@@ -173,8 +173,24 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Mac里文件夹必须以管理员身份才可写入，staff只有读的权限，且在文件夹简介中修改显示弹窗“无权限修改”。</p>
-<p>[]: <a href="https://support.apple.com/zh-cn/HT203538" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT203538</a>    “苹果官方文档解决办法”</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2>
+<p><a href="https://support.apple.com/zh-cn/HT203538" target="_blank" rel="noopener">苹果官方解决办法</a></p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>下面以文件夹post为例，</p>
+<p>此时staff为只读权限，需修改为读和写权限</p>
+<img src="https://hust-gy.oss-cn-beijing.aliyuncs.com/gy/img5.png" style="zoom:40%;" />
+
+<h3 id="在共享与权限设置中点击“应用到包含的项目”"><a href="#在共享与权限设置中点击“应用到包含的项目”" class="headerlink" title="在共享与权限设置中点击“应用到包含的项目”"></a>在共享与权限设置中点击“应用到包含的项目”</h3><p>先在“共享与权限”右下角的地方解锁，再在设置中选中“应用到包含的项目”，等待进度条结束即可。</p>
+<img src="https://hust-gy.oss-cn-beijing.aliyuncs.com/gy/img2.png" style="zoom:40%;" />
+
+<h4 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h4><p>打开命令行，在根目录下输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskutil resetUserPermissions &#x2F; &#96;id -u&#96;</span><br></pre></td></tr></table></figure>
+
+<img src="https://hust-gy.oss-cn-beijing.aliyuncs.com/gy/img3.png" style="zoom:40%;" />
+
+<h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><p>命令行运行结束后重启电脑。</p>
+<h4 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h4><p>重启后再次打开该文件夹的“简介”，发现权限可修改了，权限修改完成。</p>
+<img src="https://hust-gy.oss-cn-beijing.aliyuncs.com/gy/img1.png" style="zoom:40%;" />
+
+
       
 
       
