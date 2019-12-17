@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>某不科学的C课设入门</title>
+    <url>/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>一些C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。</p>
+<a id="more"></a>
+
+<h2 id="入门建议"><a href="#入门建议" class="headerlink" title="入门建议"></a>入门建议</h2><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><p>C课设的大部分需要的知识都已经在自动化大一下学期的C语言课程上学习过了，这里主要就谈一些需要自学的知识，建议大家在暑假期间学习一下。</p>
+<ul>
+<li><p><strong>建立打开工程</strong></p>
+<p>跑一跑学长学姐的代码，看看大致是一个怎样的内容。学会如何在bc上建立一个工程。（详细过程请参考《Borland C++建立工程菜鸟教程》）</p>
+</li>
+<li><p><strong>选择画图的模式，学习基本的画图方法</strong></p>
+<p>两种模式可供选择——VGA和SVGA</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>VGA</strong></td>
+<td>具有众多的画图函数（例如画圆、画方框等），画图显示速度快（基本一跳转画图就完成）</td>
+<td>分辨率低，可选择的颜色少，不能贴图</td>
+</tr>
+<tr>
+<td><strong>SVGA</strong></td>
+<td>分辨率高，可选颜色多，可贴图</td>
+<td>需要基于画点自己写画图函数，画图显示慢（页面显示时可以明显地看出画图的过程）</td>
+</tr>
+</tbody></table>
+<p><strong>建议</strong>：不要求较为复杂的页面的课题选择VGA模式，因为画图比较方便而且显示效果比较好；如果需要画较为复杂的页面和图形，或者必须得贴图的课题选择SVGA模式。</p>
+<p><strong>提醒</strong>：贴图须谨慎，非必要不贴图。每年的情况可能不同，打听一下今年的贴图的要求。</p>
+<p>VGA画图函数可以参考《C高级实用程序设计（王士元）》中的章节。</p>
+</li>
+<li><p><strong>鼠标的使用</strong></p>
+</li>
+<li><p>重点是找到一个好用的鼠标，然后学会如何使用。（当然如果愿意自己写一个也是可以的，这样会理解的更透彻一些）</p>
+<p><em>注意：不要用系统鼠标！！！</em></p>
+<p> 系统鼠标是DOS下面自带的一个鼠标，在我们的电脑的bc跑的时候可以很好地显示，但是在验收用XP系统跑的时候，系统鼠标是无法显示出来的。</p>
+<p>如何区分是否是系统鼠标？</p>
+<p>看有没有画鼠标的图形，如果该鼠标文件里面没有任何画图的过程直接调出鼠标的形状即为系统鼠标。</p>
+</li>
+<li><p><strong>汉字显示</strong></p>
+<p>与鼠标相同，只要找一个汉字库加入工程，然后学会使用就行。</p>
+<p>有些用Notepad++编写的同学会发现汉字乱码的情况，这是因为在编写的最初没有设置为简体汉字，Notepad++默认编码为UTF-8编码，在每次编写c文件前需要手动设为中文简体。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576517/gy/cks1_ae9qus.jpg" style="zoom: 15%;" />
+</li>
+<li><p><strong>文件操作</strong></p>
+<p>需要自学文件的读取和写入的操作。由于不连网，所以课设中信息一般都是储存在文件中， 这时候的文件相当于课设系统的数据库。文件建议以二进制形式存储，这样读写的速度会更快。</p>
+</li>
+</ul>
+<h3 id="其他建议"><a href="#其他建议" class="headerlink" title="其他建议"></a>其他建议</h3><ol>
+<li>组内配合。C课设毕竟是个合作项目，很多人一开始忽视了搭档之间配合的重要性，最后一个人完成了大部分的工作，其实这样不仅会让你身心俱疲，而且也可能无法取得更高的分数（老师并不知道真正工作分配量，而且就算知道，不能和搭档较好的合作这个问题也会成为你的一个扣分项）。不建议组三人队，三人队对于课设来说人太多了些，但是已经组好了三人队也没关系，把功能多做一些，分摊到每个人的工作量不能小于二人队。</li>
+<li>多找老师。找老师主要是两个方面：一是和老师讨论一下项目的总体规划（最好找出这道题的老师），不要让你的项目功能和老师想的偏差太大，可能的话多给几个老师看一下你的程序。二是找老师帮助debug，如果有bug一直都该不好，尽早找老师或者学长学姐问，不要拖。</li>
+<li>仿照市面上已有的电脑版软件设计。课设最好的效果就是让人看起来像一个真实的软件。</li>
+<li>尽早开始做。C课设至少要一到两个月的工作量，一般中期验收在10月中旬，终期验收在11月初或者中旬，所以建议最晚在9月中旬要开始工作，当然越早开始肯定是越好的啦。</li>
+<li>验收前一周一定要去科技楼的电脑上跑一下程序，科技楼有一种银白色的主机是最后验收时跑的主机，（判断是否是最后验收时跑的方式的方法：工程在XP系统上直接运行，不需要打开BC），这种跑法可能会和你在自己电脑上或者科技楼非XP系统的电脑上跑得有很大的不同，所以一定要提前至少一周的时间去科技楼跑一下你的程序。最后有闲余的时间的话可以把程序里的warning全部消掉一下。</li>
+<li>中期和终期报告尽量多写一些。中期验收会看报告页数，页数不够的会被打回去重写。</li>
+<li>每个函数的行数不要过多。不要把一个页面所有的代码都堆在一个函数里，这样很可能让你带上重复代码来凑代码量的嫌疑，把带有功能的代码块提出成函数，这样也方便重复调用。</li>
+<li>多功能性和稳定性。不一定要追求十分复杂的算法，重要的是扩展功能，特别是较为简单的题就得放开思路，使你的系统功能更加的丰富。</li>
+</ol>
+<h2 id="跑往届代码"><a href="#跑往届代码" class="headerlink" title="跑往届代码"></a>跑往届代码</h2><p>《Borland C++建立工程菜鸟教程》中很详细地讲述了如何建立工程的问题，所以这里就只是简述一下怎么打开已有的工程（这里就用我们组的工程进行演示，文件夹名为stock）。</p>
+<p>第一步：把代码放到BC的DISK_C文件夹下。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576585/gy/cks2_vtbuw9.png" style="zoom:40%;" />
+
+<p>第二步：打开BC，在 File &gt; Change Directory 里找到相应文件。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576622/gy/cks3_yqusyj.jpg" style="zoom:75%;" />
+
+<p>第三步：在 Project &gt; Open Project File 中找到 .prj 文件，打开。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576802/gy/cks4_mae1qb.jpg" style="zoom:75%;" />
+
+<p> 第四步：设置Directories</p>
+<p>在Options &gt; Directories中的第一行是头文件的地址，除了BC自带的头文件库外，还得添加自己程序的头文件所在地址。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576839/gy/cks5_sezizh.png" style="zoom: 40%;" />
+
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576872/gy/cks6_blyehy.jpg" style="zoom:75%;" />
+
+<p>第五步：上述几步都设置好了后就可以编译了</p>
+<p>​         Compile &gt; Build all</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576916/gy/cks7_nhlxc2.jpg" style="zoom:75%;" />
+
+<p>编译没有error，就可以跑了（Run &gt; Run）</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576954/gy/cks8_tydpvv.jpg" style="zoom:75%;" />
+
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576990/gy/cks9_qt7pz1.jpg" style="zoom:75%;" />
+
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577029/gy/cks10_kwiqgf.jpg" style="zoom:75%;" />
+
+<p> 之后就自己去玩啦。。。。。</p>
+<h2 id="如何搭建项目框架"><a href="#如何搭建项目框架" class="headerlink" title="如何搭建项目框架"></a>如何搭建项目框架</h2><p>接下来我会演示我们组当时建立整个项目的框架，如何建工程《Borland C++建立工程菜鸟教程》中有讲，这里不在赘述。</p>
+<h3 id="Notepad-的使用"><a href="#Notepad-的使用" class="headerlink" title="Notepad++的使用"></a>Notepad++的使用</h3><p>建议使用第三方编译器来打代码（如Notepad++）</p>
+<p>Notepad++可在官网直接免费下载</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577065/gy/cks11_cgpuko.jpg" style="zoom:75%;" />
+
+<p>用Notepad++新建一个文件后，一定要记得进行两个设置，一个是汉字（前面提过），一个是C语言。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577092/gy/cks12_enrz0y.jpg" alt="编码>编码字符集>中文>GB2312(Simplified)" style="zoom: 25%;" />
+
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577155/gy/cks13_dlvq8m.jpg" alt="语言&gt;C&gt;C"></p>
+<h3 id="项目框架的搭建"><a href="#项目框架的搭建" class="headerlink" title="项目框架的搭建"></a>项目框架的搭建</h3><p>事例项目test 将放在文件夹中一起提供给大家。</p>
+<p>文件夹中需要编写的只有.c 和 .h文件，其余为自动生成和库。</p>
+<h4 id="主函数的编写"><a href="#主函数的编写" class="headerlink" title="主函数的编写"></a>主函数的编写</h4><p>主函数 main.c 主要由初始化部分和页面跳转部分组成。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">/***********各种初始化*****************/</span></span><br><span class="line">	<span class="comment">/*设定初始页面</span></span><br><span class="line"><span class="comment">	调试的时候可以改变page的初始设定，直接跳转到需要调试的页面</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//VGA画图的初始化</span></span><br><span class="line">    <span class="keyword">int</span> graphdriver = VGA;</span><br><span class="line">    <span class="keyword">int</span>	graphmode = VGAHI;</span><br><span class="line">    initgraph(&amp;graphdriver, &amp;graphmode, <span class="string">"BGI"</span>);</span><br><span class="line">	<span class="comment">//鼠标的初始化</span></span><br><span class="line">	mouseinit();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	*********页面跳转循环***********</span></span><br><span class="line"><span class="comment">	每一个页面对应一个page值，</span></span><br><span class="line"><span class="comment">	在各个页面的程序中，每一次有需要跳转页面的时候，就改变page值，且回到主程序</span></span><br><span class="line"><span class="comment">	在主程序的循环中，通过page值的改变，跳转到相应页面</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">switch</span>(page)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:<span class="comment">//页面1（初始页面）</span></span><br><span class="line">			    page = p1();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">				</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:<span class="comment">//页面2</span></span><br><span class="line">			    page = p2();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">				</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:<span class="comment">//退出程序</span></span><br><span class="line">				closegraph();<span class="comment">//关闭画图</span></span><br><span class="line">			    <span class="built_in">exit</span>(<span class="number">0</span>);<span class="comment">//退出程序</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>页面跳转依赖while循环和switch case的结合，之后新开页面直接增加case就可以。</p>
+<h4 id="页面函数的编写"><a href="#页面函数的编写" class="headerlink" title="页面函数的编写"></a>页面函数的编写</h4><p>页面函数主要是页面绘制和鼠标或者其他控制功能和页面跳转的两个部分。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page1.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//因为需要返回page值，所以页面的函数需是int型</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">p1</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//防止鼠标在跳转页面时留痕</span></span><br><span class="line">	clrmous(MouseX,MouseY);</span><br><span class="line">	<span class="built_in">delay</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">	page1_screen();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*循环，不停地监测异动，当异动导致page值改变，跳转页面*/</span></span><br><span class="line">	<span class="keyword">while</span>(page == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//获取鼠标的位置和状态</span></span><br><span class="line">		mou_pos(&amp;MouseX,&amp;MouseY,&amp;<span class="built_in">press</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击跳转页面框，跳转到页面2界面</span></span><br><span class="line">		<span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">170</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">1</span>;<span class="comment">//返回1到主函数的页面跳转循环</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击退出程序框</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">2</span>;<span class="comment">//返回2到主函数的页面跳转循环</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制页面1界面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">page1_screen</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cleardevice();<span class="comment">//把以前的页面清屏</span></span><br><span class="line">	</span><br><span class="line">	setbkcolor(BLACK);<span class="comment">//背景色设置</span></span><br><span class="line">	</span><br><span class="line">	setfillstyle(SOLID_FILL, BLUE);<span class="comment">//设定蓝色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">170</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>);<span class="comment">//跳转页面</span></span><br><span class="line">	setfillstyle(SOLID_FILL, RED);<span class="comment">//设定红色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>+<span class="number">60</span>);<span class="comment">//退出程序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>页面1有两个框，点击蓝框跳转到页面2，点击红框退出程序。</p>
+<p>页面2与页面1编写结构相同，只有一个红色的退出框。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577257/gy/cks14_hlp79y.jpg" alt="页面1" style="zoom:75%;" />
+
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577276/gy/cks15_ezfwi0.jpg" alt="页面2" style="zoom:75%;" />
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page2.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">////因为需要返回page值，所以页面的函数需是int型</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">p2</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//防止鼠标在跳转页面时留痕</span></span><br><span class="line">	clrmous(MouseX,MouseY);</span><br><span class="line">	<span class="built_in">delay</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">	page2_screen();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*循环，不停地监测异动，当异动导致page值改变，跳转页面*/</span></span><br><span class="line">	<span class="keyword">while</span>(page == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//获取鼠标的位置和状态</span></span><br><span class="line">		mou_pos(&amp;MouseX,&amp;MouseY,&amp;<span class="built_in">press</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击退出程序框</span></span><br><span class="line">		<span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">200</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">200</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> page;<span class="comment">//返回2到主函数的页面跳转循环</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制页面2界面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">page2_screen</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cleardevice();<span class="comment">//把以前的页面清屏</span></span><br><span class="line">	</span><br><span class="line">	setbkcolor(BLACK);<span class="comment">//背景色设置</span></span><br><span class="line">	</span><br><span class="line">	setfillstyle(SOLID_FILL, RED);<span class="comment">//设定红色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">200</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">200</span>+<span class="number">60</span>);<span class="comment">//退出程序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="头文件的编写"><a href="#头文件的编写" class="headerlink" title="头文件的编写"></a>头文件的编写</h4><p>头文件的编写有多种形式，这里写的只是我们当时用的那种，其他编写形式也是可以的。</p>
+<p>从上面的.c文件中可以看出，我们的每一个.c都调用了两个头文件。</p>
+<p>一个是同样的common.h，一个是与其文件名相同的 .h文件。</p>
+<p>test的common.h如下图所示：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _COMMON_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _COMMON_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;graphics.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bios.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dos.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"mouse.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>我们用common.h装了所有需要用到的库文件和鼠标头文件，每次有新调用的库文件就加进去，这样每个.c文件都只要调用common.h，不需要再重新写调用的库文件。</p>
+<p>另一种是与文件名相同的 .h文件，以main.h为例。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _MAIN_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _MAIN_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page1.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page2.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>与文件名相同的 .h文件包含两个部分，第一部分是其调用的位于其他文件的函数的头文件，如main中调用了p1()和p2()分别位于page1.h和page2.h；第二部分是该.c文件中所有的函数。</p>
+<p>这样我们就搭建了一个有两个页面的简单工程。</p>
+<p>最后祝学弟学妹们“0 warning, 0 error.”，之后的路就要靠学弟学妹们自己去探索，老妈子学姐就不再废话啦。</p>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>华科自动化</tag>
+        <tag>C语言课程设计</tag>
+        <tag>BorlandC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac使用Matlab卡顿严重且闪退的解决办法</title>
+    <url>/2019/12/16/Mac%E4%BD%BF%E7%94%A8Matlab%E5%8D%A1%E9%A1%BF%E4%B8%A5%E9%87%8D%E4%B8%94%E9%97%AA%E9%80%80%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>安装Matlab后发现使用时十分卡顿且易闪退。</p>
+<a id="more"></a>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>关闭 “MathWorks源代码管理集成”。</p>
+<p>1、打开 “主页 &gt; 环境 &gt; 预设”；</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577602/gy/img7_oxoxex.png" style="zoom:50%;" />
+
+
+
+<p>2、打开 “常规  &gt; 原代码管理”，选择 “无”。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577645/gy/img8_cebx5p.png" style="zoom:50%;" />
+
+<p>问题解决。</p>
+]]></content>
+      <categories>
+        <category>踩坑记录</category>
+      </categories>
+      <tags>
+        <tag>Mac</tag>
+        <tag>Matlab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Canny边缘检测算法（C++实现）</title>
+    <url>/2019/12/16/Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88C++%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>用高斯滤波器平滑图像；</li>
+<li>用一阶偏导有限差分计算梯度幅值和方向；</li>
+<li>对梯度幅值应用非极大值抑制；</li>
+<li>用双阈值算法检测和连接边缘。</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="一、openCV在C-中的应用"><a href="#一、openCV在C-中的应用" class="headerlink" title="一、openCV在C++中的应用"></a>一、openCV在C++中的应用</h2><p>首先，在mac的Xcode上安装配置openCV库，参考一下链接（科学上网访问）<a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003</a></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv; <span class="comment">// 使用命名空间cv</span></span><br></pre></td></tr></table></figure>
+
+<p>如此可以减少输入，例如 cv :: Mat 就可省略为 Mat</p>
+<h3 id="Mat"><a href="#Mat" class="headerlink" title="Mat"></a>Mat</h3><p>Mat的优点是不再需要手动分配其内存，并在不需要它时立即发布它。在执行此操作仍然是可能的情况下，大多数OpenCV功能将自动分配其输出数据。</p>
+<p>Mat作为一个类，包含</p>
+<ul>
+<li>矩阵头（包含矩阵的大小，用于存储的方法，存储在哪个地址的信息等等）</li>
+<li>指向包含像素值（取决于所选存储方法的任何维度）</li>
+</ul>
+<p>从文件中加载图像：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Mat img = imread(filename);</span><br></pre></td></tr></table></figure>
+
+<p>如果需要加载灰度图：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Mat img = imread(filename, IMREAD_GRAYSCALE);</span><br></pre></td></tr></table></figure>
+
+<p>显示图像：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">namedWindow(<span class="string">"图片"</span>); <span class="comment">//打开名为“图片”的窗口</span></span><br><span class="line">imshow(<span class="string">"图片"</span>, img); <span class="comment">//显示图像</span></span><br></pre></td></tr></table></figure>
+
+<p> openCV加载图像显示</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv; <span class="comment">// 使用命名空间cv</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Mat img = imread(<span class="string">"building.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    <span class="comment">//显示图像</span></span><br><span class="line">    namedWindow(<span class="string">"原图"</span>);</span><br><span class="line">    imshow(<span class="string">"原图"</span>, img);</span><br><span class="line"></span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何访问图像每一个像素点"><a href="#如何访问图像每一个像素点" class="headerlink" title="如何访问图像每一个像素点"></a>如何访问图像每一个像素点</h2><p>利用指针访问，调用 Mat::ptr(i) 来获取第i行的首地址，通过循环进行访问。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 按行遍历所有点(单通道)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nr; j++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nc; i++) &#123;</span><br><span class="line">        <span class="comment">//每个点为 img.ptr&lt;uchar&gt;(j)[i]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、用高斯滤波器平滑图像"><a href="#二、用高斯滤波器平滑图像" class="headerlink" title="二、用高斯滤波器平滑图像"></a>二、用高斯滤波器平滑图像</h2><h3 id="高斯滤波器（openCV）"><a href="#高斯滤波器（openCV）" class="headerlink" title="高斯滤波器（openCV）"></a>高斯滤波器（openCV）</h3><p>openCV自带的高斯滤波器：<a href="http://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1" target="_blank" rel="noopener">cv :: GaussianBlur</a></p>
+<table>
+<thead>
+<tr>
+<th>void cv::GaussianBlur</th>
+<th>(</th>
+<th><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga353a9de602fe76c709e12074a6f362ba" target="_blank" rel="noopener">InputArray</a></th>
+<th><em>src</em>,</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#gaad17fda1d0f0d1ee069aebb1df2913c0" target="_blank" rel="noopener">OutputArray</a></td>
+<td><em>dst</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga346f563897249351a34549137c8532a0" target="_blank" rel="noopener">Size</a></td>
+<td><em>ksize</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>double</td>
+<td><em>sigmaX</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>double</td>
+<td><em>sigmaY</em> = <code>0</code>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>int</td>
+<td><em>borderType</em> = <a href="https://docs.opencv.org/master/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5afe14c13a4ea8b8e3b3ef399013dbae01" target="_blank" rel="noopener">BORDER_DEFAULT</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>)</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>#include &lt;opencv2/imgproc.hpp&gt;</p>
+<p>使用高斯滤镜模糊图像。</p>
+<p>该函数将源图像与指定的高斯内核进行卷积。支持就地过滤。</p>
+<h4 id="参量"><a href="#参量" class="headerlink" title="参量"></a>参量</h4><table>
+<thead>
+<tr>
+<th><strong>src</strong></th>
+<th>输入图像；图像可以具有任意数量的通道，这些通道可以独立处理，但深度应为CV_8U，CV_16U，CV_16S，CV_32F或CV_64F。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>dst</strong></td>
+<td>输出与src大小和类型相同的图像。</td>
+</tr>
+<tr>
+<td><strong>size</strong></td>
+<td>高斯核大小。ksize.width和ksize.height可以不同，但它们都必须为正数和奇数。或者，它们可以为零，然后根据sigma计算得出。</td>
+</tr>
+<tr>
+<td><strong>sigmaX</strong></td>
+<td>X方向上的高斯核标准偏差。</td>
+</tr>
+<tr>
+<td><strong>sigmaY</strong></td>
+<td>Y方向的高斯核标准差；如果sigmaY为零，则将其设置为等于sigmaX；如果两个sigmas为零，则分别从ksize.width和ksize.height计算得出（有关详细信息，请参见<a href="https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa" target="_blank" rel="noopener">getGaussianKernel</a>）；为了完全控制结果，而不管将来可能对所有这些语义进行的修改，建议指定所有ksize，sigmaX和sigmaY。</td>
+</tr>
+<tr>
+<td><strong>borderType</strong></td>
+<td>像素外推方法，请参见<a href="https://docs.opencv.org/master/d2/de8/group__core__array.html#ga209f2f4869e304c82d07739337eae7c5" target="_blank" rel="noopener">BorderTypes</a></td>
+</tr>
+</tbody></table>
+<h3 id="高斯滤波器的C-实现"><a href="#高斯滤波器的C-实现" class="headerlink" title="高斯滤波器的C++实现"></a>高斯滤波器的C++实现</h3><ol>
+<li>对图像使用一维高斯卷积模版，在一个方向上进行滤波（例如水平方向）；</li>
+<li>转置图像；</li>
+<li>对转置后的图像使用同一个高斯卷积模版，在同样的方向上进行滤波；</li>
+<li>将图像转置回原来的位置，得到二维高斯滤波的图像。</li>
+</ol>
+<p>一维高斯卷积模版可以由二项式展开的系数来模拟，如3*3模版:     1/4 * [1  2  1]</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 高斯滤波器，利用3*3的高斯模版进行高斯卷积</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst  高斯滤波后的输出图像</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gaussianFilter</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 对水平方向进行滤波</span></span><br><span class="line">    Mat dst1 = img.clone();</span><br><span class="line">    gaussianConvolution(img, dst1);</span><br><span class="line">    <span class="comment">//图像矩阵转置</span></span><br><span class="line">    Mat dst2;</span><br><span class="line">    transpose(dst1, dst2);</span><br><span class="line">    <span class="comment">// 对垂直方向进行滤波</span></span><br><span class="line">    Mat dst3 = dst2.clone();</span><br><span class="line">    gaussianConvolution(dst2, dst3);</span><br><span class="line">    <span class="comment">// 再次转置</span></span><br><span class="line">    transpose(dst3, dst);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 一维高斯卷积，对每行进行高斯卷积</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst  一维高斯卷积后的输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gaussianConvolution</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nr = img.rows;</span><br><span class="line">    <span class="keyword">int</span> nc = img.cols;</span><br><span class="line">    <span class="keyword">int</span> templates[<span class="number">3</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 按行遍历除每行边缘点的所有点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nr; j++) &#123;</span><br><span class="line">        uchar* data= img.ptr&lt;uchar&gt;(j); <span class="comment">//提取该行地址</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nc<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; <span class="number">3</span>; n++) &#123;</span><br><span class="line">                sum += data[i<span class="number">-1</span>+n] * templates[n]; <span class="comment">//相称累加</span></span><br><span class="line">            &#125;</span><br><span class="line">            sum /= <span class="number">4</span>;</span><br><span class="line">            dst.ptr&lt;uchar&gt;(j)[i] = sum;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>高斯滤波前后的图像：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191108122357494.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>高斯滤波</p>
+<h2 id="三、用一阶偏导有限差分计算梯度幅值和方向"><a href="#三、用一阶偏导有限差分计算梯度幅值和方向" class="headerlink" title=" 三、用一阶偏导有限差分计算梯度幅值和方向"></a> 三、用一阶偏导有限差分计算梯度幅值和方向</h2><p>用一阶偏导有限差分计算偏导数的两个阵列P与Q</p>
+<p><img src="https://private.codecogs.com/gif.latex?P%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20%5Capprox%20%5Cleft%20%28%20S%5Cleft%20%5B%20y%2Cx&plus;1%20%5Cright%20%5D-S%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20&plus;S%5Cleft%20%5B%20y&plus;1%2Cx&plus;1%20%5Cright%20%5D-S%5By&plus;1%2Cx%5D%5Cright%20%29/2" alt="P\left [ y,x \right ] \approx \left ( S\left [ y,x+1 \right ]-S\left [ y,x \right ] +S\left [ y+1,x+1 \right ]-S[y+1,x]\right )/2"></p>
+<p><img src="https://private.codecogs.com/gif.latex?Q%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20%5Capprox%20%5Cleft%20%28%20S%5Cleft%20%5B%20y&plus;1%2Cx%20%5Cright%20%5D-S%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20&plus;S%5Cleft%20%5B%20y&plus;1%2Cx&plus;1%20%5Cright%20%5D-S%5By%2Cx&plus;1%5D%5Cright%20%29/2" alt="Q\left [ y,x \right ] \approx \left ( S\left [ y+1,x \right ]-S\left [ y,x \right ] +S\left [ y+1,x+1 \right ]-S[y,x+1]\right )/2"></p>
+<p>再由P和Q算出梯度幅值和方向角</p>
+<p><img src="https://private.codecogs.com/gif.latex?M%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%3D%20%5Csqrt%7BP%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%5E%7B2%7D&plus;Q%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%5E%7B2%7D%7D" alt="M\left [ y,x \right ]= \sqrt{P\left [ y,x \right ]^{2}+Q\left [ y,x \right ]^{2}}"></p>
+<p><img src="https://private.codecogs.com/gif.latex?%5Ctheta%20%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%3D%5Carctan%20%5Cleft%20%28%20Q%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20/P%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%5Cright%20%29" alt="\theta \left [ y,x \right ]=\arctan \left ( Q\left [ y,x \right ] /P\left [ y,x \right ]\right )"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 用一阶偏导有限差分计算梯度幅值和方向</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> gradXY 输出的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输出的梯度方向</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getGrandient</span> <span class="params">(Mat &amp;img, Mat &amp;gradXY, Mat &amp;theta)</span> </span>&#123;</span><br><span class="line">    gradXY = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    theta = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.rows<span class="number">-1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.cols<span class="number">-1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">double</span> p = (img.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j)[i] + img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i])/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">double</span> q = (img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i] - img.ptr&lt;uchar&gt;(j)[i] + img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>])/<span class="number">2</span>;</span><br><span class="line">            gradXY.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">sqrt</span>(p*p + q*q); <span class="comment">//计算梯度</span></span><br><span class="line">            theta.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">atan</span>(q/p);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时输入输出图像为：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191108121702859.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>二维梯度算法</p>
+<p> 可以看出，二维计算梯度只区分出了部分边界，边界损失过大，于是采用三维算法计算梯度((y,x)为a11)。</p>
+<table>
+<thead>
+<tr>
+<th>a00</th>
+<th>a01</th>
+<th>a02</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a10</td>
+<td>a11</td>
+<td>a12</td>
+</tr>
+<tr>
+<td>a20</td>
+<td>a21</td>
+<td>a22</td>
+</tr>
+</tbody></table>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">double</span> gradX = <span class="keyword">double</span>(a02 + <span class="number">2</span> * a12 + a22 - a00 - <span class="number">2</span> * a10 - a20);</span><br><span class="line"><span class="keyword">double</span> gradY = <span class="keyword">double</span>(a00 + <span class="number">2</span> * a01 + a02 - a20 - <span class="number">2</span> * a21 - a22);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 用一阶偏导有限差分计算梯度幅值和方向</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> gradXY 输出的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输出的梯度方向</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getGrandient</span> <span class="params">(Mat &amp;img, Mat &amp;gradXY, Mat &amp;theta)</span> </span>&#123;</span><br><span class="line">    gradXY = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    theta = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> gradY = <span class="keyword">double</span>(img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>] + <span class="number">2</span> * img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i] + img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>] - <span class="number">2</span> * img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">double</span> gradX = <span class="keyword">double</span>(img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>] + <span class="number">2</span> * img.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>] + img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>] - <span class="number">2</span> * img.ptr&lt;uchar&gt;(j)[i<span class="number">-1</span>] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>]);</span><br><span class="line"></span><br><span class="line">            gradXY.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">sqrt</span>(gradX*gradX + gradY*gradY); <span class="comment">//计算梯度</span></span><br><span class="line">            theta.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">atan</span>(gradY/gradX); <span class="comment">//计算梯度方向</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三维梯度算法的输入输出图像：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191108132415101.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>三维梯度算法</p>
+<h2 id="四、对梯度幅值应用非极大值抑制"><a href="#四、对梯度幅值应用非极大值抑制" class="headerlink" title="四、对梯度幅值应用非极大值抑制"></a>四、对梯度幅值应用非极大值抑制</h2><p>仅仅得到全局梯度并不足以确定边缘，保留局部梯度最大的点，而抑制非极大点。将梯度角的变化范围减小到圆周的四个扇区之一；</p>
+<ol>
+<li><p>四个扇区的标号为0到3，对应3*3领域的四种可能组合方向；</p>
+</li>
+<li><p>每一个点上领域的中心像素M与沿着梯度线的两个像素比较；</p>
+</li>
+<li><p>如果M梯度值不比沿梯度线的两个相邻像素梯度值大，则令M=0。    </p>
+<p>  由 atan() 得到的角度在 <img src="https://private.codecogs.com/gif.latex?%5Cleft%20%5B%20-%5Cpi%20/2%2C%20%5Cpi%20/2%5Cright%20%5D" alt="\left [ -\pi /2, \pi /2\right ]"> 范围内，将此范围均分为四个等份。</p>
+<p><img src="https://img-blog.csdnimg.cn/2019110816014884.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" style="zoom:25%;" /> <img src="https://img-blog.csdnimg.cn/20191108160159422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" style="zoom:27%;" /></p>
+</li>
+</ol>
+<pre><code><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 局部非极大值抑制</span></span><br><span class="line"><span class="comment"> gradXY 输入的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输入的梯度方向</span></span><br><span class="line"><span class="comment"> dst 输出的经局部非极大值抑制后的图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nonLocalMaxValue</span> <span class="params">(Mat &amp;gradXY, Mat &amp;theta, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    dst = gradXY.clone();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; gradXY.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; gradXY.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> t = <span class="keyword">double</span>(theta.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">double</span> g = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">if</span> (g == <span class="number">0.0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">double</span> g0, g1;</span><br><span class="line">            <span class="keyword">if</span> ((t &gt;= -(<span class="number">3</span>*M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; -(M_PI/<span class="number">8</span>))) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= -(M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= M_PI/<span class="number">8</span>) &amp;&amp; (t &lt; <span class="number">3</span>*M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (g &lt;= g0 || g &lt;= g1) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">0.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre><p>输入的经梯度计算后的图像和输出的局部非极大值抑制后的图像：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191108174023525.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>局部非极大值抑制</p>
+<h2 id="五、用双阈值算法检测和连接边缘"><a href="#五、用双阈值算法检测和连接边缘" class="headerlink" title="五、用双阈值算法检测和连接边缘"></a>五、用双阈值算法检测和连接边缘</h2><p>1、Canny算法采用双阈值，高阈值一般是低阈值的两倍，遍历所有像素点：</p>
+<p>X &lt; 低阈值 ，像素点置0，被抑制掉；</p>
+<p>低阈值 &lt; X &lt;高阈值，像素点为弱边缘点，像素点值先不变；</p>
+<p>X &gt; 高阈值，像素点为强边缘点，置255。</p>
+<p>2、弱边缘点补充连接强边缘点：</p>
+<p>如果弱边缘点的8邻点域存在强边缘点，则将此点置255，用以连接强边缘点；如果不存在强边缘点，则这是一个孤立的弱边缘点，此点置0。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 用双阈值算法检测和连接边缘</span></span><br><span class="line"><span class="comment"> low 输入的低阈值</span></span><br><span class="line"><span class="comment"> high 输入的高阈值</span></span><br><span class="line"><span class="comment"> img 输入的原图像</span></span><br><span class="line"><span class="comment"> dst 输出的用双阈值算法检测和连接边缘后的图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doubleThreshold</span> <span class="params">(<span class="keyword">double</span> low, <span class="keyword">double</span> high, Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 区分出弱边缘点和强边缘点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> x = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="comment">// 像素点为强边缘点，置255</span></span><br><span class="line">            <span class="keyword">if</span> (x &gt; high) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">255</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 像素点置0，被抑制掉</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (x &lt; low) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 弱边缘点补充连接强边缘点</span></span><br><span class="line">    doubleThresholdLink(dst);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 弱边缘点补充连接强边缘点</span></span><br><span class="line"><span class="comment"> img 弱边缘点补充连接强边缘点的输入和输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doubleThresholdLink</span> <span class="params">(Mat &amp;img)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 循环找到强边缘点，把其领域内的弱边缘点变为强边缘点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; img.rows<span class="number">-2</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; img.cols<span class="number">-2</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 如果该点是强边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="comment">// 遍历该强边缘点领域</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">-1</span>; m &lt; <span class="number">1</span>; m++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">-1</span>; n &lt; <span class="number">1</span>; n++) &#123;</span><br><span class="line">                        <span class="comment">// 该点为弱边缘点（不是强边缘点，也不是被抑制的0点）</span></span><br><span class="line">                        <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j+m)[i+n] != <span class="number">0</span> &amp;&amp; img.ptr&lt;uchar&gt;(j+m)[i+n] != <span class="number">255</span>) &#123;</span><br><span class="line">                            img.ptr&lt;uchar&gt;(j+m)[i+n] = <span class="number">255</span>; <span class="comment">//该弱边缘点补充为强边缘点</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 如果该点依旧是弱边缘点，及此点是孤立边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] != <span class="number">255</span> &amp;&amp; img.ptr&lt;uchar&gt;(j)[i] != <span class="number">255</span>) &#123;</span><br><span class="line">                img.ptr&lt;uchar&gt;(j)[i] = <span class="number">0</span>; <span class="comment">//该孤立弱边缘点抑制</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>双阈值算法前后的输入输出图像 ：</p>
+<p><img src="https://img-blog.csdnimg.cn/20191109012221209.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>双阈值算法</p>
+<p>Canny边缘检测代码</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _USE_MATH_DEFINES</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;<span class="comment">// 使用命名空间cv</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 将两个图像拼接，以便在同一个窗口显示</span></span><br><span class="line"><span class="comment"> dst 输出的拼接后的图像</span></span><br><span class="line"><span class="comment"> src1 拼接的第一幅图</span></span><br><span class="line"><span class="comment"> src2 拼接的第二幅图</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeImg</span><span class="params">(Mat &amp; dst,Mat &amp;src1,Mat &amp;src2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rows = src1.rows;</span><br><span class="line">    <span class="keyword">int</span> cols = src1.cols+<span class="number">5</span>+src2.cols;</span><br><span class="line">    CV_Assert(src1.type () == src2.type ());</span><br><span class="line">    dst.create (rows,cols,src1.type ());</span><br><span class="line">    src1.copyTo (dst(Rect(<span class="number">0</span>,<span class="number">0</span>,src1.cols,src1.rows)));</span><br><span class="line">    src2.copyTo (dst(Rect(src1.cols+<span class="number">5</span>,<span class="number">0</span>,src2.cols,src2.rows)));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 一维高斯卷积，对每行进行高斯卷积</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst  一维高斯卷积后的输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gaussianConvolution</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nr = img.rows;</span><br><span class="line">    <span class="keyword">int</span> nc = img.cols;</span><br><span class="line">    <span class="keyword">int</span> templates[<span class="number">3</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 按行遍历除每行边缘点的所有点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nr; j++) &#123;</span><br><span class="line">        uchar* data= img.ptr&lt;uchar&gt;(j); <span class="comment">//提取该行地址</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nc<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; <span class="number">3</span>; n++) &#123;</span><br><span class="line">                sum += data[i<span class="number">-1</span>+n] * templates[n]; <span class="comment">//相称累加</span></span><br><span class="line">            &#125;</span><br><span class="line">            sum /= <span class="number">4</span>;</span><br><span class="line">            dst.ptr&lt;uchar&gt;(j)[i] = sum;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 高斯滤波器，利用3*3的高斯模版进行高斯卷积</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst  高斯滤波后的输出图像</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gaussianFilter</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 对水平方向进行滤波</span></span><br><span class="line">    Mat dst1 = img.clone();</span><br><span class="line">    gaussianConvolution(img, dst1);</span><br><span class="line">    <span class="comment">//图像矩阵转置</span></span><br><span class="line">    Mat dst2;</span><br><span class="line">    transpose(dst1, dst2);</span><br><span class="line">    <span class="comment">// 对垂直方向进行滤波</span></span><br><span class="line">    Mat dst3 = dst2.clone();</span><br><span class="line">    gaussianConvolution(dst2, dst3);</span><br><span class="line">    <span class="comment">// 再次转置</span></span><br><span class="line">    transpose(dst3, dst);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 用一阶偏导有限差分计算梯度幅值和方向</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> gradXY 输出的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输出的梯度方向</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getGrandient</span> <span class="params">(Mat &amp;img, Mat &amp;gradXY, Mat &amp;theta)</span> </span>&#123;</span><br><span class="line">    gradXY = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    theta = Mat::zeros(img.<span class="built_in">size</span>(), CV_8U);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> gradY = <span class="keyword">double</span>(img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>] + <span class="number">2</span> * img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i] + img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>] - <span class="number">2</span> * img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">double</span> gradX = <span class="keyword">double</span>(img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>] + <span class="number">2</span> * img.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>] + img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>] - img.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>] - <span class="number">2</span> * img.ptr&lt;uchar&gt;(j)[i<span class="number">-1</span>] - img.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>]);</span><br><span class="line"> </span><br><span class="line">            gradXY.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">sqrt</span>(gradX*gradX + gradY*gradY); <span class="comment">//计算梯度</span></span><br><span class="line">            theta.ptr&lt;uchar&gt;(j)[i] = <span class="built_in">atan</span>(gradY/gradX); <span class="comment">//计算梯度方向</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 局部非极大值抑制</span></span><br><span class="line"><span class="comment"> gradXY 输入的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输入的梯度方向</span></span><br><span class="line"><span class="comment"> dst 输出的经局部非极大值抑制后的图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nonLocalMaxValue</span> <span class="params">(Mat &amp;gradXY, Mat &amp;theta, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    dst = gradXY.clone();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; gradXY.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; gradXY.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> t = <span class="keyword">double</span>(theta.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">double</span> g = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">if</span> (g == <span class="number">0.0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">double</span> g0, g1;</span><br><span class="line">            <span class="keyword">if</span> ((t &gt;= -(<span class="number">3</span>*M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; -(M_PI/<span class="number">8</span>))) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= -(M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= M_PI/<span class="number">8</span>) &amp;&amp; (t &lt; <span class="number">3</span>*M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (g &lt;= g0 || g &lt;= g1) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">0.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 弱边缘点补充连接强边缘点</span></span><br><span class="line"><span class="comment"> img 弱边缘点补充连接强边缘点的输入和输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doubleThresholdLink</span> <span class="params">(Mat &amp;img)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 循环找到强边缘点，把其领域内的弱边缘点变为强边缘点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; img.rows<span class="number">-2</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; img.cols<span class="number">-2</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 如果该点是强边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="comment">// 遍历该强边缘点领域</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">-1</span>; m &lt; <span class="number">1</span>; m++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">-1</span>; n &lt; <span class="number">1</span>; n++) &#123;</span><br><span class="line">                        <span class="comment">// 该点为弱边缘点（不是强边缘点，也不是被抑制的0点）</span></span><br><span class="line">                        <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j+m)[i+n] != <span class="number">0</span> &amp;&amp; img.ptr&lt;uchar&gt;(j+m)[i+n] != <span class="number">255</span>) &#123;</span><br><span class="line">                            img.ptr&lt;uchar&gt;(j+m)[i+n] = <span class="number">255</span>; <span class="comment">//该弱边缘点补充为强边缘点</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 如果该点依旧是弱边缘点，及此点是孤立边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] != <span class="number">255</span> &amp;&amp; img.ptr&lt;uchar&gt;(j)[i] != <span class="number">255</span>) &#123;</span><br><span class="line">                img.ptr&lt;uchar&gt;(j)[i] = <span class="number">0</span>; <span class="comment">//该孤立弱边缘点抑制</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 用双阈值算法检测和连接边缘</span></span><br><span class="line"><span class="comment"> low 输入的低阈值</span></span><br><span class="line"><span class="comment"> high 输入的高阈值</span></span><br><span class="line"><span class="comment"> img 输入的原图像</span></span><br><span class="line"><span class="comment"> dst 输出的用双阈值算法检测和连接边缘后的图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doubleThreshold</span> <span class="params">(<span class="keyword">double</span> low, <span class="keyword">double</span> high, Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 区分出弱边缘点和强边缘点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> x = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="comment">// 像素点为强边缘点，置255</span></span><br><span class="line">            <span class="keyword">if</span> (x &gt; high) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">255</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 像素点置0，被抑制掉</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (x &lt; low) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 弱边缘点补充连接强边缘点</span></span><br><span class="line">    doubleThresholdLink(dst);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img = imread(<span class="string">"woman.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 高斯滤波</span></span><br><span class="line">    Mat gauss_img;</span><br><span class="line">    gaussianFilter(img, gauss_img); <span class="comment">//高斯滤波器</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 用一阶偏导有限差分计算梯度幅值和方向</span></span><br><span class="line">    Mat gradXY, theta;</span><br><span class="line">    getGrandient(gauss_img, gradXY, theta);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 局部非极大值抑制</span></span><br><span class="line">    Mat local_img;</span><br><span class="line">    nonLocalMaxValue(gradXY, theta, local_img);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 用双阈值算法检测和连接边缘</span></span><br><span class="line">    Mat dst;</span><br><span class="line">    doubleThreshold(<span class="number">40</span>, <span class="number">80</span>, local_img, dst);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 图像显示</span></span><br><span class="line">    Mat outImg;</span><br><span class="line">    mergeImg (outImg,img,dst); <span class="comment">//图像拼接</span></span><br><span class="line">    namedWindow(<span class="string">"img"</span>);</span><br><span class="line">    imshow(<span class="string">"img"</span>,outImg);<span class="comment">// 图像显示</span></span><br><span class="line">    imwrite(<span class="string">"canny算法.jpg"</span>, outImg);</span><br><span class="line"> </span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>Canny边缘检测的前后图像</p>
+<p><img src="https://img-blog.csdnimg.cn/20191109012754920.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>Canny边缘检测算法</p>
+<hr>
+<p>参考资源：</p>
+<p>【1】<a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">Setting up OpenCV and C++ development environment in Xcode for Computer Vision projects</a></p>
+<p>【2】<a href="https://docs.opencv.org/master/d9/df8/tutorial_root.html" target="_blank" rel="noopener">OpenCV Tutorials</a></p>
+<p>【3】<a href="https://www.w3cschool.cn/opencv/opencv-2gnx28u3.html" target="_blank" rel="noopener">OpenCV教程</a></p>
+]]></content>
+      <categories>
+        <category>图像处理</category>
+      </categories>
+      <tags>
+        <tag>Canny</tag>
+        <tag>C++</tag>
+        <tag>openCV</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令行执行hexo d后，出现错误ERROR Deployer not found: git</title>
+    <url>/2019/12/16/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8Chexo-d%E5%90%8E%EF%BC%8C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AFERROR-Deployer-not-found-git/</url>
+    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>命令行执行hexo d后，出现错误ERROR Deployer not found: git</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576407/gy/img6_d6qnm6.png" style="zoom:50%;" />
+
+<a id="more"></a>
+
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>命令行在hexo的根目录位置执行 <code>npm install --save hexo-deployer-git</code></p>
+]]></content>
+      <categories>
+        <category>踩坑记录</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>error</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac权限无法修改问题解决办法</title>
+    <url>/2019/12/16/Mac%E6%9D%83%E9%99%90%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>Mac里文件夹必须以管理员身份才可写入，staff只有读的权限，且在文件夹简介中修改显示弹窗“无权限修改”。</p>
+<p><a href="https://support.apple.com/zh-cn/HT203538" target="_blank" rel="noopener">苹果官方解决办法</a></p>
+<a id="more"></a>
+
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>下面以文件夹post为例，</p>
+<p>此时staff为只读权限，需修改为读和写权限</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577392/gy/img5_rnbylg.png" style="zoom:40%;" />
+
+<h4 id="在共享与权限设置中点击“应用到包含的项目”"><a href="#在共享与权限设置中点击“应用到包含的项目”" class="headerlink" title="在共享与权限设置中点击“应用到包含的项目”"></a>在共享与权限设置中点击“应用到包含的项目”</h4><p>先在“共享与权限”右下角的地方解锁，再在设置中选中“应用到包含的项目”，等待进度条结束即可。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577419/gy/img2_jmxbhq.png" style="zoom:40%;" />
+
+<h4 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h4><p>打开命令行，在根目录下输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">diskutil resetUserPermissions &#x2F; &#96;id -u&#96;</span><br></pre></td></tr></table></figure>
+
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577450/gy/img3_uogrou.png" style="zoom:40%;" />
+
+<h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><p>命令行运行结束后重启电脑。</p>
+<h4 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h4><p>重启后再次打开该文件夹的“简介”，发现权限可修改了，权限修改完成。</p>
+<img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577485/gy/img1_oqgi7b.png" style="zoom:40%;" />
+
+]]></content>
+      <categories>
+        <category>踩坑记录</category>
+      </categories>
+      <tags>
+        <tag>Mac</tag>
+        <tag>权限</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/12/16/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
