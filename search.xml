@@ -1,9 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>matlab GUI入门</title>
+    <url>/2020/01/08/matlab-GUI%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>​    Matlab GUI为图形用户界面，可以理解为相当于做一个软件，将输入输出函数操作通过交互界面表现出来，下面简单讲述一些Matlab GUI入门知识。</p>
+<a id="more"></a>
+
+<h1 id="创建新的GUI界面"><a href="#创建新的GUI界面" class="headerlink" title="创建新的GUI界面"></a>创建新的GUI界面</h1><p>​    GUI系统包含两种文件，一种是.fig文件，用于设计页面，另一种是.m文件，用来存放控件操作。</p>
+<h2 id="创建-fig文件"><a href="#创建-fig文件" class="headerlink" title="创建.fig文件"></a>创建.fig文件</h2><ol>
+<li><p>打开Matlab，在命令行窗口中输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">guide</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/01/08/NA8QGvdIXoH6f9q.png" alt="命令行窗口中输入GUI"></p>
+</li>
+<li><p>回车，弹出GUIDE快速入门弹窗；</p>
+<img src="https://i.loli.net/2020/01/08/MxiXZS38gl4Rj1H.png" style="zoom: 50%;" />
+</li>
+<li><p>选中默认的 Blank GUI (Default) ，点击确定新建GUI，自动生成新的.fig页面文件；</p>
+<p><img src="https://i.loli.net/2020/01/08/PZcp1OA4zEndsqr.png" alt=""></p>
+</li>
+<li><p>完成GUI的.fig文件的新建。</p>
+<h2 id="创建-fig文件-1"><a href="#创建-fig文件-1" class="headerlink" title="创建.fig文件"></a>创建.fig文件</h2><p>​    保存.fig文件时，会自动生成相对应的.m的文件。</p>
+</li>
+</ol>
+<p>   ​    现在，一个GUI界面已经搭建完成，你可以在.fig文件里增加修改控件、设计页面，在.m文件里编写逻辑代码。</p>
+<h1 id="fig的页面设计"><a href="#fig的页面设计" class="headerlink" title=".fig的页面设计"></a>.fig的页面设计</h1><h2 id="控件"><a href="#控件" class="headerlink" title="控件"></a>控件</h2><p>   ​    左侧的控件栏里面直接可通过拖拽放入控件，下面简单介绍一下课设里几种常用的控件。</p>
+   <img src="https://i.loli.net/2020/01/08/9I4OvxFEXa58Zpi.png" style="zoom: 50%;" />
+
+<h3 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h3><p>   <img src="https://i.loli.net/2020/01/08/g8qOlNs9fSXVixe.png" style="zoom:50%;" />    双击拖拽出来的按钮，可进入按钮的检查器，在检查器里设置按钮的属性。</p>
+   <img src="https://i.loli.net/2020/01/08/8RWnOp9Ej3x5acZ.png" style="zoom: 33%;" />
+
+<p>   ​    检查器中比较重要的几个属性：</p>
+<ul>
+<li><table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>控件的名称（不重名），.m通过Tag来唯一寻找该控件，建议将需调用的控件换成有意义的名字，方便调用。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String</td>
+<td>控件里面的文字</td>
+</tr>
+<tr>
+<td>FontSize</td>
+<td>控件里面的文字的字体大小</td>
+</tr>
+<tr>
+<td>Visible</td>
+<td>控件初始是否可见</td>
+</tr>
+<tr>
+<td><strong>Callback</strong></td>
+<td>调用函数（如是按钮的话，则点击按钮就会调用该函数），<strong>双击中间的书写按钮matlab会自动跳转到相应的.m中的调用函数的位置</strong>，方便书写</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="可编辑文本"><a href="#可编辑文本" class="headerlink" title="可编辑文本"></a>可编辑文本</h3><p><img src="https://i.loli.net/2020/01/08/WU2iYajrpITE8cK.png" style="zoom:50%;" />可编辑文本，<strong>可通过交互界面来进行编辑</strong>，当然也可在检查器中String里直接设置其初始值，常用于<strong>参数输入</strong>。</p>
+<h3 id="静态文本"><a href="#静态文本" class="headerlink" title="静态文本"></a>静态文本</h3><p><img src="https://i.loli.net/2020/01/08/wsrGmgAjLbYhEtk.png" style="zoom:50%;" />静态文本，<strong>不可通过交互界面来进行编辑</strong>，可设置String初始文本，也可通过.m修改，用于<strong>描述文字和输出</strong>。</p>
+<h3 id="坐标区"><a href="#坐标区" class="headerlink" title="坐标区"></a>坐标区</h3><p><img src="https://i.loli.net/2020/01/08/klGwxZiDnfa7Kou.png" style="zoom:50%;" />坐标区，用于画图（动画、坐标图等）。</p>
+<h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><p><img src="https://i.loli.net/2020/01/08/6vIciuo9e387OyY.png" style="zoom:50%;" />面板，可将各控件组合成一个集合，方便移动，显示更清晰。</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>​    介绍两个我觉得用得到的。</p>
+<h3 id="对齐对象"><a href="#对齐对象" class="headerlink" title="对齐对象"></a>对齐对象</h3><p><img src="https://i.loli.net/2020/01/08/jneLEPHMBTRQk8s.png" alt=""></p>
+<p>​    用于对齐控件，使页面整齐美观。</p>
+<img src="https://i.loli.net/2020/01/08/UcTon8SJIWreNYQ.png" style="zoom:50%;" />
+
+<p>​    例如，随意拖入几个文本，选中全部，设置好横纵对齐分布格式，点击应用。</p>
+<img src="https://i.loli.net/2020/01/08/L3lE4JMuDjQKFoO.png" style="zoom: 33%;" />
+
+<img src="https://i.loli.net/2020/01/08/DOC9TpkP3NvfFbj.png" style="zoom: 33%;" />
+
+<p>​    瞬间就整齐了。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>​    可方便地查看页面显示。</p>
+<p><img src="https://i.loli.net/2020/01/08/S5jN4MUP8LmZXnC.png" alt=""></p>
+<h1 id="m的文件编写"><a href="#m的文件编写" class="headerlink" title=".m的文件编写"></a>.m的文件编写</h1><h2 id="查看修改控件属性"><a href="#查看修改控件属性" class="headerlink" title="查看修改控件属性"></a>查看修改控件属性</h2><p>​    应用广泛，比如检测输入框输入的内容和输出到输出的静态文本框。</p>
+<p>检测输入框输入的内容：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">x = str2num(get(handles.Tagname, <span class="string">'string'</span>)); <span class="comment">% 从Tag属性为Tagname的String属性中获取x的string格式，再转为num（即在Tagname中输入的x）</span></span><br></pre></td></tr></table></figure>
+
+<p>输出到输出的静态文本框：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">set(handles.Tagname, <span class="string">'string'</span>, num2str(y)); <span class="comment">% 将参数y先从num转为string，再设置到Tag属性为Tagname的String属性中（即在Tagname中显示y）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="页面跳转"><a href="#页面跳转" class="headerlink" title="页面跳转"></a>页面跳转</h2><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">h = gcf;	<span class="comment">% 本页面（不需关闭本页面此句省略）</span></span><br><span class="line">pagename; <span class="comment">% 打开名字为pagename的页面</span></span><br><span class="line">close(h); <span class="comment">%	关闭本页面（不需关闭本页面此句省略）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="页面之间传参"><a href="#页面之间传参" class="headerlink" title="页面之间传参"></a>页面之间传参</h3><p>​    既然有跳转，那就免不了传参，最简单的方法就是设置全局变量（适用于小系统）。</p>
+<p>​    在用到该全局变量的函数开头都声明该全局变量即可。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="keyword">global</span> x</span><br></pre></td></tr></table></figure>
+
+<h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><p>​    例如绘制一个三角函数<br>$$<br>y = sinx<br>$$<br>先在界面放置好axes控件，这里命名为axes1；</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">X = <span class="number">0</span>:<span class="number">0.01</span>:<span class="built_in">pi</span>; <span class="comment">% 设置x的范围(起始值：采样间隔：终止值)</span></span><br><span class="line">Y = <span class="built_in">sin</span>(X); <span class="comment">% 设置x-y的对应函数</span></span><br><span class="line">axes(handles.axes1); <span class="comment">% 选则坐标区（axes）axes1</span></span><br><span class="line"><span class="built_in">plot</span>(X, Y, <span class="string">'b'</span>); <span class="comment">% 绘制X-Y（X轴变量，Y轴变量，点的颜色）</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Matlab</category>
+      </categories>
+      <tags>
+        <tag>Matlab</tag>
+        <tag>GUI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>12.25</title>
+    <url>/2019/12/25/12-25/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>12.24</title>
     <url>/2019/12/24/12-24/</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="不开，不开，就不开." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="芝麻开门" /><label>芝麻开门</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="79b06743676002c60b2a5c8d7d2e04e3b997fc3993baf32745b34214aa74d53f">e56dc7f3f2cc69c0f1873e3c989893c081e61346c6350dbdba826788983fa9acdf363c555c20c8e8bd66c1599c97dc6bd8623ac2e750ddbac34720ad0865665c77f0abf6e9d47922bdb13dc0f14612414e5f15107817294b3c09410cf45d0e2902d8ca631c9f2666aed476d65b35b3b2b3c2eee9908410e516aa8ec8759ddc23353d91a6c5185e8ec75e01f889a4de3f0de97f5b2a1b1a712079f2dbeebafa6654f2405f1b80c4168d6b4de507b9ae9560eb7bc594fd014cd6c48bc70a2a48834018895bc2d5622548ab820d0f1e1f2676b038b6fe2f953c6674466a121e14b26ba733b07b6bfb8450fa9c0a95d3347331bb937e001633f447c91cec079829058eab0941e8e96e16ec40f36935e10a862d9cb8e9310485be48f2014c48b65d0c6d1567f71420f4e648880e2cdfcb5eaeff377a0961616c5e5ff3beff4538179b288e17ce390f88e8cfbe78fc086d616d3d3561b6220726c2e5fb8d85b903980c1c59383d7ef334daaa54d788ae15d9831166c9dff1a70c45f337f2e5d1d5a3bb6e3af7f4a54ed585e0caa49125501132</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="不开，不开，就不开." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="芝麻开门" /><label>芝麻开门</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="6624dccf3c88f3b41fba5db5c20963ad534d62a5775539561dda9ba173a795ca">e56dc7f3f2cc69c0f1873e3c989893c081e61346c6350dbdba826788983fa9acdf363c555c20c8e8bd66c1599c97dc6bd8623ac2e750ddbac34720ad0865665c77f0abf6e9d47922bdb13dc0f14612414e5f15107817294b3c09410cf45d0e2902d8ca631c9f2666aed476d65b35b3b2b3c2eee9908410e516aa8ec8759ddc23774d6b4dd4d76ff3cfc42e8dac076ec1f8ff6b9a4ab5b8dd2008055237b1fdcd7f09b6786784325fb2a476775176b37966ed5596f4dbc8284863c59ed09299b35cf70b2330209f101810a6467e6700133e68284944e263239a99713f9b235e9522d5062eb518e581adbb9f5e76b043c3821c700273066951a130c29b84842c6c00462f0fbc3771fb67837c880e89eaa0f5c21991c08fcbdaf2071c908842b0142b7c1b5b331d29c5b97957a051fd285ea322e28f4f5ae593b2676975e83048a47289446355cc106a0b6cf204ac65a0c82af8fab77b20a6fec2982ea2c554785f5c1dfc544c25f53bb2a045b543ef171011aa7d750a53252db824465784c15e16c09fbe8f81b25ad503ddb99fc6b1fab43ee68892c19e63d06d662f2ffbcfe42c4050301825ff6df46472a9cf19949ba3adde35dcc43838f3cf2f33edc93579f4</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
         <category>日志</category>
       </categories>
