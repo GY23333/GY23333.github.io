@@ -67,7 +67,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191109012221209.jpg?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ&#x3D;&#x3D;,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191109012754920.jpg?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ&#x3D;&#x3D;,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2019-12-16T12:50:50.000Z">
-<meta property="article:modified_time" content="2019-12-17T04:36:22.666Z">
+<meta property="article:modified_time" content="2020-01-08T07:44:42.794Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Canny">
 <meta property="article:tag" content="C++">
@@ -251,7 +251,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-17 12:36:22" itemprop="dateModified" datetime="2019-12-17T12:36:22+08:00">2019-12-17</time>
+                <time title="Modified: 2020-01-08 15:44:42" itemprop="dateModified" datetime="2020-01-08T15:44:42+08:00">2020-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -307,7 +307,7 @@
 </blockquote>
 <a id="more"></a>
 
-<h2 id="一、openCV在C-中的应用"><a href="#一、openCV在C-中的应用" class="headerlink" title="一、openCV在C++中的应用"></a>一、openCV在C++中的应用</h2><p>首先，在mac的Xcode上安装配置openCV库，参考一下链接（科学上网访问）<a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003</a></p>
+<h1 id="openCV在C-中的应用"><a href="#openCV在C-中的应用" class="headerlink" title="openCV在C++中的应用"></a>openCV在C++中的应用</h1><p>首先，在mac的Xcode上安装配置openCV库，参考一下链接（科学上网访问）<a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003</a></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv; <span class="comment">// 使用命名空间cv</span></span><br></pre></td></tr></table></figure>
 
 <p>如此可以减少输入，例如 cv :: Mat 就可省略为 Mat</p>
@@ -332,7 +332,7 @@
 <h2 id="如何访问图像每一个像素点"><a href="#如何访问图像每一个像素点" class="headerlink" title="如何访问图像每一个像素点"></a>如何访问图像每一个像素点</h2><p>利用指针访问，调用 Mat::ptr(i) 来获取第i行的首地址，通过循环进行访问。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按行遍历所有点(单通道)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nr; j++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nc; i++) &#123;</span><br><span class="line">        <span class="comment">//每个点为 img.ptr&lt;uchar&gt;(j)[i]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="二、用高斯滤波器平滑图像"><a href="#二、用高斯滤波器平滑图像" class="headerlink" title="二、用高斯滤波器平滑图像"></a>二、用高斯滤波器平滑图像</h2><h3 id="高斯滤波器（openCV）"><a href="#高斯滤波器（openCV）" class="headerlink" title="高斯滤波器（openCV）"></a>高斯滤波器（openCV）</h3><p>openCV自带的高斯滤波器：<a href="http://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1" target="_blank" rel="noopener">cv :: GaussianBlur</a></p>
+<h2 id="用高斯滤波器平滑图像"><a href="#用高斯滤波器平滑图像" class="headerlink" title="用高斯滤波器平滑图像"></a>用高斯滤波器平滑图像</h2><h3 id="高斯滤波器（openCV）"><a href="#高斯滤波器（openCV）" class="headerlink" title="高斯滤波器（openCV）"></a>高斯滤波器（openCV）</h3><p>openCV自带的高斯滤波器：<a href="http://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1" target="_blank" rel="noopener">cv :: GaussianBlur</a></p>
 <table>
 <thead>
 <tr>
@@ -422,7 +422,7 @@
 <p>高斯滤波前后的图像：</p>
 <p><img src="https://img-blog.csdnimg.cn/20191108122357494.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
 <p>高斯滤波</p>
-<h2 id="三、用一阶偏导有限差分计算梯度幅值和方向"><a href="#三、用一阶偏导有限差分计算梯度幅值和方向" class="headerlink" title=" 三、用一阶偏导有限差分计算梯度幅值和方向"></a> 三、用一阶偏导有限差分计算梯度幅值和方向</h2><p>用一阶偏导有限差分计算偏导数的两个阵列P与Q</p>
+<h2 id="用一阶偏导有限差分计算梯度幅值和方向"><a href="#用一阶偏导有限差分计算梯度幅值和方向" class="headerlink" title="用一阶偏导有限差分计算梯度幅值和方向"></a>用一阶偏导有限差分计算梯度幅值和方向</h2><p>用一阶偏导有限差分计算偏导数的两个阵列P与Q</p>
 <p><img src="https://private.codecogs.com/gif.latex?P%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20%5Capprox%20%5Cleft%20%28%20S%5Cleft%20%5B%20y%2Cx&plus;1%20%5Cright%20%5D-S%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20&plus;S%5Cleft%20%5B%20y&plus;1%2Cx&plus;1%20%5Cright%20%5D-S%5By&plus;1%2Cx%5D%5Cright%20%29/2" alt="P\left [ y,x \right ] \approx \left ( S\left [ y,x+1 \right ]-S\left [ y,x \right ] +S\left [ y+1,x+1 \right ]-S[y+1,x]\right )/2"></p>
 <p><img src="https://private.codecogs.com/gif.latex?Q%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20%5Capprox%20%5Cleft%20%28%20S%5Cleft%20%5B%20y&plus;1%2Cx%20%5Cright%20%5D-S%5Cleft%20%5B%20y%2Cx%20%5Cright%20%5D%20&plus;S%5Cleft%20%5B%20y&plus;1%2Cx&plus;1%20%5Cright%20%5D-S%5By%2Cx&plus;1%5D%5Cright%20%29/2" alt="Q\left [ y,x \right ] \approx \left ( S\left [ y+1,x \right ]-S\left [ y,x \right ] +S\left [ y+1,x+1 \right ]-S[y,x+1]\right )/2"></p>
 <p>再由P和Q算出梯度幅值和方向角</p>
@@ -458,7 +458,7 @@
 <p>三维梯度算法的输入输出图像：</p>
 <p><img src="https://img-blog.csdnimg.cn/20191108132415101.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
 <p>三维梯度算法</p>
-<h2 id="四、对梯度幅值应用非极大值抑制"><a href="#四、对梯度幅值应用非极大值抑制" class="headerlink" title="四、对梯度幅值应用非极大值抑制"></a>四、对梯度幅值应用非极大值抑制</h2><p>仅仅得到全局梯度并不足以确定边缘，保留局部梯度最大的点，而抑制非极大点。将梯度角的变化范围减小到圆周的四个扇区之一；</p>
+<h2 id="对梯度幅值应用非极大值抑制"><a href="#对梯度幅值应用非极大值抑制" class="headerlink" title="对梯度幅值应用非极大值抑制"></a>对梯度幅值应用非极大值抑制</h2><p>仅仅得到全局梯度并不足以确定边缘，保留局部梯度最大的点，而抑制非极大点。将梯度角的变化范围减小到圆周的四个扇区之一；</p>
 <ol>
 <li><p>四个扇区的标号为0到3，对应3*3领域的四种可能组合方向；</p>
 </li>
@@ -472,7 +472,7 @@
 <pre><code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 局部非极大值抑制</span></span><br><span class="line"><span class="comment"> gradXY 输入的梯度幅值</span></span><br><span class="line"><span class="comment"> theta 输入的梯度方向</span></span><br><span class="line"><span class="comment"> dst 输出的经局部非极大值抑制后的图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nonLocalMaxValue</span> <span class="params">(Mat &amp;gradXY, Mat &amp;theta, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    dst = gradXY.clone();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; gradXY.rows<span class="number">-1</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; gradXY.cols<span class="number">-1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> t = <span class="keyword">double</span>(theta.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">double</span> g = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i]);</span><br><span class="line">            <span class="keyword">if</span> (g == <span class="number">0.0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">double</span> g0, g1;</span><br><span class="line">            <span class="keyword">if</span> ((t &gt;= -(<span class="number">3</span>*M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; -(M_PI/<span class="number">8</span>))) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= -(M_PI/<span class="number">8</span>)) &amp;&amp; (t &lt; M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i<span class="number">-1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j)[i+<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((t &gt;= M_PI/<span class="number">8</span>) &amp;&amp; (t &lt; <span class="number">3</span>*M_PI/<span class="number">8</span>)) &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i+<span class="number">1</span>]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                g0 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j<span class="number">-1</span>)[i]);</span><br><span class="line">                g1 = <span class="keyword">double</span>(dst.ptr&lt;uchar&gt;(j+<span class="number">1</span>)[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (g &lt;= g0 || g &lt;= g1) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(j)[i] = <span class="number">0.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre><p>输入的经梯度计算后的图像和输出的局部非极大值抑制后的图像：</p>
 <p><img src="https://img-blog.csdnimg.cn/20191108174023525.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" alt=""></p>
 <p>局部非极大值抑制</p>
-<h2 id="五、用双阈值算法检测和连接边缘"><a href="#五、用双阈值算法检测和连接边缘" class="headerlink" title="五、用双阈值算法检测和连接边缘"></a>五、用双阈值算法检测和连接边缘</h2><p>1、Canny算法采用双阈值，高阈值一般是低阈值的两倍，遍历所有像素点：</p>
+<h2 id="用双阈值算法检测和连接边缘"><a href="#用双阈值算法检测和连接边缘" class="headerlink" title="用双阈值算法检测和连接边缘"></a>用双阈值算法检测和连接边缘</h2><p>1、Canny算法采用双阈值，高阈值一般是低阈值的两倍，遍历所有像素点：</p>
 <p>X &lt; 低阈值 ，像素点置0，被抑制掉；</p>
 <p>低阈值 &lt; X &lt;高阈值，像素点为弱边缘点，像素点值先不变；</p>
 <p>X &gt; 高阈值，像素点为强边缘点，置255。</p>
@@ -584,7 +584,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、openCV在C-中的应用"><span class="nav-number">2.</span> <span class="nav-text">一、openCV在C++中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mat"><span class="nav-number">2.1.</span> <span class="nav-text">Mat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何访问图像每一个像素点"><span class="nav-number">3.</span> <span class="nav-text">如何访问图像每一个像素点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、用高斯滤波器平滑图像"><span class="nav-number">4.</span> <span class="nav-text">二、用高斯滤波器平滑图像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯滤波器（openCV）"><span class="nav-number">4.1.</span> <span class="nav-text">高斯滤波器（openCV）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参量"><span class="nav-number">4.1.1.</span> <span class="nav-text">参量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯滤波器的C-实现"><span class="nav-number">4.2.</span> <span class="nav-text">高斯滤波器的C++实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、用一阶偏导有限差分计算梯度幅值和方向"><span class="nav-number">5.</span> <span class="nav-text"> 三、用一阶偏导有限差分计算梯度幅值和方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、对梯度幅值应用非极大值抑制"><span class="nav-number">6.</span> <span class="nav-text">四、对梯度幅值应用非极大值抑制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、用双阈值算法检测和连接边缘"><span class="nav-number">7.</span> <span class="nav-text">五、用双阈值算法检测和连接边缘</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">1.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#openCV在C-中的应用"><span class="nav-number"></span> <span class="nav-text">openCV在C++中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mat"><span class="nav-number">0.1.</span> <span class="nav-text">Mat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何访问图像每一个像素点"><span class="nav-number">1.</span> <span class="nav-text">如何访问图像每一个像素点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用高斯滤波器平滑图像"><span class="nav-number">2.</span> <span class="nav-text">用高斯滤波器平滑图像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯滤波器（openCV）"><span class="nav-number">2.1.</span> <span class="nav-text">高斯滤波器（openCV）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参量"><span class="nav-number">2.1.1.</span> <span class="nav-text">参量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯滤波器的C-实现"><span class="nav-number">2.2.</span> <span class="nav-text">高斯滤波器的C++实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用一阶偏导有限差分计算梯度幅值和方向"><span class="nav-number">3.</span> <span class="nav-text">用一阶偏导有限差分计算梯度幅值和方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对梯度幅值应用非极大值抑制"><span class="nav-number">4.</span> <span class="nav-text">对梯度幅值应用非极大值抑制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用双阈值算法检测和连接边缘"><span class="nav-number">5.</span> <span class="nav-text">用双阈值算法检测和连接边缘</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -600,20 +600,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

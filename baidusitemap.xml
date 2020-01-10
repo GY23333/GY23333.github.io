@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://gy23333.github.io/2020/01/10/C-%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C/</loc>
+    <lastmod>2020-01-10</lastmod>
+  </url>  <url>
+    <loc>https://gy23333.github.io/2019/12/16/Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88C++%E5%AE%9E%E7%8E%B0%EF%BC%89/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
     <loc>https://gy23333.github.io/2020/01/08/matlab-GUI%E5%85%A5%E9%97%A8/</loc>
     <lastmod>2020-01-07</lastmod>
   </url>  <url>
@@ -26,9 +32,6 @@
     <lastmod>2019-12-17</lastmod>
   </url>  <url>
     <loc>https://gy23333.github.io/2019/12/16/hello-world/</loc>
-    <lastmod>2019-12-17</lastmod>
-  </url>  <url>
-    <loc>https://gy23333.github.io/2019/12/16/Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88C++%E5%AE%9E%E7%8E%B0%EF%BC%89/</loc>
     <lastmod>2019-12-17</lastmod>
   </url>
 </urlset>
