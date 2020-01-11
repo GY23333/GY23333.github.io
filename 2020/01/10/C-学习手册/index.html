@@ -55,7 +55,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;10&#x2F;DT7fHNvbGzyVXIM.png">
 <meta property="article:published_time" content="2020-01-09T18:36:52.000Z">
-<meta property="article:modified_time" content="2020-01-11T10:13:24.205Z">
+<meta property="article:modified_time" content="2020-01-11T19:17:04.608Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="入门">
@@ -239,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-11 18:13:24" itemprop="dateModified" datetime="2020-01-11T18:13:24+08:00">2020-01-11</time>
+                <time title="Modified: 2020-01-12 03:17:04" itemprop="dateModified" datetime="2020-01-12T03:17:04+08:00">2020-01-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,9 +313,9 @@
 <p>​    已经定义了value为int型，所以在 cin&gt;&gt;value 输入不为int型时，则判断为false。</p>
 <h3 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h3><p>​    for(初始化语句; 循环条件; 表达式)</p>
 <h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>​    条件判断为真即执行。</p>
-<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><p>​    相当于把各种数据打包组成了一个集合来调用。</p>
+<h1 id="C-基础"><a href="#C-基础" class="headerlink" title="C++基础"></a>C++基础</h1><h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>​    相当于把各种数据打包组成了一个集合来调用。</p>
 <p>​    下面以建立和使用一个书籍销售单类Sales_data为例。</p>
-<h2 id="建立头文件"><a href="#建立头文件" class="headerlink" title="建立头文件"></a>建立头文件</h2><p>​    为保障各文件中的类的定义一致，类通常被定义在头文件中。这里我们建立一个名为Sales_data.h的头文件来转载Sales_data类的定义。</p>
+<h3 id="建立头文件"><a href="#建立头文件" class="headerlink" title="建立头文件"></a>建立头文件</h3><p>​    为保障各文件中的类的定义一致，类通常被定义在头文件中。这里我们建立一个名为Sales_data.h的头文件来转载Sales_data类的定义。</p>
 <p>​    头文件一般最好进行预处理，添加头文件保护符：</p>
 <table>
 <thead>
@@ -339,7 +339,7 @@
 </tbody></table>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> Sales_data_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Sales_data_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> bookNo; <span class="comment">// 书籍编号</span></span><br><span class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>; <span class="comment">// 销售数量</span></span><br><span class="line">    <span class="keyword">double</span> revenue = <span class="number">0.0</span>; <span class="comment">// 销售收入</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
-<h2 id="使用类定义"><a href="#使用类定义" class="headerlink" title="使用类定义"></a>使用类定义</h2><p>​    调用该.h文件</p>
+<h3 id="使用类定义"><a href="#使用类定义" class="headerlink" title="使用类定义"></a>使用类定义</h3><p>​    调用该.h文件</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br></pre></td></tr></table></figure>
 
 <p>​    定义类变量</p>
@@ -348,9 +348,9 @@
 <p>​    利用.来访问类中的对象</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Sales_data data1;</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0.0</span>; <span class="comment">// 书籍单价</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input book_No, sold_num and price."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; data1.bookNo &gt;&gt; data1.units_sold &gt;&gt; price;</span><br><span class="line">    data1.revenue = price * data1.units_sold;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Book "</span> &lt;&lt; data1.bookNo &lt;&lt; <span class="string">"'s revenue is "</span> &lt;&lt; data1.revenue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="标准库类型-vector"><a href="#标准库类型-vector" class="headerlink" title="标准库类型 vector"></a>标准库类型 vector</h1><p>​    vector表示对象的集合，其中所有对象的类型都相同（可不定长）。</p>
+<h2 id="标准库类型-vector"><a href="#标准库类型-vector" class="headerlink" title="标准库类型 vector"></a>标准库类型 vector</h2><p>​    vector表示对象的集合，其中所有对象的类型都相同（可不定长）。</p>
 <p>​    vector定义在头文件<vector>中，命名空间std中。</p>
-<h2 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h2><table>
+<h3 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h3><table>
 <thead>
 <tr>
 <th>vector<T> v1</th>
@@ -382,20 +382,24 @@
 <td>等价于 v5{a, b, c….}</td>
 </tr>
 </tbody></table>
-<h3 id="值初始化"><a href="#值初始化" class="headerlink" title="值初始化"></a>值初始化</h3><p>​    int类型的初始化为0，string类型的初始化为空字符。</p>
+<h4 id="值初始化"><a href="#值初始化" class="headerlink" title="值初始化"></a>值初始化</h4><p>​    int类型的初始化为0，string类型的初始化为空字符。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都初始为0</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; svec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都是空string对象</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="向vector对象中添加元素"><a href="#向vector对象中添加元素" class="headerlink" title="向vector对象中添加元素"></a>向vector对象中添加元素</h2><p>​    利用 push_back把一个值压入vector对象的尾端。</p>
+<h3 id="向vector对象中添加元素"><a href="#向vector对象中添加元素" class="headerlink" title="向vector对象中添加元素"></a>向vector对象中添加元素</h3><p>​    利用 push_back把一个值压入vector对象的尾端。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    不断输入数字储存，直至输入字母停下</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; num) &#123;</span><br><span class="line">        v1.push_back(num); <span class="comment">// 向vector对象中添加元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; v1[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h2><table>
+<h3 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h3><table>
 <thead>
 <tr>
-<th>v.empty()</th>
-<th>如果v不含有任何元素，返回真；否则返回假</th>
+<th></th>
+<th>功能</th>
 </tr>
 </thead>
 <tbody><tr>
+<td>v.empty()</td>
+<td>如果v不含有任何元素，返回真；否则返回假</td>
+</tr>
+<tr>
 <td>v.size()</td>
 <td>返回v中元素的个数</td>
 </tr>
@@ -424,6 +428,39 @@
 <td>以字典顺序进行比较</td>
 </tr>
 </tbody></table>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>​    迭代器是一种检查容器内元素并遍历元素的数据类型。可以替代下标访问vector对象的元素。可以理解为指向容器内元素的指针。</p>
+<h3 id="使用迭代器"><a href="#使用迭代器" class="headerlink" title="使用迭代器"></a>使用迭代器</h3><p>​    begin 返回指向第一个元素的迭代器，end 返回指向容器尾元素的下一个位置的迭代器（实际上是不存在的）。当begin和end返回的为同一迭代器，则该容器为空。</p>
+<p>​    不在意迭代器的类型，一般定义为auto。</p>
+<h4 id="迭代器运算符"><a href="#迭代器运算符" class="headerlink" title="迭代器运算符"></a>迭代器运算符</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*iter</td>
+<td>返回迭代器iter所指的元素的引用</td>
+</tr>
+<tr>
+<td>Iter-&gt;mem</td>
+<td>解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem</td>
+</tr>
+<tr>
+<td>++iter</td>
+<td>令iter指示容器中的下一个元素</td>
+</tr>
+<tr>
+<td>–iter</td>
+<td>令iter指示容器中的上一个元素</td>
+</tr>
+<tr>
+<td>iter1 == iter2 / iter1 != iter2</td>
+<td>判断两迭代器是否相等。如两迭代器指示的是同一个元素或者它们是同一个容器或者它们是同一个容器的尾后迭代器，则相等。</td>
+</tr>
+</tbody></table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    将首单词的首字母大写</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"hello world."</span>;</span><br><span class="line">    <span class="keyword">if</span> (s.<span class="built_in">begin</span>() != s.<span class="built_in">end</span>()) &#123; <span class="comment">// s不为空</span></span><br><span class="line">        <span class="keyword">auto</span> it = s.<span class="built_in">begin</span>(); <span class="comment">// 指向首单词的迭代器</span></span><br><span class="line">        *it = <span class="built_in">toupper</span>(*it); <span class="comment">// 将it迭代器所指的元素的引用首字母大写</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -508,7 +545,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">1.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">1.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">1.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">1.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">1.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">for语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if语句"><span class="nav-number">1.2.3.</span> <span class="nav-text">if语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类"><span class="nav-number">2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立头文件"><span class="nav-number">2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用类定义"><span class="nav-number">2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#值初始化"><span class="nav-number">3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">1.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">1.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">1.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">1.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">1.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">for语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if语句"><span class="nav-number">1.2.3.</span> <span class="nav-text">if语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-基础"><span class="nav-number">2.</span> <span class="nav-text">C++基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">2.1.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立头文件"><span class="nav-number">2.1.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类定义"><span class="nav-number">2.1.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">2.2.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#值初始化"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">2.2.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他vector操作"><span class="nav-number">2.2.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">2.3.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算符"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">迭代器运算符</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -537,7 +574,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
