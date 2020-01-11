@@ -55,7 +55,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;10&#x2F;DT7fHNvbGzyVXIM.png">
 <meta property="article:published_time" content="2020-01-09T18:36:52.000Z">
-<meta property="article:modified_time" content="2020-01-10T19:22:31.311Z">
+<meta property="article:modified_time" content="2020-01-11T10:13:24.205Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="入门">
@@ -239,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-11 03:22:31" itemprop="dateModified" datetime="2020-01-11T03:22:31+08:00">2020-01-11</time>
+                <time title="Modified: 2020-01-11 18:13:24" itemprop="dateModified" datetime="2020-01-11T18:13:24+08:00">2020-01-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,6 +348,82 @@
 <p>​    利用.来访问类中的对象</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Sales_data data1;</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0.0</span>; <span class="comment">// 书籍单价</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input book_No, sold_num and price."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; data1.bookNo &gt;&gt; data1.units_sold &gt;&gt; price;</span><br><span class="line">    data1.revenue = price * data1.units_sold;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Book "</span> &lt;&lt; data1.bookNo &lt;&lt; <span class="string">"'s revenue is "</span> &lt;&lt; data1.revenue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="标准库类型-vector"><a href="#标准库类型-vector" class="headerlink" title="标准库类型 vector"></a>标准库类型 vector</h1><p>​    vector表示对象的集合，其中所有对象的类型都相同（可不定长）。</p>
+<p>​    vector定义在头文件<vector>中，命名空间std中。</p>
+<h2 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h2><table>
+<thead>
+<tr>
+<th>vector<T> v1</th>
+<th>v1是一个空vector，它潜在的元素是类型为T</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>vector<T> v2(v1)</td>
+<td>v2中包含有v1所有元素的副本</td>
+</tr>
+<tr>
+<td>vector<T> v2 = v1</td>
+<td>等价于 v2(v1)</td>
+</tr>
+<tr>
+<td>vector<T> v3(n, val)</td>
+<td>v3包含了n个重复的元素val</td>
+</tr>
+<tr>
+<td>vector<T> v4(n)</td>
+<td>v4包含了n个重复的执行了值初始化的对象</td>
+</tr>
+<tr>
+<td>vector<T> v5 {a, b, c….}</td>
+<td>v5包含了初始值个数的元素，每个元素都赋予相应的初始值</td>
+</tr>
+<tr>
+<td>vector<T> v5 = {a, b, c….}</td>
+<td>等价于 v5{a, b, c….}</td>
+</tr>
+</tbody></table>
+<h3 id="值初始化"><a href="#值初始化" class="headerlink" title="值初始化"></a>值初始化</h3><p>​    int类型的初始化为0，string类型的初始化为空字符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都初始为0</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; svec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都是空string对象</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="向vector对象中添加元素"><a href="#向vector对象中添加元素" class="headerlink" title="向vector对象中添加元素"></a>向vector对象中添加元素</h2><p>​    利用 push_back把一个值压入vector对象的尾端。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    不断输入数字储存，直至输入字母停下</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; num) &#123;</span><br><span class="line">        v1.push_back(num); <span class="comment">// 向vector对象中添加元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; v1[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h2><table>
+<thead>
+<tr>
+<th>v.empty()</th>
+<th>如果v不含有任何元素，返回真；否则返回假</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v.size()</td>
+<td>返回v中元素的个数</td>
+</tr>
+<tr>
+<td>v.push_back(t)</td>
+<td>向v的尾端添加一个值为t的元素</td>
+</tr>
+<tr>
+<td>v[n]</td>
+<td>返回v中第n个位置上元素的引用（不能用此来添加元素）</td>
+</tr>
+<tr>
+<td>v1 = v2</td>
+<td>用v2中的元素拷贝替换v1中的元素</td>
+</tr>
+<tr>
+<td>v1 = {a, b, c….}</td>
+<td>用列表中的元素拷贝替换v1中的元素</td>
+</tr>
+<tr>
+<td>v1 == v2 / v1 != v2</td>
+<td>仅当v1和v2完全相同（不同）时返回为真</td>
+</tr>
+<tr>
+<td>&lt;，&lt;=，&gt;，&gt;=</td>
+<td>以字典顺序进行比较</td>
+</tr>
+</tbody></table>
 
     </div>
 
@@ -432,7 +508,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">1.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">1.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">1.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">1.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">1.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">for语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if语句"><span class="nav-number">1.2.3.</span> <span class="nav-text">if语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类"><span class="nav-number">2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立头文件"><span class="nav-number">2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用类定义"><span class="nav-number">2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">1.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">1.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">1.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">1.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">1.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">for语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if语句"><span class="nav-number">1.2.3.</span> <span class="nav-text">if语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类"><span class="nav-number">2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立头文件"><span class="nav-number">2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用类定义"><span class="nav-number">2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#值初始化"><span class="nav-number">3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
