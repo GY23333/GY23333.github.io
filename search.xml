@@ -41,6 +41,8 @@
 <h2 id="添加相对路径"><a href="#添加相对路径" class="headerlink" title="添加相对路径"></a>添加相对路径</h2><p>​    在 Run -&gt; Options 勾选 <em>Use Custom Working Directory</em>，并添加路径。</p>
 <p><img src="https://i.loli.net/2020/01/16/fN5u3iD1TLK2JeZ.png" alt=""></p>
 <p>​    现在即可使用相对地址引入文件。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">Setting up OpenCV and C++ development environment in Xcode for Computer Vision projects</a></p>
+<p>注意科学上网！！</p>
 ]]></content>
       <categories>
         <category>图像处理</category>
