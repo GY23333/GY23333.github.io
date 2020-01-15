@@ -30,7 +30,22 @@
 
 <p>​    已经定义了value为int型，所以在 cin&gt;&gt;value 输入不为int型时，则判断为false。</p>
 <h3 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h3><p>​    for(初始化语句; 循环条件; 表达式)</p>
-<h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>​    条件判断为真即执行。</p>
+<h4 id="遍历数组中的元素"><a href="#遍历数组中的元素" class="headerlink" title="遍历数组中的元素"></a>遍历数组中的元素</h4><ol>
+<li><p>​    一维数组</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> scores[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : scores) &#123; <span class="comment">//遍历数组scores中的元素</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>多维数组</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ia[<span class="number">2</span>][<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;row : ia) &#123; <span class="comment">//遍历二维数组ia外层数组的每一个元素（这里相当于遍历每行）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;col : row) &#123; <span class="comment">//遍历二维数组ia内层数组的每一个元素</span></span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; col;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
 <h1 id="C-基础"><a href="#C-基础" class="headerlink" title="C++基础"></a>C++基础</h1><h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>​    相当于把各种数据打包组成了一个集合来调用。</p>
 <p>​    下面以建立和使用一个书籍销售单类Sales_data为例。</p>
 <h3 id="建立头文件"><a href="#建立头文件" class="headerlink" title="建立头文件"></a>建立头文件</h3><p>​    为保障各文件中的类的定义一致，类通常被定义在头文件中。这里我们建立一个名为Sales_data.h的头文件来转载Sales_data类的定义。</p>
@@ -178,6 +193,41 @@
 </tr>
 </tbody></table>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    将首单词的首字母大写</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"hello world."</span>;</span><br><span class="line">    <span class="keyword">if</span> (s.<span class="built_in">begin</span>() != s.<span class="built_in">end</span>()) &#123; <span class="comment">// s不为空</span></span><br><span class="line">        <span class="keyword">auto</span> it = s.<span class="built_in">begin</span>(); <span class="comment">// 指向首单词的迭代器</span></span><br><span class="line">        *it = <span class="built_in">toupper</span>(*it); <span class="comment">// 将it迭代器所指的元素的引用首字母大写</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代器运算"><a href="#迭代器运算" class="headerlink" title="迭代器运算"></a>迭代器运算</h3><table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iter + n / iter - n</td>
+<td>加或减n个位置得到一个迭代器</td>
+</tr>
+<tr>
+<td>iter += n / iter -= n</td>
+<td>加或减n个位置得到一个迭代器赋给iter本身</td>
+</tr>
+<tr>
+<td>iter1 - iter2</td>
+<td>iter1与iter2之间的位置差</td>
+</tr>
+<tr>
+<td>&gt; 、&gt;=、&lt;、&lt;=</td>
+<td>比较位置</td>
+</tr>
+</tbody></table>
+<h2 id="try语句块和异常处理"><a href="#try语句块和异常处理" class="headerlink" title="try语句块和异常处理"></a>try语句块和异常处理</h2><h3 id="throw表达式"><a href="#throw表达式" class="headerlink" title="throw表达式"></a>throw表达式</h3><p>​    throw表达式，异常检测部分使用throw表达式来<strong>表示</strong>它遇到了无法处理的问题。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    检验输入是否是数字，不是则抛出异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input a number."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">char</span> input;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; input;</span><br><span class="line">    <span class="keyword">if</span> (input &gt;= <span class="string">'0'</span> &amp;&amp; input &lt;= <span class="string">'9'</span>) &#123; <span class="comment">//输入为数字</span></span><br><span class="line">        number = input - <span class="string">'0'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//输入不为数字</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"Input not number."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当输入不为数字时，运行到throw语句时卡住，并输出异常信息。</p>
+<img src="https://i.loli.net/2020/01/15/Sl2ne7PQgsriDfO.png" style="zoom:50%;" />
+
+<img src="https://i.loli.net/2020/01/15/opaRJDAg7B2nd54.png" style="zoom: 50%;" />
+
+<h3 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h3><p>​    try语句块，异常处理部分使用try语句块<strong>处理</strong>异常。try尝试一个代码块，如有异常通常会被catch捕捉处理。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="comment">//测试的代码块</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(exception-declaration) &#123; <span class="comment">//exception-declaration异常声明</span></span><br><span class="line">	<span class="comment">//异常处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
