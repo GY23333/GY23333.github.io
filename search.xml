@@ -201,7 +201,7 @@
 <td><strong>0.12</strong></td>
 </tr>
 </tbody></table>
-<h2 id="计算各灰度级的累积分布"><a href="#计算各灰度级的累积分布" class="headerlink" title="计算各灰度级的累积分布"></a>计算各灰度级的累积分布</h2><img src="/Users/yogo/Library/Application Support/typora-user-images/image-20200116210111924.png" alt="image-20200116210111924" style="zoom:25%;" />
+<h2 id="计算各灰度级的累积分布"><a href="#计算各灰度级的累积分布" class="headerlink" title="计算各灰度级的累积分布"></a>计算各灰度级的累积分布</h2><img src="https://i.loli.net/2020/01/16/ntvmADKixyB7r5C.png" style="zoom: 50%;" />
 
 <table>
 <thead>
@@ -251,7 +251,7 @@
 <td><strong>1.00</strong></td>
 </tr>
 </tbody></table>
-<h2 id="求出新图像的灰度值"><a href="#求出新图像的灰度值" class="headerlink" title="求出新图像的灰度值"></a>求出新图像的灰度值</h2><img src="/Users/yogo/Library/Application Support/typora-user-images/image-20200116210709241.png" alt="image-20200116210709241" style="zoom:50%;" />
+<h2 id="求出新图像的灰度值"><a href="#求出新图像的灰度值" class="headerlink" title="求出新图像的灰度值"></a>求出新图像的灰度值</h2><img src="https://i.loli.net/2020/01/16/Xgf4cGaTAyIwhQi.png" alt="image-20200116210709241" style="zoom:80%;" />
 
 <p>​    即乘以灰度级个数后再四舍五入。</p>
 <h1 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="comment">//直方图均衡化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">histogram_equalization</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> H[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        H[i] = <span class="number">0</span>; <span class="comment">// 灰度直方图</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    由原图像得灰度直方图</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">int</span> h = img.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">            H[h] ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    由灰度直方图得灰度级像素百分比</span></span><br><span class="line">    <span class="keyword">int</span> NR = img.rows * img.cols; <span class="comment">// 总像素点个数</span></span><br><span class="line">    <span class="keyword">double</span> HR[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        HR[i] = <span class="number">0.0</span>; <span class="comment">// 灰度直方图</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        HR[i] = <span class="keyword">double</span>(H[i])/<span class="keyword">double</span>(NR); <span class="comment">// 灰度级像素百分比</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    计算各灰度级的累积分布，并求出新图像的灰度值</span></span><br><span class="line">    <span class="keyword">double</span> HS[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        HS[i] = <span class="number">0.0</span>; <span class="comment">// 各灰度级的累积分布</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++) &#123;</span><br><span class="line">            HS[i] += HR[j];</span><br><span class="line">        &#125;</span><br><span class="line">        H[i] = round(HS[i] * <span class="number">255</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//    获得新图像</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">int</span> h = img.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">            dst.ptr&lt;uchar&gt;(nrow)[ncol] = H[h];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img = imread(<span class="string">"Unequalized.jpg"</span>, IMREAD_GRAYSCALE);</span><br><span class="line">    Mat dst = img.clone();</span><br><span class="line">    histogram_equalization(img, dst);</span><br><span class="line">    imshow(<span class="string">"img"</span>,img);</span><br><span class="line">    imshow(<span class="string">"Histogram Equalization"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"result.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -266,8 +266,8 @@
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>openCV</tag>
         <tag>直方图均衡化</tag>
+        <tag>openCV</tag>
       </tags>
   </entry>
   <entry>
@@ -605,8 +605,8 @@
         <category>Matlab</category>
       </categories>
       <tags>
-        <tag>入门</tag>
         <tag>Matlab</tag>
+        <tag>入门</tag>
         <tag>GUI</tag>
       </tags>
   </entry>
@@ -1066,8 +1066,8 @@
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Canny</tag>
         <tag>openCV</tag>
+        <tag>Canny</tag>
       </tags>
   </entry>
   <entry>
