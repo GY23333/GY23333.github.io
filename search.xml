@@ -893,6 +893,8 @@
 <li>用双阈值算法检测和连接边缘。</li>
 </ol>
 </blockquote>
+<img src="https://img-blog.csdnimg.cn/20191109012754920.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hVU1RFUl9HeQ==,size_16,color_FFFFFF,t_70" style="zoom:50%;" />
+
 <a id="more"></a>
 
 <h1 id="openCV在C-中的应用"><a href="#openCV在C-中的应用" class="headerlink" title="openCV在C++中的应用"></a>openCV在C++中的应用</h1><p>首先，在mac的Xcode上安装配置openCV库，参考一下链接（科学上网访问）<a href="https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003" target="_blank" rel="noopener">https://medium.com/@jaskaranvirdi/setting-up-opencv-and-c-development-environment-in-xcode-b6027728003</a></p>
