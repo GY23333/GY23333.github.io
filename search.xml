@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>大津二值化法</title>
+    <url>/2020/01/18/%E5%A4%A7%E6%B4%A5%E4%BA%8C%E5%80%BC%E5%8C%96%E6%B3%95/</url>
+    <content><![CDATA[<p>​    大津法（Otsu算法，おおつ）用来自动对图像进行二值化，即将图像的两类分开。要计算将两类分开的最佳阈值，即要使两类的类内方差最小。由于两类平方距离恒定，所以类内方差最小即是求类间方差最大时的阈值为最佳阈值。</p>
+<img src="https://i.loli.net/2020/01/18/P1J6Caybjuv7HQs.png" alt="image.png" style="zoom: 60%;" />
+
+<img src="https://i.loli.net/2020/01/18/2hvMQawHr5u3OiP.jpg" alt="result.jpg" style="zoom:60%;" />
+
+<a id="more"></a>
+
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><ol>
+<li><p>计算得原图的灰度直方图和概率直方图</p>
+<p>​    设图像像素为 <em>N</em>，灰度范围为 <em>[0, L-1]*，对应灰度级 *i</em> 的像素为 <em>ni</em>，概率为：</p>
+<p><img src="https://i.loli.net/2020/01/18/ukiQnv16RA9fwhJ.png" alt=""></p>
+</li>
+<li><p>遍历所有可能阈值 t ，找到类间方差最大是的两个对应的阈值（有一个最大则取一个，两个最大取平均）</p>
+<p>类概率：</p>
+<p><img src="https://i.loli.net/2020/01/18/rZMCzkKURx4JNBc.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/01/18/LIuFPTcKsMpjEm1.png" alt=""></p>
+<p>类均值：</p>
+<p><img src="https://i.loli.net/2020/01/18/Oi7jx3lAesLZ9vN.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/01/18/aW21HAmIpibxPyd.png" alt=""></p>
+</li>
+</ol>
+<p>   类间方差：</p>
+<p>   <img src="https://i.loli.net/2020/01/18/bBYL5wMJrVqznmj.png" alt=""></p>
+<ol start="3">
+<li>最佳阈值=<img src="https://i.loli.net/2020/01/18/bKAZIRuL3xvMn6Q.png" alt="image.png"></li>
+</ol>
+<h1 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h1><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 获取灰度概率直方图</span></span><br><span class="line"><span class="comment"> img为原图像，histogram为灰度概率直方图</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getHistogram</span><span class="params">(Mat &amp;img, <span class="keyword">double</span> *histogram)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> H[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">int</span> h = img.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">            H[h] ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> N = img.rows * img.cols; <span class="comment">//总像素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        histogram[i] = <span class="keyword">double</span>(H[i]) / <span class="keyword">double</span>(N);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 大津法获取最佳阈值</span></span><br><span class="line"><span class="comment"> histogram为灰度概率直方图，threshold为最佳阈值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Otsu</span><span class="params">(<span class="keyword">double</span> *histogram, <span class="keyword">double</span> &amp;threshold)</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> w1 = <span class="number">0.0</span>, w2 = <span class="number">1.0</span>; <span class="comment">//类概率w1,w2</span></span><br><span class="line">    <span class="keyword">double</span> u1, u2; <span class="comment">//类均值u1,u2</span></span><br><span class="line">    <span class="keyword">double</span> <span class="built_in">max</span> = <span class="number">0.0</span>; <span class="comment">//最大类间方差</span></span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">255</span>; i++) &#123;</span><br><span class="line">        sum += i * histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> sum1 = <span class="number">0.0</span>, sum2 = sum;</span><br><span class="line">    <span class="keyword">double</span> threshold1 = <span class="number">0.0</span>, threshold2 = <span class="number">0.0</span>; <span class="comment">//有一个最大则取一个，两个最大取平均</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//    遍历所有可能阈值 t ，找到类间方差最大是的两个对应的阈值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">1</span>; t &lt;= <span class="number">255</span>; t++) &#123;</span><br><span class="line">        w1 += histogram[t];</span><br><span class="line">        w2 = <span class="number">1</span> - w1;</span><br><span class="line">        <span class="keyword">if</span> (w1 == <span class="number">0</span>) &#123; <span class="comment">//还没出现点时不会是阈值</span></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (w2 == <span class="number">0</span>)&#123; <span class="comment">//后面没点时已获得最佳阈值</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        sum1 += t * histogram[t];</span><br><span class="line">        sum2 = sum - sum1;</span><br><span class="line">        u1 = sum1 / w1;</span><br><span class="line">        u2 = sum2 / w2;</span><br><span class="line">        <span class="keyword">double</span> v = w1 * w2 * (u1 - u2) * (u1 - u2); <span class="comment">//类间方差</span></span><br><span class="line">        <span class="keyword">if</span> (v &gt;= <span class="built_in">max</span>) &#123;</span><br><span class="line">            threshold1 = t; <span class="comment">//大于等于，等于时，有两个最大</span></span><br><span class="line">            <span class="keyword">if</span> (v &gt; <span class="built_in">max</span>) &#123;</span><br><span class="line">                threshold2 = t; <span class="comment">//大于时，有唯一最大，threshold1、threshold2统一</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">max</span> = v; <span class="comment">//替换max</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    threshold = (threshold1 + threshold2) / <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 获得大津法二值化后的图像</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getOtsuImg</span><span class="params">(Mat img, Mat &amp;dst, <span class="keyword">double</span> threshold)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt;= img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt;= img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(nrow)[ncol] &lt;= threshold) &#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img,dst;</span><br><span class="line">    img = imread(<span class="string">"Otsu.png"</span>, IMREAD_GRAYSCALE); <span class="comment">//获取原图的灰度图像</span></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//    获取灰度概率直方图</span></span><br><span class="line">    <span class="keyword">double</span> histogram[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">//灰度概率直方图</span></span><br><span class="line">    getHistogram(img, histogram); <span class="comment">//获取灰度概率直方图</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//    获取最佳阈值</span></span><br><span class="line">    <span class="keyword">double</span> threshold = <span class="number">0</span>; <span class="comment">//最佳阈值</span></span><br><span class="line">    Otsu(histogram, threshold); <span class="comment">//获取最佳阈值</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//    获得大津法二值化后的图像</span></span><br><span class="line">    dst = img.clone();</span><br><span class="line">    getOtsuImg(img, dst, threshold);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 图像显示</span></span><br><span class="line">    imshow(<span class="string">"img"</span>, img);</span><br><span class="line">    imshow(<span class="string">"Otsu"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    imwrite(<span class="string">"result.jpg"</span>, dst);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/18/P1J6Caybjuv7HQs.png" alt="image.png"></p>
+<p>大津法二值化后得到的图像：</p>
+<p><img src="https://i.loli.net/2020/01/18/2hvMQawHr5u3OiP.jpg" alt="result.jpg"></p>
+]]></content>
+      <categories>
+        <category>图像处理</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>OpenCV</tag>
+        <tag>图像处理</tag>
+        <tag>大津法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Xcode上配置OpenCV和C++开发环境</title>
     <url>/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>​    在下载完OpenCV和新建完C++工程后，需在Xcode的C++文件上配置OpenCV。</p>
@@ -266,7 +312,8 @@
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>openCV</tag>
+        <tag>OpenCV</tag>
+        <tag>图像处理</tag>
         <tag>直方图均衡化</tag>
       </tags>
   </entry>
@@ -641,7 +688,8 @@
 
 <a id="more"></a>
 
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>在Canny算法提取出边缘的基础上，</p>
+<ol>
 <li><p>将原图像空间转到参数空间；</p>
 </li>
 <li><p>在参数空间 <em>(u,v)</em> 内建立两维数组 <em>A( u,v )</em> ;</p>
@@ -669,6 +717,9 @@
         <category>图像处理</category>
       </categories>
       <tags>
+        <tag>C++</tag>
+        <tag>OpenCV</tag>
+        <tag>图像处理</tag>
         <tag>hough</tag>
       </tags>
   </entry>
@@ -1093,8 +1144,9 @@
       </categories>
       <tags>
         <tag>C++</tag>
+        <tag>OpenCV</tag>
+        <tag>图像处理</tag>
         <tag>Canny</tag>
-        <tag>openCV</tag>
       </tags>
   </entry>
   <entry>
