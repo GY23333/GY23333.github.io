@@ -43,7 +43,9 @@
 <li>当结构元素中原点位置的值是0时，仍把它看作是0；而不再把它看作是1。</li>
 <li>当结构元素在目标图像上平移时，允许结构中的非原点像素超出目标图像范围。</li>
 </ol>
-<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>结构元素原点为1时，</p>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><ul>
+<li>结构元素原点为1时，</li>
+</ul>
 <p>​    原图像：</p>
 <img src="https://i.loli.net/2020/01/23/5kNeIaSqHERKzZ8.png" alt="image.png" style="zoom:67%;" />
 
@@ -51,11 +53,14 @@
 <img src="https://i.loli.net/2020/01/23/U9KjTLXRgrzNp1V.png" alt="image.png" style="zoom: 67%;" />
 
 <p>​    结构元素的反射：</p>
-<p><img src="https://i.loli.net/2020/01/23/qTVWv5BQ17ubxps.png" alt="image.png" style="zoom:67%;" /><img src="https://i.loli.net/2020/01/23/wrcmlgnZFP4TbSM.png" alt="image.png">)<img src="https://i.loli.net/2020/01/23/wrcmlgnZFP4TbSM.png" alt="image.png"></p>
+<img src="https://i.loli.net/2020/01/23/qTVWv5BQ17ubxps.png" alt="image.png" style="zoom:67%;" />
+
 <p>​    膨胀运算后的结果图像：</p>
 <img src="https://i.loli.net/2020/01/23/wrcmlgnZFP4TbSM.png" alt="image.png" style="zoom:67%;" />
 
-<p>结构元素原点为0时，</p>
+<ul>
+<li>结构元素原点为0时，</li>
+</ul>
 <p>​    原图像：</p>
 <img src="https://i.loli.net/2020/01/23/uXEYVCIlwGofcj8.png" alt="image.png" style="zoom:67%;" />
 
