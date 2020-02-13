@@ -53,15 +53,17 @@
 <meta property="og:site_name" content="GuoYi的博客">
 <meta property="og:description" content="​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;Users&#x2F;yogo&#x2F;Library&#x2F;Application%20Support&#x2F;typora-user-images&#x2F;截屏2020-02-13下午11.47.22.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;14&#x2F;9sVQ2d3Mbhlkw7R.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;14&#x2F;jBlypUZEQof3rPa.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;14&#x2F;Spdj9PLzWl8Fbah.png">
 <meta property="article:published_time" content="2020-02-13T15:22:24.000Z">
-<meta property="article:modified_time" content="2020-02-13T17:37:52.180Z">
+<meta property="article:modified_time" content="2020-02-13T17:45:20.105Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="Mac">
 <meta property="article:tag" content="Latex">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;Users&#x2F;yogo&#x2F;Library&#x2F;Application%20Support&#x2F;typora-user-images&#x2F;截屏2020-02-13下午11.47.22.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;14&#x2F;9sVQ2d3Mbhlkw7R.png">
 
 <link rel="canonical" href="https://gy23333.github.io/2020/02/13/Latex%E5%85%A5%E9%97%A8/">
 
@@ -239,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-14 01:37:52" itemprop="dateModified" datetime="2020-02-14T01:37:52+08:00">2020-02-14</time>
+                <time title="Modified: 2020-02-14 01:45:20" itemprop="dateModified" datetime="2020-02-14T01:45:20+08:00">2020-02-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,9 +292,9 @@
 
 <h1 id="在Mac环境下编写Latex"><a href="#在Mac环境下编写Latex" class="headerlink" title="在Mac环境下编写Latex"></a>在Mac环境下编写Latex</h1><h2 id="MacTeX"><a href="#MacTeX" class="headerlink" title="MacTeX"></a>MacTeX</h2><p>​    在Mac环境下必需下载相应的 <a href="http://www.tug.org/mactex/" target="_blank" rel="noopener">MacTeX</a></p>
 <p>​    下载完成后会得到下面四个app。</p>
-<p>![截屏2020-02-13下午11.41.11](/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-13下午11.41.11.png)</p>
+<p><img src="https://i.loli.net/2020/02/14/9sVQ2d3Mbhlkw7R.png" alt=""></p>
 <p>​    其中TeXShop是Latex的编辑器，但功能较为简单，建议使用Sublime+Skim 或 TeXpad</p>
-<img src="/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-13下午11.47.22.png" alt="截屏2020-02-13下午11.47.22" style="zoom:28%;" />
+<img src="https://i.loli.net/2020/02/14/jBlypUZEQof3rPa.png" style="zoom:25%;" />
 
 <h2 id="Texpad"><a href="#Texpad" class="headerlink" title="Texpad"></a>Texpad</h2><p>​    一款功能强大的Latex编辑器 <a href="https://www.texpad.com/mac" target="_blank" rel="noopener">Texpad for macOS</a></p>
 <h1 id="Latex"><a href="#Latex" class="headerlink" title="Latex"></a>Latex</h1><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>​    先大致介绍一下编写Latex会遇到的一些问题。</p>
@@ -300,7 +302,7 @@
 <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% exemple.tex</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-----------------------导言区------------------------</span></span><br><span class="line"><span class="comment">%用于设置性质，自定义一些命令</span></span><br><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;article&#125;</span></span> <span class="comment">%文档类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 在\maketitle时显示</span></span><br><span class="line"><span class="tag">\<span class="name">title</span><span class="string">&#123;title&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">author</span><span class="string">&#123;author&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">date</span><span class="string">&#123;\today&#125;</span></span> <span class="comment">%\today会自动同步到今天</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">bibliographystyle</span><span class="string">&#123;plain&#125;</span></span> <span class="comment">%声明参考文献格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-----------------------正文部分------------------------</span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"></span><br><span class="line">	<span class="tag">\<span class="name">maketitle</span></span> <span class="comment">%实际输出标题（显示title, author, date）</span></span><br><span class="line">	<span class="tag">\<span class="name">tableofcontents</span></span> <span class="comment">%输出目录</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section 1&#125;</span></span> <span class="comment">%开始一节</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section 2&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">bibliography</span><span class="string">&#123;math&#125;</span></span> <span class="comment">%打印参考文献</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <p>​    点击左上角开始编译。</p>
-<p>![截屏2020-02-14上午1.21.21](/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-14上午1.21.21.png)</p>
+<p><img src="https://i.loli.net/2020/02/14/Spdj9PLzWl8Fbah.png" alt=""></p>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>​    正文部分直接输入，但是要注意：</p>
 <ul>
 <li><strong>使用空行分段</strong>。单个换行不会引起分段，必须中间有空行，多个空行和一个空行效果一致。</li>
