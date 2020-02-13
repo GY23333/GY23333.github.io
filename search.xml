@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Latex入门</title>
+    <url>/2020/02/13/Latex%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。</p>
+<a id="more"></a>
+
+<h1 id="在Mac环境下编写Latex"><a href="#在Mac环境下编写Latex" class="headerlink" title="在Mac环境下编写Latex"></a>在Mac环境下编写Latex</h1><h2 id="MacTeX"><a href="#MacTeX" class="headerlink" title="MacTeX"></a>MacTeX</h2><p>​    在Mac环境下必需下载相应的 <a href="http://www.tug.org/mactex/" target="_blank" rel="noopener">MacTeX</a></p>
+<p>​    下载完成后会得到下面四个app。</p>
+<p>![截屏2020-02-13下午11.41.11](/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-13下午11.41.11.png)</p>
+<p>​    其中TeXShop是Latex的编辑器，但功能较为简单，建议使用Sublime+Skim 或 TeXpad</p>
+<img src="/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-13下午11.47.22.png" alt="截屏2020-02-13下午11.47.22" style="zoom:28%;" />
+
+<h2 id="Texpad"><a href="#Texpad" class="headerlink" title="Texpad"></a>Texpad</h2><p>​    一款功能强大的Latex编辑器 <a href="https://www.texpad.com/mac" target="_blank" rel="noopener">Texpad for macOS</a></p>
+<h1 id="Latex"><a href="#Latex" class="headerlink" title="Latex"></a>Latex</h1><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>​    先大致介绍一下编写Latex会遇到的一些问题。</p>
+<h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲"></a>提纲</h3><p>​    以下是一个Latex的基本框架：****</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="comment">% exemple.tex</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-----------------------导言区------------------------</span></span><br><span class="line"><span class="comment">%用于设置性质，自定义一些命令</span></span><br><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;article&#125;</span></span> <span class="comment">%文档类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 在\maketitle时显示</span></span><br><span class="line"><span class="tag">\<span class="name">title</span><span class="string">&#123;title&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">author</span><span class="string">&#123;author&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">date</span><span class="string">&#123;\today&#125;</span></span> <span class="comment">%\today会自动同步到今天</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">bibliographystyle</span><span class="string">&#123;plain&#125;</span></span> <span class="comment">%声明参考文献格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-----------------------正文部分------------------------</span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"></span><br><span class="line">	<span class="tag">\<span class="name">maketitle</span></span> <span class="comment">%实际输出标题（显示title, author, date）</span></span><br><span class="line">	<span class="tag">\<span class="name">tableofcontents</span></span> <span class="comment">%输出目录</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section 1&#125;</span></span> <span class="comment">%开始一节</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section 2&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">bibliography</span><span class="string">&#123;math&#125;</span></span> <span class="comment">%打印参考文献</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>​    点击左上角开始编译。</p>
+<p>![截屏2020-02-14上午1.21.21](/Users/yogo/Library/Application Support/typora-user-images/截屏2020-02-14上午1.21.21.png)</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>​    正文部分直接输入，但是要注意：</p>
+<ul>
+<li><strong>使用空行分段</strong>。单个换行不会引起分段，必须中间有空行，多个空行和一个空行效果一致。</li>
+<li><strong>段前不用空格</strong>。Latex会自动段前缩进，即使段前打了空格也会被省略。</li>
+<li><strong>汉字后的空格会被省略</strong>，但英文字母之间不会，<strong>多个空格和一个空格效果一致</strong>。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Latex</category>
+      </categories>
+      <tags>
+        <tag>入门</tag>
+        <tag>Mac</tag>
+        <tag>Latex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序（云开发）</title>
+    <url>/2020/02/03/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BA%91%E5%BC%80%E5%8F%91%EF%BC%89/</url>
+    <content><![CDATA[<p>​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。</p>
+<a id="more"></a>
+
+<h1 id="小程序基础"><a href="#小程序基础" class="headerlink" title="小程序基础"></a>小程序基础</h1><h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><h3 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h3><h3 id="wxss"><a href="#wxss" class="headerlink" title="wxss"></a>wxss</h3>]]></content>
+      <categories>
+        <category>微信小程序</category>
+      </categories>
+      <tags>
+        <tag>入门</tag>
+        <tag>微信小程序</tag>
+        <tag>云开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数学形态学运算——腐蚀、膨胀、开运算、闭运算</title>
     <url>/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p>​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。</p>
