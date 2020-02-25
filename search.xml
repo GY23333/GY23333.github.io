@@ -6,7 +6,25 @@
     <content><![CDATA[<p>​    记录Hexo博客的搭建过程。</p>
 <a id="more"></a>
 
-<h1 id="Next主题设置"><a href="#Next主题设置" class="headerlink" title="Next主题设置"></a>Next主题设置</h1><h2 id="网页图标"><a href="#网页图标" class="headerlink" title="网页图标"></a>网页图标</h2>]]></content>
+<h1 id="设置优化"><a href="#设置优化" class="headerlink" title="设置优化"></a>设置优化</h1><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>​    在blog中添加一个音乐播放页面。</p>
+<h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
+<li><p>新建一个页面</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在新生成的  /source/music/index.md  中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: 歌单</span><br><span class="line">date: 2020-02-25 19:50:11</span><br><span class="line">type: &quot;music&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li>在主题的 _config.yml文件中，设置页面</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: &#x2F; || home</span><br><span class="line">  archives: &#x2F;archives&#x2F; || archive</span><br><span class="line">  categories: &#x2F;categories&#x2F; || th</span><br><span class="line">  tags: &#x2F;tags&#x2F; || tags</span><br><span class="line">  music: &#x2F;music&#x2F; || music</span><br></pre></td></tr></table></figure>
+
+<p>​    页面创建成功！</p>
+<h3 id="使用hexo-tag-aplayer插件"><a href="#使用hexo-tag-aplayer插件" class="headerlink" title="使用hexo-tag-aplayer插件"></a>使用hexo-tag-aplayer插件</h3>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
