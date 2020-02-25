@@ -6,7 +6,7 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    记录Hexo博客的搭建过程。</p>
 <a id="more"></a>
 
-<h1 id="设置优化"><a href="#设置优化" class="headerlink" title="设置优化"></a>设置优化</h1><h2 id="Next主题添加动态背景"><a href="#Next主题添加动态背景" class="headerlink" title="Next主题添加动态背景"></a>Next主题添加动态背景</h2><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>​    在blog中添加一个音乐播放页面</p>
+<h1 id="设置优化"><a href="#设置优化" class="headerlink" title="设置优化"></a>设置优化</h1><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>​    在blog中添加一个音乐播放页面</p>
 <p><a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">    官方中文文档</a></p>
 <h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
 <li><p>新建一个页面</p>
@@ -31,13 +31,13 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过 <code>
-    <div id="aplayer-ugNMwXnv" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-kUlgCLaQ" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="..." data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 在文章中使用 MetingJS 播放器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 简单示例 (id, server, type)  --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 进阶示例 --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:340px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure>
 
 <p>有关 <code>
-    <div id="aplayer-erKJcCsQ" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-iwOxiCDL" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="undefined" data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 的选项列表如下:</p>
 <table>
