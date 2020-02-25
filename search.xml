@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo搭建记录</title>
+    <url>/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>​    记录Hexo博客的搭建过程。</p>
+<a id="more"></a>
+
+<h1 id="Next主题设置"><a href="#Next主题设置" class="headerlink" title="Next主题设置"></a>Next主题设置</h1><h2 id="网页图标"><a href="#网页图标" class="headerlink" title="网页图标"></a>网页图标</h2>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Latex入门</title>
     <url>/2020/02/13/Latex%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。</p>
