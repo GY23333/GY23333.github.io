@@ -223,9 +223,12 @@
 <p>​    正文字体默认为 五号字体。</p>
 <img src="https://i.loli.net/2020/02/26/LkzfSin341vI5E8.png" alt="截屏2020-02-26上午2.46.40.png" style="zoom:50%;" />
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass&#123;ctexart&#125;</span><br><span class="line"></span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">	% 中文字体大小</span><br><span class="line">	\zihao&#123;2&#125; 二号中文字体</span><br><span class="line">	</span><br><span class="line">	\zihao&#123;-2&#125; 小二号中文字体</span><br><span class="line">	</span><br><span class="line">	\zihao&#123;5&#125; 五号中文字体</span><br><span class="line">	</span><br><span class="line">	\zihao&#123;-5&#125; 小五号中文字体</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 中文字体大小</span></span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;2&#125;</span></span> 二号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;-2&#125;</span></span> 小二号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;5&#125;</span></span> 五号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;-5&#125;</span></span> 小五号中文字体</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
-<img src="https://i.loli.net/2020/02/26/lJ5SONLVvAEBke8.png" alt="截屏2020-02-26上午2.44.21.png" style="zoom:50%;" />]]></content>
+<img src="https://i.loli.net/2020/02/26/lJ5SONLVvAEBke8.png" alt="截屏2020-02-26上午2.44.21.png" style="zoom:50%;" />
+
+<h2 id="篇章结构"><a href="#篇章结构" class="headerlink" title="篇章结构"></a>篇章结构</h2><h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲"></a>提纲</h3><p>​    \section可以在正文中构建小节，相当于一级标题，在section前加sub套娃形成二级、三级、四级等等标题。</p>
+]]></content>
       <categories>
         <category>Latex</category>
       </categories>
