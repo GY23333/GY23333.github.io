@@ -68,8 +68,10 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;26&#x2F;C5s8Ed4cU1SPnWD.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;26&#x2F;7lUf5wrPQDF6sCc.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;26&#x2F;tV6QrHE5Ab8MGp7.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;28&#x2F;i1cq6Go2mMXb9tR.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;28&#x2F;n2ZDaWwO1YJUp58.png">
 <meta property="article:published_time" content="2020-02-13T15:22:24.000Z">
-<meta property="article:modified_time" content="2020-02-26T12:38:11.453Z">
+<meta property="article:modified_time" content="2020-02-28T05:55:38.160Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="Mac">
@@ -258,7 +260,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-26 20:38:11" itemprop="dateModified" datetime="2020-02-26T20:38:11+08:00">2020-02-26</time>
+                <time title="Modified: 2020-02-28 13:55:38" itemprop="dateModified" datetime="2020-02-28T13:55:38+08:00">2020-02-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -403,6 +405,155 @@
 <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	This is an article. This is an article. This is an article.</span><br><span class="line">	<span class="comment">%空行——新开一个段落</span></span><br><span class="line">	</span><br><span class="line">	This is an article. This is an article. This is an article.<span class="tag">\<span class="name">\</span></span>Change the line. Change the line. Change the line.  <span class="comment">% \\——换行</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2020/02/26/tV6QrHE5Ab8MGp7.png" alt=""></p>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><h3 id="空白符号"><a href="#空白符号" class="headerlink" title="空白符号"></a>空白符号</h3><ul>
+<li>英文字符之间多个空格当一个空格处理，中文字符之间的空格无效；</li>
+<li>中文之间插入英文，在英文片段前后自动添加空格；</li>
+<li>其他空格命令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\quad</td>
+<td>1em的空白（推荐）</td>
+</tr>
+<tr>
+<td>\qquad</td>
+<td>2em的空白</td>
+</tr>
+<tr>
+<td>,</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\thinspace</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\enspace</td>
+<td>0.5em的空白</td>
+</tr>
+<tr>
+<td>\</td>
+<td>空格（推荐）</td>
+</tr>
+<tr>
+<td>～</td>
+<td>硬空格</td>
+</tr>
+<tr>
+<td>\kern 指定宽度</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hspace{指定宽度}</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hphantom{}</td>
+<td>占位宽度的空格（空格长度等于{}内的字符应有的长度）</td>
+</tr>
+<tr>
+<td>\hfill</td>
+<td>产生一行的空格（前后分别在行首和行尾）</td>
+</tr>
+</tbody></table>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 1em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> quad b --------------- a<span class="tag">\<span class="name">quad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 2em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> qquad b -------------- a<span class="tag">\<span class="name">qquad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span>,b --------------------- a<span class="tag">\<span class="name">,</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> thinspace b --------- a<span class="tag">\<span class="name">thinspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 0.5em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> enspace b ------------ a<span class="tag">\<span class="name">enspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> b ----------------------- a<span class="tag">\<span class="name"> </span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 硬空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">~</span></span>b ------------------------ a~b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> kern 1em b ----------- a<span class="tag">\<span class="name">kern</span></span> 1em b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hspace<span class="tag">\<span class="name">&#123;</span></span>1em<span class="tag">\<span class="name">&#125;</span></span>b ------ a<span class="tag">\<span class="name">hspace</span><span class="string">&#123;1em&#125;</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 占位宽度的空格（空格长度等于&#123;&#125;内的字符应有的长度）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hphantom<span class="tag">\<span class="name">&#123;</span></span>xyz<span class="tag">\<span class="name">&#125;</span></span>b --- a<span class="tag">\<span class="name">hphantom</span><span class="string">&#123;xyz&#125;</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生一行的空格（前后分别在行首和行尾）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hfill b ------------------ a<span class="tag">\<span class="name">hfill</span></span> b</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/02/28/i1cq6Go2mMXb9tR.png" alt=""></p>
+<h3 id="控制符"><a href="#控制符" class="headerlink" title="控制符"></a>控制符</h3><p>​    对于有特殊含义的符号，要想其正常显示，需在符号前加 \ ，而 \ 本身由于\ \表示换行，所以用 \textbacklash 表示。</p>
+<table>
+<thead>
+<tr>
+<th>控制符</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>\textbackslash</td>
+</tr>
+<tr>
+<td>#</td>
+<td>\#</td>
+</tr>
+<tr>
+<td>$</td>
+<td>\$</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>\{\}</td>
+</tr>
+</tbody></table>
+<h3 id="排版符号"><a href="#排版符号" class="headerlink" title="排版符号"></a>排版符号</h3><table>
+<thead>
+<tr>
+<th>排版符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>§</td>
+<td>\S</td>
+</tr>
+<tr>
+<td>¶</td>
+<td>\P</td>
+</tr>
+<tr>
+<td>†</td>
+<td>\dag</td>
+</tr>
+<tr>
+<td>‡</td>
+<td>\ddag</td>
+</tr>
+<tr>
+<td>©</td>
+<td>\copyright</td>
+</tr>
+<tr>
+<td>£</td>
+<td>\pounds</td>
+</tr>
+</tbody></table>
+<h3 id="标志符号"><a href="#标志符号" class="headerlink" title="标志符号"></a>标志符号</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">TeX</span></span> <span class="tag">\<span class="name">quad</span></span> <span class="tag">\<span class="name">LaTeX</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/02/28/n2ZDaWwO1YJUp58.png" alt=""></p>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><table>
+<thead>
+<tr>
+<th>符号名称</th>
+<th>符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>左单引号</td>
+<td><strong>‘</strong></td>
+<td><strong>`</strong></td>
+</tr>
+<tr>
+<td>右单引号</td>
+<td><strong>’</strong></td>
+<td><strong>‘</strong></td>
+</tr>
+<tr>
+<td>左双引号</td>
+<td><strong>“</strong></td>
+<td><strong>``</strong></td>
+</tr>
+<tr>
+<td>右双引号</td>
+<td><strong>”</strong></td>
+<td><strong>‘’</strong></td>
+</tr>
+</tbody></table>
 
     </div>
 
@@ -490,7 +641,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在Mac环境下编写Latex"><span class="nav-number">1.</span> <span class="nav-text">在Mac环境下编写Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MacTeX"><span class="nav-number">1.1.</span> <span class="nav-text">MacTeX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texpad"><span class="nav-number">1.2.</span> <span class="nav-text">Texpad</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Latex"><span class="nav-number">2.</span> <span class="nav-text">Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">2.1.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导言区"><span class="nav-number">2.1.1.</span> <span class="nav-text">导言区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件类型"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标题区"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">标题区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文区"><span class="nav-number">2.1.2.</span> <span class="nav-text">正文区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正文"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公式"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译结果"><span class="nav-number">2.1.4.</span> <span class="nav-text">编译结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Latex使用中文"><span class="nav-number">2.2.</span> <span class="nav-text">Latex使用中文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CTEX文档（推荐）"><span class="nav-number">2.2.1.</span> <span class="nav-text">CTEX文档（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">2.3.</span> <span class="nav-text">字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体族"><span class="nav-number">2.3.1.</span> <span class="nav-text">字体族</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体系列"><span class="nav-number">2.3.2.</span> <span class="nav-text">字体系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体形状"><span class="nav-number">2.3.3.</span> <span class="nav-text">字体形状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体"><span class="nav-number">2.3.4.</span> <span class="nav-text">中文字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体大小"><span class="nav-number">2.3.5.</span> <span class="nav-text">字体大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#英文字体大小"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">英文字体大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中文字体大小"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">中文字体大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#篇章结构"><span class="nav-number">2.4.</span> <span class="nav-text">篇章结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提纲"><span class="nav-number">2.4.1.</span> <span class="nav-text">提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">2.4.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">正文</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在Mac环境下编写Latex"><span class="nav-number">1.</span> <span class="nav-text">在Mac环境下编写Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MacTeX"><span class="nav-number">1.1.</span> <span class="nav-text">MacTeX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texpad"><span class="nav-number">1.2.</span> <span class="nav-text">Texpad</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Latex"><span class="nav-number">2.</span> <span class="nav-text">Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">2.1.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导言区"><span class="nav-number">2.1.1.</span> <span class="nav-text">导言区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件类型"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标题区"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">标题区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文区"><span class="nav-number">2.1.2.</span> <span class="nav-text">正文区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正文"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公式"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译结果"><span class="nav-number">2.1.4.</span> <span class="nav-text">编译结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Latex使用中文"><span class="nav-number">2.2.</span> <span class="nav-text">Latex使用中文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CTEX文档（推荐）"><span class="nav-number">2.2.1.</span> <span class="nav-text">CTEX文档（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">2.3.</span> <span class="nav-text">字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体族"><span class="nav-number">2.3.1.</span> <span class="nav-text">字体族</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体系列"><span class="nav-number">2.3.2.</span> <span class="nav-text">字体系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体形状"><span class="nav-number">2.3.3.</span> <span class="nav-text">字体形状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体"><span class="nav-number">2.3.4.</span> <span class="nav-text">中文字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体大小"><span class="nav-number">2.3.5.</span> <span class="nav-text">字体大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#英文字体大小"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">英文字体大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中文字体大小"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">中文字体大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#篇章结构"><span class="nav-number">2.4.</span> <span class="nav-text">篇章结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提纲"><span class="nav-number">2.4.1.</span> <span class="nav-text">提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">2.4.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">正文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符"><span class="nav-number">2.5.</span> <span class="nav-text">特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空白符号"><span class="nav-number">2.5.1.</span> <span class="nav-text">空白符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制符"><span class="nav-number">2.5.2.</span> <span class="nav-text">控制符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排版符号"><span class="nav-number">2.5.3.</span> <span class="nav-text">排版符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标志符号"><span class="nav-number">2.5.4.</span> <span class="nav-text">标志符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引号"><span class="nav-number">2.5.5.</span> <span class="nav-text">引号</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

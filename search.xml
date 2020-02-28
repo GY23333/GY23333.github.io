@@ -10,7 +10,7 @@
 <p>​    虽然失去了大门，但是房子的影子还是在的，既然房子在就好说，门没了还能找窗嘛。</p>
 <img src="https://i.loli.net/2020/02/27/8MwrakFqPfo79je.png" style="zoom:50%;" />
 
-<pre><code># 另辟蹊径</code></pre><h2 id="下载路线（简单易操作，推荐）"><a href="#下载路线（简单易操作，推荐）" class="headerlink" title="下载路线（简单易操作，推荐）"></a>下载路线（简单易操作，推荐）</h2><p>​    从声优的页面，可以看到已消失剧集，点进去，显示音频消失也没关系，该音频未限制下载，点击下载即可将音频下到本地播放。</p>
+<h1 id="另辟蹊径"><a href="#另辟蹊径" class="headerlink" title="另辟蹊径"></a>另辟蹊径</h1><h2 id="下载路线（简单易操作，推荐）"><a href="#下载路线（简单易操作，推荐）" class="headerlink" title="下载路线（简单易操作，推荐）"></a>下载路线（简单易操作，推荐）</h2><p>​    从声优的页面，可以看到已消失剧集，点进去，显示音频消失也没关系，该音频未限制下载，点击下载即可将音频下到本地播放。</p>
 <h2 id="外链路线（需在消失前收藏）"><a href="#外链路线（需在消失前收藏）" class="headerlink" title="外链路线（需在消失前收藏）"></a>外链路线（需在消失前收藏）</h2><p>​    走外链，比较麻烦，目前我只发现了事先收藏的音频集，点击生成外链，在外链里可正常播放。</p>
 ]]></content>
   </entry>
@@ -261,6 +261,155 @@
 <figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	This is an article. This is an article. This is an article.</span><br><span class="line">	<span class="comment">%空行——新开一个段落</span></span><br><span class="line">	</span><br><span class="line">	This is an article. This is an article. This is an article.<span class="tag">\<span class="name">\</span></span>Change the line. Change the line. Change the line.  <span class="comment">% \\——换行</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2020/02/26/tV6QrHE5Ab8MGp7.png" alt=""></p>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><h3 id="空白符号"><a href="#空白符号" class="headerlink" title="空白符号"></a>空白符号</h3><ul>
+<li>英文字符之间多个空格当一个空格处理，中文字符之间的空格无效；</li>
+<li>中文之间插入英文，在英文片段前后自动添加空格；</li>
+<li>其他空格命令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\quad</td>
+<td>1em的空白（推荐）</td>
+</tr>
+<tr>
+<td>\qquad</td>
+<td>2em的空白</td>
+</tr>
+<tr>
+<td>,</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\thinspace</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\enspace</td>
+<td>0.5em的空白</td>
+</tr>
+<tr>
+<td>\</td>
+<td>空格（推荐）</td>
+</tr>
+<tr>
+<td>～</td>
+<td>硬空格</td>
+</tr>
+<tr>
+<td>\kern 指定宽度</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hspace{指定宽度}</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hphantom{}</td>
+<td>占位宽度的空格（空格长度等于{}内的字符应有的长度）</td>
+</tr>
+<tr>
+<td>\hfill</td>
+<td>产生一行的空格（前后分别在行首和行尾）</td>
+</tr>
+</tbody></table>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 1em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> quad b --------------- a<span class="tag">\<span class="name">quad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 2em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> qquad b -------------- a<span class="tag">\<span class="name">qquad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span>,b --------------------- a<span class="tag">\<span class="name">,</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> thinspace b --------- a<span class="tag">\<span class="name">thinspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 0.5em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> enspace b ------------ a<span class="tag">\<span class="name">enspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> b ----------------------- a<span class="tag">\<span class="name"> </span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 硬空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">~</span></span>b ------------------------ a~b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> kern 1em b ----------- a<span class="tag">\<span class="name">kern</span></span> 1em b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hspace<span class="tag">\<span class="name">&#123;</span></span>1em<span class="tag">\<span class="name">&#125;</span></span>b ------ a<span class="tag">\<span class="name">hspace</span><span class="string">&#123;1em&#125;</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 占位宽度的空格（空格长度等于&#123;&#125;内的字符应有的长度）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hphantom<span class="tag">\<span class="name">&#123;</span></span>xyz<span class="tag">\<span class="name">&#125;</span></span>b --- a<span class="tag">\<span class="name">hphantom</span><span class="string">&#123;xyz&#125;</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生一行的空格（前后分别在行首和行尾）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hfill b ------------------ a<span class="tag">\<span class="name">hfill</span></span> b</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/02/28/i1cq6Go2mMXb9tR.png" alt=""></p>
+<h3 id="控制符"><a href="#控制符" class="headerlink" title="控制符"></a>控制符</h3><p>​    对于有特殊含义的符号，要想其正常显示，需在符号前加 \ ，而 \ 本身由于\ \表示换行，所以用 \textbacklash 表示。</p>
+<table>
+<thead>
+<tr>
+<th>控制符</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>\textbackslash</td>
+</tr>
+<tr>
+<td>#</td>
+<td>\#</td>
+</tr>
+<tr>
+<td>$</td>
+<td>\$</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>\{\}</td>
+</tr>
+</tbody></table>
+<h3 id="排版符号"><a href="#排版符号" class="headerlink" title="排版符号"></a>排版符号</h3><table>
+<thead>
+<tr>
+<th>排版符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>§</td>
+<td>\S</td>
+</tr>
+<tr>
+<td>¶</td>
+<td>\P</td>
+</tr>
+<tr>
+<td>†</td>
+<td>\dag</td>
+</tr>
+<tr>
+<td>‡</td>
+<td>\ddag</td>
+</tr>
+<tr>
+<td>©</td>
+<td>\copyright</td>
+</tr>
+<tr>
+<td>£</td>
+<td>\pounds</td>
+</tr>
+</tbody></table>
+<h3 id="标志符号"><a href="#标志符号" class="headerlink" title="标志符号"></a>标志符号</h3><figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">TeX</span></span> <span class="tag">\<span class="name">quad</span></span> <span class="tag">\<span class="name">LaTeX</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/02/28/n2ZDaWwO1YJUp58.png" alt=""></p>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><table>
+<thead>
+<tr>
+<th>符号名称</th>
+<th>符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>左单引号</td>
+<td><strong>‘</strong></td>
+<td><strong>`</strong></td>
+</tr>
+<tr>
+<td>右单引号</td>
+<td><strong>’</strong></td>
+<td><strong>‘</strong></td>
+</tr>
+<tr>
+<td>左双引号</td>
+<td><strong>“</strong></td>
+<td><strong>``</strong></td>
+</tr>
+<tr>
+<td>右双引号</td>
+<td><strong>”</strong></td>
+<td><strong>‘’</strong></td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>Latex</category>
