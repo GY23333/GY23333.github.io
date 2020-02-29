@@ -610,6 +610,24 @@
 
 <p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlsS0UvUWQ3cFpLNzBGNmJNaitnRFFkTGFsVUgvTTVJTWxiQmZvOW5vdlJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0" alt=""></p>
 <h4 id="align-环境"><a href="#align-环境" class="headerlink" title="align*环境"></a>align*环境</h4><p>​    与align环境不同的是，但公式不带编号。</p>
+<h2 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h2><h3 id="newcommand-定义新的命令"><a href="#newcommand-定义新的命令" class="headerlink" title="\newcommand 定义新的命令"></a>\newcommand 定义新的命令</h3><ul>
+<li>格式：<code>\newcommand&lt;命令&gt;[&lt;参数个数&gt;][&lt;首参数默认值&gt;]{&lt;具体定义&gt;}</code></li>
+<li>命令只能由字母组成，不能以 \end 开头</li>
+<li>参数可以从1到9，用 #1，#2，….，#9 表示</li>
+<li>默认值为非必填项，只能设定 #1 的参数</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 设置新命令</span></span><br><span class="line"><span class="tag">\<span class="name">newcommand</span><span class="string">&#123;\PRC&#125;</span><span class="string">&#123;People's Republic of China&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">newcommand</span><span class="string">&#123;\loves&#125;</span><span class="string">[2]</span><span class="string">&#123;#1 love #2&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">PRC</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">loves</span><span class="string">&#123;I&#125;</span><span class="string">&#123;apple&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBNW1VWmZ2Wm55cHU2aFFkSC9sYVU3Tm1rMUF6bjhRSEZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:67%;" />
+
+<h3 id="renewcommand-重新定义命令"><a href="#renewcommand-重新定义命令" class="headerlink" title="\renewcommand 重新定义命令"></a>\renewcommand 重新定义命令</h3><ul>
+<li>格式：<code>\renewcommand&lt;命令&gt;[&lt;参数个数&gt;][&lt;首参数默认值&gt;]{&lt;具体定义&gt;}</code></li>
+<li>只能定义已有命令</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 重新定义已有命令</span></span><br><span class="line"><span class="tag">\<span class="name">renewcommand</span></span> <span class="tag">\<span class="name">abstractname</span><span class="string">&#123;简介&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">abstractname</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBdzdKalU2Z2Z5NEt6ZXQyL080b04wRzRvTFpTVGVRcENnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" />
+
 ]]></content>
       <categories>
         <category>Latex</category>
