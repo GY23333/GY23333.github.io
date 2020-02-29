@@ -550,30 +550,30 @@
 <td>^\circ</td>
 </tr>
 </tbody></table>
-<h5 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h5><p>​    格式：    <code>\sum_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt;</code></p>
+<h4 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h4><p>​    格式：    <code>\sum_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt;</code></p>
 <p>​                    或（上面的格式上下限在右边，下面的\limit格式上下限在正上下方 ）</p>
 <p>​                    <code>\sum\limits_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt;</code>                    </p>
 <figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sum</span></span>_&#123;i=0&#125;^&#123;n&#125; a_i $</span> <span class="comment">%上下限在右边</span></span><br><span class="line">	<span class="tag">\<span class="name">quad</span></span> </span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sum</span></span><span class="tag">\<span class="name">limits</span></span>_&#123;i=0&#125;^&#123;n&#125; a_i $</span> <span class="comment">%上下限在正上下方</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <img src="https://i.loli.net/2020/02/29/oSAUxv9rjCP64FR.png" style="zoom: 33%;" />
 
-<h5 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h5><p>​    格式:    <code>\int_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt; d\! &lt;变量&gt;</code></p>
+<h4 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h4><p>​    格式:    <code>\int_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt; d\! &lt;变量&gt;</code></p>
 <p>​    多重积分用 <code>\iint</code> <code>\iiint</code></p>
 <figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">int</span></span>_0^1 f(t) d<span class="tag">\<span class="name">!</span></span> t $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTzlRZGZYSG53M0V6RFBlVmYvYWNlMm5nSVErZzNEekdRPT0.png" style="zoom: 50%;" />
 
-<h5 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h5><p>​    格式：    <code>\frac &lt;分子&gt;&lt;分母&gt;</code></p>
+<h4 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h4><p>​    格式：    <code>\frac &lt;分子&gt;&lt;分母&gt;</code></p>
 <figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">frac</span></span> 12 + <span class="tag">\<span class="name">frac</span></span> 1a = <span class="tag">\<span class="name">frac</span><span class="string">&#123;2+a&#125;</span><span class="string">&#123;2a&#125;</span></span> $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTW9jZW5TMUFpdzZYQlZwemtqUlNwRGF1b3hLMWRvUE9nPT0.png" style="zoom: 50%;" />
 
-<h5 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h5><p>​    格式：    <code>\sqrt[&lt;开方次数&gt;]{&lt;被开方数&gt;}</code></p>
+<h4 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h4><p>​    格式：    <code>\sqrt[&lt;开方次数&gt;]{&lt;被开方数&gt;}</code></p>
 <figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sqrt</span><span class="string">[n]</span><span class="string">&#123;\frac&#123;x^2+\sqrt&#123;2&#125;</span></span>&#125;&#123;x+y&#125;&#125; $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTUhubkFCYWx6OVRLQVREQXdMcWhkeEpZeUFwc3ovU09BPT0.png" style="zoom:50%;" />
 
-<h5 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h5><p>​    amsmath宏包提供一下矩阵形式。</p>
+<h4 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h4><p>​    amsmath宏包提供一下矩阵形式。</p>
 <img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaT3VhdzFyR24zYk1GU211cEVqVHJMRzRHRkdZbGdzUTFBPT0.png" style="zoom: 50%;" />
 
 <p>​    编写格式与表格相似。</p>
