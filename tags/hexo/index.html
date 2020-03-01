@@ -322,7 +322,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -464,6 +464,17 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       pageSize: '20' || 10,
       visitor: false,
       lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
+ 'zh-cn',
       path: location.pathname,
       recordIP: false,
       serverURLs: ''
