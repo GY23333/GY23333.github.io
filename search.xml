@@ -7,7 +7,7 @@
 <a id="more"></a>
 
 <h1 id="高斯滤波"><a href="#高斯滤波" class="headerlink" title="高斯滤波"></a>高斯滤波</h1><p>​    高斯滤波器是利用高斯核的一个2维的卷积算子（线性滤波器），对于抑制服从正态分布的噪声非常有效。</p>
-<h2 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h2><h3 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h3><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDVvMk1PbnpqZi9mUWNHRDBGSHRuODJyTGRzZEllWW53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:25%;" />
+<h2 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h2><h3 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h3><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDVvMk1PbnpqZi9mUWNHRDBGSHRuODJyTGRzZEllWW53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom: 35%;" />
 
 <img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84OENkOXp2dHhMNVZHbmpoR0htRlhndllRRmdUS3hjUTBnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:80%;" />
 
@@ -119,7 +119,7 @@
 <p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFb1dnVnUyQjVoNUFpRSsvZTdzYTd0MmlSR1MxNW9IYUx3PT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg" alt=""></p>
 <p>​    该高斯滤波结果与openCV滤波结果基本一致。</p>
 <h1 id="均值滤波"><a href="#均值滤波" class="headerlink" title="均值滤波"></a>均值滤波</h1><p>​    均值滤波是空间域线性滤波器，其中所得到的图像中的每个像素具有的值等于其邻近的像素的输入图像中的平均值。它是低通（“模糊”）滤波器的一种形式。</p>
-<img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXQ5a0dqR1dMTHNKQy9TbEY5UmRrbEozRE41ZVQ3SDR3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:67%;" />
+<img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXQ5a0dqR1dMTHNKQy9TbEY5UmRrbEozRE41ZVQ3SDR3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:80%;" />
 
 <h2 id="openCV实现（openCV提供的函数）-1"><a href="#openCV实现（openCV提供的函数）-1" class="headerlink" title="openCV实现（openCV提供的函数）"></a>openCV实现（openCV提供的函数）</h2><h3 id="cv-blur"><a href="#cv-blur" class="headerlink" title="cv::blur"></a>cv::blur</h3><p>​    openCV自带的均值滤波器：<a href="https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37" target="_blank" rel="noopener">cv::blur</a></p>
 <ul>
@@ -201,7 +201,7 @@
 <p>原图像和经均值滤波后图像的傅立叶变换频谱</p>
 <img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWVBZT2RldFFuMitvYmIyMjFnMnV6WllXTG5UaUxRR3pnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0" style="zoom: 50%;" />
 
-<img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFY0RPVTFQOFlYeXV0Vy9VRmtUY0hqdHhGZWV6NWwrTFlRPT0.png" style="zoom:50%;" />
+<img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFY0RPVTFQOFlYeXV0Vy9VRmtUY0hqdHhGZWV6NWwrTFlRPT0.png" style="zoom:40%;" />
 
 <h2 id="C-实现（函数自己编写）-1"><a href="#C-实现（函数自己编写）-1" class="headerlink" title="C++实现（函数自己编写）"></a>C++实现（函数自己编写）</h2><p>​    利用5*5的均值滤波器</p>
 <img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFYVlrWVpqazZTNkJEK0lXTHBEOWl1OGJsc0twMlFIMDF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" />
