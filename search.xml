@@ -476,13 +476,13 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过 <code>
-    <div id="aplayer-kUlgCLaQ" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-nhqhxBIq" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="..." data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 在文章中使用 MetingJS 播放器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 简单示例 (id, server, type)  --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 进阶示例 --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:340px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure>
 
 <p>有关 <code>
-    <div id="aplayer-iwOxiCDL" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-JFxhQMeV" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="undefined" data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 的选项列表如下:</p>
 <table>
@@ -1086,7 +1086,7 @@
   <entry>
     <title>微信小程序（云开发）</title>
     <url>/2020/02/03/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BA%91%E5%BC%80%E5%8F%91%EF%BC%89/</url>
-    <content><![CDATA[<p>​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。</p>
 <a id="more"></a>
 
 <h1 id="小程序基础"><a href="#小程序基础" class="headerlink" title="小程序基础"></a>小程序基础</h1><h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><h3 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h3><h3 id="wxss"><a href="#wxss" class="headerlink" title="wxss"></a>wxss</h3>]]></content>
@@ -1102,7 +1102,7 @@
   <entry>
     <title>数学形态学运算——腐蚀、膨胀、开运算、闭运算</title>
     <url>/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/</url>
-    <content><![CDATA[<p>​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。</p>
 <img src="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg" alt="erosion_dst.jpg" style="zoom:70%;" />
 
 <img src="https://i.loli.net/2020/01/23/u8RTH9BgPibLvWp.jpg" alt="dilation_dst.jpg" style="zoom: 85%;" />
@@ -1213,7 +1213,7 @@
   <entry>
     <title>基于区域的图像分割——区域分裂与合并</title>
     <url>/2020/01/19/%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E2%80%94%E2%80%94%E5%8C%BA%E5%9F%9F%E5%88%86%E8%A3%82%E4%B8%8E%E5%90%88%E5%B9%B6/</url>
-    <content><![CDATA[<p>​    分裂与合并是一种区域分割方式，将图像划分成不相交的区域，以某一检测准则从四叉树数据结构的任一层开始，对区域进行分裂或合并。并逐步改善区域划分的性能，直到最后将图像分成数量最小的均匀区域为止。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    分裂与合并是一种区域分割方式，将图像划分成不相交的区域，以某一检测准则从四叉树数据结构的任一层开始，对区域进行分裂或合并。并逐步改善区域划分的性能，直到最后将图像分成数量最小的均匀区域为止。</p>
 <img src="https://i.loli.net/2020/01/19/zHZh7fe1OIcmqD3.jpg" alt="img.jpg" style="zoom:40%;" />
 
 <img src="https://i.loli.net/2020/01/20/PUAhMeZjsBI6v8m.jpg" alt="result.jpg" style="zoom: 40%;" />
@@ -1260,7 +1260,7 @@
   <entry>
     <title>基于区域的图像分割——区域生长</title>
     <url>/2020/01/18/%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E2%80%94%E2%80%94%E5%8C%BA%E5%9F%9F%E7%94%9F%E9%95%BF/</url>
-    <content><![CDATA[<p>​    区域生长是一种基于区域的分割方式，从初始种子点出发，检查相邻像素点，判断是否需要加入该区域。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    区域生长是一种基于区域的分割方式，从初始种子点出发，检查相邻像素点，判断是否需要加入该区域。</p>
 <p><img src="https://i.loli.net/2020/01/18/vlGqrPXBI6RDMSb.jpg" alt="mountains.jpg" style="zoom: 15%;" /><img src="https://i.loli.net/2020/01/18/ZWH2fCianE9MtYx.jpg" alt="result.jpg" style="zoom:15%;" /></p>
 <a id="more"></a>
 
@@ -1292,7 +1292,7 @@
   <entry>
     <title>大津二值化法</title>
     <url>/2020/01/18/%E5%A4%A7%E6%B4%A5%E4%BA%8C%E5%80%BC%E5%8C%96%E6%B3%95/</url>
-    <content><![CDATA[<p>​    大津法（Otsu算法，おおつ）用来自动对图像进行二值化，即将图像的两类分开。要计算将两类分开的最佳阈值，即要使两类的类内方差最小。由于两类平方距离恒定，所以类内方差最小即是求类间方差最大时的阈值为最佳阈值。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    大津法（Otsu算法，おおつ）用来自动对图像进行二值化，即将图像的两类分开。要计算将两类分开的最佳阈值，即要使两类的类内方差最小。由于两类平方距离恒定，所以类内方差最小即是求类间方差最大时的阈值为最佳阈值。</p>
 <img src="https://i.loli.net/2020/01/18/P1J6Caybjuv7HQs.png" alt="image.png" style="zoom: 60%;" />
 
 <img src="https://i.loli.net/2020/01/18/2hvMQawHr5u3OiP.jpg" alt="result.jpg" style="zoom:60%;" />
@@ -1338,7 +1338,7 @@
   <entry>
     <title>Xcode上配置OpenCV和C++开发环境</title>
     <url>/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>​    在下载完OpenCV和新建完C++工程后，需在Xcode的C++文件上配置OpenCV。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    在下载完OpenCV和新建完C++工程后，需在Xcode的C++文件上配置OpenCV。</p>
 <a id="more"></a>
 
 <h1 id="Xcode配置OpenCV步骤"><a href="#Xcode配置OpenCV步骤" class="headerlink" title="Xcode配置OpenCV步骤"></a>Xcode配置OpenCV步骤</h1><p>​    首先先新建好C++工程。</p>
@@ -1384,16 +1384,16 @@
       </categories>
       <tags>
         <tag>C++</tag>
+        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
-        <tag>Xcode</tag>
         <tag>环境配置</tag>
       </tags>
   </entry>
   <entry>
     <title>直方图均衡化</title>
     <url>/2020/01/15/%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%9D%87%E8%A1%A1%E5%8C%96/</url>
-    <content><![CDATA[<p>​    直方图均衡化是通过对原图像在像素个数多的灰度级进行展宽，对像素个数少的灰度级进行缩减，使原图像的灰度直方图修正为均匀分布的直方图。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    直方图均衡化是通过对原图像在像素个数多的灰度级进行展宽，对像素个数少的灰度级进行缩减，使原图像的灰度直方图修正为均匀分布的直方图。</p>
 <p><img src="https://i.loli.net/2020/01/16/Sv9pntb6Qay1c2Z.jpg" style="zoom: 33%;" /><img src="https://i.loli.net/2020/01/16/HqY6SxcMLaFrB3U.jpg" style="zoom: 33%;" /></p>
 <a id="more"></a>
 
@@ -1609,7 +1609,7 @@
   <entry>
     <title>C++学习手册</title>
     <url>/2020/01/10/C-%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>​    C++学习手册，主要是在C的基础上写出一些C++不同于C的点，部分C语言相通部分就不再赘述。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    C++学习手册，主要是在C的基础上写出一些C++不同于C的点，部分C语言相通部分就不再赘述。</p>
 <a id="more"></a>
 
 <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>​    C++输入输出需使用iostream库</p>
@@ -1941,14 +1941,14 @@
         <category>MATLAB</category>
       </categories>
       <tags>
-        <tag>GUI</tag>
         <tag>MATLAB</tag>
+        <tag>GUI</tag>
       </tags>
   </entry>
   <entry>
     <title>Mac WiFi连接无法弹出验证页面问题解决办法</title>
     <url>/2019/12/21/Mac-WiFi%E8%BF%9E%E6%8E%A5%E6%97%A0%E6%B3%95%E5%BC%B9%E5%87%BA%E9%AA%8C%E8%AF%81%E9%A1%B5%E9%9D%A2%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>连接公共Wi-Fi时常有弹出的验证页面，Mac显示已连接上Wi-Fi，但未弹出验证页面，无法使用网络。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>连接公共Wi-Fi时常有弹出的验证页面，Mac显示已连接上Wi-Fi，但未弹出验证页面，无法使用网络。</p>
 <a id="more"></a>
 
 <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
@@ -1969,7 +1969,7 @@
   <entry>
     <title>hough变换</title>
     <url>/2019/12/20/hough%E5%8F%98%E6%8D%A2/</url>
-    <content><![CDATA[<p>​    hough变换主要用于找线，当然也可以扩展为找圆或者其他形状。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    hough变换主要用于找线，当然也可以扩展为找圆或者其他形状。</p>
 <img src="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg" alt="road.jpg" style="zoom:18%;" />
 
 <img src="https://i.loli.net/2020/01/17/2YX7I6Od9UlGKcr.jpg" alt="result.jpg" style="zoom: 18%;" />
@@ -2014,7 +2014,7 @@
   <entry>
     <title>汇编学习笔记</title>
     <url>/2019/12/20/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>汇编学习</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>汇编学习</p>
 <a id="more"></a>
 
 <h1 id="如何在Mac上运行汇编程序"><a href="#如何在Mac上运行汇编程序" class="headerlink" title="如何在Mac上运行汇编程序"></a>如何在Mac上运行汇编程序</h1><h2 id="安装nasm"><a href="#安装nasm" class="headerlink" title="安装nasm"></a>安装nasm</h2><p>在命令行中安装nasm</p>
@@ -2058,7 +2058,7 @@
   <entry>
     <title>某不科学的C课设入门（华科自动化C课设）</title>
     <url>/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>一些关于华科自动化C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一些关于华科自动化C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。</p>
 <a id="more"></a>
 
 <h2 id="入门建议"><a href="#入门建议" class="headerlink" title="入门建议"></a>入门建议</h2><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><p>C课设的大部分需要的知识都已经在自动化大一下学期的C语言课程上学习过了，这里主要就谈一些需要自学的知识，建议大家在暑假期间学习一下。</p>
@@ -2217,14 +2217,14 @@
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
     <title>Canny边缘检测算法（C++实现）</title>
     <url>/2019/12/16/Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88C++%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><blockquote>
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
 <li>用高斯滤波器平滑图像；</li>
 <li>用一阶偏导有限差分计算梯度幅值和方向；</li>
@@ -2431,8 +2431,8 @@
         <category>图像处理</category>
       </categories>
       <tags>
-        <tag>Canny</tag>
         <tag>C++</tag>
+        <tag>Canny</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
       </tags>
@@ -2440,7 +2440,7 @@
   <entry>
     <title>命令行执行hexo d后，出现错误ERROR Deployer not found: git</title>
     <url>/2019/12/16/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8Chexo-d%E5%90%8E%EF%BC%8C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AFERROR-Deployer-not-found-git/</url>
-    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>命令行执行hexo d后，出现错误ERROR Deployer not found: git</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>命令行执行hexo d后，出现错误ERROR Deployer not found: git</p>
 <img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576407/gy/img6_d6qnm6.png" style="zoom:50%;" />
 
 <a id="more"></a>
@@ -2458,7 +2458,7 @@
   <entry>
     <title>Mac权限无法修改问题解决办法</title>
     <url>/2019/12/16/Mac%E6%9D%83%E9%99%90%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>Mac里文件夹必须以管理员身份才可写入，staff只有读的权限，且在文件夹简介中修改显示弹窗“无权限修改”。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Mac里文件夹必须以管理员身份才可写入，staff只有读的权限，且在文件夹简介中修改显示弹窗“无权限修改”。</p>
 <p><a href="https://support.apple.com/zh-cn/HT203538" target="_blank" rel="noopener">苹果官方解决办法</a></p>
 <a id="more"></a>
 
@@ -2490,7 +2490,7 @@
   <entry>
     <title>Hello World</title>
     <url>/2019/12/16/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <a id="more"></a>
 
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
