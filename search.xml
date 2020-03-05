@@ -2199,7 +2199,7 @@
   <entry>
     <title>Mac使用Matlab卡顿严重且闪退的解决办法</title>
     <url>/2019/12/16/Mac%E4%BD%BF%E7%94%A8Matlab%E5%8D%A1%E9%A1%BF%E4%B8%A5%E9%87%8D%E4%B8%94%E9%97%AA%E9%80%80%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>安装Matlab后发现使用时十分卡顿且易闪退。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>安装Matlab后发现使用时十分卡顿且易闪退。</p>
 <a id="more"></a>
 
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>关闭 “MathWorks源代码管理集成”。</p>
@@ -2218,7 +2218,7 @@
       </categories>
       <tags>
         <tag>Mac</tag>
-        <tag>Matlab</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
