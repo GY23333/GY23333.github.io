@@ -129,15 +129,7 @@
 <h3 id="子图"><a href="#子图" class="headerlink" title="子图"></a>子图</h3><p>​    使用 <code>subplot</code> 函数可以在同一窗口的不同子区域显示多个绘图。</p>
 <p>格式：<code>subplot(a, b, c)</code> </p>
 <p>功能：a⨉b网格中的第c个位置显示图形。</p>
-<img src="https://i.loli.net/2020/03/05/q4OePTnEXGZxFJY.jpg" style="zoom:33%;" />
-
-]]></content>
-      <categories>
-        <category>MATLAB</category>
-      </categories>
-      <tags>
-        <tag>MATLAB</tag>
-      </tags>
+<img src="https://i.loli.net/2020/03/05/q4OePTnEXGZxFJY.jpg" style="zoom:33%;" />]]></content>
   </entry>
   <entry>
     <title>高斯滤波&amp;均值滤波&amp;中值滤波</title>
@@ -476,13 +468,13 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过 <code>
-    <div id="aplayer-nhqhxBIq" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-jGWSSZhs" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="..." data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 在文章中使用 MetingJS 播放器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 简单示例 (id, server, type)  --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 进阶示例 --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:340px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure>
 
 <p>有关 <code>
-    <div id="aplayer-JFxhQMeV" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-NuiWSgJq" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="undefined" data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 的选项列表如下:</p>
 <table>
@@ -1937,11 +1929,7 @@
 <figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">X = <span class="number">0</span>:<span class="number">0.01</span>:<span class="built_in">pi</span>; <span class="comment">% 设置x的范围(起始值：采样间隔：终止值)</span></span><br><span class="line">Y = <span class="built_in">sin</span>(X); <span class="comment">% 设置x-y的对应函数</span></span><br><span class="line">axes(handles.axes1); <span class="comment">% 选则坐标区（axes）axes1</span></span><br><span class="line"><span class="built_in">plot</span>(X, Y, <span class="string">'b'</span>); <span class="comment">% 绘制X-Y（X轴变量，Y轴变量，点的颜色）</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
-      <categories>
-        <category>MATLAB</category>
-      </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>GUI</tag>
       </tags>
   </entry>
@@ -2217,7 +2205,6 @@
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
       </tags>
   </entry>
