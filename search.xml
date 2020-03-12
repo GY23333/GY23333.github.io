@@ -474,13 +474,13 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过 <code>
-    <div id="aplayer-enXAbTat" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-IDohFXIj" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="..." data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 在文章中使用 MetingJS 播放器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 简单示例 (id, server, type)  --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 进阶示例 --&gt;</span><br><span class="line">&#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:340px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure>
 
 <p>有关 <code>
-    <div id="aplayer-xeDBxKIf" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-ObRMCZts" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="undefined" data-server="undefined" data-type="undefined" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#ad7a86"
     ></div></code> 的选项列表如下:</p>
 <table>
@@ -581,8 +581,10 @@
 
 <h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><ol>
 <li>下载图片，将其添加到主题页面的 source\images\ 下；</li>
-<li>themes\next\source\css_custom\custom.styl</li>
+<li>在 /themes/next/source/css/_common/components/back-to-top.styl 中添加</li>
 </ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="comment">//自定义回到顶部样式</span></span><br><span class="line">@media screen and (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.back-to-top</span> &#123;</span><br><span class="line">      <span class="attribute">right</span>: <span class="number">60px</span>;</span><br><span class="line">      <span class="attribute">width</span>: <span class="number">70px</span>;  <span class="comment">//图片素材宽度</span></span><br><span class="line">      <span class="attribute">height</span>: <span class="number">900px</span>;  <span class="comment">//图片素材高度</span></span><br><span class="line">      <span class="attribute">top</span>: -<span class="number">900px</span>;</span><br><span class="line">      <span class="attribute">bottom</span>: unset;</span><br><span class="line">      transition: all .5s ease-in-out;</span><br><span class="line">      <span class="attribute">background</span>: url(<span class="string">"/images/scroll.png"</span>);</span><br><span class="line">      <span class="attribute">position</span>: fixed;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//隐藏箭头图标</span></span><br><span class="line">      &gt; <span class="selector-tag">i</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: none;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      &amp;<span class="selector-class">.back-to-top-on</span> &#123;</span><br><span class="line">        <span class="attribute">bottom</span>: unset;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">100vh</span> &lt; (<span class="number">900px</span> + <span class="number">200px</span>) ? calc( <span class="number">100vh</span> - <span class="number">900px</span> - <span class="number">200px</span> ) : <span class="number">0px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Hexo</category>
