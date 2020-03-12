@@ -1160,7 +1160,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ba9d29;
+  background: #a3eb77;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1466,23 +1466,38 @@ pre .javascript .function {
     transform: scale(1.1);
   }
 }
-@media screen and (min-width: 900px) {
+.back-to-top {
+  background: #222;
+  bottom: -100px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  left: 30px;
+  opacity: 1;
+  padding: 0 6px;
+  position: fixed;
+  text-align: center;
+  transition-property: bottom;
+  z-index: 1300;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  width: 24px;
+}
+.back-to-top span {
+  display: none;
+}
+.back-to-top:hover {
+  color: #87daff;
+}
+.back-to-top.back-to-top-on {
+  bottom: 19px;
+}
+@media (max-width: 991px) {
   .back-to-top {
-    right: 60px;
-    width: 70px;
-    height: 900px;
-    top: -900px;
-    bottom: unset;
-    transition: all 0.5s ease-in-out;
-    background: url("/images/scroll.png");
-    position: fixed;
-  }
-  .back-to-top > i {
-    display: none;
-  }
-  .back-to-top.back-to-top-on {
-    bottom: unset;
-    top: calc(100vh - 900px - 200px);
+    left: 20px;
+    opacity: 0.8;
   }
 }
 .post-body {
