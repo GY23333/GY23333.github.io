@@ -3,7 +3,8 @@
   <entry>
     <title>《计算机网络-自顶向下方法》笔记</title>
     <url>/2020/03/16/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    《计算机网络-自顶向下方法》课堂笔记。</p>
+<a id="more"></a>
 
 <h1 id="计算机网络和因特网"><a href="#计算机网络和因特网" class="headerlink" title="计算机网络和因特网"></a>计算机网络和因特网</h1><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>​    起源是为了形成一个自主、自治、互联的计算机通信系统。</p>
 <h3 id="构成描述"><a href="#构成描述" class="headerlink" title="构成描述"></a>构成描述</h3><p>​    因特网也被称为“网中网”，我们所用的网络都是大网中的小网（套娃）。</p>

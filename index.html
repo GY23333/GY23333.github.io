@@ -237,7 +237,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 01:24:31" itemprop="dateModified" datetime="2020-03-20T01:24:31+08:00">2020-03-20</time>
+                <time title="Modified: 2020-03-20 01:27:23" itemprop="dateModified" datetime="2020-03-20T01:27:23+08:00">2020-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,92 +276,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<h1 id="计算机网络和因特网"><a href="#计算机网络和因特网" class="headerlink" title="计算机网络和因特网"></a>计算机网络和因特网</h1><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>​    起源是为了形成一个自主、自治、互联的计算机通信系统。</p>
-<h3 id="构成描述"><a href="#构成描述" class="headerlink" title="构成描述"></a>构成描述</h3><p>​    因特网也被称为“网中网”，我们所用的网络都是大网中的小网（套娃）。</p>
-<ul>
-<li>接入网络的设备——网络边缘<ul>
-<li><strong>主机</strong>（host） = <strong>端系统</strong>（end system）</li>
-<li>运行的联网app</li>
-</ul>
-</li>
-<li><strong>通信链路</strong>（communication link）——接入网<ul>
-<li>媒介：同轴电缆、铜线、光纤、无线电频谱</li>
-<li>传输速率：带宽 bps</li>
-</ul>
-</li>
-<li><strong>分组交换机</strong>（packet switch）——网络核心<ul>
-<li><strong>路由器</strong>（router）和 <strong>链路层交换机</strong>（link-layer switch）</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><strong>协议</strong>：控制发送、接收信息。比如，TCP, IP, HTTP等等。每个层次有每个层次的协议。</li>
-<li><strong>网络标准</strong><ul>
-<li>因特网工程任务组（<strong>IETF</strong>）： 制定网络标准的组织</li>
-<li>请求评论（<strong>RFC</strong>）：IETF的标准文档</li>
-</ul>
-</li>
-</ul>
-<img src="https://i.loli.net/2020/03/19/J1qlUrQx9LiTFY2.png" style="zoom:50%;" />
-
-<h3 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h3><ul>
-<li><p>为应用程序提供服务的基础设施</p>
-<p>即用户使用应用。</p>
-</li>
-<li><p>应用程序编程接口</p>
-<p>即编写应用。</p>
-</li>
-</ul>
-<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><p>​    与因特网相接的计算机及其他设备位于因特网的边缘，称为<strong>端系统</strong>。</p>
-<p>端系统 = 主机，可以被划为下面两种：</p>
-<ul>
-<li>客户（client）</li>
-<li>服务器（server）：比如有企业存储大量数据的大型<strong>数据中心</strong>（data centers）</li>
-</ul>
-<h3 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h3><p>​    网络边缘的端系统  通过 <strong>接入网</strong>（物理链路）  连接到  <strong>边缘路由器</strong>（端系统到任何其他远程端系统的路径上的第一台路由器）。</p>
-<h4 id="家庭接入：DSL、电缆、FTTH、拨号和卫星"><a href="#家庭接入：DSL、电缆、FTTH、拨号和卫星" class="headerlink" title="家庭接入：DSL、电缆、FTTH、拨号和卫星"></a>家庭接入：DSL、电缆、FTTH、拨号和卫星</h4><ol>
-<li><p><strong>数字用户线</strong>（digital subscriber line，<strong>DSL</strong>）</p>
-<p>​    利用<strong>电话线路</strong>接入网络。其中 <strong>ADSL</strong>是非对称的数字用户线，基本都用ADSL，因为一般下行的数据量都远大于上行的数据量，所以要设计成非平衡的链路。</p>
-<p>​    采用<strong>独占</strong>的<strong>频分多路复用</strong>来传输。因为利用的是原有的电话线路，所以需要将DSL传输的网络信号（上行、下行）和电话信号通过频分多路复用来区分开来。</p>
-<table>
-<thead>
-<tr>
-<th>频段</th>
-<th>传输信号</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0~4K</td>
-<td>电话语音线路</td>
-</tr>
-<tr>
-<td>4K~50K</td>
-<td>上行信号</td>
-</tr>
-<tr>
-<td>50K~1M</td>
-<td>下行信号</td>
-</tr>
-</tbody></table>
-<img src="https://i.loli.net/2020/03/20/oCDhqtVGuRLjenm.png" alt="截屏2020-03-20上午12.22.20.png" style="zoom:50%;" />
-</li>
-<li><p><strong>电缆因特网接入</strong>（cable Internet access）</p>
-<p>利用<strong>有线电视网</strong>接入网络。结构上，通过粗的同轴电缆接入社区，再用细的同轴电缆接入每家每户。</p>
-<p>采用<strong>共享</strong>的<strong>频分多路复用</strong>来传输。</p>
-<img src="https://i.loli.net/2020/03/20/w1BdRQcMi5KS7Iz.png" style="zoom:50%;" />
-
-<ul>
-<li><strong>混合光纤同轴电缆</strong>（<strong>HFC</strong>）</li>
-</ul>
-<p>​    <strong>同轴电缆</strong>和<strong>光纤节点</strong>相连再接入边缘路由器。</p>
-<p>​    <strong>不对称</strong>的<strong>竞争式协议</strong>，最高可达到30Mbps的下行速率和2Mbps的上行速率。由于采用竞争式协议，在用户少时使用体验优于普通的电缆因特网接入，但是在用户多时容易造成卡顿。</p>
-<img src="https://i.loli.net/2020/03/20/xsZF9RbLfSq82or.png" style="zoom:50%;" />
-
-</li>
-</ol>
-<h4 id="企业（家庭）接入：以太网和WiFi"><a href="#企业（家庭）接入：以太网和WiFi" class="headerlink" title="企业（家庭）接入：以太网和WiFi"></a>企业（家庭）接入：以太网和WiFi</h4>
+          <p>​    《计算机网络-自顶向下方法》课堂笔记。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/16/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
