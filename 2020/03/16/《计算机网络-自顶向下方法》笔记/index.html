@@ -46,19 +46,22 @@
   };
 </script>
 
-  <meta name="description" content="​    《计算机网络-自顶向下方法》课堂笔记。">
+  <meta name="description" content="​    计算机网络课堂笔记，参考用书《计算机网络-自顶向下方法》。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《计算机网络-自顶向下方法》笔记">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;03&#x2F;16&#x2F;%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="​    《计算机网络-自顶向下方法》课堂笔记。">
+<meta property="og:description" content="​    计算机网络课堂笔记，参考用书《计算机网络-自顶向下方法》。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;19&#x2F;J1qlUrQx9LiTFY2.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;oCDhqtVGuRLjenm.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;w1BdRQcMi5KS7Iz.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;xsZF9RbLfSq82or.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;dAzBna3i9lZU2uN.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;YZt3aBmjsS1dLIi.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;zkxt9eo4fQqmLRV.jpg">
 <meta property="article:published_time" content="2020-03-16T12:54:15.000Z">
-<meta property="article:modified_time" content="2020-03-19T17:27:23.089Z">
+<meta property="article:modified_time" content="2020-03-20T11:07:11.275Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -245,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-20 01:27:23" itemprop="dateModified" datetime="2020-03-20T01:27:23+08:00">2020-03-20</time>
+                <time title="Modified: 2020-03-20 19:07:11" itemprop="dateModified" datetime="2020-03-20T19:07:11+08:00">2020-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,7 +294,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​    《计算机网络-自顶向下方法》课堂笔记。</p>
+        <p>​    计算机网络课堂笔记，参考用书《计算机网络-自顶向下方法》。</p>
 <a id="more"></a>
 
 <h1 id="计算机网络和因特网"><a href="#计算机网络和因特网" class="headerlink" title="计算机网络和因特网"></a>计算机网络和因特网</h1><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>​    起源是为了形成一个自主、自治、互联的计算机通信系统。</p>
@@ -330,13 +333,13 @@
 <p>即编写应用。</p>
 </li>
 </ul>
-<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><p>​    与因特网相接的计算机及其他设备位于因特网的边缘，称为<strong>端系统</strong>。</p>
+<h2 id="网络边缘（Network-Edge）"><a href="#网络边缘（Network-Edge）" class="headerlink" title="网络边缘（Network Edge）"></a>网络边缘（Network Edge）</h2><p>​    与因特网相接的计算机及其他设备位于因特网的边缘，称为<strong>端系统</strong>。</p>
 <p>端系统 = 主机，可以被划为下面两种：</p>
 <ul>
 <li>客户（client）</li>
 <li>服务器（server）：比如有企业存储大量数据的大型<strong>数据中心</strong>（data centers）</li>
 </ul>
-<h3 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h3><p>​    网络边缘的端系统  通过 <strong>接入网</strong>（物理链路）  连接到  <strong>边缘路由器</strong>（端系统到任何其他远程端系统的路径上的第一台路由器）。</p>
+<h3 id="接入网（Access-Networks）"><a href="#接入网（Access-Networks）" class="headerlink" title="接入网（Access Networks）"></a>接入网（Access Networks）</h3><p>​    网络边缘的端系统  通过 <strong>接入网</strong>（物理链路）  连接到  <strong>边缘路由器</strong>（端系统到任何其他远程端系统的路径上的第一台路由器）。</p>
 <h4 id="家庭接入：DSL、电缆、FTTH、拨号和卫星"><a href="#家庭接入：DSL、电缆、FTTH、拨号和卫星" class="headerlink" title="家庭接入：DSL、电缆、FTTH、拨号和卫星"></a>家庭接入：DSL、电缆、FTTH、拨号和卫星</h4><ol>
 <li><p><strong>数字用户线</strong>（digital subscriber line，<strong>DSL</strong>）</p>
 <p>​    利用<strong>电话线路</strong>接入网络。其中 <strong>ADSL</strong>是非对称的数字用户线，基本都用ADSL，因为一般下行的数据量都远大于上行的数据量，所以要设计成非平衡的链路。</p>
@@ -377,7 +380,35 @@
 
 </li>
 </ol>
-<h4 id="企业（家庭）接入：以太网和WiFi"><a href="#企业（家庭）接入：以太网和WiFi" class="headerlink" title="企业（家庭）接入：以太网和WiFi"></a>企业（家庭）接入：以太网和WiFi</h4>
+<h4 id="企业（家庭）接入：以太网和WiFi"><a href="#企业（家庭）接入：以太网和WiFi" class="headerlink" title="企业（家庭）接入：以太网和WiFi"></a>企业（家庭）接入：以太网和WiFi</h4><ul>
+<li><strong>以太网</strong>：使用双绞铜线与一台以太网交换机相连，速率可达到100Mbps、1Gbps、10Gbps。</li>
+<li><strong>WiFi</strong>：IEEE802.11技术无线LAN，范围在几十米内。</li>
+</ul>
+<h4 id="广义无线接入：4G和5G"><a href="#广义无线接入：4G和5G" class="headerlink" title="广义无线接入：4G和5G"></a>广义无线接入：4G和5G</h4><p>​    详见第六章</p>
+<h3 id="物理媒体（Physical-Media）"><a href="#物理媒体（Physical-Media）" class="headerlink" title="物理媒体（Physical Media）"></a>物理媒体（Physical Media）</h3><ul>
+<li>导引型媒体（guided media）：信号在固体媒体中传输，比如光缆、双绞铜线和同轴电缆。</li>
+<li>非导引型媒体（unguided media）：电波在空气中传播，比如无线局域网或数字卫星频道。</li>
+</ul>
+<h2 id="网络核心（Network-Core）"><a href="#网络核心（Network-Core）" class="headerlink" title="网络核心（Network Core）"></a>网络核心（Network Core）</h2><p>​    网络核心：由端系统的分组交换机和链路构成的网状网络。下图标亮部分即使网络核心。</p>
+<p>​    一共有三种交换方式：报文交换、分组交换和电路交换</p>
+<img src="https://i.loli.net/2020/03/20/dAzBna3i9lZU2uN.png" style="zoom:50%;" />
+
+<h3 id="分组交换（Packet-Switching）"><a href="#分组交换（Packet-Switching）" class="headerlink" title="分组交换（Packet Switching）"></a>分组交换（Packet Switching）</h3><p>​    端系统之间彼此传输报文，分组交换中，将长报文划分为分组，分组再通过通信链路和分组交换机（分为路由器和链路层交换机）传送。</p>
+<ol>
+<li><p>存储转发传输（Store-and-Forward Transmission）</p>
+<p>​    分组交换和报文交换都采用了存储转发的传输形式。但分组交换的存储转发以分组为单位，即交换机接收到整个分组后才能输出该分组的数据；而报文交换的存储转发单位为报文，需要交换机接收到整个报文后才能输出。</p>
+<img src="https://i.loli.net/2020/03/20/YZt3aBmjsS1dLIi.png" style="zoom:50%;" />
+
+<p>​    传输相同大小的数据包，分组交换比报文交换更快。下面是分组交换传输3L大小的报文的时间流，报文分为3个大小为L的分组，根据分组交换原理，一共耗费了 4L/R 时间完成传输。而如果使用报文传输同样的3L大小的报文则需要耗费 6L/R 时间。</p>
+<img src="https://i.loli.net/2020/03/20/zkxt9eo4fQqmLRV.jpg" alt="分组交换.jpg" style="zoom: 30%;" />
+</li>
+<li><p>排队时延（Queuing Delay）和分组丢失（Packet Loss）</p>
+</li>
+</ol>
+<ol start="3">
+<li><h3 id="电路交换"><a href="#电路交换" class="headerlink" title="电路交换"></a>电路交换</h3></li>
+</ol>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3>
     </div>
 
     
@@ -459,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘（Network-Edge）"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘（Network Edge）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网（Access-Networks）"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网（Access Networks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广义无线接入：4G和5G"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">广义无线接入：4G和5G</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理媒体（Physical-Media）"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理媒体（Physical Media）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络核心（Network-Core）"><span class="nav-number">1.3.</span> <span class="nav-text">网络核心（Network Core）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换（Packet-Switching）"><span class="nav-number">1.3.1.</span> <span class="nav-text">分组交换（Packet Switching）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换"><span class="nav-number">1.3.2.</span> <span class="nav-text">电路交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.3.</span> <span class="nav-text">网络结构</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
