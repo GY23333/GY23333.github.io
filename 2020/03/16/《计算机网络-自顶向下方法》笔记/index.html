@@ -65,8 +65,11 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;20&#x2F;NubPYJA6WrcvsqI.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;21&#x2F;yLN9bmafTdIqj6c.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;21&#x2F;NugS6r92GDaCqeJ.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;RS7Lpk2YjGtCnKV.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;oYnb8OzPqg461Ux.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;uBFK4rGifLvsHqE.png">
 <meta property="article:published_time" content="2020-03-16T12:54:15.000Z">
-<meta property="article:modified_time" content="2020-03-20T17:12:22.008Z">
+<meta property="article:modified_time" content="2020-03-21T17:22:53.017Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -253,7 +256,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-21 01:12:22" itemprop="dateModified" datetime="2020-03-21T01:12:22+08:00">2020-03-21</time>
+                <time title="Modified: 2020-03-22 01:22:53" itemprop="dateModified" datetime="2020-03-22T01:22:53+08:00">2020-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -438,6 +441,65 @@
 <li>因特网交换点（Internet Exchange Point，<strong>IXP</strong>）：由第三方公司创建，IXP是一个汇合点，多个ISP在此处对等。</li>
 </ul>
 <img src="https://i.loli.net/2020/03/21/NugS6r92GDaCqeJ.png" style="zoom: 60%;" />
+
+<h2 id="协议（Protocol）"><a href="#协议（Protocol）" class="headerlink" title="协议（Protocol）"></a>协议（Protocol）</h2><p>​    协议定义了在两个或多个通信实体之间交换的报文格式和次序，以及报文发送和/或接收一条报文或其他时间所采取的动作。</p>
+<p>​    协议三大要素：</p>
+<ul>
+<li>语法（Syntax）：每一段内容符合一定规则的格式，比如一个报文前8位是原地址，后八个是目的地址（只是举例，不要当真）之类。</li>
+<li>语义（Semantics）：每一段内容需要代表某种意义，比如原地址部分的二进制到底是指哪个地址。</li>
+<li>同步（Timing）：通信的过程，即每一段任务的执行顺序。</li>
+</ul>
+<img src="https://i.loli.net/2020/03/22/RS7Lpk2YjGtCnKV.png" style="zoom:50%;" />
+
+<h2 id="协议层次（Protocol-Layer）及其服务模型"><a href="#协议层次（Protocol-Layer）及其服务模型" class="headerlink" title="协议层次（Protocol Layer）及其服务模型"></a>协议层次（Protocol Layer）及其服务模型</h2><h3 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h3><p>​    因特网协议栈由5个层次组成：物理层、链路层、网络层、运输层和应用层。因特网协议栈是一个理想模型。</p>
+<p>​    下层为上层提供服务。越下面的层，越靠近硬件；越上面的层，越靠近用户。</p>
+<img src="https://i.loli.net/2020/03/22/oYnb8OzPqg461Ux.png" alt="截屏2020-03-22上午12.23.35.png" style="zoom: 20%;" />
+
+<table>
+<thead>
+<tr>
+<th align="center">层次</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">应用层（Application Layer）</td>
+<td>支持网络应用，应用协议仅仅是网络应用的一个组成部分，运行在不同主机上的进程则使用应用层协议进行通信。</td>
+</tr>
+<tr>
+<td align="center">运输层（Transport Layer）</td>
+<td>负责为信源和信宿提供应用程序进程间的数据传输服务，这一层上主要定义了两个传输协议，传输控制协议即TCP和用户数据报协议UDP。</td>
+</tr>
+<tr>
+<td align="center">网络层（Network Layer）</td>
+<td>负责将<strong>数据报</strong>独立地从信源发送到信宿，主要解决路由选择、拥塞控制和网络互联等问题。</td>
+</tr>
+<tr>
+<td align="center">链路层（Link Layer）</td>
+<td>负责将IP数据报封装成合适在物理网络上传输的<strong>帧</strong>格式并传输，或将从物理网络接收到的帧解封，取出IP数据报交给网络层。</td>
+</tr>
+<tr>
+<td align="center">物理层（Physical Layer）</td>
+<td>负责将<strong>比特流</strong>在结点间传输，即负责物理传输。该层的协议既与链路有关也与传输介质有关。</td>
+</tr>
+</tbody></table>
+<h3 id="OSI模型"><a href="#OSI模型" class="headerlink" title="OSI模型"></a>OSI模型</h3><p>​    OSI模型由国际标准化组织（ISO）制定，实际并没有应用，只有理论。</p>
+<p>​    OSI模型由7层组成：应用层、表示层、会话层、运输层、网络层、数据链路层、物理层。</p>
+<h3 id="封装（Encapsulation）"><a href="#封装（Encapsulation）" class="headerlink" title="封装（Encapsulation）"></a>封装（Encapsulation）</h3><p>​    在发送端，</p>
+<ol>
+<li><p>应用层：将 <strong>应用层报文</strong>（application-layer message）M传送给运输层；</p>
+</li>
+<li><p>运输层：接收报文M，附上运输层首部信息Ht（包括差错检测位信息等），构成 <strong>运输层报文段</strong>（transport-layer segment），将其传递给网络层；</p>
+</li>
+<li><p>网络层：接收运输层报文段，附上网络层首部信息Hn（包括源和目的地址等），构成 <strong>网络层数据段</strong>（network-layer datagram），将其传递给网络层；</p>
+</li>
+<li><p>链路层：接收网络层数据段，附上链路层首部信息Hl，构成 <strong>链路层帧</strong>（link-layer frame），将其传递给物理层；</p>
+</li>
+<li><p>物理层：负责比特流物理传输。</p>
+<p>在接收端以反方向从构报文段。</p>
+</li>
+</ol>
+<img src="https://i.loli.net/2020/03/22/uBFK4rGifLvsHqE.png" style="zoom:50%;" />
     </div>
 
     
@@ -519,7 +581,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘（Network-Edge）"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘（Network Edge）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网（Access-Networks）"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网（Access Networks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广义无线接入：4G和5G"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">广义无线接入：4G和5G</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理媒体（Physical-Media）"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理媒体（Physical Media）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络核心（Network-Core）"><span class="nav-number">1.3.</span> <span class="nav-text">网络核心（Network Core）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换（Packet-Switching）"><span class="nav-number">1.3.1.</span> <span class="nav-text">分组交换（Packet Switching）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换（Circuit-Switching）"><span class="nav-number">1.3.2.</span> <span class="nav-text">电路交换（Circuit Switching）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频分多路复用（FDM）"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">频分多路复用（FDM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时分多路复用（TDM）"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">时分多路复用（TDM）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换-amp-电路交换"><span class="nav-number">1.3.3.</span> <span class="nav-text">分组交换 &amp; 电路交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.4.</span> <span class="nav-text">网络结构</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘（Network-Edge）"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘（Network Edge）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网（Access-Networks）"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网（Access Networks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广义无线接入：4G和5G"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">广义无线接入：4G和5G</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理媒体（Physical-Media）"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理媒体（Physical Media）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络核心（Network-Core）"><span class="nav-number">1.3.</span> <span class="nav-text">网络核心（Network Core）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换（Packet-Switching）"><span class="nav-number">1.3.1.</span> <span class="nav-text">分组交换（Packet Switching）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换（Circuit-Switching）"><span class="nav-number">1.3.2.</span> <span class="nav-text">电路交换（Circuit Switching）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频分多路复用（FDM）"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">频分多路复用（FDM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时分多路复用（TDM）"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">时分多路复用（TDM）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换-amp-电路交换"><span class="nav-number">1.3.3.</span> <span class="nav-text">分组交换 &amp; 电路交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.4.</span> <span class="nav-text">网络结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议（Protocol）"><span class="nav-number">1.4.</span> <span class="nav-text">协议（Protocol）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议层次（Protocol-Layer）及其服务模型"><span class="nav-number">1.5.</span> <span class="nav-text">协议层次（Protocol Layer）及其服务模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#五层因特网协议栈"><span class="nav-number">1.5.1.</span> <span class="nav-text">五层因特网协议栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI模型"><span class="nav-number">1.5.2.</span> <span class="nav-text">OSI模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装（Encapsulation）"><span class="nav-number">1.5.3.</span> <span class="nav-text">封装（Encapsulation）</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
