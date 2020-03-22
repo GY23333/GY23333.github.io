@@ -68,8 +68,9 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;RS7Lpk2YjGtCnKV.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;oYnb8OzPqg461Ux.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;uBFK4rGifLvsHqE.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;22&#x2F;wxHkuoMDth7Bqpm.jpg">
 <meta property="article:published_time" content="2020-03-16T12:54:15.000Z">
-<meta property="article:modified_time" content="2020-03-21T17:22:53.017Z">
+<meta property="article:modified_time" content="2020-03-22T15:50:12.436Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -256,7 +257,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-22 01:22:53" itemprop="dateModified" datetime="2020-03-22T01:22:53+08:00">2020-03-22</time>
+                <time title="Modified: 2020-03-22 23:50:12" itemprop="dateModified" datetime="2020-03-22T23:50:12+08:00">2020-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -496,10 +497,94 @@
 <li><p>链路层：接收网络层数据段，附上链路层首部信息Hl，构成 <strong>链路层帧</strong>（link-layer frame），将其传递给物理层；</p>
 </li>
 <li><p>物理层：负责比特流物理传输。</p>
-<p>在接收端以反方向从构报文段。</p>
+<p>在接收端以反方向重构报文段。</p>
 </li>
 </ol>
 <img src="https://i.loli.net/2020/03/22/uBFK4rGifLvsHqE.png" style="zoom:50%;" />
+
+<h2 id="物理层概述"><a href="#物理层概述" class="headerlink" title="物理层概述"></a>物理层概述</h2><p>​    在两个物理媒体间进行比特流传输，上层都是逻辑链接，只有物理层是实际的物理连接。</p>
+<h3 id="物理层基本目标"><a href="#物理层基本目标" class="headerlink" title="物理层基本目标"></a>物理层基本目标</h3><ul>
+<li>保证发送信号“0”和“1”的正确性以及发送和接收的一致性；</li>
+<li>比特流传输的模式、速度、持续时间和信号失真；</li>
+<li>接口设计：引脚数目、功能等等；</li>
+<li>信号传输的程序：如何安排传输过程和事件次序。</li>
+</ul>
+<h3 id="物理层的基本特性"><a href="#物理层的基本特性" class="headerlink" title="物理层的基本特性"></a>物理层的基本特性</h3><ul>
+<li><p><strong>机械特性</strong>：指明接口所用接线器的形状和尺寸、引线数目和排列、固定和锁定装置等；</p>
+</li>
+<li><p><strong>电气特性</strong>：指明传输模式、电压范围、编码、阻抗匹配、传输速率以及传输距离等等；</p>
+</li>
+<li><p><strong>功能特性</strong>：指明各条物理线路的功能，比如某条线上出现的某一电平的电压表示何种意义，</p>
+<p>物理接口信号线按功能分为四类：数据线、控制线、定时线和地线；</p>
+</li>
+<li><p><strong>规程特性</strong>：指明各物理线路工作规程和时序的关系，比如对于不同功能的各种可能事件的出现顺序，</p>
+<p>信号传输的模式：单工（仅单向通行）、半双工（双方通，但一个时刻仅一方通）、全双工（双方随时通）。</p>
+</li>
+</ul>
+<h2 id="基本通信原理"><a href="#基本通信原理" class="headerlink" title="基本通信原理"></a>基本通信原理</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>数据（data）：对于客观事实描述的物理符号，包括数字、文本、语言、图像等等；</li>
+<li>信息（information）：数据的集合；</li>
+<li>信号（signal）：数据传输中的表现形式，比如模拟信号、数字信号；</li>
+<li>信道（channel）：往固定方向传输信息的媒介。</li>
+</ul>
+<p><strong>模拟传输VS数字传输</strong></p>
+<table>
+<thead>
+<tr>
+<th>传输方式</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模拟</td>
+<td>对信道有高利用率</td>
+<td>不抗噪</td>
+</tr>
+<tr>
+<td>数字</td>
+<td>信号不易失真</td>
+<td>需要更宽的带宽</td>
+</tr>
+</tbody></table>
+<h3 id="信道特性"><a href="#信道特性" class="headerlink" title="信道特性"></a>信道特性</h3><ul>
+<li><p><strong>码元</strong>（Symbol）：承载信息量的基本信号单位。</p>
+<p>​    下面是马原分级数 N 与所需bit位数 n 的关系（N个离散的值需要n个bits）<br>$$<br>n=log_2N<br>$$</p>
+<img src="https://i.loli.net/2020/03/22/wxHkuoMDth7Bqpm.jpg" style="zoom:40%;" />
+</li>
+<li><p><strong>波特率</strong>（Baud rate）：传输码元的速率。</p>
+</li>
+<li><p><strong>比特率</strong>（Bit rate）：传输比特的速率。</p>
+<p>波特率与比特率的关系<br>$$<br>bit\ rate(b/s)=baud\ rate*n<br>$$</p>
+</li>
+<li><p><strong>信道容量</strong>（Channel capacity）：在一个信道中能够可靠地传送信息时可达速率的最小上界，单位 bps。</p>
+</li>
+<li><p><strong>频带宽度</strong>（Frequency bandwidth）：信道允许的信号频率范围，单位 Hz。<br>$$<br>Frequency\ bandwidth = maximum\ bandwidth-minimum\ bandwidth<br>$$</p>
+</li>
+<li><p><strong>传输延迟</strong>（Transmission delay）：包括发送到接受的处理事件、电信号的响应时间、中间介质的传输时间。</p>
+</li>
+<li><p><strong>奈奎斯特定理</strong>（Nyquist’s Law）</p>
+<ol>
+<li>对于理想的低通信号，在一个频带宽度为 W 的信道，其码元的最大传输速率 = 2W Baud</li>
+<li>对于理想的带通信号，在一个频带宽度为 W 的信道，其码元的最大传输速率 = W Baud</li>
+</ol>
+</li>
+<li><p><strong>香农定理</strong>（Shannon’s Formula）</p>
+<p>信道的信息传输速率C（单位：bps）<br>$$<br>C=Wlog_2(1+S/N)<br>$$</p>
+<ul>
+<li><p>W -  带宽，单位 Hz</p>
+</li>
+<li><p>S  -  信道的平均信号功率</p>
+</li>
+<li><p>N  -  信道的高斯噪声功率</p>
+</li>
+<li><p>S/N  -  信号功率与噪声功率之比（也可以叫信噪比）</p>
+<p>一般情况下，信噪比不用 $S/N$ 表示，而是 $10log_10S/N$ ，单位为dB。</p>
+</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -581,7 +666,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘（Network-Edge）"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘（Network Edge）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网（Access-Networks）"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网（Access Networks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广义无线接入：4G和5G"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">广义无线接入：4G和5G</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理媒体（Physical-Media）"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理媒体（Physical Media）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络核心（Network-Core）"><span class="nav-number">1.3.</span> <span class="nav-text">网络核心（Network Core）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换（Packet-Switching）"><span class="nav-number">1.3.1.</span> <span class="nav-text">分组交换（Packet Switching）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换（Circuit-Switching）"><span class="nav-number">1.3.2.</span> <span class="nav-text">电路交换（Circuit Switching）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频分多路复用（FDM）"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">频分多路复用（FDM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时分多路复用（TDM）"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">时分多路复用（TDM）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换-amp-电路交换"><span class="nav-number">1.3.3.</span> <span class="nav-text">分组交换 &amp; 电路交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.4.</span> <span class="nav-text">网络结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议（Protocol）"><span class="nav-number">1.4.</span> <span class="nav-text">协议（Protocol）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议层次（Protocol-Layer）及其服务模型"><span class="nav-number">1.5.</span> <span class="nav-text">协议层次（Protocol Layer）及其服务模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#五层因特网协议栈"><span class="nav-number">1.5.1.</span> <span class="nav-text">五层因特网协议栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI模型"><span class="nav-number">1.5.2.</span> <span class="nav-text">OSI模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装（Encapsulation）"><span class="nav-number">1.5.3.</span> <span class="nav-text">封装（Encapsulation）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络和因特网"><span class="nav-number">1.</span> <span class="nav-text">计算机网络和因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">构成描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务描述"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络边缘（Network-Edge）"><span class="nav-number">1.2.</span> <span class="nav-text">网络边缘（Network Edge）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入网（Access-Networks）"><span class="nav-number">1.2.1.</span> <span class="nav-text">接入网（Access Networks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#家庭接入：DSL、电缆、FTTH、拨号和卫星"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">家庭接入：DSL、电缆、FTTH、拨号和卫星</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#企业（家庭）接入：以太网和WiFi"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">企业（家庭）接入：以太网和WiFi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广义无线接入：4G和5G"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">广义无线接入：4G和5G</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理媒体（Physical-Media）"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理媒体（Physical Media）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络核心（Network-Core）"><span class="nav-number">1.3.</span> <span class="nav-text">网络核心（Network Core）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换（Packet-Switching）"><span class="nav-number">1.3.1.</span> <span class="nav-text">分组交换（Packet Switching）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换（Circuit-Switching）"><span class="nav-number">1.3.2.</span> <span class="nav-text">电路交换（Circuit Switching）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频分多路复用（FDM）"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">频分多路复用（FDM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时分多路复用（TDM）"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">时分多路复用（TDM）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组交换-amp-电路交换"><span class="nav-number">1.3.3.</span> <span class="nav-text">分组交换 &amp; 电路交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.4.</span> <span class="nav-text">网络结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议（Protocol）"><span class="nav-number">1.4.</span> <span class="nav-text">协议（Protocol）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议层次（Protocol-Layer）及其服务模型"><span class="nav-number">1.5.</span> <span class="nav-text">协议层次（Protocol Layer）及其服务模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#五层因特网协议栈"><span class="nav-number">1.5.1.</span> <span class="nav-text">五层因特网协议栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI模型"><span class="nav-number">1.5.2.</span> <span class="nav-text">OSI模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装（Encapsulation）"><span class="nav-number">1.5.3.</span> <span class="nav-text">封装（Encapsulation）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层概述"><span class="nav-number">1.6.</span> <span class="nav-text">物理层概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层基本目标"><span class="nav-number">1.6.1.</span> <span class="nav-text">物理层基本目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层的基本特性"><span class="nav-number">1.6.2.</span> <span class="nav-text">物理层的基本特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本通信原理"><span class="nav-number">1.7.</span> <span class="nav-text">基本通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.7.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信道特性"><span class="nav-number">1.7.2.</span> <span class="nav-text">信道特性</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -741,6 +826,58 @@ if (document.querySelectorAll('pre.mermaid').length) {
 
 
   
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 
