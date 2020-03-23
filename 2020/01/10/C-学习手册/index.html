@@ -294,92 +294,81 @@
       
         <p>​    C++学习手册，主要是在C的基础上写出一些C++不同于C的点，部分C语言相通部分就不再赘述。</p>
 <a id="more"></a>
-
 <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>​    C++输入输出需使用iostream库</p>
 <h3 id="Xcode引入iostream库失败"><a href="#Xcode引入iostream库失败" class="headerlink" title="Xcode引入iostream库失败"></a>Xcode引入iostream库失败</h3><p>​    提示 ‘iostream’ file not found的解决办法：</p>
 <p>在Build Settings -&gt; Search paths -&gt;System Header Search Paths中添加路径</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Toolchains&#x2F;XcodeDefault.xctoolchain&#x2F;usr&#x2F;include&#x2F;c++&#x2F;v1&#x2F;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://i.loli.net/2020/01/10/DT7fHNvbGzyVXIM.png" alt=""></p>
 <p>添加后，C++库引入成功。</p>
 <h3 id="标准输出cout"><a href="#标准输出cout" class="headerlink" title="标准输出cout"></a>标准输出cout</h3><p>std :: cout 是输出内容，&lt;&lt; 是输出运算符，std :: endl 结束改行，相当于一个”\n”</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!\n"</span> ;</span><br></pre></td></tr></table></figure>
-
 <h3 id="标准输入cin"><a href="#标准输入cin" class="headerlink" title="标准输入cin"></a>标准输入cin</h3><p>std :: cin 是输入内容，&gt;&gt; 是输入运算符。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Input a and b."</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"The sum of a and b is "</span> &lt;&lt; a+b &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h3 id="使用标准库中的名字"><a href="#使用标准库中的名字" class="headerlink" title="使用标准库中的名字"></a>使用标准库中的名字</h3><p>​     std::表示cout和cin是定义在名为std的<strong>命名空间</strong>中的，可以通过<strong>using namespace</strong>来进行命名空间的缩略。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br></pre></td></tr></table></figure>
-
 <h2 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h2><h3 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h3><p>​    while语句反复执行一段代码，直至条件判断为错误。</p>
 <h4 id="读取数量不定的输入数据"><a href="#读取数量不定的输入数据" class="headerlink" title="读取数量不定的输入数据"></a>读取数量不定的输入数据</h4><p>​    利用std::cin进行输入不定的输入。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    不断输入数字求和，直至输入不是数字结束</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, value = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input number."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; value) &#123; <span class="comment">//当输入不为数字时判断为false</span></span><br><span class="line">        sum += value;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input number."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sum is "</span> &lt;&lt; sum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>​    已经定义了value为int型，所以在 cin&gt;&gt;value 输入不为int型时，则判断为false。</p>
 <h3 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h3><p>​    for(初始化语句; 循环条件; 表达式)</p>
 <h4 id="遍历数组中的元素"><a href="#遍历数组中的元素" class="headerlink" title="遍历数组中的元素"></a>遍历数组中的元素</h4><ol>
 <li><p>​    一维数组</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> scores[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : scores) &#123; <span class="comment">//遍历数组scores中的元素</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ol>
-<ol start="2">
+<ol>
 <li><p>多维数组</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ia[<span class="number">2</span>][<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;row : ia) &#123; <span class="comment">//遍历二维数组ia外层数组的每一个元素（这里相当于遍历每行）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;col : row) &#123; <span class="comment">//遍历二维数组ia内层数组的每一个元素</span></span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; col;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ol>
 <h1 id="C-基础"><a href="#C-基础" class="headerlink" title="C++基础"></a>C++基础</h1><h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>​    相当于把各种数据打包组成了一个集合来调用。</p>
 <p>​    下面以建立和使用一个书籍销售单类Sales_data为例。</p>
 <h3 id="建立头文件"><a href="#建立头文件" class="headerlink" title="建立头文件"></a>建立头文件</h3><p>​    为保障各文件中的类的定义一致，类通常被定义在头文件中。这里我们建立一个名为Sales_data.h的头文件来转载Sales_data类的定义。</p>
 <p>​    头文件一般最好进行预处理，添加头文件保护符：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>#define</th>
-<th align="left">把名字设定为预处理变量</th>
+<th style="text-align:left">把名字设定为预处理变量</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>#ifdef</td>
-<td align="left">当且仅当变量已定义时为真</td>
+<td style="text-align:left">当且仅当变量已定义时为真</td>
 </tr>
 <tr>
 <td>#ifndef</td>
-<td align="left">当且仅当变量未被定义时为真</td>
+<td style="text-align:left">当且仅当变量未被定义时为真</td>
 </tr>
 <tr>
 <td>#endif</td>
-<td align="left">判断为真后，执行到#endif结束</td>
+<td style="text-align:left">判断为真后，执行到#endif结束</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> Sales_data_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Sales_data_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> bookNo; <span class="comment">// 书籍编号</span></span><br><span class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>; <span class="comment">// 销售数量</span></span><br><span class="line">    <span class="keyword">double</span> revenue = <span class="number">0.0</span>; <span class="comment">// 销售收入</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
 <h3 id="使用类定义"><a href="#使用类定义" class="headerlink" title="使用类定义"></a>使用类定义</h3><p>​    调用该.h文件</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br></pre></td></tr></table></figure>
-
 <p>​    定义类变量</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sales_data data1;</span><br></pre></td></tr></table></figure>
-
 <p>​    利用.来访问类中的对象</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Sales_data data1;</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0.0</span>; <span class="comment">// 书籍单价</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input book_No, sold_num and price."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; data1.bookNo &gt;&gt; data1.units_sold &gt;&gt; price;</span><br><span class="line">    data1.revenue = price * data1.units_sold;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Book "</span> &lt;&lt; data1.bookNo &lt;&lt; <span class="string">"'s revenue is "</span> &lt;&lt; data1.revenue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="标准库类型-vector"><a href="#标准库类型-vector" class="headerlink" title="标准库类型 vector"></a>标准库类型 vector</h2><p>​    vector表示对象的集合，其中所有对象的类型都相同（可不定长）。</p>
 <p>​    vector定义在头文件<vector>中，命名空间std中。</p>
-<h3 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h3><table>
+<h3 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>vector<T> v1</th>
 <th>v1是一个空vector，它潜在的元素是类型为T</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>vector<T> v2(v1)</td>
 <td>v2中包含有v1所有元素的副本</td>
 </tr>
@@ -403,21 +392,23 @@
 <td>vector<T> v5 = {a, b, c….}</td>
 <td>等价于 v5{a, b, c….}</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="值初始化"><a href="#值初始化" class="headerlink" title="值初始化"></a>值初始化</h4><p>​    int类型的初始化为0，string类型的初始化为空字符。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都初始为0</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; svec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都是空string对象</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="向vector对象中添加元素"><a href="#向vector对象中添加元素" class="headerlink" title="向vector对象中添加元素"></a>向vector对象中添加元素</h3><p>​    利用 push_back把一个值压入vector对象的尾端。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    不断输入数字储存，直至输入字母停下</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; num) &#123;</span><br><span class="line">        v1.push_back(num); <span class="comment">// 向vector对象中添加元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; v1[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h3><table>
+<h3 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th></th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>v.empty()</td>
 <td>如果v不含有任何元素，返回真；否则返回假</td>
 </tr>
@@ -449,18 +440,22 @@
 <td>&lt;，&lt;=，&gt;，&gt;=</td>
 <td>以字典顺序进行比较</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>​    迭代器是一种检查容器内元素并遍历元素的数据类型。可以替代下标访问vector对象的元素。可以理解为指向容器内元素的指针。</p>
 <h3 id="使用迭代器"><a href="#使用迭代器" class="headerlink" title="使用迭代器"></a>使用迭代器</h3><p>​    begin 返回指向第一个元素的迭代器，end 返回指向容器尾元素的下一个位置的迭代器（实际上是不存在的）。当begin和end返回的为同一迭代器，则该容器为空。</p>
 <p>​    不在意迭代器的类型，一般定义为auto。</p>
-<h4 id="迭代器运算符"><a href="#迭代器运算符" class="headerlink" title="迭代器运算符"></a>迭代器运算符</h4><table>
+<h4 id="迭代器运算符"><a href="#迭代器运算符" class="headerlink" title="迭代器运算符"></a>迭代器运算符</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th></th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*iter</td>
 <td>返回迭代器iter所指的元素的引用</td>
 </tr>
@@ -473,24 +468,27 @@
 <td>令iter指示容器中的下一个元素</td>
 </tr>
 <tr>
-<td>–iter</td>
+<td>—iter</td>
 <td>令iter指示容器中的上一个元素</td>
 </tr>
 <tr>
 <td>iter1 == iter2 / iter1 != iter2</td>
 <td>判断两迭代器是否相等。如两迭代器指示的是同一个元素或者它们是同一个容器或者它们是同一个容器的尾后迭代器，则相等。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    将首单词的首字母大写</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"hello world."</span>;</span><br><span class="line">    <span class="keyword">if</span> (s.<span class="built_in">begin</span>() != s.<span class="built_in">end</span>()) &#123; <span class="comment">// s不为空</span></span><br><span class="line">        <span class="keyword">auto</span> it = s.<span class="built_in">begin</span>(); <span class="comment">// 指向首单词的迭代器</span></span><br><span class="line">        *it = <span class="built_in">toupper</span>(*it); <span class="comment">// 将it迭代器所指的元素的引用首字母大写</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="迭代器运算"><a href="#迭代器运算" class="headerlink" title="迭代器运算"></a>迭代器运算</h3><table>
+<h3 id="迭代器运算"><a href="#迭代器运算" class="headerlink" title="迭代器运算"></a>迭代器运算</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>iter + n / iter - n</td>
 <td>加或减n个位置得到一个迭代器</td>
 </tr>
@@ -506,18 +504,16 @@
 <td>&gt; 、&gt;=、&lt;、&lt;=</td>
 <td>比较位置</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="try语句块和异常处理"><a href="#try语句块和异常处理" class="headerlink" title="try语句块和异常处理"></a>try语句块和异常处理</h2><h3 id="throw表达式"><a href="#throw表达式" class="headerlink" title="throw表达式"></a>throw表达式</h3><p>​    throw表达式，异常检测部分使用throw表达式来<strong>表示</strong>它遇到了无法处理的问题。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    检验输入是否是数字，不是则抛出异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input a number."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">char</span> input;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; input;</span><br><span class="line">    <span class="keyword">if</span> (input &gt;= <span class="string">'0'</span> &amp;&amp; input &lt;= <span class="string">'9'</span>) &#123; <span class="comment">//输入为数字</span></span><br><span class="line">        number = input - <span class="string">'0'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//输入不为数字</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"Input not number."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>当输入不为数字时，运行到throw语句时卡住，并输出异常信息。</p>
-<img src="https://i.loli.net/2020/01/15/Sl2ne7PQgsriDfO.png" style="zoom:50%;" />
-
-<img src="https://i.loli.net/2020/01/15/opaRJDAg7B2nd54.png" style="zoom: 50%;" />
-
+<p><img src="https://i.loli.net/2020/01/15/Sl2ne7PQgsriDfO.png" style="zoom:50%;" /></p>
+<p><img src="https://i.loli.net/2020/01/15/opaRJDAg7B2nd54.png" style="zoom: 50%;" /></p>
 <h3 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h3><p>​    try语句块，异常处理部分使用try语句块<strong>处理</strong>异常。try尝试一个代码块，如有异常通常会被catch捕捉处理。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="comment">//测试的代码块</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(exception-declaration) &#123; <span class="comment">//exception-declaration异常声明</span></span><br><span class="line">	<span class="comment">//异常处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
     </div>
 

@@ -291,40 +291,32 @@
       
         <p>​    MATLAB是MATrix LABoratory（矩阵实验室）的缩写，是一款由美国The MathWorks公司出品的商业数学软件。MATLAB是一种用于算法开发、数据可视化、数据分析以及数值计算的高级技术计算语言和交互式环境。除了矩阵运算、绘制函数/数据图像等常用功能外，MATLAB还可以用来创建用户界面及与调用其它语言（包括C、C++、Java、Python和FORTRAN）编写的程序。下面是对<a href="https://ww2.mathworks.cn/help/matlab/index.html" target="_blank" rel="noopener">MATLAB官方中文文档</a>的学习总结。</p>
 <a id="more"></a>
-
 <h1 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h1><h2 id="矩阵和数组"><a href="#矩阵和数组" class="headerlink" title="矩阵和数组"></a>矩阵和数组</h2><p>​    所有 MATLAB 变量都是多维数组，与数据类型无关。矩阵是指通常用来进行线性代数运算的二维数组。</p>
 <h3 id="数组创建"><a href="#数组创建" class="headerlink" title="数组创建"></a>数组创建</h3><h4 id="一般数组的创建"><a href="#一般数组的创建" class="headerlink" title="一般数组的创建"></a>一般数组的创建</h4><ul>
 <li>在每行中，用 <code>,</code> 或者 <code>空格</code>来分隔每个元素；</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/43LTOiathcHGdgj.png" style="zoom:50%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/43LTOiathcHGdgj.png" style="zoom:50%;" /></p>
 <ul>
 <li>用 <code>;</code> 来分隔每行，形成矩阵；</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>; <span class="number">4</span> <span class="number">5</span> <span class="number">6</span>; <span class="number">7</span> <span class="number">8</span> <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/epbL2DuHclYton7.png" alt="截屏2020-03-05下午3.26.33.png" style="zoom:50%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/epbL2DuHclYton7.png" alt="截屏2020-03-05下午3.26.33.png" style="zoom:50%;" /></p>
 <h4 id="函数创建矩阵"><a href="#函数创建矩阵" class="headerlink" title="函数创建矩阵"></a>函数创建矩阵</h4><h5 id="ones-函数"><a href="#ones-函数" class="headerlink" title="ones 函数"></a>ones 函数</h5><ul>
 <li>格式：<code>ones(行数, 列数)</code></li>
 <li>功能：创建由1构成的行数⨉列数的矩阵</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ones</span>(<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/4zrtkOKAP26g3lT.png" style="zoom:50%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/4zrtkOKAP26g3lT.png" style="zoom:50%;" /></p>
 <h5 id="zeros-函数"><a href="#zeros-函数" class="headerlink" title="zeros 函数"></a>zeros 函数</h5><ul>
 <li>格式：<code>zeros(行数, 列数)</code></li>
 <li>功能：创建由0构成的行数⨉列数的矩阵</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">zeros</span>(<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/8BSWTFO3UZX24J5.png" style="zoom:50%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/8BSWTFO3UZX24J5.png" style="zoom:50%;" /></p>
 <h3 id="矩阵和数组运算"><a href="#矩阵和数组运算" class="headerlink" title="矩阵和数组运算"></a>矩阵和数组运算</h3><p>​    MATLAB 允许使用单一的算术运算符或函数来处理矩阵中的所有值。</p>
 <p>​    比如 <code>sin(a)</code> 即可将a矩阵中的所有值带入 sin函数。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -332,7 +324,8 @@
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>a&#39;</code></td>
 <td>矩阵转置</td>
 </tr>
@@ -348,12 +341,15 @@
 <td><code>a.*b</code></td>
 <td>矩阵元素级乘法</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="矩阵串联"><a href="#矩阵串联" class="headerlink" title="矩阵串联"></a>矩阵串联</h3><ul>
 <li><code>[a, a]</code> 水平串联</li>
 <li><code>[a; a]</code> 垂直串联</li>
 </ul>
 <h2 id="数组索引"><a href="#数组索引" class="headerlink" title="数组索引"></a>数组索引</h2><p><strong>注意：MATLAB中数组的开始下标为 1。</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -361,7 +357,8 @@
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>a(行下标, 列下标)</code></td>
 <td>得到指定行和列下标的元素</td>
 </tr>
@@ -377,7 +374,9 @@
 <td><code>a(:, 列下标)</code></td>
 <td>得到指定列的元素数组</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="工作变量"><a href="#工作变量" class="headerlink" title="工作变量"></a>工作变量</h2><p>​    工作区包含在 MATLAB 中创建或从数据文件或其他程序导入的变量。</p>
 <ul>
 <li><strong>whos</strong> 可以查看工作区的内容。</li>
@@ -396,26 +395,21 @@
 </ul>
 <h2 id="二维图和三维图"><a href="#二维图和三维图" class="headerlink" title="二维图和三维图"></a>二维图和三维图</h2><h3 id="二维图"><a href="#二维图" class="headerlink" title="二维图"></a>二维图</h3><p>​    用 <code>plot</code> 函数创建二维线图。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">0</span>:<span class="built_in">pi</span>/<span class="number">100</span>:<span class="number">2</span>*<span class="built_in">pi</span>; <span class="comment">%自变量数组</span></span><br><span class="line">y = <span class="built_in">sin</span>(x); <span class="comment">%因变量函数</span></span><br><span class="line"><span class="built_in">plot</span>(x,y) <span class="comment">%显示x-y图像</span></span><br><span class="line">xlabel(<span class="string">'x'</span>) <span class="comment">%x轴标题</span></span><br><span class="line">ylabel(<span class="string">'sin(x)'</span>) <span class="comment">%y轴标题</span></span><br><span class="line">title(<span class="string">'Plot of the Sine Function'</span>) <span class="comment">%总标题</span></span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/9BJ6hinycleAMxf.jpg" style="zoom: 33%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/9BJ6hinycleAMxf.jpg" style="zoom: 33%;" /></p>
 <p>​    利用<code>hold on</code>一个窗口显示两个图。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">0</span>:<span class="built_in">pi</span>/<span class="number">100</span>:<span class="number">2</span>*<span class="built_in">pi</span>; </span><br><span class="line">y = <span class="built_in">sin</span>(x); </span><br><span class="line"><span class="built_in">plot</span>(x,y)</span><br><span class="line"><span class="built_in">hold</span> on <span class="comment">%保留住现窗口</span></span><br><span class="line"><span class="comment">%显示第二个图形</span></span><br><span class="line">y2 = <span class="built_in">cos</span>(x); </span><br><span class="line"><span class="built_in">plot</span>(x,y2,<span class="string">':'</span>) </span><br><span class="line"><span class="built_in">legend</span>(<span class="string">'sin'</span>,<span class="string">'cos'</span>)</span><br><span class="line"><span class="built_in">hold</span> off <span class="comment">%关闭窗口</span></span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/DWoScr4Gyn8bC1p.jpg" style="zoom:33%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/DWoScr4Gyn8bC1p.jpg" style="zoom:33%;" /></p>
 <h3 id="三维图"><a href="#三维图" class="headerlink" title="三维图"></a>三维图</h3><ul>
 <li>使用 <code>meshgrid</code> 在此函数的域中创建一组 (x,y) 点</li>
 <li><code>surf</code> 创建曲面图</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mat[X,Y] = <span class="built_in">meshgrid</span>(<span class="number">-2</span>:<span class="number">.2</span>:<span class="number">2</span>); </span><br><span class="line">Z = X .* <span class="built_in">exp</span>(-X.^<span class="number">2</span> - Y.^<span class="number">2</span>);</span><br><span class="line">surf(X,Y,Z) <span class="comment">%创建曲面</span></span><br></pre></td></tr></table></figure>
-
-<img src="https://i.loli.net/2020/03/05/bGFu1854h7sDWUy.jpg" style="zoom:33%;" />
-
+<p><img src="https://i.loli.net/2020/03/05/bGFu1854h7sDWUy.jpg" style="zoom:33%;" /></p>
 <h3 id="子图"><a href="#子图" class="headerlink" title="子图"></a>子图</h3><p>​    使用 <code>subplot</code> 函数可以在同一窗口的不同子区域显示多个绘图。</p>
 <p>格式：<code>subplot(a, b, c)</code> </p>
 <p>功能：a⨉b网格中的第c个位置显示图形。</p>
-<img src="https://i.loli.net/2020/03/05/q4OePTnEXGZxFJY.jpg" style="zoom:33%;" />
+<p><img src="https://i.loli.net/2020/03/05/q4OePTnEXGZxFJY.jpg" style="zoom:33%;" /></p>
+
     </div>
 
     
