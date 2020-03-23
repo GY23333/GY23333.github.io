@@ -47,16 +47,42 @@
 <li>服务器（server）：比如有企业存储大量数据的大型<strong>数据中心</strong>（data centers）</li>
 </ul>
 <h3 id="接入网（Access-Networks）"><a href="#接入网（Access-Networks）" class="headerlink" title="接入网（Access Networks）"></a>接入网（Access Networks）</h3><p>​    网络边缘的端系统  通过 <strong>接入网</strong>（物理链路）  连接到  <strong>边缘路由器</strong>（端系统到任何其他远程端系统的路径上的第一台路由器）。</p>
-<h4 id="家庭接入：DSL、电缆、FTTH、拨号和卫星"><a href="#家庭接入：DSL、电缆、FTTH、拨号和卫星" class="headerlink" title="家庭接入：DSL、电缆、FTTH、拨号和卫星"></a>家庭接入：DSL、电缆、FTTH、拨号和卫星</h4><ol>
-<li><p><strong>数字用户线</strong>（digital subscriber line，<strong>DSL</strong>）</p>
+<h4 id="家庭接入：DSL、电缆、FTTH、拨号和卫星"><a href="#家庭接入：DSL、电缆、FTTH、拨号和卫星" class="headerlink" title="家庭接入：DSL、电缆、FTTH、拨号和卫星"></a>家庭接入：DSL、电缆、FTTH、拨号和卫星</h4><ul>
+<li><strong>数字用户线</strong>（digital subscriber line，<strong>DSL</strong>）</li>
+</ul>
 <p>​    利用<strong>电话线路</strong>接入网络。其中 <strong>ADSL</strong>是非对称的数字用户线，基本都用ADSL，因为一般下行的数据量都远大于上行的数据量，所以要设计成非平衡的链路。</p>
 <p>​    采用<strong>独占</strong>的<strong>频分多路复用</strong>来传输。因为利用的是原有的电话线路，所以需要将DSL传输的网络信号（上行、下行）和电话信号通过频分多路复用来区分开来。</p>
-<p>| 频段   | 传输信号     |<br>| ——— | —————— |<br>| 0~4K   | 电话语音线路 |<br>| 4K~50K | 上行信号     |<br>| 50K~1M | 下行信号     |</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>频段</th>
+<th>传输信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0~4K</td>
+<td>电话语音线路</td>
+</tr>
+<tr>
+<td>4K~50K</td>
+<td>上行信号</td>
+</tr>
+<tr>
+<td>50K~1M</td>
+<td>下行信号</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><img src="https://i.loli.net/2020/03/20/oCDhqtVGuRLjenm.png" alt="截屏2020-03-20上午12.22.20.png" style="zoom:50%;" /></p>
-</li>
+<ul>
 <li><p><strong>电缆因特网接入</strong>（cable Internet access）</p>
 <p>利用<strong>有线电视网</strong>接入网络。结构上，通过粗的同轴电缆接入社区，再用细的同轴电缆接入每家每户。</p>
 <p>采用<strong>共享</strong>的<strong>频分多路复用</strong>来传输。</p>
+</li>
+</ul>
 <p><img src="https://i.loli.net/2020/03/20/w1BdRQcMi5KS7Iz.png" style="zoom:50%;" /></p>
 <ul>
 <li><strong>混合光纤同轴电缆</strong>（<strong>HFC</strong>）</li>
@@ -64,8 +90,6 @@
 <p>​    <strong>同轴电缆</strong>和<strong>光纤节点</strong>相连再接入边缘路由器。</p>
 <p>​    <strong>不对称</strong>的<strong>竞争式协议</strong>，最高可达到30Mbps的下行速率和2Mbps的上行速率。由于采用竞争式协议，在用户少时使用体验优于普通的电缆因特网接入，但是在用户多时容易造成卡顿。</p>
 <p><img src="https://i.loli.net/2020/03/20/xsZF9RbLfSq82or.png" style="zoom:50%;" /></p>
-</li>
-</ol>
 <h4 id="企业（家庭）接入：以太网和WiFi"><a href="#企业（家庭）接入：以太网和WiFi" class="headerlink" title="企业（家庭）接入：以太网和WiFi"></a>企业（家庭）接入：以太网和WiFi</h4><ul>
 <li><strong>以太网</strong>：使用双绞铜线与一台以太网交换机相连，速率可达到100Mbps、1Gbps、10Gbps。</li>
 <li><strong>WiFi</strong>：IEEE802.11技术无线LAN，范围在几十米内。</li>
