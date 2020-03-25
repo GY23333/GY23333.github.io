@@ -434,6 +434,8 @@ traffic\ intensity = (L\times a)/R</script><p>​    其中，L —— 分组长
 <p>​    串联链路吞吐量取决于<strong>瓶颈链路</strong>（bottleneck link）。</p>
 <script type="math/tex; mode=display">
 Throughput = min\{R_1, R_2,...,R_N\}</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Throughput.png" alt="Throughput.png" style="zoom:70%;" /></p>
+<h1 id="应用层（Application-Layer）"><a href="#应用层（Application-Layer）" class="headerlink" title="应用层（Application Layer）"></a>应用层（Application Layer）</h1><h2 id="应用层协议原理"><a href="#应用层协议原理" class="headerlink" title="应用层协议原理"></a>应用层协议原理</h2><p>客户机服务器结构</p>
+<h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>​    域名系统（Domain Name System，DNS）通过分布式的数据库来实现IP地址和域名的映射</p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
@@ -1375,8 +1377,8 @@ Throughput = min\{R_1, R_2,...,R_N\}</script><p><img src="https://raw.githubuser
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Latex</tag>
         <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
