@@ -91,7 +91,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;Non-persistent%20HTTP(2).png">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;NetWork%20Non-persistent%20HTTP%20response%20time.png">
 <meta property="article:published_time" content="2020-03-16T12:54:15.000Z">
-<meta property="article:modified_time" content="2020-03-26T16:18:56.870Z">
+<meta property="article:modified_time" content="2020-03-26T16:38:49.898Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -278,7 +278,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-27 00:18:56" itemprop="dateModified" datetime="2020-03-27T00:18:56+08:00">2020-03-27</time>
+                <time title="Modified: 2020-03-27 00:38:49" itemprop="dateModified" datetime="2020-03-27T00:38:49+08:00">2020-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -851,7 +851,7 @@ Throughput = min\{R_1, R_2,...,R_N\}</script><p><img src="https://raw.githubuser
 <li><strong>阻塞控制</strong>（congestion control）：不能有太多个主机同时发送导致网络过载</li>
 <li>不提供的服务：时效性、最小带宽（吞吐率）、安全性</li>
 </ul>
-<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><p>​    UDP是一种<span class="label info">不提供不必要服务</span>的轻量传输协议。优点是速度快、灵活性好。</p>
+<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><p>​    UDP是一种<strong>不提供不必要服务</strong>的轻量传输协议。优点是速度快、灵活性好。</p>
 <ul>
 <li><strong>不需要建立连接</strong></li>
 <li><strong>不可靠的数据传输</strong></li>
@@ -882,9 +882,7 @@ Throughput = min\{R_1, R_2,...,R_N\}</script><p><img src="https://raw.githubuser
 <li>TCP连接可以断开</li>
 </ol>
 </li>
-<li><p>HTTP是无状态的</p>
-<p>​    服务器不会保留之前客户机发的请求信息。</p>
-<p>​    协议要维持状态是很复杂的：保留之前的历史记录很消耗资源；如果客户机或着服务器有死机，它们的状态会不一致，还需要重新同步，这很麻烦。</p>
+<li><p>HTTP是无状态的<br>​    &emsp;&emsp;服务器不会保留之前客户机发的请求信息。<br>​    &emsp;&emsp;协议要维持状态是很复杂的：保留之前的历史记录很消耗资源；如果客户机或着服务器有死机，它们的状态会不一致，还需要重新同步，这很麻烦。</p>
 </li>
 </ul>
 <h3 id="HTTP连接类型"><a href="#HTTP连接类型" class="headerlink" title="HTTP连接类型"></a>HTTP连接类型</h3><h4 id="非持久性连接（Non-persistent-HTTP）"><a href="#非持久性连接（Non-persistent-HTTP）" class="headerlink" title="非持久性连接（Non-persistent HTTP）"></a>非持久性连接（Non-persistent HTTP）</h4><h5 id="非持久性HTTP步骤"><a href="#非持久性HTTP步骤" class="headerlink" title="非持久性HTTP步骤"></a>非持久性HTTP步骤</h5><ol>
@@ -915,7 +913,7 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 <li>并行抓取：浏览器常常开多个并行的TCP连接去抓取对象</li>
 </ul>
 <div class="note warning">
-            <p>例题：一个网页包含1个HTML和10张图片，共有5个并行的TCP连接，则非持久性HTTP响应需要多少个RTT？<br>  首先传输HTML需要 $2RTT$ 的时间，5个并行的TCP连接传输10个对象需要2个 $2RTT$ 的时间。</p><script type="math/tex; mode=display">  RTT\ in\ Response\ Time = 2RTT + 2 \times 2RTT = 6RTT</script>
+            <p>例题：一个网页包含1个HTML和10张图片，共有5个并行的TCP连接，则非持久性HTTP响应需要多少个RTT？<br>  &emsp;首先传输HTML需要 $2RTT$ 的时间，5个并行的TCP连接传输10个对象需要2个 $2RTT$ 的时间。</p><script type="math/tex; mode=display">  RTT\ in\ Response\ Time = 2RTT + 2 \times 2RTT = 6RTT</script>
           </div>
 <h4 id="持久性连接（Persistent-HTTP）"><a href="#持久性连接（Persistent-HTTP）" class="headerlink" title="持久性连接（Persistent HTTP）"></a>持久性连接（Persistent HTTP）</h4><p>  步骤：</p>
 <ol>
