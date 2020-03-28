@@ -625,7 +625,7 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
             <p>为什么要选用分布的DNS，而不采用集中式的DNS？</p><ul><li>单点可能失效：一个故障就gg了</li><li>流量问题：所有客户机都访问一个域名服务器，会产生很大的流量</li><li>远程的集中式数据库：客户机要访问可能要花费很多时间，RTT会很大，造成大时延</li></ul>
           </div>
 <p>  &emsp;&emsp;DNS采用三层结构</p>
-<p><div id="flowchart-0" class="flow-chart"></div><br><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DNS%20Server.png" alt="DNS Server.png" style="zoom: 33%;" /></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DNS%20Server.png" alt="DNS Server.png" style="zoom: 33%;" /></p>
 <p>一个客户机得到<code>www.amazon.com</code>的IP地址的步骤：</p>
 <ol>
 <li>客户机先查询根域名服务器，得到顶级域名服务器<code>.com DNS server</code>的地址；</li>
@@ -665,9 +665,12 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_iterated-query.png" alt="iterated query.png" style="zoom:40%;" /></p>
 <h4 id="递归查询（recursive-query）"><a href="#递归查询（recursive-query）" class="headerlink" title="递归查询（recursive query）"></a>递归查询（recursive query）</h4><p>&emsp;&emsp;把域名解析的负担交给了联系到的域名服务器，这种方法对于高级的负担增加，所以一般采用迭代查询而不采用递归查询。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_recursive-query.png" alt="recursive query.png" style="zoom:38%;" /></p>
-<h3 id="DNS缓存和更新"><a href="#DNS缓存和更新" class="headerlink" title="DNS缓存和更新"></a>DNS缓存和更新</h3><h2 id="P2P"><a href="#P2P" class="headerlink" title="P2P"></a>P2P</h2><h2 id="Socket编程"><a href="#Socket编程" class="headerlink" title="Socket编程"></a>Socket编程<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">graph TD
-  A[根域名服务器] --> B[顶级域名服务器]
-  B --> C[权威域名服务器]</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></h2>]]></content>
+<h3 id="DNS缓存和更新"><a href="#DNS缓存和更新" class="headerlink" title="DNS缓存和更新"></a>DNS缓存和更新</h3><ul>
+<li>一旦域名服务器学习到了一个映射，它就会缓存这个映射。缓存往往在本地域名服务器里，这样可以减轻根域名服务器的压力。</li>
+<li>缓存有效时间TTL，过了有效时间该缓存就会被删除。</li>
+<li>更新/通知机制：由IETF制定的 RFC2136 标准。<br>&emsp;&emsp;如果中途域名主机改变IP地址，整个网络可能都不知道真正的IP地址，直到TTL到时，所以需要更新/通知机制。</li>
+</ul>
+<h3 id="DNS记录"><a href="#DNS记录" class="headerlink" title="DNS记录"></a>DNS记录</h3>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
