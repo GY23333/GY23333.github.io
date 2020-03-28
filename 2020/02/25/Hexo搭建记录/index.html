@@ -46,18 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="​    记录Hexo博客的搭建过程。">
+  <meta name="description" content="&amp;emsp;​&amp;emsp;记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo搭建记录">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="​    记录Hexo博客的搭建过程。">
+<meta property="og:description" content="&amp;emsp;​&amp;emsp;记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;02&#x2F;25&#x2F;fuqwxW43kozZTVR.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;13&#x2F;QjJ314LNwvZeOhg.gif">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;16&#x2F;KDVTNgcn7uxvmjS.gif">
 <meta property="article:published_time" content="2020-02-25T08:13:22.000Z">
-<meta property="article:modified_time" content="2020-03-22T17:21:11.534Z">
+<meta property="article:modified_time" content="2020-03-28T10:45:24.087Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="blog">
@@ -245,7 +245,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-23 01:21:11" itemprop="dateModified" datetime="2020-03-23T01:21:11+08:00">2020-03-23</time>
+                <time title="Modified: 2020-03-28 18:45:24" itemprop="dateModified" datetime="2020-03-28T18:45:24+08:00">2020-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,10 +291,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​    记录Hexo博客的搭建过程。</p>
+        <p>&emsp;​&emsp;记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。</p>
 <a id="more"></a>
-<h1 id="设置优化"><a href="#设置优化" class="headerlink" title="设置优化"></a>设置优化</h1><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>​    在blog中添加一个音乐播放页面</p>
-<p><a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">    官方中文文档</a></p>
+<h1 id="Hexo书写技巧"><a href="#Hexo书写技巧" class="headerlink" title="Hexo书写技巧"></a>Hexo书写技巧</h1><h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><h3 id="Hexo引入数学公式"><a href="#Hexo引入数学公式" class="headerlink" title="Hexo引入数学公式"></a>Hexo引入数学公式</h3><p>&emsp;​&emsp;Hexo默认不支持数学公式，需要引入数学公式的响应环境。</p>
+<ol>
+<li><p>更换Hexo的markdown渲染引擎</p>
+<p>​    卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在next主题中开启mathJax开关</p>
+<p>​    在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
+<figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line"> <span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"> <span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"> <span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"> <span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"> <span class="attr">mathjax:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;​&emsp;如此即可在每片文章中自动允许数学公式。</p>
+<h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>&emsp;​&emsp;Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入流程图"><a href="#Hexo引入流程图" class="headerlink" title="Hexo引入流程图"></a>Hexo引入流程图</h3><p>&emsp;&emsp;Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
+<ol>
+<li>安装hexo-filter-flowchart插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-filter-flowchart</span><br></pre></td></tr></table></figure></li>
+<li><p>在主题配置文件下添加flowchart配置</p>
+ <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flowchart:</span></span><br><span class="line"><span class="comment"># raphael:   # optional, the source url of raphael.js</span></span><br><span class="line"><span class="comment"># flowchart: # optional, the source url of flowchart.js</span></span><br><span class="line"><span class="attr">options:</span> <span class="comment"># options used for `drawSVG`</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绘制流程图</p>
+</li>
+</ol>
+<p> 范例：下列代码包在flow之间</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start|past:&gt;http://www.google.com[blank]</span><br><span class="line">e=&gt;end: End:&gt;http://www.google.com</span><br><span class="line">op1=&gt;operation: My Operation|past</span><br><span class="line">op2=&gt;operation: Stuff|current</span><br><span class="line">sub1=&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond=&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http://www.google.com</span><br><span class="line">c2=&gt;condition: Good idea|rejected</span><br><span class="line">io=&gt;inputoutput: catch something...|request</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
 <h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
 <li><p>新建一个页面</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
@@ -326,7 +351,7 @@
 <p><img src="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png" style="zoom: 20%;" /></p>
 <h3 id="手动建立歌单（不推荐）"><a href="#手动建立歌单（不推荐）" class="headerlink" title="手动建立歌单（不推荐）"></a>手动建立歌单（不推荐）</h3><p>​    强迫症可手动将各平台的歌单整合在一起，这里提供一个<a href="https://music.liuzhijin.cn/" target="_blank" rel="noopener">下载各平台音乐的神器</a>。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line"><span class="code">    "narrow": false,                          // （可选）播放器袖珍风格</span></span><br><span class="line"><span class="code">    "autoplay": true,                         // （可选) 自动播放，移动端浏览器暂时不支持此功能</span></span><br><span class="line"><span class="code">    "mode": "random",                         // （可选）曲目循环类型，有 'random'（随机播放）, 'single' (单曲播放), 'circulation' (循环播放), 'order' (列表播放)， 默认：'circulation' </span></span><br><span class="line"><span class="code">    "showlrc": 3,                             // （可选）歌词显示配置项，可选项有：1,2,3</span></span><br><span class="line"><span class="code">    "mutex": true,                            // （可选）该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</span></span><br><span class="line"><span class="code">    "theme": "#e6d0b2",	                      // （可选）播放器风格色彩设置，默认：#b7daff</span></span><br><span class="line"><span class="code">    "preload": "metadata",                    // （可选）音乐文件预载入模式，可选项： 'none' 'metadata' 'auto', 默认: 'auto'</span></span><br><span class="line"><span class="code">    "listmaxheight": "513px",                 // (可选) 该播放列表的最大长度</span></span><br><span class="line"><span class="code">    "music": [</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "CoCo",</span></span><br><span class="line"><span class="code">            "author": "Jeff Williams",</span></span><br><span class="line"><span class="code">            "url": "caffeine.mp3",</span></span><br><span class="line"><span class="code">            "pic": "caffeine.jpeg",</span></span><br><span class="line"><span class="code">            "lrc": "caffeine.txt"</span></span><br><span class="line"><span class="code">        &#125;,</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "アイロニ",</span></span><br><span class="line"><span class="code">            "author": "鹿乃",</span></span><br><span class="line"><span class="code">            "url": "irony.mp3",</span></span><br><span class="line"><span class="code">            "pic": "irony.jpg"</span></span><br><span class="line"><span class="code">        &#125;</span></span><br><span class="line"><span class="code">    ]</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><p>​    猫耳FM同款回到顶部插件。</p>
+<h1 id="Hexo主题优化"><a href="#Hexo主题优化" class="headerlink" title="Hexo主题优化"></a>Hexo主题优化</h1><h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><p>​    猫耳FM同款回到顶部插件。</p>
 <ol>
 <li><a href="https://i.loli.net/2020/03/13/oCTlu4gV8GYNm2O.png" target="_blank" rel="noopener">下载图片</a>，将其添加到主题页面的 source\images\ 下；</li>
 <li>在 /themes/next/source/css/_common/components/back-to-top.styl 中添加</li>
@@ -345,21 +370,24 @@
 <p>​    则可通过配置主题配置文件来设置鼠标点击效果。</p>
 <p>​    如explosion的效果</p>
 <p><img src="https://i.loli.net/2020/03/16/KDVTNgcn7uxvmjS.gif" alt="explosion.gif"></p>
-<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><ol>
-<li><p>更换Hexo的markdown渲染引擎</p>
-<p>​    卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在next主题中开启mathJax开关</p>
-<p>​    在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
-<figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line"> <span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"> <span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"> <span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"> <span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"> <span class="attr">mathjax:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>​    如此即可在每片文章中自动允许数学公式。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方文档</a></li>
 <li><a href="http://yearito.cn/" target="_blank" rel="noopener">Yearito’s Blog</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
 </ol>
 
     </div>
@@ -447,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设置优化"><span class="nav-number">1.</span> <span class="nav-text">设置优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Aplayer音乐播放器"><span class="nav-number">1.1.</span> <span class="nav-text">Aplayer音乐播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建音乐页面"><span class="nav-number">1.1.1.</span> <span class="nav-text">新建音乐页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用hexo-tag-aplayer插件"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用hexo-tag-aplayer插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动建立歌单（不推荐）"><span class="nav-number">1.1.3.</span> <span class="nav-text">手动建立歌单（不推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化回到顶部"><span class="nav-number">1.2.</span> <span class="nav-text">个性化回到顶部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鼠标点击效果"><span class="nav-number">1.3.</span> <span class="nav-text">鼠标点击效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式"><span class="nav-number">1.4.</span> <span class="nav-text">数学公式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo书写技巧"><span class="nav-number">1.</span> <span class="nav-text">Hexo书写技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式"><span class="nav-number">1.1.</span> <span class="nav-text">数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo引入数学公式"><span class="nav-number">1.1.1.</span> <span class="nav-text">Hexo引入数学公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学公式书写规则"><span class="nav-number">1.1.2.</span> <span class="nav-text">数学公式书写规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程图"><span class="nav-number">1.2.</span> <span class="nav-text">流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo引入流程图"><span class="nav-number">1.2.1.</span> <span class="nav-text">Hexo引入流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程图绘制规则"><span class="nav-number">1.2.2.</span> <span class="nav-text">流程图绘制规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aplayer音乐播放器"><span class="nav-number">1.3.</span> <span class="nav-text">Aplayer音乐播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建音乐页面"><span class="nav-number">1.3.1.</span> <span class="nav-text">新建音乐页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用hexo-tag-aplayer插件"><span class="nav-number">1.3.2.</span> <span class="nav-text">使用hexo-tag-aplayer插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动建立歌单（不推荐）"><span class="nav-number">1.3.3.</span> <span class="nav-text">手动建立歌单（不推荐）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo主题优化"><span class="nav-number">2.</span> <span class="nav-text">Hexo主题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化回到顶部"><span class="nav-number">2.1.</span> <span class="nav-text">个性化回到顶部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鼠标点击效果"><span class="nav-number">2.2.</span> <span class="nav-text">鼠标点击效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

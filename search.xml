@@ -621,11 +621,53 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 <li>邮件服务的别名</li>
 <li>负荷分配：有些Web可能有多个服务器，即会有多个IP地址对应一个域名，可调整IP地址的顺序以分配负荷。</li>
 </ul>
-<h3 id="DNS：分布式、层级的数据库"><a href="#DNS：分布式、层级的数据库" class="headerlink" title="DNS：分布式、层级的数据库"></a>DNS：分布式、层级的数据库</h3><p>  &emsp;&emsp;采用三层结构</p>
-<div class="note info">
+<h3 id="DNS：分布式、层级的数据库"><a href="#DNS：分布式、层级的数据库" class="headerlink" title="DNS：分布式、层级的数据库"></a>DNS：分布式、层级的数据库</h3><div class="note info">
             <p>为什么要选用分布的DNS，而不采用集中式的DNS？</p><ul><li>单点可能失效：一个故障就gg了</li><li>流量问题：所有客户机都访问一个域名服务器，会产生很大的流量</li><li>远程的集中式数据库：客户机要访问可能要花费很多时间，RTT会很大，造成大时延</li></ul>
           </div>
-<h2 id="P2P"><a href="#P2P" class="headerlink" title="P2P"></a>P2P</h2><h2 id="Socket编程"><a href="#Socket编程" class="headerlink" title="Socket编程"></a>Socket编程</h2>]]></content>
+<p>  &emsp;&emsp;DNS采用三层结构</p>
+<p><div id="flowchart-0" class="flow-chart"></div><br><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DNS%20Server.png" alt="DNS Server.png" style="zoom: 33%;" /></p>
+<p>一个客户机得到<code>www.amazon.com</code>的IP地址的步骤：</p>
+<ol>
+<li>客户机先查询根域名服务器，得到顶级域名服务器<code>.com DNS server</code>的地址；</li>
+<li>客户机查询顶级域名服务器<code>.com DNS server</code>，得到权威域名服务器<code>amazon.com DNS server</code>的地址；</li>
+<li>客户机查询权威域名服务器<code>amazon.com DNS server</code>，得到<code>www.amazon.com</code>的IP地址</li>
+</ol>
+<h4 id="根域名服务器（Root-Name-Server）"><a href="#根域名服务器（Root-Name-Server）" class="headerlink" title="根域名服务器（Root Name Server）"></a>根域名服务器（Root Name Server）</h4><ul>
+<li>官方的服务器，是<u>连接的最后的方法</u>（如果知道下级域名服务器的地址就不需要再从头开始查询根域名服务器，不然会对根域名服务器产生很大的流量负荷）</li>
+<li>对网络运行相当重要，离开根域名服务器网络无法正常工作</li>
+<li>域名系统安全扩展（Domain Name System Security Extensions，DNSSEC） —— 对DNS提供给DNS客户端（解析器）的DNS数据来源进行认证，并验证不存在性和校验数据完整性验证。</li>
+<li>ICANN（互联网名称与数字地址分配机构，Internet Corporation for Assigned Names and Numbers）—— 管理根域名服务器的组织</li>
+</ul>
+<div class="note info">
+            <p>世界上现在有13个根域名服务器，分布在世界各地。</p>
+          </div>
+<h4 id="顶层域名服务器（Top-Level-Domain-Server-TLD）"><a href="#顶层域名服务器（Top-Level-Domain-Server-TLD）" class="headerlink" title="顶层域名服务器（Top-Level Domain Server, TLD）"></a>顶层域名服务器（Top-Level Domain Server, TLD）</h4><ul>
+<li>各种类型的TLD，比如<code>.com</code>、<code>.org</code>、<code>net</code>、<code>.edu</code>等等，国家的TLD，比如<code>.cn</code>、<code>.uk</code>等等。</li>
+<li>Network Solutions：管理<code>.com</code>、<code>net</code>TLD的组织</li>
+<li>Educause：管理<code>.edu</code>的组织</li>
+</ul>
+<h4 id="权威域名服务器（Authoritative-Domain-Server）"><a href="#权威域名服务器（Authoritative-Domain-Server）" class="headerlink" title="权威域名服务器（Authoritative Domain Server）"></a>权威域名服务器（Authoritative Domain Server）</h4><ul>
+<li>组织自己的DNS服务器，用来提供组织内部的域名到IP地址的映射</li>
+<li>由组织自己或者服务提供商来维护</li>
+</ul>
+<h4 id="本地域名服务器（Local-DNS-Name-Server）"><a href="#本地域名服务器（Local-DNS-Name-Server）" class="headerlink" title="本地域名服务器（Local DNS Name Server）"></a>本地域名服务器（Local DNS Name Server）</h4><ul>
+<li>严格来说不属于层级结构</li>
+<li>每个ISP都会有一个本地域名服务器，也叫做<strong>默认域名服务器</strong>（default name server）</li>
+<li>当主机要进行DNS查询时，查询会被直接送到本地的DNS服务器。</li>
+<li>作用：<ul>
+<li>缓存：可以缓存最近收到的域名到IP地址的映射（缓存有时效，会过期）</li>
+<li>代理：可以作为代理，代替主机在层级结构中进行查询</li>
+</ul>
+</li>
+</ul>
+<h3 id="DNS查询方法"><a href="#DNS查询方法" class="headerlink" title="DNS查询方法"></a>DNS查询方法</h3><h4 id="迭代查询（iterated-query）"><a href="#迭代查询（iterated-query）" class="headerlink" title="迭代查询（iterated query）"></a>迭代查询（iterated query）</h4><p>&emsp;&emsp;被联系到的服务器会将后一个服务器的名字反馈回来，即“我不认识这个域名，但是你可以去问那台服务器(=ﾟωﾟ)ﾉ”</p>
+<p>&emsp;&emsp;下面的迭代查询过程，利用本地域名服务器作为代理迭代查询域名对于的IP地址。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_iterated-query.png" alt="iterated query.png" style="zoom:40%;" /></p>
+<h4 id="递归查询（recursive-query）"><a href="#递归查询（recursive-query）" class="headerlink" title="递归查询（recursive query）"></a>递归查询（recursive query）</h4><p>&emsp;&emsp;把域名解析的负担交给了联系到的域名服务器，这种方法对于高级的负担增加，所以一般采用迭代查询而不采用递归查询。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_recursive-query.png" alt="recursive query.png" style="zoom:38%;" /></p>
+<h3 id="DNS缓存和更新"><a href="#DNS缓存和更新" class="headerlink" title="DNS缓存和更新"></a>DNS缓存和更新</h3><h2 id="P2P"><a href="#P2P" class="headerlink" title="P2P"></a>P2P</h2><h2 id="Socket编程"><a href="#Socket编程" class="headerlink" title="Socket编程"></a>Socket编程<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">graph TD
+  A[根域名服务器] --> B[顶级域名服务器]
+  B --> C[权威域名服务器]</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
@@ -1069,10 +1111,35 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
   <entry>
     <title>Hexo搭建记录</title>
     <url>/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    记录Hexo博客的搭建过程。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;​&emsp;记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。</p>
 <a id="more"></a>
-<h1 id="设置优化"><a href="#设置优化" class="headerlink" title="设置优化"></a>设置优化</h1><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>​    在blog中添加一个音乐播放页面</p>
-<p><a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">    官方中文文档</a></p>
+<h1 id="Hexo书写技巧"><a href="#Hexo书写技巧" class="headerlink" title="Hexo书写技巧"></a>Hexo书写技巧</h1><h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><h3 id="Hexo引入数学公式"><a href="#Hexo引入数学公式" class="headerlink" title="Hexo引入数学公式"></a>Hexo引入数学公式</h3><p>&emsp;​&emsp;Hexo默认不支持数学公式，需要引入数学公式的响应环境。</p>
+<ol>
+<li><p>更换Hexo的markdown渲染引擎</p>
+<p>​    卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在next主题中开启mathJax开关</p>
+<p>​    在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
+<figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line"> <span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"> <span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"> <span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"> <span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"> <span class="attr">mathjax:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;​&emsp;如此即可在每片文章中自动允许数学公式。</p>
+<h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>&emsp;​&emsp;Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入流程图"><a href="#Hexo引入流程图" class="headerlink" title="Hexo引入流程图"></a>Hexo引入流程图</h3><p>&emsp;&emsp;Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
+<ol>
+<li>安装hexo-filter-flowchart插件<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-filter-flowchart</span><br></pre></td></tr></table></figure></li>
+<li><p>在主题配置文件下添加flowchart配置</p>
+ <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">flowchart:</span></span><br><span class="line"><span class="comment"># raphael:   # optional, the source url of raphael.js</span></span><br><span class="line"><span class="comment"># flowchart: # optional, the source url of flowchart.js</span></span><br><span class="line"><span class="attr">options:</span> <span class="comment"># options used for `drawSVG`</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绘制流程图</p>
+</li>
+</ol>
+<p> 范例：下列代码包在flow之间</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">st=&gt;start: Start|past:&gt;http://www.google.com[blank]</span><br><span class="line">e=&gt;end: End:&gt;http://www.google.com</span><br><span class="line">op1=&gt;operation: My Operation|past</span><br><span class="line">op2=&gt;operation: Stuff|current</span><br><span class="line">sub1=&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond=&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http://www.google.com</span><br><span class="line">c2=&gt;condition: Good idea|rejected</span><br><span class="line">io=&gt;inputoutput: catch something...|request</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
 <h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
 <li><p>新建一个页面</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
@@ -1104,7 +1171,7 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 <p><img src="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png" style="zoom: 20%;" /></p>
 <h3 id="手动建立歌单（不推荐）"><a href="#手动建立歌单（不推荐）" class="headerlink" title="手动建立歌单（不推荐）"></a>手动建立歌单（不推荐）</h3><p>​    强迫症可手动将各平台的歌单整合在一起，这里提供一个<a href="https://music.liuzhijin.cn/" target="_blank" rel="noopener">下载各平台音乐的神器</a>。</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line"><span class="code">    "narrow": false,                          // （可选）播放器袖珍风格</span></span><br><span class="line"><span class="code">    "autoplay": true,                         // （可选) 自动播放，移动端浏览器暂时不支持此功能</span></span><br><span class="line"><span class="code">    "mode": "random",                         // （可选）曲目循环类型，有 'random'（随机播放）, 'single' (单曲播放), 'circulation' (循环播放), 'order' (列表播放)， 默认：'circulation' </span></span><br><span class="line"><span class="code">    "showlrc": 3,                             // （可选）歌词显示配置项，可选项有：1,2,3</span></span><br><span class="line"><span class="code">    "mutex": true,                            // （可选）该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</span></span><br><span class="line"><span class="code">    "theme": "#e6d0b2",	                      // （可选）播放器风格色彩设置，默认：#b7daff</span></span><br><span class="line"><span class="code">    "preload": "metadata",                    // （可选）音乐文件预载入模式，可选项： 'none' 'metadata' 'auto', 默认: 'auto'</span></span><br><span class="line"><span class="code">    "listmaxheight": "513px",                 // (可选) 该播放列表的最大长度</span></span><br><span class="line"><span class="code">    "music": [</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "CoCo",</span></span><br><span class="line"><span class="code">            "author": "Jeff Williams",</span></span><br><span class="line"><span class="code">            "url": "caffeine.mp3",</span></span><br><span class="line"><span class="code">            "pic": "caffeine.jpeg",</span></span><br><span class="line"><span class="code">            "lrc": "caffeine.txt"</span></span><br><span class="line"><span class="code">        &#125;,</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "アイロニ",</span></span><br><span class="line"><span class="code">            "author": "鹿乃",</span></span><br><span class="line"><span class="code">            "url": "irony.mp3",</span></span><br><span class="line"><span class="code">            "pic": "irony.jpg"</span></span><br><span class="line"><span class="code">        &#125;</span></span><br><span class="line"><span class="code">    ]</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><p>​    猫耳FM同款回到顶部插件。</p>
+<h1 id="Hexo主题优化"><a href="#Hexo主题优化" class="headerlink" title="Hexo主题优化"></a>Hexo主题优化</h1><h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><p>​    猫耳FM同款回到顶部插件。</p>
 <ol>
 <li><a href="https://i.loli.net/2020/03/13/oCTlu4gV8GYNm2O.png" target="_blank" rel="noopener">下载图片</a>，将其添加到主题页面的 source\images\ 下；</li>
 <li>在 /themes/next/source/css/_common/components/back-to-top.styl 中添加</li>
@@ -1123,21 +1190,24 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 <p>​    则可通过配置主题配置文件来设置鼠标点击效果。</p>
 <p>​    如explosion的效果</p>
 <p><img src="https://i.loli.net/2020/03/16/KDVTNgcn7uxvmjS.gif" alt="explosion.gif"></p>
-<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><ol>
-<li><p>更换Hexo的markdown渲染引擎</p>
-<p>​    卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在next主题中开启mathJax开关</p>
-<p>​    在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
-<figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line"> <span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"> <span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"> <span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"> <span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"> <span class="attr">mathjax:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>​    如此即可在每片文章中自动允许数学公式。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方文档</a></li>
 <li><a href="http://yearito.cn/" target="_blank" rel="noopener">Yearito’s Blog</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
 </ol>
 ]]></content>
       <categories>
@@ -1565,9 +1635,9 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
         <category>Latex</category>
       </categories>
       <tags>
-        <tag>Latex</tag>
-        <tag>Mac</tag>
         <tag>入门</tag>
+        <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
