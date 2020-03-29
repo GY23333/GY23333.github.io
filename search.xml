@@ -938,12 +938,11 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <ul>
 <li>网络层：主机之间的通信</li>
 <li><p>传输层：进程之间的通信</p>
-<p>&emsp;&emsp;传输层依赖于并能强化网络层服务。</p>
+<p>传输层依赖于并能强化网络层服务。</p>
 </li>
 </ul>
 <h3 id="传输层协议"><a href="#传输层协议" class="headerlink" title="传输层协议"></a>传输层协议</h3><ul>
-<li><p>TCP：可靠的，有序的传送</p>
-<ul>
+<li>TCP：可靠的，有序的传送<ul>
 <li>拥塞控制</li>
 <li>流量控制</li>
 <li>需要建立连接</li>
