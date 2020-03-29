@@ -146,7 +146,7 @@
 <li>同步（Timing）：通信的过程，即每一段任务的执行顺序。</li>
 </ul>
 <p><img src="https://i.loli.net/2020/03/22/RS7Lpk2YjGtCnKV.png" style="zoom:50%;" /></p>
-<h2 id="协议层次（Protocol-Layer）及其服务模型"><a href="#协议层次（Protocol-Layer）及其服务模型" class="headerlink" title="协议层次（Protocol Layer）及其服务模型"></a>协议层次（Protocol Layer）及其服务模型</h2><h3 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h3><p>​    因特网协议栈由5个层次组成：物理层、链路层、网络层、运输层和应用层。因特网协议栈是一个理想模型。</p>
+<h2 id="协议层次（Protocol-Layer）及其服务模型"><a href="#协议层次（Protocol-Layer）及其服务模型" class="headerlink" title="协议层次（Protocol Layer）及其服务模型"></a>协议层次（Protocol Layer）及其服务模型</h2><h3 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h3><p>​    因特网协议栈由5个层次组成：物理层、链路层、网络层、传输层和应用层。因特网协议栈是一个理想模型。</p>
 <p>​    下层为上层提供服务。越下面的层，越靠近硬件；越上面的层，越靠近用户。</p>
 <p><img src="https://i.loli.net/2020/03/22/oYnb8OzPqg461Ux.png" alt="截屏2020-03-22上午12.23.35.png" style="zoom: 20%;" /></p>
 <div class="table-container">
@@ -163,7 +163,7 @@
 <td>支持网络应用，应用协议仅仅是网络应用的一个组成部分，运行在不同主机上的进程则使用应用层协议进行通信。</td>
 </tr>
 <tr>
-<td style="text-align:center">运输层（Transport Layer）</td>
+<td style="text-align:center">传输层（Transport Layer）</td>
 <td>负责为信源和信宿提供应用程序进程间的数据传输服务，这一层上主要定义了两个传输协议，传输控制协议即TCP和用户数据报协议UDP。</td>
 </tr>
 <tr>
@@ -182,14 +182,14 @@
 </table>
 </div>
 <h3 id="OSI模型"><a href="#OSI模型" class="headerlink" title="OSI模型"></a>OSI模型</h3><p>​    OSI模型由国际标准化组织（ISO）制定，实际并没有应用，只有理论。</p>
-<p>​    OSI模型由7层组成：应用层、表示层、会话层、运输层、网络层、数据链路层、物理层。</p>
+<p>​    OSI模型由7层组成：应用层、表示层、会话层、传输层、网络层、数据链路层、物理层。</p>
 <h3 id="封装（Encapsulation）"><a href="#封装（Encapsulation）" class="headerlink" title="封装（Encapsulation）"></a>封装（Encapsulation）</h3><p>​    在发送端，</p>
 <ol>
-<li><p>应用层：将 <strong>应用层报文</strong>（application-layer message）M传送给运输层；</p>
+<li><p>应用层：将 <strong>应用层报文</strong>（application-layer message）M传送给传输层；</p>
 </li>
-<li><p>运输层：接收报文M，附上运输层首部信息Ht（包括差错检测位信息等），构成 <strong>运输层报文段</strong>（transport-layer segment），将其传递给网络层；</p>
+<li><p>传输层：接收报文M，附上传输层首部信息Ht（包括差错检测位信息等），构成 <strong>传输层报文段</strong>（transport-layer segment），将其传递给网络层；</p>
 </li>
-<li><p>网络层：接收运输层报文段，附上网络层首部信息Hn（包括源和目的地址等），构成 <strong>网络层数据段</strong>（network-layer datagram），将其传递给网络层；</p>
+<li><p>网络层：接收传输层报文段，附上网络层首部信息Hn（包括源和目的地址等），构成 <strong>网络层数据段</strong>（network-layer datagram），将其传递给网络层；</p>
 </li>
 <li><p>链路层：接收网络层数据段，附上链路层首部信息Hl，构成 <strong>链路层帧</strong>（link-layer frame），将其传递给物理层；</p>
 </li>
@@ -896,15 +896,15 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_UDP_socket_client.png" alt="UDP socket.png" style="zoom:50%;" /></p>
 </li>
 </ul>
-<h4 id="TCP中的socket编程"><a href="#TCP中的socket编程" class="headerlink" title="TCP中的socket编程"></a>TCP中的socket编程</h4><p>  服务器的先行准备</p>
+<h4 id="TCP中的socket编程"><a href="#TCP中的socket编程" class="headerlink" title="TCP中的socket编程"></a>TCP中的socket编程</h4><p>  &emsp;&emsp;服务器的先行准备</p>
 <ul>
 <li>服务器必须先运行</li>
 <li><p>服务器需要创建socket来连接客户机</p>
-<p>客户机连接服务器</p>
+<p>&emsp;&emsp;客户机连接服务器</p>
 </li>
 <li>客户机需要创建自己的socket，明确服务器进程的IP地址和端口号</li>
 <li><p>客户机创建socket时，客户机和服务器之间需建立TCP连接</p>
-<p>服务器接收客户机消息</p>
+<p>&emsp;&emsp;服务器接收客户机消息</p>
 </li>
 <li><p>服务器需创建一个新的socket，为了服务器进程能够和客户机进行通信</p>
 <ul>
@@ -925,7 +925,52 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket_client.png" alt="TCP socket.png" style="zoom:50%;" /></p>
 </li>
 </ul>
-]]></content>
+<h1 id="传输层（Transport-Layer）"><a href="#传输层（Transport-Layer）" class="headerlink" title="传输层（Transport Layer）"></a>传输层（Transport Layer）</h1><h2 id="传输层服务"><a href="#传输层服务" class="headerlink" title="传输层服务"></a>传输层服务</h2><h3 id="传输层概述"><a href="#传输层概述" class="headerlink" title="传输层概述"></a>传输层概述</h3><ul>
+<li>为不同主机之间的应用进程提供通信的桥梁</li>
+<li>端对端：传输层协议在端系统间运行，不需要涉及网络核心<ul>
+<li>发送方把应用层接到的消息分成段（segment），再把这些段传输给网络层</li>
+<li>接收方把接收到的段重新拼装成消息，传输给应用层</li>
+</ul>
+</li>
+<li>传输层的协议：TCP和UDP</li>
+</ul>
+<p><strong>传输层和网络层对比</strong></p>
+<ul>
+<li>网络层：主机之间的通信</li>
+<li><p>传输层：进程之间的通信</p>
+<p>&emsp;&emsp;传输层依赖于并能强化网络层服务。</p>
+</li>
+</ul>
+<h3 id="传输层协议"><a href="#传输层协议" class="headerlink" title="传输层协议"></a>传输层协议</h3><ul>
+<li><p>TCP：可靠的，有序的传送</p>
+<ul>
+<li>拥塞控制</li>
+<li>流量控制</li>
+<li>需要建立连接</li>
+</ul>
+</li>
+<li><p>UDP：不可靠的，无序的传送</p>
+<ul>
+<li>提供尽力而为交付服务</li>
+</ul>
+<p>二者均不提供的服务：延时保障、带宽保障</p>
+</li>
+</ul>
+<h2 id="多路复用（Multiplexing）与多路分用（Demultiplexing）"><a href="#多路复用（Multiplexing）与多路分用（Demultiplexing）" class="headerlink" title="多路复用（Multiplexing）与多路分用（Demultiplexing）"></a>多路复用（Multiplexing）与多路分用（Demultiplexing）</h2><p>  &emsp;&emsp;多路复用存在于发送方：发送方需要处理多个套接字，并且给套接字加上传输层的头部。</p>
+<p>  &emsp;&emsp;多路分用存在于接收方：利用头部信息，将接收到的报文段传输给正确的套接字。</p>
+<p>  <img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Multiplexing.png" alt="Multiplexing/demultiplexing.png" style="zoom:50%;" /></p>
+<h3 id="多路分用工作流程"><a href="#多路分用工作流程" class="headerlink" title="多路分用工作流程"></a>多路分用工作流程</h3><ul>
+<li>主机收到IP数据报（IP datagram）<ul>
+<li>每个数据报有源IP地址和目的IP地址</li>
+<li>每个数据报携带一个传输层报文段（segment）</li>
+<li>每个报文段有源和目的的端口号</li>
+</ul>
+</li>
+<li><p>主机利用IP地址和端口号来把报文段传入正确的套接字</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_segment-format.png" alt="segment format.png" style="zoom:50%;" /></p>
+</li>
+</ul>
+<h3 id="无连接的多路分用"><a href="#无连接的多路分用" class="headerlink" title="无连接的多路分用"></a>无连接的多路分用</h3><h2 id="UDP-1"><a href="#UDP-1" class="headerlink" title="UDP"></a>UDP</h2><h2 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h2><h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
