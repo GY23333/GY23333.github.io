@@ -871,10 +871,10 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
           </div>
 </li>
 </ul>
-<h3 id="socket编程"><a href="#socket编程" class="headerlink" title="socket编程"></a>socket编程</h3><p>  &emsp;&emsp;目标：建立客户机/服务器的应用中的通信运用socket</p>
+<h2 id="socket编程"><a href="#socket编程" class="headerlink" title="socket编程"></a>socket编程</h2><p>  &emsp;&emsp;目标：建立客户机/服务器的应用中的通信运用socket</p>
 <p>  &emsp;&emsp;socket：相当于应用进程和点对点传输协议之间的一扇门</p>
 <p>  &emsp;&emsp;socket类型：对应TCP和UDP有两种socket</p>
-<h4 id="UDP中的socket编程"><a href="#UDP中的socket编程" class="headerlink" title="UDP中的socket编程"></a>UDP中的socket编程</h4><p>  UDP：客户机与服务器之间没有连接</p>
+<h3 id="UDP中的socket编程"><a href="#UDP中的socket编程" class="headerlink" title="UDP中的socket编程"></a>UDP中的socket编程</h3><p>  UDP：客户机与服务器之间没有连接</p>
 <ul>
 <li>发送数据前不需要握手</li>
 <li>发送数据包附加IP地址+端口号</li>
@@ -883,7 +883,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;UDP提供的是一种不可靠的数据流传输，传输过程中可能会丢包，接收的时候顺序也可能被打乱。</p>
           </div>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_UDP_socket.png" alt="UDP socket.png" style="zoom:50%;" /></p>
-<h5 id="UDP中的socket编程示例"><a href="#UDP中的socket编程示例" class="headerlink" title="UDP中的socket编程示例"></a>UDP中的socket编程示例</h5><p>&emsp;&emsp;这里jupyter notebook中进行编程，安装好jupyter notebook后，在命令行执行</p>
+<h4 id="UDP中的socket编程示例"><a href="#UDP中的socket编程示例" class="headerlink" title="UDP中的socket编程示例"></a>UDP中的socket编程示例</h4><p>&emsp;&emsp;这里jupyter notebook中进行编程，安装好jupyter notebook后，在命令行执行</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
 <p>即可启动jupyter notebook</p>
 <p>UDP服务器代码</p>
@@ -896,7 +896,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_UDP_socket_client.png" alt="UDP socket.png" style="zoom:50%;" /></p>
 </li>
 </ul>
-<h4 id="TCP中的socket编程"><a href="#TCP中的socket编程" class="headerlink" title="TCP中的socket编程"></a>TCP中的socket编程</h4><p>  &emsp;&emsp;服务器的先行准备</p>
+<h3 id="TCP中的socket编程"><a href="#TCP中的socket编程" class="headerlink" title="TCP中的socket编程"></a>TCP中的socket编程</h3><p>  &emsp;&emsp;服务器的先行准备</p>
 <ul>
 <li>服务器必须先运行</li>
 <li><p>服务器需要创建socket来连接客户机</p>
@@ -915,16 +915,14 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;TCP提供的是一种可靠的字节流（byte-stream）传输（pipe）。</p>
           </div>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket.png" alt="TCP socket.png" style="zoom:50%;" /></p>
-<h5 id="TCP中的socket编程示例"><a href="#TCP中的socket编程示例" class="headerlink" title="TCP中的socket编程示例"></a>TCP中的socket编程示例</h5><p>TCP服务器代码</p>
-<figure class="highlight python"><figcaption><span>TCPServer.ipynb</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#引入socket库</span></span><br><span class="line"></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment">#服务器端口号</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_STREAM) <span class="comment">#创建服务器套接字（前台）</span></span><br><span class="line">serverSocket.bind((<span class="string">''</span>, serverPort)) <span class="comment">#给套接字绑定端口号</span></span><br><span class="line">serverSocket.listen(<span class="number">1</span>)</span><br><span class="line">print(<span class="string">'The server is ready to receive.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment">#服务器要一直在线等待，所以给一个死循环</span></span><br><span class="line">    connectionSocket, addr = serverSocket.accept() <span class="comment">#前台套接字接收到请求后，创建一个新的套接字（窗口）</span></span><br><span class="line">    </span><br><span class="line">    sentence = connectionSocket.recv(<span class="number">1024</span>).decode() <span class="comment">#窗口套接字读取信息</span></span><br><span class="line">    capitalizedSentence = sentence.upper() <span class="comment">#对消息进行处理（此处是改大写）</span></span><br><span class="line">    </span><br><span class="line">    connectionSocket.send(capitalizedSentence.encode()) <span class="comment">#将处理后的信息发回给客户机</span></span><br><span class="line">    </span><br><span class="line">    connectionSocket.close() <span class="comment">#关闭窗口套接字，前台套接字保持开放</span></span><br></pre></td></tr></table></figure>
-<p>TCP客户机代码</p>
-<figure class="highlight python"><figcaption><span>TCPClient.ipynb</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#引入socket库</span></span><br><span class="line"></span><br><span class="line">serverName = gethostname() <span class="comment">#由于没得服务器，服务器主机用本机来当</span></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment">#服务器端口号</span></span><br><span class="line">clientSocket = socket(AF_INET, SOCK_STREAM) <span class="comment">#创建客户机套接字(类型为字节流SOCK_STREAM)</span></span><br><span class="line">clientSocket.connect((serverName, serverPort)) <span class="comment">#TCP连接</span></span><br><span class="line"></span><br><span class="line">sentence = input(<span class="string">'Input lowercase sentence:'</span>) <span class="comment">#得到输入字符串</span></span><br><span class="line">clientSocket.send(sentence.encode()) <span class="comment">#发送数据到服务器</span></span><br><span class="line"></span><br><span class="line">modifiedSentence = clientSocket.recv(<span class="number">1024</span>) <span class="comment">#接收服务器发回的消息</span></span><br><span class="line">print(<span class="string">'From server:'</span>, modifiedSentence.decode()) <span class="comment">#显示接收的字符串</span></span><br><span class="line"></span><br><span class="line">clientSocket.close() <span class="comment">#关闭客户机socket</span></span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp;先运行TCPServer.ipynb，启动服务器运行。</p>
-<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket_server.png" alt="TCP socket.png" style="zoom:50%;" /></p>
-<p>&emsp;&emsp;先运行TCPClient.ipynb，进行客户机访问。</p>
-<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket_client.png" alt="TCP socket.png" style="zoom:50%;" /></p>
 </li>
 </ul>
+<h4 id="TCP中的socket编程示例"><a href="#TCP中的socket编程示例" class="headerlink" title="TCP中的socket编程示例"></a>TCP中的socket编程示例</h4><p>  TCP服务器代码<br>  <figure class="highlight python"><figcaption><span>TCPServer.ipynb</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#引入socket库</span></span><br><span class="line"></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment">#服务器端口号</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_STREAM) <span class="comment">#创建服务器套接字（前台）</span></span><br><span class="line">serverSocket.bind((<span class="string">''</span>, serverPort)) <span class="comment">#给套接字绑定端口号</span></span><br><span class="line">serverSocket.listen(<span class="number">1</span>)</span><br><span class="line">print(<span class="string">'The server is ready to receive.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment">#服务器要一直在线等待，所以给一个死循环</span></span><br><span class="line">    connectionSocket, addr = serverSocket.accept() <span class="comment">#前台套接字接收到请求后，创建一个新的套接字（窗口）</span></span><br><span class="line">    </span><br><span class="line">    sentence = connectionSocket.recv(<span class="number">1024</span>).decode() <span class="comment">#窗口套接字读取信息</span></span><br><span class="line">    capitalizedSentence = sentence.upper() <span class="comment">#对消息进行处理（此处是改大写）</span></span><br><span class="line">    </span><br><span class="line">    connectionSocket.send(capitalizedSentence.encode()) <span class="comment">#将处理后的信息发回给客户机</span></span><br><span class="line">    </span><br><span class="line">    connectionSocket.close() <span class="comment">#关闭窗口套接字，前台套接字保持开放</span></span><br></pre></td></tr></table></figure></p>
+<p>  TCP客户机代码<br>  <figure class="highlight python"><figcaption><span>TCPClient.ipynb</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#引入socket库</span></span><br><span class="line"></span><br><span class="line">serverName = gethostname() <span class="comment">#由于没得服务器，服务器主机用本机来当</span></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment">#服务器端口号</span></span><br><span class="line">clientSocket = socket(AF_INET, SOCK_STREAM) <span class="comment">#创建客户机套接字(类型为字节流SOCK_STREAM)</span></span><br><span class="line">clientSocket.connect((serverName, serverPort)) <span class="comment">#TCP连接</span></span><br><span class="line"></span><br><span class="line">sentence = input(<span class="string">'Input lowercase sentence:'</span>) <span class="comment">#得到输入字符串</span></span><br><span class="line">clientSocket.send(sentence.encode()) <span class="comment">#发送数据到服务器</span></span><br><span class="line"></span><br><span class="line">modifiedSentence = clientSocket.recv(<span class="number">1024</span>) <span class="comment">#接收服务器发回的消息</span></span><br><span class="line">print(<span class="string">'From server:'</span>, modifiedSentence.decode()) <span class="comment">#显示接收的字符串</span></span><br><span class="line"></span><br><span class="line">clientSocket.close() <span class="comment">#关闭客户机socket</span></span><br></pre></td></tr></table></figure></p>
+<p>  &emsp;&emsp;先运行TCPServer.ipynb，启动服务器运行。</p>
+<p>  <img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket_server.png" alt="TCP socket.png" style="zoom:50%;" /></p>
+<p>  &emsp;&emsp;先运行TCPClient.ipynb，进行客户机访问。</p>
+<p>  <img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP_socket_client.png" alt="TCP socket.png" style="zoom:50%;" /></p>
 <h1 id="传输层（Transport-Layer）"><a href="#传输层（Transport-Layer）" class="headerlink" title="传输层（Transport Layer）"></a>传输层（Transport Layer）</h1><h2 id="传输层服务"><a href="#传输层服务" class="headerlink" title="传输层服务"></a>传输层服务</h2><h3 id="传输层概述"><a href="#传输层概述" class="headerlink" title="传输层概述"></a>传输层概述</h3><ul>
 <li>为不同主机之间的应用进程提供通信的桥梁</li>
 <li>端对端：传输层协议在端系统间运行，不需要涉及网络核心<ul>
@@ -958,7 +956,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <h2 id="多路复用（Multiplexing）与多路分用（Demultiplexing）"><a href="#多路复用（Multiplexing）与多路分用（Demultiplexing）" class="headerlink" title="多路复用（Multiplexing）与多路分用（Demultiplexing）"></a>多路复用（Multiplexing）与多路分用（Demultiplexing）</h2><p>  &emsp;&emsp;多路复用存在于发送方：发送方需要处理多个套接字，并且给套接字加上传输层的头部。</p>
 <p>  &emsp;&emsp;多路分用存在于接收方：利用头部信息，将接收到的报文段传输给正确的套接字。</p>
 <p>  <img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Multiplexing.png" alt="Multiplexing/demultiplexing.png" style="zoom:50%;" /></p>
-<h3 id="多路分用工作流程"><a href="#多路分用工作流程" class="headerlink" title="多路分用工作流程"></a>多路分用工作流程</h3><ul>
+<h3 id="多路分用"><a href="#多路分用" class="headerlink" title="多路分用"></a>多路分用</h3><h4 id="多路分用工作流程"><a href="#多路分用工作流程" class="headerlink" title="多路分用工作流程"></a>多路分用工作流程</h4><ul>
 <li>主机收到IP数据报（IP datagram）<ul>
 <li>每个数据报有源IP地址和目的IP地址</li>
 <li>每个数据报携带一个传输层报文段（segment）</li>
@@ -969,7 +967,8 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_segment-format.png" alt="segment format.png" style="zoom:50%;" /></p>
 </li>
 </ul>
-<h3 id="无连接的多路分用"><a href="#无连接的多路分用" class="headerlink" title="无连接的多路分用"></a>无连接的多路分用</h3><h2 id="UDP-1"><a href="#UDP-1" class="headerlink" title="UDP"></a>UDP</h2><h2 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h2><h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
+<h4 id="无连接的多路分用（Connectionless-demultiplexing）"><a href="#无连接的多路分用（Connectionless-demultiplexing）" class="headerlink" title="无连接的多路分用（Connectionless demultiplexing）"></a>无连接的多路分用（Connectionless demultiplexing）</h4><p>  参考</p>
+<h4 id="面向连接的多路分用（Connection-oriented-demux）"><a href="#面向连接的多路分用（Connection-oriented-demux）" class="headerlink" title="面向连接的多路分用（Connection-oriented demux）"></a>面向连接的多路分用（Connection-oriented demux）</h4><h2 id="UDP-1"><a href="#UDP-1" class="headerlink" title="UDP"></a>UDP</h2><h2 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h2><h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
