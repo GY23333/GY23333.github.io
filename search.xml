@@ -897,14 +897,12 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 </li>
 </ul>
 <h3 id="TCP中的socket编程"><a href="#TCP中的socket编程" class="headerlink" title="TCP中的socket编程"></a>TCP中的socket编程</h3><ul>
-<li><p>服务器的先行准备</p>
-<ul>
+<li>服务器的先行准备<ul>
 <li>服务器必须先运行</li>
 <li>服务器需要创建socket来连接客户机</li>
 </ul>
 </li>
-<li><p>客户机连接服务器</p>
-<ul>
+<li>客户机连接服务器<ul>
 <li>客户机需要创建自己的socket，明确服务器进程的IP地址和端口号</li>
 <li>客户机创建socket时，客户机和服务器之间需建立TCP连接</li>
 </ul>
@@ -981,7 +979,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <li>服务器的主机可能要同时支持多个TCP连接</li>
 <li>web服务器有不同的socket对应每个连接的客户机，其中非持久性HTTP会给每个请求都建立新的socket。</li>
 </ul>
-<h2 id="UDP-1"><a href="#UDP-1" class="headerlink" title="UDP"></a>UDP</h2><p>  &emsp;&emsp;UDP（User Datagram Protocol，用户数据报协议），标准为RFC 768。</p>
+<h2 id="UDP-1"><a href="#UDP-1" class="headerlink" title="UDP"></a>UDP</h2><h2 id="UDP概述"><a href="#UDP概述" class="headerlink" title="UDP概述"></a>UDP概述</h2><p>  &emsp;&emsp;UDP（User Datagram Protocol，用户数据报协议），标准为RFC 768。</p>
 <ul>
 <li>只有基本的功能</li>
 <li>尽力而为的服务，UDP可能会丢包或者失序</li>
@@ -996,15 +994,13 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <li>不需要拥塞控制，可以尽快地把UDP段发出去</li>
 </ul>
 </li>
-<li><p>UDP的应用</p>
-<ul>
+<li>UDP的应用<ul>
 <li>流媒体的app（运行一部分数据的丢失，但是对速度很敏感）</li>
 <li>DNS</li>
 <li>SNMP</li>
 </ul>
 </li>
-<li><p>通过UDP进行可靠的传输（UDP本身是不可靠的）</p>
-<ul>
+<li>通过UDP进行可靠的传输（UDP本身是不可靠的）<ul>
 <li>在应用层增加可靠性</li>
 <li>app要有对应的错误恢复方法</li>
 </ul>
@@ -1012,8 +1008,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 </ul>
 <h3 id="UDP校验和（UDP-checksum）"><a href="#UDP校验和（UDP-checksum）" class="headerlink" title="UDP校验和（UDP checksum）"></a>UDP校验和（UDP checksum）</h3><p>  &emsp;&emsp;位于UDP头部，负责检测传输的段有没有发生“错误”（比如位的翻转）</p>
 <ul>
-<li><p>发送方：</p>
-<ul>
+<li>发送方：<ul>
 <li>把发送的段的内容包括头部分，当作一组16-bit的整数</li>
 <li>校验和：报文段中的所有16-bit的和的取关于“1”的补码</li>
 <li>发送方要将校验和放到UDP的校验和部分</li>
@@ -1028,11 +1023,23 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;校验和相同只能说是“检验不出错误”，不能保障没有错误。比如传输中多个16bit字发生错误，但是可能恰巧相加校验和不变。</p>
           </div>
 <div class="note warning">
-            <p>  &emsp;&emsp;有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">  \begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wraparound\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011   \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
+            <p>  例题：有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">  \begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wrap\ around\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011   \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
           </div>
 </li>
 </ul>
-<h2 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h2><h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
+<h2 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h2><p>  &emsp;&emsp;可靠数据传输原理（Principles of reliable data transfer, <strong>rdt</strong>）</p>
+<ul>
+<li><p>对应用层、传输层、链路层都很重要</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_provide-service.png" alt="provide service.png" style="zoom:46%">&emsp;&emsp;<img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_service-implementation.png" alt="service implementation.png" style="zoom:50%"></p>
+</li>
+<li><p>不可靠信道的特点决定了不可靠传输协议的复杂度</p>
+</li>
+</ul>
+<p>调用接口函数：<br>| 接口函数         | 参数 | 作用                                                         |<br>| ———————— | ———————- | ———— |<br>| <code>rdt_send()</code>     | data     | 调用数据传输协议的发送方，将要发送的数据交付给位于接收方的较高层 |<br>| <code>udt_send()</code>     | packet   | rdt调用，通过不可靠信道，将packet传输到接收方                |<br>| <code>rdt_rcv()</code>      | packet   | 在packet到达接收方信道时调用 |<br>| <code>deliver_data()</code> | data     | rdt调用，传输数据到高层                                              |</p>
+<div class="note info">
+            <p>与不可靠信道之间的函数调用都是双向的，由于其不可靠性，需要进行确认的控制信号。</p>
+          </div>
+<h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
