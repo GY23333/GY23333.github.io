@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Xcode调用Mac摄像头</title>
+    <url>/2020/03/31/Xcode%E8%B0%83%E7%94%A8Mac%E6%91%84%E5%83%8F%E5%A4%B4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">OpenCV: not authorized to capture video (status 0), requesting... OpenCV: camera failed to properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
+<a id="more"></a>
+<h1 id="注册摄像头权限"><a href="#注册摄像头权限" class="headerlink" title="注册摄像头权限"></a>注册摄像头权限</h1><p>&emsp;&emsp;Photo Booth作为Mac原生的调用摄像头的app，天生带有设置权限的<code>Info.plist</code>，我们只需要将Photo Booth的<code>Info.plist</code>稍作修改，便可应用于我们的程序中。</p>
+<p>&emsp;&emsp;当然，首先我们得<a href="https://gy23333.github.io/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">在Xcode里配置OpenCV</a>。</p>
+<ol>
+<li>在<code>/System/Applications/Photo Booth.app</code>中右击“显示包文件”，找到其中的<code>/System/Applications/Photo Booth.app/Contents/Info.plist</code>，将这个<code>Info.plist</code>拷贝用于修改。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_显示包内容.png" style="zoom: 50%;" /></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-position.png" style="zoom: 50%;" /></p>
+<ol>
+<li>修改<code>Info.plist</code></li>
+</ol>
+<p>&emsp;&emsp;将原本的<code>Info.plist</code>进行下列修改。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-proto.png" style="zoom: 50%;" /></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-after.png" style="zoom: 67%;" /></p>
+<ol>
+<li>将<code>Info.plist</code>移入Xcode项目中</li>
+</ol>
+<p>&emsp;&emsp;在Xcode项目的Product文件中右击里面的项目“Show In Folder”，将修改后的<code>Info.plist</code>添加到该文件夹中。</p>
+<p>&emsp;&emsp;摄像头注册配置完成。</p>
+<h1 id="OpenCV-C-调用摄像头"><a href="#OpenCV-C-调用摄像头" class="headerlink" title="OpenCV C++ 调用摄像头"></a>OpenCV C++ 调用摄像头</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//读取视频或摄像头</span></span><br><span class="line">    <span class="function">VideoCapture <span class="title">capture</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">        Mat frame;</span><br><span class="line">        capture &gt;&gt; frame;</span><br><span class="line">        imshow(<span class="string">"读取视频"</span>, frame);</span><br><span class="line">        waitKey(<span class="number">30</span>); <span class="comment">//延时30</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>图像处理</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>Xcode</tag>
+        <tag>Mac</tag>
+        <tag>OpenCV</tag>
+        <tag>摄像头权限</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《计算机网络-自顶向下方法》笔记</title>
     <url>/2020/03/16/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>​    计算机网络课堂笔记，参考用书《计算机网络-自顶向下方法》。</p>
@@ -3019,8 +3055,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
