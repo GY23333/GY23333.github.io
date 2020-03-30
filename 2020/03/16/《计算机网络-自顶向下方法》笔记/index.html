@@ -107,7 +107,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;Network_segment-format.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;Network_UDP-segment.png">
 <meta property="article:published_time" content="2020-03-16T12:54:15.000Z">
-<meta property="article:modified_time" content="2020-03-30T09:19:53.856Z">
+<meta property="article:modified_time" content="2020-03-30T09:23:43.305Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -294,7 +294,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-30 17:19:53" itemprop="dateModified" datetime="2020-03-30T17:19:53+08:00">2020-03-30</time>
+                <time title="Modified: 2020-03-30 17:23:43" itemprop="dateModified" datetime="2020-03-30T17:23:43+08:00">2020-03-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1365,7 +1365,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;校验和相同只能说是“检验不出错误”，不能保障没有错误。比如传输中多个16bit字发生错误，但是可能恰巧相加校验和不变。</p>
           </div>
 <div class="note warning">
-            <p>&emsp;&emsp;有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">\begin{split} &1110011001100110\\\\+\ &1101010101010101\\\\\hlinewraparound\quad1&1011101110111011\quad\\\\sum\quad&1011101110111100\\\\checksum\quad&0100010001000011 \end{split}</script><p>&emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
+            <p>  &emsp;&emsp;有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">  \begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wraparound\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011   \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
           </div>
 </li>
 </ul>

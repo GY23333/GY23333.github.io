@@ -1028,7 +1028,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;校验和相同只能说是“检验不出错误”，不能保障没有错误。比如传输中多个16bit字发生错误，但是可能恰巧相加校验和不变。</p>
           </div>
 <div class="note warning">
-            <p>&emsp;&emsp;有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">\begin{split} &1110011001100110\\\\+\ &1101010101010101\\\\\hlinewraparound\quad1&1011101110111011\quad\\\\sum\quad&1011101110111100\\\\checksum\quad&0100010001000011 \end{split}</script><p>&emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
+            <p>  &emsp;&emsp;有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">  \begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wraparound\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011   \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
           </div>
 </li>
 </ul>
@@ -2259,9 +2259,9 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>C++</tag>
+        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
-        <tag>Xcode</tag>
         <tag>环境配置</tag>
       </tags>
   </entry>
@@ -3012,8 +3012,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
@@ -3221,8 +3221,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>图像处理</category>
       </categories>
       <tags>
-        <tag>Canny</tag>
         <tag>C++</tag>
+        <tag>Canny</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
       </tags>
