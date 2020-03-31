@@ -58,12 +58,12 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;XcodeCamera_Info-proto.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;XcodeCamera_Info-after.png">
 <meta property="article:published_time" content="2020-03-30T17:04:38.000Z">
-<meta property="article:modified_time" content="2020-03-30T18:05:29.241Z">
+<meta property="article:modified_time" content="2020-03-30T18:08:53.898Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Xcode">
-<meta property="article:tag" content="Mac">
 <meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="Mac">
 <meta property="article:tag" content="摄像头权限">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;GY23333&#x2F;imgs&#x2F;master&#x2F;XcodeCamera_显示包内容.png">
@@ -243,7 +243,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-03-31 01:04:38 / Modified: 02:05:29" itemprop="dateCreated datePublished" datetime="2020-03-31T01:04:38+08:00">2020-03-31</time>
+              <time title="Created: 2020-03-31 01:04:38 / Modified: 02:08:53" itemprop="dateCreated datePublished" datetime="2020-03-31T01:04:38+08:00">2020-03-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -293,20 +293,14 @@
 <a id="more"></a>
 <h1 id="注册摄像头权限"><a href="#注册摄像头权限" class="headerlink" title="注册摄像头权限"></a>注册摄像头权限</h1><p>&emsp;&emsp;Photo Booth作为Mac原生的调用摄像头的app，天生带有设置权限的<code>Info.plist</code>，我们只需要将Photo Booth的<code>Info.plist</code>稍作修改，便可应用于我们的程序中。</p>
 <p>&emsp;&emsp;当然，首先我们得<a href="https://gy23333.github.io/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">在Xcode里配置OpenCV</a>。</p>
-<ol>
-<li>在<code>/System/Applications/Photo Booth.app</code>中右击“显示包文件”，找到其中的<code>/System/Applications/Photo Booth.app/Contents/Info.plist</code>，将这个<code>Info.plist</code>拷贝用于修改。</li>
-</ol>
+<p>1、在<code>/System/Applications/Photo Booth.app</code>中右击“显示包文件”，找到其中的<code>/System/Applications/Photo Booth.app/Contents/Info.plist</code>，将这个<code>Info.plist</code>拷贝用于修改。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_显示包内容.png" style="zoom: 50%;" /></p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-position.png" style="zoom: 50%;" /></p>
-<ol>
-<li>修改<code>Info.plist</code></li>
-</ol>
+<p>2、修改<code>Info.plist</code></p>
 <p>&emsp;&emsp;将原本的<code>Info.plist</code>进行下列修改。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-proto.png" style="zoom: 50%;" /></p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-after.png" style="zoom: 67%;" /></p>
-<ol>
-<li>将<code>Info.plist</code>移入Xcode项目中</li>
-</ol>
+<p>3、将<code>Info.plist</code>移入Xcode项目中</p>
 <p>&emsp;&emsp;在Xcode项目的Product文件中右击里面的项目“Show In Folder”，将修改后的<code>Info.plist</code>添加到该文件夹中。</p>
 <p>&emsp;&emsp;摄像头注册配置完成。</p>
 <h1 id="OpenCV-C-调用摄像头"><a href="#OpenCV-C-调用摄像头" class="headerlink" title="OpenCV C++ 调用摄像头"></a>OpenCV C++ 调用摄像头</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//读取视频或摄像头</span></span><br><span class="line">    <span class="function">VideoCapture <span class="title">capture</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">        Mat frame;</span><br><span class="line">        capture &gt;&gt; frame;</span><br><span class="line">        imshow(<span class="string">"读取视频"</span>, frame);</span><br><span class="line">        waitKey(<span class="number">30</span>); <span class="comment">//延时30</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -321,8 +315,8 @@
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"># C++</a>
               <a href="/tags/Xcode/" rel="tag"># Xcode</a>
-              <a href="/tags/Mac/" rel="tag"># Mac</a>
               <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
               <a href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4%E6%9D%83%E9%99%90/" rel="tag"># 摄像头权限</a>
           </div>
 

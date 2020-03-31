@@ -7,20 +7,14 @@
 <a id="more"></a>
 <h1 id="注册摄像头权限"><a href="#注册摄像头权限" class="headerlink" title="注册摄像头权限"></a>注册摄像头权限</h1><p>&emsp;&emsp;Photo Booth作为Mac原生的调用摄像头的app，天生带有设置权限的<code>Info.plist</code>，我们只需要将Photo Booth的<code>Info.plist</code>稍作修改，便可应用于我们的程序中。</p>
 <p>&emsp;&emsp;当然，首先我们得<a href="https://gy23333.github.io/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">在Xcode里配置OpenCV</a>。</p>
-<ol>
-<li>在<code>/System/Applications/Photo Booth.app</code>中右击“显示包文件”，找到其中的<code>/System/Applications/Photo Booth.app/Contents/Info.plist</code>，将这个<code>Info.plist</code>拷贝用于修改。</li>
-</ol>
+<p>1、在<code>/System/Applications/Photo Booth.app</code>中右击“显示包文件”，找到其中的<code>/System/Applications/Photo Booth.app/Contents/Info.plist</code>，将这个<code>Info.plist</code>拷贝用于修改。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_显示包内容.png" style="zoom: 50%;" /></p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-position.png" style="zoom: 50%;" /></p>
-<ol>
-<li>修改<code>Info.plist</code></li>
-</ol>
+<p>2、修改<code>Info.plist</code></p>
 <p>&emsp;&emsp;将原本的<code>Info.plist</code>进行下列修改。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-proto.png" style="zoom: 50%;" /></p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/XcodeCamera_Info-after.png" style="zoom: 67%;" /></p>
-<ol>
-<li>将<code>Info.plist</code>移入Xcode项目中</li>
-</ol>
+<p>3、将<code>Info.plist</code>移入Xcode项目中</p>
 <p>&emsp;&emsp;在Xcode项目的Product文件中右击里面的项目“Show In Folder”，将修改后的<code>Info.plist</code>添加到该文件夹中。</p>
 <p>&emsp;&emsp;摄像头注册配置完成。</p>
 <h1 id="OpenCV-C-调用摄像头"><a href="#OpenCV-C-调用摄像头" class="headerlink" title="OpenCV C++ 调用摄像头"></a>OpenCV C++ 调用摄像头</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//读取视频或摄像头</span></span><br><span class="line">    <span class="function">VideoCapture <span class="title">capture</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">        Mat frame;</span><br><span class="line">        capture &gt;&gt; frame;</span><br><span class="line">        imshow(<span class="string">"读取视频"</span>, frame);</span><br><span class="line">        waitKey(<span class="number">30</span>); <span class="comment">//延时30</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -31,8 +25,8 @@
       <tags>
         <tag>C++</tag>
         <tag>Xcode</tag>
-        <tag>Mac</tag>
         <tag>OpenCV</tag>
+        <tag>Mac</tag>
         <tag>摄像头权限</tag>
       </tags>
   </entry>
@@ -1073,8 +1067,74 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 </ul>
 <p>调用接口函数：<br>| 接口函数         | 参数 | 作用                                                         |<br>| ———————— | ———————- | ———— |<br>| <code>rdt_send()</code>     | data     | 调用数据传输协议的发送方，将要发送的数据交付给位于接收方的较高层 |<br>| <code>udt_send()</code>     | packet   | rdt调用，通过不可靠信道，将packet传输到接收方                |<br>| <code>rdt_rcv()</code>      | packet   | 在packet到达接收方信道时调用 |<br>| <code>deliver_data()</code> | data     | rdt调用，传输数据到高层                                              |</p>
 <div class="note info">
-            <p>与不可靠信道之间的函数调用都是双向的，由于其不可靠性，需要进行确认的控制信号。</p>
+            <p>与不可靠信道之间的函数调用都是双向的，由于其不可靠性，需要进行确认的控制信号（ACK，NAK）。</p>
           </div>
+<h3 id="rdt1-0：经可靠信道的可靠数据传输"><a href="#rdt1-0：经可靠信道的可靠数据传输" class="headerlink" title="rdt1.0：经可靠信道的可靠数据传输"></a>rdt1.0：经可靠信道的可靠数据传输</h3><h4 id="rdt1-0概述"><a href="#rdt1-0概述" class="headerlink" title="rdt1.0概述"></a>rdt1.0概述</h4><ul>
+<li>下层信道完全可靠：rdt1.0中假设下层的信道是一个完全可靠的信道（理想情况）<ul>
+<li>没有bit的错误</li>
+<li>没有分组（packet）丢失</li>
+</ul>
+</li>
+<li>发送方和接收方的<strong>有限状态机（FSM）</strong>（存在状态和操作）<ul>
+<li>发送方发送数据给下层信道</li>
+<li>接收方接收下层信道传来的数据</li>
+</ul>
+</li>
+</ul>
+<h4 id="rdt1-0无限状态机"><a href="#rdt1-0无限状态机" class="headerlink" title="rdt1.0无限状态机"></a>rdt1.0无限状态机</h4><h5 id="发送方"><a href="#发送方" class="headerlink" title="发送方"></a>发送方</h5><p>&emsp;&emsp;发送方首先在“<strong>等待上级调用</strong>”的状态，<code>rdt_send(data)</code>上级调用rdt，从上级接收到data，<code>make_pkt(data)</code>将data装到packet里，再用<code>udt_send(packet)</code>将packet发送出去，完成后发送方再回到“等待上级调用”的状态。（发送方只有一个状态）</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt1-0-sender.png" alt="rdt1.0 sender.png" style="zoom:50%"></p>
+<h5 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h5><p>&emsp;&emsp;接收方首先在“<strong>等待下级调用</strong>”的状态，<code>rdt_rcv(packet)</code>下级调用rdt，从下级接收到packet，用<code>extract(packet, data)</code>将packet重新恢复成data，提取出来的data再通过<code>deliver_data(data)</code>传送给上级。完成后接收方再回到“等待下级调用”的状态。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt1-0-receiver.png" alt="rdt1.0 receiver.png" style="zoom:50%"></p>
+<p>下层信道不可能完全可靠 =&gt; 引入rdt2.0</p>
+<h3 id="rdt2-0：经具有比特差错信道的数据传输"><a href="#rdt2-0：经具有比特差错信道的数据传输" class="headerlink" title="rdt2.0：经具有比特差错信道的数据传输"></a>rdt2.0：经具有比特差错信道的数据传输</h3><p>&emsp;&emsp;引入差错检测、控制信号和重传机制，解决下层信道不可靠问题。</p>
+<h4 id="rdt2-0概述"><a href="#rdt2-0概述" class="headerlink" title="rdt2.0概述"></a>rdt2.0概述</h4><ul>
+<li>packet在下层信道传输中会出现<strong>比特翻转</strong>：可以引入<a href="https://gy23333.github.io/2020/03/16/《计算机网络-自顶向下方法》笔记/#UDP校验和（UDP-checksum）"><strong>校验和（checksum）</strong></a>来检测比特错误。</li>
+<li>错误恢复——如果检验到错误如何恢复？<ul>
+<li><strong>ACKs（acknowledgements）</strong>：接收方告诉发送方收到的pkt是正确的</li>
+<li><strong>NAKs（negative acknowledgements）</strong>：接收方告诉发送方收到的pkt是错误的</li>
+<li>发送方收到NAK则重传那个pkt</li>
+</ul>
+</li>
+<li>rdt2.0引入的新机制<ul>
+<li>差错检测：checksum</li>
+<li>接收方反馈：控制信号（control msg），即ACK和NAK</li>
+<li>重传</li>
+</ul>
+</li>
+</ul>
+<h4 id="rdt2-0无限状态机"><a href="#rdt2-0无限状态机" class="headerlink" title="rdt2.0无限状态机"></a>rdt2.0无限状态机</h4><h5 id="发送方-1"><a href="#发送方-1" class="headerlink" title="发送方"></a>发送方</h5><p>&emsp;&emsp;rdt2.0的发送方有2个状态——<strong>等待上级调用</strong>、<strong>等待ACK或NAK</strong>。发送方最初处于“<strong>等待上级调用</strong>”的状态，<code>rdt_send(data)</code>上级调用rdt，从上级接收到data，<code>sndpkt = make_pkt(data, checksum)</code>将data装到packet里，再用<code>udt_send(sndpkt)</code>将packet发送出去。此时，发送方变为“<strong>等待ACK或NAK</strong>”的状态。<code>rdt_rcv(rcvpkt)</code>接收反馈，如果<code>isNAK(rcvpkt)</code>即接收到NAK，则重传<code>udt_send(sndpkt)</code>，并保持“<strong>等待ACK或NAK</strong>”的状态；如果<code>isACK(rcvpkt)</code>即接收到ACK，则回到“<strong>等待上级调用</strong>”的状态。</p>
+<div class="note info">
+            <p>停等机制（stop and wait）</p><p>&emsp;&emsp;发送方发送一个packet，然后等待接收方的响应。</p>
+          </div>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-0-sender.png" alt="rdt2.0 sender.png" style="zoom:50%"></p>
+<h5 id="接收方-1"><a href="#接收方-1" class="headerlink" title="接收方"></a>接收方</h5><p>&emsp;&emsp;接收方还是只有一个状态——<strong>等待下级调用</strong>。接收方首先在“<strong>等待下级调用</strong>”的状态，<code>rdt_rcv(rcvpkt)</code>接收方接收packet，如果<code>corrupt(rcvpkt)</code>，即检测到错误，则<code>udt_send(NAK)</code>反馈NAK；如果<code>notcorrupt(rcvpkt)</code>，即未检测到错误，则<code>extract(packet, data)</code>将packet重新恢复成data，<code>deliver_data(data)</code>将data传送给上级，最后<code>udt_send(ACK)</code>反馈ACK。完成后接收方再回到“等待下级调用”的状态。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-0-receiver.png" alt="rdt2.0 receiver.png" style="zoom:50%"></p>
+<p>接收方可能判断ACK/NAK信号出错，导致发送分组重复 =&gt; 引入rdt2.1</p>
+<h3 id="rdt2-1：接收方判断ACK-NAK信号出错"><a href="#rdt2-1：接收方判断ACK-NAK信号出错" class="headerlink" title="rdt2.1：接收方判断ACK/NAK信号出错"></a>rdt2.1：接收方判断ACK/NAK信号出错</h3><p>&emsp;&emsp;引入0/1序号和丢弃分组，解决接收方判断ACK/NAK信号出错，导致发送分组重复问题。但这也让发送方和接收方有限状态机的状态翻倍。</p>
+<h4 id="rdt2-1有限状态机"><a href="#rdt2-1有限状态机" class="headerlink" title="rdt2.1有限状态机"></a>rdt2.1有限状态机</h4><h5 id="发送方-2"><a href="#发送方-2" class="headerlink" title="发送方"></a>发送方</h5><p>&emsp;&emsp;相较于rdt2.0，rdt2.1在发送的packet里包含了0/1序号（sequence number），所以发送方有4种状态——<strong>等待上级调用 0</strong>、<strong>等待ACK或NAK 0</strong>、<strong>等待上级调用 1</strong>、<strong>等待ACK或NAK 1</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-1-sender.png" alt="rdt2.1 sender.png" style="zoom:50%"></p>
+<h5 id="接收方-2"><a href="#接收方-2" class="headerlink" title="接收方"></a>接收方</h5><p>&emsp;&emsp;接收方有2种状态——<strong>等待下级调用 0</strong>、<strong>等待下级调用 1</strong>。只有在数据包ACK且<strong>收到的packet序号与目前状态等待的序号相同</strong>时，才能向上传输。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-1-receiver.png" alt="rdt2.1 receiver.png" style="zoom:50%"></p>
+<div class="note info">
+            <p>为什么接收方等待1状态接收到0的packet时，为什么要反馈ACK？</p><p>&emsp;&emsp;为了让发送方的状态转移，从“等待ACK或NAK 0”到“等待上级调用 1”。</p>
+          </div>
+<h3 id="rdt2-2：不发生NAK的协议"><a href="#rdt2-2：不发生NAK的协议" class="headerlink" title="rdt2.2：不发生NAK的协议"></a>rdt2.2：不发生NAK的协议</h3><p>&emsp;&emsp;用重复的ACK替代NAK，解决信号冗余问题。</p>
+<h4 id="rdt2-2概述"><a href="#rdt2-2概述" class="headerlink" title="rdt2.2概述"></a>rdt2.2概述</h4><ul>
+<li>只用ACK，不用NAK，实现和rdt2.1一样的功能。</li>
+<li>在检测到错误时，不发送NAK，但是接收方要发送判断上一次序号的ACK（同时包括序号）</li>
+<li>用重复的ACK代替NAK</li>
+</ul>
+<h4 id="rdt2-2有限状态机"><a href="#rdt2-2有限状态机" class="headerlink" title="rdt2.2有限状态机"></a>rdt2.2有限状态机</h4><h5 id="发送方-3"><a href="#发送方-3" class="headerlink" title="发送方"></a>发送方</h5><p>&emsp;&emsp;将rdt2.1中的<code>isNAK(rcvpkt)</code>判断本次反馈是NAK，替代成判断上次序号的反馈是ACK，比如rdt2.2在“<strong>等待ACK 0</strong>”时，如果<code>isACK(rcvpkt, 1)</code>，则相当于收到来rdt2.1中的<code>isNAK(rcvpkt)</code>。其余不变。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-2-sender.png" alt="rdt2.2 sender.png" style="zoom:50%"></p>
+<h5 id="接收方-3"><a href="#接收方-3" class="headerlink" title="接收方"></a>接收方</h5><p>&emsp;&emsp;接收方如果校验和检测出错，则发送上一次序号的ACK；在校验和检测正确时，发送ACK也需要带上本次的序号。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt2-2-receiver.png" alt="rdt2.2 receiver.png" style="zoom:50%"></p>
+<h3 id="rdt3-0：信道存在错误和丢包"><a href="#rdt3-0：信道存在错误和丢包" class="headerlink" title="rdt3.0：信道存在错误和丢包"></a>rdt3.0：信道存在错误和丢包</h3><h4 id="rdt3-0概述"><a href="#rdt3-0概述" class="headerlink" title="rdt3.0概述"></a>rdt3.0概述</h4><p>&emsp;&emsp;发送端在一个合理的时间内，等待接收ACK。</p>
+<ul>
+<li>当在等待时间内没有接收ACK时，重传</li>
+<li>超过时间可能有两种情况：丢包或时延，如果发生时延可能会重复发生pkt，此时rdt2.1和2.2中的序号可以解决问题，同样的发生ACK得带上序号。</li>
+<li>需要计时器</li>
+</ul>
+<h4 id="rdt3-0有限状态机"><a href="#rdt3-0有限状态机" class="headerlink" title="rdt3.0有限状态机"></a>rdt3.0有限状态机</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_rdt3-0-sender.png" alt="rdt3.0 sender.png" style="zoom:50%"></p>
 <h2 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h2><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
       <categories>
         <category>计算机网络</category>
@@ -2044,8 +2104,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
@@ -3055,8 +3115,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
