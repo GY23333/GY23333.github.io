@@ -24,8 +24,8 @@
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
+        <tag>Xcode</tag>
         <tag>Mac</tag>
         <tag>摄像头权限</tag>
       </tags>
@@ -2535,9 +2535,9 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
+        <tag>Xcode</tag>
         <tag>环境配置</tag>
       </tags>
   </entry>
@@ -3288,8 +3288,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
@@ -3497,8 +3497,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>图像处理</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>Canny</tag>
+        <tag>C++</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
       </tags>
