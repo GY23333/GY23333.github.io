@@ -25,8 +25,8 @@
       <tags>
         <tag>C++</tag>
         <tag>Xcode</tag>
-        <tag>Mac</tag>
         <tag>OpenCV</tag>
+        <tag>Mac</tag>
         <tag>摄像头权限</tag>
       </tags>
   </entry>
@@ -1188,7 +1188,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <li>接收方只发送累计ACK</li>
 <li>发送方给最早还没ACK的packet一个计时器，当这个计时器到时时，重传所有的未ACK的packet。</li>
 </ul>
-<h5 id="GBN发送方"><a href="#GBN发送方" class="headerlink" title="GBN发送方"></a>GBN发送方</h5><ul>
+<h4 id="GBN发送方"><a href="#GBN发送方" class="headerlink" title="GBN发送方"></a>GBN发送方</h4><ul>
 <li>packet头部有k bit的序号，则可以表示 $2^k$ 个序号。</li>
 <li>“窗口”大小为N，这一段是允许的未ACK的packet</li>
 </ul>
@@ -1199,7 +1199,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <li>如果timeout（n），重传#n以及比#n更大的未ACK的packet</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_GBN-sender(1).png" alt="GBN sender.png" style="zoom:50%"></p>
-<h5 id="GBN接收方"><a href="#GBN接收方" class="headerlink" title="GBN接收方"></a>GBN接收方</h5><ul>
+<h4 id="GBN接收方"><a href="#GBN接收方" class="headerlink" title="GBN接收方"></a>GBN接收方</h4><ul>
 <li>发送的ACK是顺序接收到的packet里面最大的序列号#<ul>
 <li>可能会产生重复的ACK</li>
 <li>只需要记住期望的序列号（expextedseqnum）</li>
@@ -1212,7 +1212,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_GBN-receiver.png" alt="GBN receiver.png" style="zoom:50%"></p>
-<h5 id="GBN流程"><a href="#GBN流程" class="headerlink" title="GBN流程"></a>GBN流程</h5><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_GBN-action.png" alt="GBN action.png" style="zoom:50%"></p>
+<h4 id="GBN流程"><a href="#GBN流程" class="headerlink" title="GBN流程"></a>GBN流程</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_GBN-action.png" alt="GBN action.png" style="zoom:50%"></p>
 <div class="note warning">
             <p>例题：采用GBN协议，一个发送方发送了 #0到#5 的packet，但是只收到了 ACK0 和 ACK2。问发送方要重发哪些packet？</p><p>&emsp;&emsp;重发#3、#4、#5 的 packet。</p><p>&emsp;&emsp;虽然没有收到ACK1，但是接收方只有在#n及之前的packet都收到了的时候，才会发送ACKn，发送方接收到ACK n，则证明接收方#n及之前的packet都收到了。所以ACK1应该是在发送过程中丢包了，但是实际接收方已经收到了#1 packet。所以重发#3、#4、#5 的 packet。</p>
           </div>
