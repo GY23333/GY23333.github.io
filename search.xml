@@ -25,8 +25,8 @@
       <tags>
         <tag>C++</tag>
         <tag>Xcode</tag>
-        <tag>Mac</tag>
         <tag>OpenCV</tag>
+        <tag>Mac</tag>
         <tag>摄像头权限</tag>
       </tags>
   </entry>
@@ -2537,8 +2537,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
         <tag>C++</tag>
         <tag>Xcode</tag>
         <tag>OpenCV</tag>
-        <tag>环境配置</tag>
         <tag>图像处理</tag>
+        <tag>环境配置</tag>
       </tags>
   </entry>
   <entry>
@@ -3498,9 +3498,9 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
       </categories>
       <tags>
         <tag>C++</tag>
+        <tag>Canny</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
-        <tag>Canny</tag>
       </tags>
   </entry>
   <entry>
