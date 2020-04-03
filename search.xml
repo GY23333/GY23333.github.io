@@ -1194,7 +1194,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_GBN-sender.png" alt="GBN sender.png" style="zoom:50%"></p>
 <ul>
-<li>ACK(n)累计确认：ACK在发送的时候要带上序号#n，即#n及之前的packet都收到了。发送方接收到ACK n，则证明接收方#n及之前的packet都收到了。但是还是可能会收到重复的ACK。</li>
+<li>ACK(n)累计确认：ACK在发送的时候要带上序号#n，即#n及之前的packet都收到了。接收方发送ACK n，则证明#n及之前的packet都收到了。否则接收方还是发送之前的ACK（重复）。</li>
 <li>计时器只给最早的未ACK的packet保留</li>
 <li>如果timeout（n），重传#n以及比#n更大的未ACK的packet</li>
 </ul>
@@ -1308,7 +1308,87 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p>8、紧急指针：只有当 URG 标志置 1 时紧急指针才有效。紧急指针是一个正的偏移量，和顺序号字段中的值相加表示紧急数据最后一个字节的序号。 TCP 的紧急方式是发送端向另一端发送紧急数据的一种方式。</p>
 <p>9、选项和填充：最常见的可选字段是最长报文大小，又称为MSS（Maximum Segment Size），每个连接方通常都在通信的第一个报文段（为建立连接而设置SYN标志为1的那个段）中指明这个选项，它表示本端所能接受的最大报文段的长度。选项长度不一定是32位的整数倍，所以要加填充位，即在这个字段中加入额外的零，以保证TCP头是32的整数倍。</p>
 <p>10、数据部分： TCP 报文段中的数据部分是可选的。在一个连接建立和一个连接终止时，双方交换的报文段仅有 TCP 首部。如果一方没有数据要发送，也使用没有任何数据的首部来确认收到的数据。在处理超时的许多情况中，也会发送不带任何数据的报文段。</p>
-<h3 id="TCP序号"><a href="#TCP序号" class="headerlink" title="TCP序号"></a>TCP序号</h3><h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
+<h4 id="TCP序号"><a href="#TCP序号" class="headerlink" title="TCP序号"></a>TCP序号</h4><p>&emsp;&emsp;报文段（segment）的序号：字节流第一个字节的序号</p>
+<div class="note warning">
+            <p>例题：下面文件的前3个报文段的序号分别是？</p><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP-segment#.png" alt="TCP segment sequenceNum.png" style="zoom:50%"></p><p>&emsp;&emsp;第一个报文段：0；第二个报文段：1000；第三个报文段：2000</p>
+          </div>
+<h4 id="TCP-ACK"><a href="#TCP-ACK" class="headerlink" title="TCP ACK"></a>TCP ACK</h4><ul>
+<li>TCP报文的ACK填写：期望从另一方收到的下一个字节序号<ul>
+<li>主机A接收到从主机B传来的字节#0～535，A下一个期望接到的字节#为536，所以主机A发送的报文段的ACK中填536。</li>
+</ul>
+</li>
+<li>累计ACK（cumulative ACK）:与GBN相似<ul>
+<li>主机A接收到从主机B传来的字节 #0～535 和 #900～1000，A下一个期望接到的字节#依旧为536，所以主机A下一个发送的报文段的ACK中填536。</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-序号和ACK传输"><a href="#TCP-序号和ACK传输" class="headerlink" title="TCP 序号和ACK传输"></a>TCP 序号和ACK传输</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP-segment-eg.png" alt="TCP segment eg.png" style="zoom:40%"></p>
+<h4 id="TCP计时"><a href="#TCP计时" class="headerlink" title="TCP计时"></a>TCP计时</h4><p>如何设置TCP timeout值？</p>
+<ul>
+<li>$time &gt; RTT$（但是RTT会改变）</li>
+<li>不能太短：过早timeout造成不必要的重传</li>
+<li>不能太长：对丢包反应太慢</li>
+</ul>
+<p>如何EstimateRTT（估计RTT）？</p>
+<ul>
+<li>SampleRTT（样本RTT）：计算发送segment到接收ACK的时间，忽略重传</li>
+<li>SampleRTT多次测量取平均</li>
+</ul>
+<p>则EstimateRTT为</p>
+<script type="math/tex; mode=display">
+EstimateRTT = (1-\alpha )*EstimateRTT + \alpha *SamleRTT</script><ul>
+<li>指数加权移动平均（不是线形的，存在迭代使原来的SamleRTT的系数越来越小，越靠后的越接近当前网络状态）</li>
+<li>EstimateRTT的变化通常比SamleRTT变化更加平滑</li>
+<li><p>一般，$\alpha = 0.125$</p>
+</li>
+<li><p>DevRTT（偏差RTT）为（一般$\beta = 0.25$）</p>
+<script type="math/tex; mode=display">
+DevRTT = (1-\beta )*DevRTT + \beta *|SampleRTT-EstimatedRTT|</script></li>
+</ul>
+<p>重传超时间隙（TimeoutInterval）</p>
+<script type="math/tex; mode=display">
+TimeoutInterval = EstimatedRTT + 4*DevRTT</script><h3 id="TCP可靠数据传输"><a href="#TCP可靠数据传输" class="headerlink" title="TCP可靠数据传输"></a>TCP可靠数据传输</h3><ul>
+<li>TCP的rdt服务是建立在IP的不可靠传输上的<ul>
+<li>流水机制</li>
+<li>累计ACK</li>
+<li>一个timer</li>
+</ul>
+</li>
+<li>重传触发情况<ul>
+<li>超时</li>
+<li>重复的ACK</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP简化"><a href="#TCP简化" class="headerlink" title="TCP简化"></a>TCP简化</h4><p>&emsp;&emsp;TCP简化版：无重复ACK、拥塞控制和流量控制。</p>
+<h5 id="TCP-sender"><a href="#TCP-sender" class="headerlink" title="TCP sender"></a>TCP sender</h5><p>TCP sender 的3种事件</p>
+<ul>
+<li>从上一层收到数据<ul>
+<li>分段，创建seq#（报文中字节流第一个字节的序号）</li>
+<li>开始timer<ul>
+<li>只给最早一个未ACK的segment timer</li>
+<li>用 TimeoutInterval 作为timeout时间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>超时<ul>
+<li>重传segment</li>
+<li>重启timer</li>
+</ul>
+</li>
+<li>收到ACK<ul>
+<li>如果收到未ACK的segment的ACK<ul>
+<li>更新被ACK的segment标记</li>
+<li>从最近的一个未ACK的segment开新的timer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="label info">图 TCP sender简化版</span>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP-sender.png" alt="TCP sender.png" style="zoom:30%"></p>
+<h2 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h2><h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
