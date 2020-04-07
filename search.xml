@@ -1585,6 +1585,79 @@ TCP\ throughput = \frac{1.22MSS}{RTT\sqrt{L}}</script><p>10Gps的吞吐量，报
 <li>转发（Forwarding）：将packet从route的输入端口到合适的输出端口</li>
 <li>连接建立（Connection setup）：一些网络结构要求数据传输前先建立路由路径</li>
 </ul>
+<h3 id="网络层服务"><a href="#网络层服务" class="headerlink" title="网络层服务"></a>网络层服务</h3><ul>
+<li>确保交付（Guaranteed delivery）</li>
+<li>具有时延上界的确保交付（Guaranteed delivery with bounded delay）</li>
+<li>有序分组交付（In-order packet delivery）</li>
+<li>确保最小带宽（Guaranteed minimal bandwidth）</li>
+<li>安全性服务（Security）</li>
+</ul>
+<p>&emsp;&emsp;网络层提供<strong>尽力而为的服务</strong>（best-effort service）。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_service-models.png" alt="Network layer service models" style="zoom: 30%;"></p>
+<h2 id="虚电路和数据报网络（Virtual-circuit-and-datagram-networks）"><a href="#虚电路和数据报网络（Virtual-circuit-and-datagram-networks）" class="headerlink" title="虚电路和数据报网络（Virtual circuit and datagram networks）"></a>虚电路和数据报网络（Virtual circuit and datagram networks）</h2><ul>
+<li>数据报网络是无连接的服务</li>
+<li>虚电路是面向连接的服务</li>
+<li>端到端的服务、运行在网络核心</li>
+</ul>
+<h3 id="虚电路（Virtual-circuit，VC）"><a href="#虚电路（Virtual-circuit，VC）" class="headerlink" title="虚电路（Virtual circuit，VC）"></a>虚电路（Virtual circuit，VC）</h3><ul>
+<li>呼叫建立 -&gt; 数据传输 -&gt; 呼叫拆除</li>
+<li>每个packet携带VC号</li>
+<li>路径上的每个router会给每个经过的VC维护连接状态</li>
+<li>链路、路由资源（带宽、缓存）都会分配到VC</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Virtual-circuit.png" alt="Virtual circuit" style="zoom: 30%;"></p>
+<p>VC组成：</p>
+<ul>
+<li>从源到目的的路径</li>
+<li>VC号：路径上每个链路都有一个号码（可以变化）</li>
+<li>转发表</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Forwarding-Table.png" alt="Forwarding Tables" style="zoom: 30%;"></p>
+<p>路由维持连接状态的信息。</p>
+<p><strong>信令协议(signaling protocol)</strong></p>
+<p>VC采用信令协议(signaling protocol)</p>
+<ul>
+<li>用来建立、维护、拆除VC</li>
+<li>用在ATM、frame-relay、X.25</li>
+<li>VC在Internet中没有使用</li>
+</ul>
+<h3 id="数据报网络（Datagram-networks）"><a href="#数据报网络（Datagram-networks）" class="headerlink" title="数据报网络（Datagram networks）"></a>数据报网络（Datagram networks）</h3><ul>
+<li>无连接</li>
+<li>路由没有端到端的连接状态</li>
+<li>packet通过目的主机ID来路由，同一个源到目的的packet可能走不同的路径。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_datagram-networks.png" alt="Datagram networks" style="zoom: 30%;"></p>
+<p>转发表存储地址范围对应的链路接口，比如</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Destination Address Range</th>
+<th>Link Interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11001000 00010111 00010000 00000000 ～ 11001000 00010111 00010111 11111111</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11001000 00010111 00011000 00000000 ～ 11001000 00010111 00011000 11111111</td>
+<td>1</td>
+</tr>
+<tr>
+<td>11001000 00010111 00011001 00000000 ～ 11001000 00010111 00011111 11111111</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Otherwise</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>最长前缀匹配</strong></p>
+<p>&emsp;&emsp;选择 Link Interface 遵循最长前缀匹配原则。</p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
