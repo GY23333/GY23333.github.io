@@ -1737,6 +1737,222 @@ TCP\ throughput = \frac{1.22MSS}{RTT\sqrt{L}}</script><p>10Gps的吞吐量，报
 <li>当switch到达比output line快，发生排队</li>
 <li>buffer满时，出现排队延时和丢包</li>
 </ul>
+<h2 id="路由算法（Routing-algorithms）"><a href="#路由算法（Routing-algorithms）" class="headerlink" title="路由算法（Routing algorithms）"></a>路由算法（Routing algorithms）</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><p><strong>路由协议</strong></p>
+<p>目标：从源到目的找到一条最好的路径</p>
+<ul>
+<li>一般，最好路径是最小代价路径</li>
+<li>但也可以有其他定义</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Abstract-graph-model.png" alt="Abstract graph model.png" style="zoom: 50%;"></p>
+<ul>
+<li>路由 -&gt; 节点</li>
+<li>物理链路 -&gt; 边</li>
+<li>链路代价：可以是延时、花费或拥塞等级等等</li>
+</ul>
+<p>路由图表示：</p>
+<script type="math/tex; mode=display">
+G = (N,E)</script><ul>
+<li>路由器集合：$N = {u,v,w,x,y,z}$</li>
+<li>链路集合：$E = {(u,v),(u,x),(v,x),(v,w),(x,w),(x,y),(w,y),(w,z),(y,z)}$</li>
+<li>路径cost：$cost\ of\ path\ (x<em>1,x_2,x_3,…,x_p)=c(x_1,x_2)+c(x_2,x_3)+…+c(x</em>{p-1},x_p)$</li>
+</ul>
+<p>路由算法：找到cost最小路径</p>
+<p><strong>路由算法分类</strong></p>
+<ul>
+<li>全局/分散信息<ul>
+<li>全局：知道所有路由信息</li>
+<li>分散：只知道邻居路由的信息，需要进行迭代查询</li>
+</ul>
+</li>
+<li>静态/动态<ul>
+<li>静态：需要手动配置，路由变化慢</li>
+<li>动态：路由变化快，周期更新</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由选择算法（Link-state-LS-alorithm）"><a href="#路由选择算法（Link-state-LS-alorithm）" class="headerlink" title="路由选择算法（Link state(LS) alorithm）"></a>路由选择算法（Link state(LS) alorithm）</h3><h4 id="迪克斯特拉算法（Dijkstra’s-algorithm）"><a href="#迪克斯特拉算法（Dijkstra’s-algorithm）" class="headerlink" title="迪克斯特拉算法（Dijkstra’s algorithm）"></a>迪克斯特拉算法（Dijkstra’s algorithm）</h4><ul>
+<li>基于<strong>全局</strong>信息的算法</li>
+<li>计算从源到所有其他节点的最小cost</li>
+<li>迭代：经过k次迭代可知到k个目的的路径cost</li>
+</ul>
+<p>算法步骤如下：<br>G={V,E}</p>
+<ol>
+<li>初始时令 S={V0},T=V-S={其余顶点}，T中顶点对应的距离值<br>若存在<V0,Vi>，d(V0,Vi)为<V0,Vi>弧上的权值<br>若不存在<V0,Vi>，d(V0,Vi)为∞</li>
+<li>从T中选取一个与S中顶点有关联边且权值最小的顶点W，加入到S中</li>
+<li>对其余T中顶点的距离值进行修改：若加进W作中间顶点，从V0到Vi的距离值缩短，则修改此距离值<br>重复上述步骤2、3，直到S中包含峙所有顶点，即W=Vi为止</li>
+</ol>
+<ul>
+<li>$c(x,y)$：x到y的cost，如果x，y不是邻居，则为$c(x,y) = \infty $</li>
+<li>$D(v)$：从源到目的v的路径的cost</li>
+<li>$p(v)$：从源到目的v的路径的前一个节点</li>
+<li>$N’$：最小cost路径的节点集</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Dijkstra’s-algorithm(1).png" alt="Dijkstra’s-algorithm(1).png" style="zoom: 30%;"></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Dijkstra’s-algorithm(2).png" alt="Dijkstra’s-algorithm(2).png" style="zoom: 30%;"></p>
+<p><strong>算法复杂度</strong></p>
+<p>假如有n个节点，</p>
+<ul>
+<li>一般的Dijkstra算法需要 $n(n+1)/2$，即$O(n^2)$</li>
+<li>通过算法优化，可将复杂度降为$O(n\log n)$</li>
+</ul>
+<p>&emsp;&emsp;Dijkstra算法存在振荡问题。</p>
+<h4 id="广播路由（Broadcast-routing）"><a href="#广播路由（Broadcast-routing）" class="headerlink" title="广播路由（Broadcast routing）"></a>广播路由（Broadcast routing）</h4><p>&emsp;&emsp;通过广播路由得到路由的实时情况。完成广播通信的最直接方式是由发送节点向每个目的地分别发送分组的拷贝。</p>
+<ul>
+<li><p><strong>洪泛</strong>（Flooding）：从源发送pkt到所有其他的节点</p>
+<p>&emsp;&emsp;无限制洪泛会引起<strong>广播风暴</strong>（Broadcast storm），导致广播路由耗光了所有的流量。</p>
+</li>
+<li><p><strong>受控洪泛</strong>（Controlled flooding）：解决广播风暴问题</p>
+<ul>
+<li><p><strong>序号控制洪泛</strong>（Sequence-number-controlled flooding）</p>
+<p>&emsp;&emsp;源节点将其地址(或其他的唯一标识符)以及广播序号放人广播分组，再向它的所有邻居发送该分组。每个节点维护它已经收到的、复制的和转发的源地址和每个广播分组的序号列表。当一个节点接收到一个广播分组时，它首先检查该分组是否在该列表中。如果在，丢弃该分组;如果不在，复制该分组并向该节点的所有邻居转发。</p>
+</li>
+<li><p><strong>反向路径广播</strong>(Reverse Path Broadcasting，RPB)</p>
+<p>RPB 的基本思想是当一台路由器接收到具有给定源地址的广播分组时， 仅当该分组到达的链路正好是位于它自己到其源的最短单播路径上，它才向其所有出链路 (除了它接收分组的那个)传输分组。否则，该路由器丢弃入分组。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_RPB.png" style="zoom:33%;" /></p>
+</li>
+</ul>
+</li>
+<li><p><strong>生成树广播</strong>（Spanning-tree broadcast）：消除了冗余广播pkt，而且能够被任何节点用于开始广播分组</p>
+<ul>
+<li>在生成树上广播pkt，这样就不再会有圈了</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Spanning-tree-broadcast.png" style="zoom:33%;" /></p>
+</li>
+</ul>
+<h4 id="LS算法"><a href="#LS算法" class="headerlink" title="LS算法"></a>LS算法</h4><p>LS算法 = 广播路由 + Dijkstra算法</p>
+<ul>
+<li>广播路由：每个节点都要广播链接状态pkt给每个其他节点，从而每个节点都获得相同完整的网络信息</li>
+<li>Dijkstra算法：计算源到每个节点的最小cost路径</li>
+<li>如果有link cost变化，则重新进行上述操作</li>
+</ul>
+<h3 id="距离向量算法（Distance-vector-DV-algorithm）"><a href="#距离向量算法（Distance-vector-DV-algorithm）" class="headerlink" title="距离向量算法（Distance vector(DV) algorithm）"></a>距离向量算法（Distance vector(DV) algorithm）</h3><p>&emsp;&emsp;DV算法为基于分散信息、动态的路由算法。</p>
+<h4 id="Bellman-Ford公式"><a href="#Bellman-Ford公式" class="headerlink" title="Bellman-Ford公式"></a>Bellman-Ford公式</h4><p>&emsp;&emsp;定义 $d_x(y)$ ：从x到y的最小cost路径的cost</p>
+<p>Bellman-Ford方程：$d_x(y)$进行分解</p>
+<script type="math/tex; mode=display">
+d_x(y) = min_v\{c(x,v)+d_v(y)\}</script><p>例题：通过$d_v(z)$、$d_w(z)$、$d_x(z)$计算$d_u(z)$。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_route-eg.png" style="zoom: 50%;" /></p>
+<script type="math/tex; mode=display">
+d_u(z) = min\{c(u,v)+d_v(z), c(u,w)+d_w(z), c(u,x)+d_x(z)\} = min(2+5,1+3,5+3) = 4</script><ul>
+<li>$D_x(y)$为估算的$d_x(y)$</li>
+<li>对于节点x<ul>
+<li>知道邻居节点v的 $c(x,v)$</li>
+<li>维持邻居的距离向量 $D_v = [D_v(y):y\in N]$</li>
+</ul>
+</li>
+</ul>
+<h4 id="DV算法"><a href="#DV算法" class="headerlink" title="DV算法"></a>DV算法</h4><ul>
+<li>每个节点定期发送它的 DV estimate 给邻居</li>
+<li>当一个节点x收到邻居发来的新的 DV estimate 时，它会根据 B-F公式 更新自己的 DV estimate</li>
+<li>多次更新后，DV estimate 会收敛于真实的最小cost $d_x(y)$</li>
+</ul>
+<p><strong>迭代、异步</strong>：<br>每个本地迭代产生于：</p>
+<ul>
+<li>本地链接cost改变</li>
+<li>邻居发来新的 DV estimate</li>
+</ul>
+<p><strong>分布</strong>：</p>
+<ul>
+<li>每个节点只会在它的DV改变的时候才会通知邻居</li>
+<li>邻居如果改变再通知邻居</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DV.png" style="zoom: 50%;" /></p>
+<h4 id="好事传得快，坏事传得慢"><a href="#好事传得快，坏事传得慢" class="headerlink" title="好事传得快，坏事传得慢"></a>好事传得快，坏事传得慢</h4><ul>
+<li>“好事”（cost变小）：更新完成快</li>
+<li>“坏事”（cost变大）：更新完成慢，造成无限问题</li>
+</ul>
+<p>如何解决无限问题？</p>
+<p>&emsp;&emsp;如果要节点最小cost路由要绕路（即不是邻居），则标为$\infty $</p>
+<h3 id="LS算法和DV算法对比"><a href="#LS算法和DV算法对比" class="headerlink" title="LS算法和DV算法对比"></a>LS算法和DV算法对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>LS</th>
+<th>DV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>信息复杂度（Message complexity）</td>
+<td>$O(nE)$（n个节点，E条链路）</td>
+<td>只在邻居之间交换</td>
+</tr>
+<tr>
+<td>收敛速度（Speed of convergence）</td>
+<td>$O(n^2)$，可优化到$O(n\log n)$</td>
+<td>速度会变化</td>
+</tr>
+<tr>
+<td>强健性（Robustness）</td>
+<td>有一定强健性，每个节点都有自己的表</td>
+<td>强健性低，节点依赖于邻居</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="层次路由（Hierarchical-Routing）"><a href="#层次路由（Hierarchical-Routing）" class="headerlink" title="层次路由（Hierarchical Routing）"></a>层次路由（Hierarchical Routing）</h3><p>之前讨论的路由都是理想化的：所有路由器都相同，网络是“扁平”的。而实际，并不存在这样的理想路由。</p>
+<ul>
+<li>大规模<ul>
+<li>无法存储所有目的的转发表</li>
+<li>路由交换流量大，导致淹没链路</li>
+</ul>
+</li>
+<li>管理自治<ul>
+<li>因特网是网中网</li>
+<li>每个网络管理都希望控制所在网络的路由</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;聚集路由成<strong>自治系统</strong>（autonomous system，AS）</p>
+<ul>
+<li><strong>AS内的路由</strong>（intra_AS routing）<ul>
+<li>在一个AS间的路由</li>
+<li>在一个AS的所有路由器运行同一个区域内协议</li>
+<li>不同AS的路由器运行不同区域的协议</li>
+<li>网管路由器：位于AS边缘，与其他AS的路由器有链接</li>
+</ul>
+</li>
+<li><strong>AS间的路由</strong>（inter_AS routing）<ul>
+<li>在不同AS间的路由</li>
+<li>网管参与区域间的路由</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_AS.png" style="zoom: 30%;" /></p>
+<p><strong>AS分类</strong></p>
+<ul>
+<li>Stub AS：末端AS，用于小企业</li>
+<li>Multihomed AS：多出口AS，用于大企业，外部不能通过它传输</li>
+<li>Transit AS：中转AS，网络提供商，用于传输</li>
+</ul>
+<h2 id="因特网中的路由选择"><a href="#因特网中的路由选择" class="headerlink" title="因特网中的路由选择"></a>因特网中的路由选择</h2><p>&emsp;&emsp;内部网关协议（Interior Gateway Protocols，IGP）是AS内的路由。</p>
+<p>常用的IGP有：</p>
+<ul>
+<li>RIP：路由信息协议，Routing Information Protocol</li>
+<li>OSPF：开放最短路径，Open Shortest Path First</li>
+<li>IGRP：Interior Gateway Routing Protocol</li>
+</ul>
+<h3 id="路由信息协议（Routing-Information-Protocol，RIP）"><a href="#路由信息协议（Routing-Information-Protocol，RIP）" class="headerlink" title="路由信息协议（Routing Information Protocol，RIP）"></a>路由信息协议（Routing Information Protocol，RIP）</h3><ul>
+<li><p>采用DV算法</p>
+</li>
+<li><p>cost：跳数</p>
+<p>&emsp;&emsp;<strong>最大15跳</strong>，16跳视为$\infty $。设置最大跳数以防止无穷计数问题，但这也限制了只能用于小网络，大网络很容易超最大跳数。</p>
+</li>
+<li><p>每30s通过发送通告的方式更新DV，通告最多路由到25个目的</p>
+</li>
+<li><p>如果超过180s每收到通告，则这个邻居/链路宣告死亡</p>
+<ul>
+<li>通过该邻居的路由失效</li>
+<li>发送新通告给邻居</li>
+<li>如果邻居的转发表变化，它也会发送新的通告</li>
+<li>链接失败的信息会快速迭代完成<ul>
+<li>采用毒性逆转防止循环</li>
+<li>将16跳设置为$\infty $</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算机网络</category>
