@@ -1658,6 +1658,85 @@ TCP\ throughput = \frac{1.22MSS}{RTT\sqrt{L}}</script><p>10Gps的吞吐量，报
 </div>
 <p><strong>最长前缀匹配</strong></p>
 <p>&emsp;&emsp;选择 Link Interface 遵循最长前缀匹配原则。</p>
+<p>例题：下面转发表</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Longest-prefix-matching.png" alt="Forwarding Table" style="zoom: 30%;"></p>
+<p>目的地址<code>11001000 00010111 00010110 10100001</code> 和 <code>11001000 00010111 00011000 10101010</code> 分别对应的Link Interface为？</p>
+<p><code>11001000 00010111 00010110 10100001</code> -&gt; 0</p>
+<p><code>11001000 00010111 00011000 10101010</code> -&gt; 1（与1和2都匹配，但是与1匹配更长）</p>
+<h3 id="虚电路和数据报网络选择"><a href="#虚电路和数据报网络选择" class="headerlink" title="虚电路和数据报网络选择"></a>虚电路和数据报网络选择</h3><p>Internet：网络核心简单，复杂度在网络边缘</p>
+<ul>
+<li>计算机数据交换：弹性服务，没有严格时间要求</li>
+<li>链路类型多：有不同特性，不能统一服务</li>
+<li>“智能”端系统</li>
+</ul>
+<p>ATM：复杂度在网络核心</p>
+<ul>
+<li>电话演变而来</li>
+<li>人之间的交流：严格的时间限制、可靠性、确定的服务保障</li>
+<li>“笨拙”端系统</li>
+</ul>
+<h2 id="路由器工作原理"><a href="#路由器工作原理" class="headerlink" title="路由器工作原理"></a>路由器工作原理</h2><h3 id="路由器结构"><a href="#路由器结构" class="headerlink" title="路由器结构"></a>路由器结构</h3><ul>
+<li>输入端口（Input port）</li>
+<li>交换结构（Switch fabric）</li>
+<li>输出端口（Output port）</li>
+<li>路由选择处理器（Routing processor）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Router-architecture.png" alt="Router architecture.png" style="zoom: 50%;"></p>
+<ul>
+<li>上半部分为控制面板：软件、毫秒级</li>
+<li>下半部分为数据面板：硬件、纳秒级</li>
+</ul>
+<h4 id="输入端口（Input-port）"><a href="#输入端口（Input-port）" class="headerlink" title="输入端口（Input port）"></a>输入端口（Input port）</h4><ol>
+<li>线路端接（line termination）：物理层功能，用来比特的接收</li>
+<li>数据链路处理（协议，拆封）（data link processing (protocol, decapsulation)）：数据链路层功能，比如以太网</li>
+<li>查找、转发、排队（lookup, forwarding, queueing）<ul>
+<li>分散交换：给出数据报目的地，然后根据转发表查找输出端口</li>
+<li>目标：希望在“line speed”上完成输入端口的处理</li>
+<li>排队：数据报到达速度大于转发速度</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Input-port-processing.png" alt="Input port processing.png" style="zoom: 50%;"></p>
+<h4 id="交换结构（Switch-fabric）"><a href="#交换结构（Switch-fabric）" class="headerlink" title="交换结构（Switch fabric）"></a>交换结构（Switch fabric）</h4><p>&emsp;&emsp;三种交换结构：共享内存、共享总线、交叉开关矩阵</p>
+<h5 id="共享内存（Switching-via-memory）"><a href="#共享内存（Switching-via-memory）" class="headerlink" title="共享内存（Switching via memory）"></a>共享内存（Switching via memory）</h5><ul>
+<li>初代路由常采用共享内存</li>
+<li>pkt在memory复制</li>
+<li>速度被内存带宽限制，每个datagram都要经过2个bus</li>
+<li>Cisco Catalyst 8500</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Switching-Memory.png" alt="Switching via memory.png" style="zoom: 70%;"></p>
+<h5 id="共享总线（Switching-via-a-bus）"><a href="#共享总线（Switching-via-a-bus）" class="headerlink" title="共享总线（Switching via a bus）"></a>共享总线（Switching via a bus）</h5><ul>
+<li>datagram通过共享的bus从输入端口到输出端口</li>
+<li>总线冲突（bus contention）：交换速度被总线带宽限制</li>
+<li>Cisco 5600</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Switching-Bus.png" alt="Switching via a bus.png" style="zoom: 70%;"></p>
+<h5 id="交叉开关矩阵（Switching-via-an-interconnection-network）"><a href="#交叉开关矩阵（Switching-via-an-interconnection-network）" class="headerlink" title="交叉开关矩阵（Switching via an interconnection network）"></a>交叉开关矩阵（Switching via an interconnection network）</h5><ul>
+<li>客服总线带宽的限制</li>
+<li>纵横式交换机是一种由2N条总线组成的互联网络，连接N个输入端口和N个输出端口</li>
+<li>可并行转发多个分组，但如果同输入输出端口，还是必须等待前一个发送了再发下一个</li>
+<li>Cisco 12000</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Switching-Interconnection-Network.png" alt="Switching via an interconnection network.png" style="zoom: 70%;"></p>
+<h4 id="输出端口（Output-port）"><a href="#输出端口（Output-port）" class="headerlink" title="输出端口（Output port）"></a>输出端口（Output port）</h4><ol>
+<li>排队（缓存管理）（Queueing(datagram buffer)）<ul>
+<li>缓存：当数据报到达快于传输速率，如果缓存不够会导致丢包</li>
+<li>调度方法：从排队中选择数据报进行传输，例如按时间顺序、按优先级顺序</li>
+</ul>
+</li>
+<li>数据链路处理（协议，封装）（Data link processing(protocol, encapsulation)）</li>
+<li>线路端接（Line termination）</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Output-port-processing.png" alt="Output port processing.png" style="zoom: 50%;"></p>
+<h3 id="排队"><a href="#排队" class="headerlink" title="排队"></a>排队</h3><h4 id="输入端口排队"><a href="#输入端口排队" class="headerlink" title="输入端口排队"></a>输入端口排队</h4><ul>
+<li>当fabric比input port慢时，发生排队</li>
+<li>buffer满时，出现排队延时和丢包</li>
+<li>队首阻塞（Head-of-the-Line blocking，HOL）：队首的datagram会阻塞排在它后面的datagram输入</li>
+</ul>
+<h4 id="输出端口排队"><a href="#输出端口排队" class="headerlink" title="输出端口排队"></a>输出端口排队</h4><ul>
+<li>当switch到达比output line快，发生排队</li>
+<li>buffer满时，出现排队延时和丢包</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算机网络</category>
