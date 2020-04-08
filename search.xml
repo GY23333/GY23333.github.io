@@ -1952,7 +1952,34 @@ d_u(z) = min\{c(u,v)+d_v(z), c(u,w)+d_w(z), c(u,x)+d_x(z)\} = min(2+5,1+3,5+3) =
 </li>
 </ul>
 </li>
+<li><p>RIP运行在应用层（路由器实际可能存在应用层，只是不对用户开放）</p>
+</li>
+<li>通告用 UDP pkt 周期性发送</li>
 </ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_RIP.png" style="zoom: 30%;" /></p>
+<h3 id="开放最短路径（Open-Shortest-Path-First，OSPF）"><a href="#开放最短路径（Open-Shortest-Path-First，OSPF）" class="headerlink" title="开放最短路径（Open Shortest Path First，OSPF）"></a>开放最短路径（Open Shortest Path First，OSPF）</h3><ul>
+<li>对公众开放</li>
+<li>使用<strong>LS算法</strong><ul>
+<li>需要发送LS pkt</li>
+<li>每个节点采用拓扑结构</li>
+<li>路由采用 Dijkstra 算法</li>
+</ul>
+</li>
+<li>OSPF通告每个邻居路由器携带一个条目</li>
+<li>通告通过洪泛散布到整个AS<ul>
+<li>OSPF消息直接分装在IP数据报上</li>
+</ul>
+</li>
+</ul>
+<p>OSPF优点：</p>
+<ul>
+<li><strong>安全</strong>：所有OSPF消息都要认证，防止恶意侵入</li>
+<li><strong>多条相同cost的路径</strong>：当到达某目的的多条路径具有相同的cost时，OSPF允许使用多条路径。即可以分流。</li>
+<li><strong>每条链路，给不同的数据类型不同的cost度量</strong></li>
+<li><strong>对单播和多播（MOSPF）路由的支持</strong>：对单播进行扩展，以便提供给多播使用</li>
+<li><strong>在大域中用分层OSPF</strong></li>
+</ul>
+<p>图 分层OSPF<br><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Hierarchical-OSPF.png" style="zoom: 30%;" /></p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
