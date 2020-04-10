@@ -1310,7 +1310,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
 <p>10、数据部分： TCP 报文段中的数据部分是可选的。在一个连接建立和一个连接终止时，双方交换的报文段仅有 TCP 首部。如果一方没有数据要发送，也使用没有任何数据的首部来确认收到的数据。在处理超时的许多情况中，也会发送不带任何数据的报文段。</p>
 <h4 id="TCP序号"><a href="#TCP序号" class="headerlink" title="TCP序号"></a>TCP序号</h4><p>&emsp;&emsp;报文段（segment）的序号：字节流第一个字节的序号</p>
 <div class="note warning">
-            <p>例题：下面文件的前3个报文段的序号分别是？</p><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP-segment#.png" alt="TCP segment sequenceNum.png" style="zoom:50%"></p><p>&emsp;&emsp;第一个报文段：0；第二个报文段：1000；第三个报文段：2000</p>
+            <p>例题：下面文件的前3个报文段的序号分别是？</p><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_TCP-segment%23.png" alt="TCP segment sequenceNum.png" style="zoom:50%"></p><p>&emsp;&emsp;第一个报文段：0；第二个报文段：1000；第三个报文段：2000</p>
           </div>
 <h4 id="TCP-ACK"><a href="#TCP-ACK" class="headerlink" title="TCP ACK"></a>TCP ACK</h4><ul>
 <li>TCP报文的ACK填写：期望从另一方收到的下一个字节序号<ul>
@@ -1770,7 +1770,7 @@ G = (N,E)</script><ul>
 </ul>
 </li>
 </ul>
-<h3 id="路由选择算法（Link-state-LS-alorithm）"><a href="#路由选择算法（Link-state-LS-alorithm）" class="headerlink" title="路由选择算法（Link state(LS) alorithm）"></a>路由选择算法（Link state(LS) alorithm）</h3><h4 id="迪克斯特拉算法（Dijkstra’s-algorithm）"><a href="#迪克斯特拉算法（Dijkstra’s-algorithm）" class="headerlink" title="迪克斯特拉算法（Dijkstra’s algorithm）"></a>迪克斯特拉算法（Dijkstra’s algorithm）</h4><ul>
+<h3 id="LS算法：路由选择算法（Link-state-alorithm）"><a href="#LS算法：路由选择算法（Link-state-alorithm）" class="headerlink" title="LS算法：路由选择算法（Link state alorithm）"></a>LS算法：路由选择算法（Link state alorithm）</h3><h4 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h4><ul>
 <li>基于<strong>全局</strong>信息的算法</li>
 <li>计算从源到所有其他节点的最小cost</li>
 <li>迭代：经过k次迭代可知到k个目的的路径cost</li>
@@ -1825,7 +1825,7 @@ G = (N,E)</script><ul>
 <li>Dijkstra算法：计算源到每个节点的最小cost路径</li>
 <li>如果有link cost变化，则重新进行上述操作</li>
 </ul>
-<h3 id="距离向量算法（Distance-vector-DV-algorithm）"><a href="#距离向量算法（Distance-vector-DV-algorithm）" class="headerlink" title="距离向量算法（Distance vector(DV) algorithm）"></a>距离向量算法（Distance vector(DV) algorithm）</h3><p>&emsp;&emsp;DV算法为基于分散信息、动态的路由算法。</p>
+<h3 id="DV算法：距离向量算法（Distance-vector-algorithm）"><a href="#DV算法：距离向量算法（Distance-vector-algorithm）" class="headerlink" title="DV算法：距离向量算法（Distance vector algorithm）"></a>DV算法：距离向量算法（Distance vector algorithm）</h3><p>&emsp;&emsp;DV算法为基于分散信息、动态的路由算法。</p>
 <h4 id="Bellman-Ford公式"><a href="#Bellman-Ford公式" class="headerlink" title="Bellman-Ford公式"></a>Bellman-Ford公式</h4><p>&emsp;&emsp;定义 $d_x(y)$ ：从x到y的最小cost路径的cost</p>
 <p>Bellman-Ford方程：$d_x(y)$进行分解</p>
 <script type="math/tex; mode=display">
@@ -1932,8 +1932,8 @@ d_u(z) = min\{c(u,v)+d_v(z), c(u,w)+d_w(z), c(u,x)+d_x(z)\} = min(2+5,1+3,5+3) =
 <li>OSPF：开放最短路径，Open Shortest Path First</li>
 <li>IGRP：Interior Gateway Routing Protocol</li>
 </ul>
-<h3 id="路由信息协议（Routing-Information-Protocol，RIP）"><a href="#路由信息协议（Routing-Information-Protocol，RIP）" class="headerlink" title="路由信息协议（Routing Information Protocol，RIP）"></a>路由信息协议（Routing Information Protocol，RIP）</h3><ul>
-<li><p>采用DV算法</p>
+<h3 id="RIP：路由信息协议（Routing-Information-Protocol）"><a href="#RIP：路由信息协议（Routing-Information-Protocol）" class="headerlink" title="RIP：路由信息协议（Routing Information Protocol）"></a>RIP：路由信息协议（Routing Information Protocol）</h3><ul>
+<li><p>DV算法</p>
 </li>
 <li><p>cost：跳数</p>
 <p>&emsp;&emsp;<strong>最大15跳</strong>，16跳视为$\infty $。设置最大跳数以防止无穷计数问题，但这也限制了只能用于小网络，大网络很容易超最大跳数。</p>
@@ -1957,7 +1957,7 @@ d_u(z) = min\{c(u,v)+d_v(z), c(u,w)+d_w(z), c(u,x)+d_x(z)\} = min(2+5,1+3,5+3) =
 <li>通告用 UDP pkt 周期性发送</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_RIP.png" style="zoom: 30%;" /></p>
-<h3 id="开放最短路径（Open-Shortest-Path-First，OSPF）"><a href="#开放最短路径（Open-Shortest-Path-First，OSPF）" class="headerlink" title="开放最短路径（Open Shortest Path First，OSPF）"></a>开放最短路径（Open Shortest Path First，OSPF）</h3><ul>
+<h3 id="OSPF：开放最短路径（Open-Shortest-Path-First）"><a href="#OSPF：开放最短路径（Open-Shortest-Path-First）" class="headerlink" title="OSPF：开放最短路径（Open Shortest Path First）"></a>OSPF：开放最短路径（Open Shortest Path First）</h3><h4 id="OSPF概述"><a href="#OSPF概述" class="headerlink" title="OSPF概述"></a>OSPF概述</h4><ul>
 <li>对公众开放</li>
 <li>使用<strong>LS算法</strong><ul>
 <li>需要发送LS pkt</li>
@@ -1971,15 +1971,242 @@ d_u(z) = min\{c(u,v)+d_v(z), c(u,w)+d_w(z), c(u,x)+d_x(z)\} = min(2+5,1+3,5+3) =
 </ul>
 </li>
 </ul>
-<p>OSPF优点：</p>
-<ul>
+<h4 id="OSPF优点"><a href="#OSPF优点" class="headerlink" title="OSPF优点"></a>OSPF优点</h4><ul>
 <li><strong>安全</strong>：所有OSPF消息都要认证，防止恶意侵入</li>
 <li><strong>多条相同cost的路径</strong>：当到达某目的的多条路径具有相同的cost时，OSPF允许使用多条路径。即可以分流。</li>
 <li><strong>每条链路，给不同的数据类型不同的cost度量</strong></li>
 <li><strong>对单播和多播（MOSPF）路由的支持</strong>：对单播进行扩展，以便提供给多播使用</li>
 <li><strong>在大域中用分层OSPF</strong></li>
 </ul>
-<p>图 分层OSPF<br><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Hierarchical-OSPF.png" style="zoom: 30%;" /></p>
+<h4 id="分层OSPF"><a href="#分层OSPF" class="headerlink" title="分层OSPF"></a>分层OSPF</h4><ul>
+<li>两层结构：<strong>局部区域</strong>（local area）和 <strong>主干</strong>（backbone）<ul>
+<li>LS通告只在区域内</li>
+<li>每个节点知道该区域的拓扑结构，对于其他区域只知道到那个区域的方向（最短路径）</li>
+</ul>
+</li>
+<li><strong>区域边界路由器</strong>（area border router）：负责为流向该区域以外的分组提供路由选择。汇拢该区域的节点距离信息，通告给其他的区域边界路由器</li>
+<li><strong>主干路由器</strong>（backbone router）：在主干内运行OSPF路由</li>
+<li><strong>网关路由器</strong>（boundary router）：与其他AS连接</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Hierarchical-OSPF.png" style="zoom: 30%;" /></p>
+<h3 id="IGRP（Interior-Gateway-Routing-Protocol）"><a href="#IGRP（Interior-Gateway-Routing-Protocol）" class="headerlink" title="IGRP（Interior Gateway Routing Protocol）"></a>IGRP（Interior Gateway Routing Protocol）</h3><ul>
+<li>最初是CISCO私有的，后来开放了，RIP的后继者</li>
+<li>DV算法</li>
+<li>cost：时延、带宽、可靠性、负荷等等</li>
+<li>利用TCP来交换路由更新</li>
+<li>利用<strong>扩散更新算法</strong>（Diffusing Update Algorithm,DUAL）来防止循环</li>
+</ul>
+<h3 id="BGP：边界网管协议（Border-Gateway-Protocol）"><a href="#BGP：边界网管协议（Border-Gateway-Protocol）" class="headerlink" title="BGP：边界网管协议（Border Gateway Protocol）"></a>BGP：边界网管协议（Border Gateway Protocol）</h3><h4 id="BGP概述"><a href="#BGP概述" class="headerlink" title="BGP概述"></a>BGP概述</h4><p>采用 <strong>Path Vector protocol</strong></p>
+<ul>
+<li>与<strong>DV协议</strong>相似</li>
+<li><p>每个边界网关向邻居（对等方）广播到达目的地的整个路径（即 AS的序列）</p>
+</li>
+<li><p><strong>eBGP</strong>：外部BGP，跨越两个AS对话。从相邻的AS获取子网可达性信息。</p>
+</li>
+<li><strong>iBGP</strong>：内部BGP，同一个AS中的两台路由器之间的BGP对话。将可达性信息传播到所有内部AS路由器。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_eBGP-iBGP.png" style="zoom: 30%;" /></p>
+<ul>
+<li>BGP会话：两BGP路由器通过半永久的TCP连接来交换消息<ul>
+<li>将路径通告到不同的目标网络前缀（BGP是“路径向量”协议）</li>
+</ul>
+</li>
+<li>如果一个AS向另一个AS通告了某个路由器，则承诺了可以路由到该路由器</li>
+</ul>
+<h4 id="路径属性和BGP路由"><a href="#路径属性和BGP路由" class="headerlink" title="路径属性和BGP路由"></a>路径属性和BGP路由</h4><ul>
+<li>通告前缀（advertised prefix）包括BGP属性<ul>
+<li>prefix + attributes = “route”</li>
+</ul>
+</li>
+<li>两个重要attributes<ul>
+<li>AS-PATH：路径中的AS的列表</li>
+<li>NEXT-HOP：以AS-PATH开头的路由器接口的IP地址</li>
+</ul>
+</li>
+<li>基于policy的路由<ul>
+<li>网关接收路由广告使用导入policy接受/拒绝路径（例如，从不通过AS Y路由）</li>
+<li>AS policy还确定是否向其他相邻AS通告路径</li>
+</ul>
+</li>
+</ul>
+<h4 id="BGP消息"><a href="#BGP消息" class="headerlink" title="BGP消息"></a>BGP消息</h4><ul>
+<li>使用TCP交换BGP消息</li>
+<li>BGP消息：<ul>
+<li>OPEN：打开TCP连接，认证sender</li>
+<li>UPDATE：通告新路径（删除旧路径）</li>
+<li>KEEP ALIVE：在没有UPDATE的情况下，保持连接活跃；ACK OPEN请求</li>
+<li>NOTIFICATION：报告以前的msg中的错误；也用于关闭连接</li>
+</ul>
+</li>
+</ul>
+<h4 id="BGP路由选择"><a href="#BGP路由选择" class="headerlink" title="BGP路由选择"></a>BGP路由选择</h4><p>&emsp;&emsp;路由器可能知道到达同一个前缀的多条路由。BGP以下优先级选择路由：</p>
+<ul>
+<li>本地偏好值：由政策决定</li>
+<li>最短 AS-PATH：通过的AS最少</li>
+<li>最近 NEXT-HOP 路由器：最近的下一跳路由器</li>
+<li>其他标准</li>
+</ul>
+<p>假设：网关X 将其路径发送到 网关W</p>
+<ul>
+<li>W 可以选择/不选 X所提供的路径<ul>
+<li>根据cost，policy（eg.不通过竞争对手的AS进行路由），防止环路 的原因选择/不选</li>
+</ul>
+</li>
+<li>如果W选择X通告的路径<script type="math/tex; mode=display">
+Path(W,Z) = W,Path(X,Z)</script></li>
+<li>X可以通过advertisement来控制传入流量：<ul>
+<li>eg.不希望将流量路由到Z -&gt; 不通告任何路由到Z</li>
+</ul>
+</li>
+</ul>
+<h4 id="BGP路由策略"><a href="#BGP路由策略" class="headerlink" title="BGP路由策略"></a>BGP路由策略</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_BGP-policy.png" style="zoom: 50%;" /></p>
+<ul>
+<li>A,B,C是ISP（网络服务提供商）</li>
+<li>W,X,Y是客户</li>
+<li><p>X是 Multihomed AS，连接了两个ISP，也可以称为 dual-homed，一般是大型公司。X可以不允许 B -&gt; X -&gt; C 这条路由，则X不通告B有路由到C</p>
+</li>
+<li><p>A 通告 B 路径 AW</p>
+</li>
+<li>B 通告 X 路径 BAW</li>
+<li>是否 B 通告 C 路径 BAW ？<ul>
+<li>不会，C不是B的客户，B希望强迫C走AW，B只想从客户发送/接收路由</li>
+</ul>
+</li>
+</ul>
+<h4 id="Inra-Inter-AS-的区别"><a href="#Inra-Inter-AS-的区别" class="headerlink" title="Inra-/Inter-AS 的区别"></a>Inra-/Inter-AS 的区别</h4><p><strong>规模</strong>：分层可以节省表格大小，减小更新的流量。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Intra-AS</th>
+<th>Inter-AS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Policy</strong></td>
+<td>一个管理员，不需要policy决策</td>
+<td>管理员想要控制路由，需要有policy</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>关注性能</td>
+<td>比起性能更关注policy</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="IP：Internet-Protocol"><a href="#IP：Internet-Protocol" class="headerlink" title="IP：Internet Protocol"></a>IP：Internet Protocol</h2><h3 id="IPv4数据报结构"><a href="#IPv4数据报结构" class="headerlink" title="IPv4数据报结构"></a>IPv4数据报结构</h3><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_IP-datagram-format.png" style="zoom: 30%;" /></p>
+<ul>
+<li><strong>版本</strong>（Version, <strong>4bit</strong>）<br>对于IPv4，字段的值是4。</li>
+<li><strong>首部长度</strong>（Header Length， IHL, <strong>4bit</strong>）<br>首部长度说明首部有多少32位字（4字节）。<strong>一般为5</strong>，相当于5*4=20字节。</li>
+<li><strong>服务类别</strong>（Type Of Service，<strong>8bit</strong>）</li>
+<li><strong>报文长度</strong>（Length, <strong>16bit</strong>）<br>IP首部+数据部分的总长度</li>
+<li><strong>标识</strong>（Identification, <strong>16bit</strong>）<br>用于在IP层对数据报进行分片的时候，标识数据包。</li>
+<li><strong>标志</strong> （Flags, <strong>3bit</strong>）<br>这个3位字段用于控制和识别分片，它们是：<br>位0：保留，必须为0；<br>位1：禁止分片（Don’t Fragment，DF），当DF=0时才允许分片；<br>位2：更多分片（More Fragment，MF），MF=1代表后面还有分片，MF=0 代表已经是最后一个分片。<br>如果DF标志被设置为1，但路由要求必须分片报文，此报文会被丢弃。这个标志可被用于发往没有能力组装分片的主机。<br>当一个报文被分片，除了最后一片外的所有分片都设置MF为1。最后一个片段具有非零片段偏移字段，将其与未分片数据包区分开，未分片的偏移字段为0。</li>
+<li><strong>分片偏移</strong> （Fragment Offset, <strong>13bit</strong>）<br>这个13位字段指明了每个分片相对于原始报文开头的偏移量，以8字节作单位。</li>
+<li><strong>存活时间</strong>（Time To Live，TTL, <strong>8bit</strong>）<br>本数据报的TTL.</li>
+<li><strong>协议</strong> （Protocol, <strong>8bit</strong>）<br>1—-icmp, 2—-igmp, 6—-tcp, 17—-udp, 89—-ospf</li>
+<li><strong>首部检验和</strong> （Header Checksum， <strong>16bit</strong>）<br>IP首部的校验和</li>
+<li><strong>源IP地址</strong>（Source IP, <strong>32bit</strong>）</li>
+<li><strong>目的IP地址</strong>（Destination IP, <strong>32bit</strong>）</li>
+</ul>
+<h3 id="IPv4数据报分片"><a href="#IPv4数据报分片" class="headerlink" title="IPv4数据报分片"></a>IPv4数据报分片</h3><ul>
+<li>网络链路有MTU（最大传送单元）— 最大可传输的链路的帧<ul>
+<li>不同的链路类型有不同的MTU</li>
+</ul>
+</li>
+<li>如果IP数据报 &gt; MTU ，则分片，到目的地后再重组</li>
+<li>IP头部字段用来标记</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_IP%20fragmentation-and-reassembly.png" style="zoom: 50%;" /></p>
+<p><strong>IP数据报分片示例</strong></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Fragmentation.png" style="zoom: 30%;" /></p>
+<ul>
+<li>本来要发送 4000 byte 的数据报（head部分 + data部分）</li>
+<li>链路的 MTU = 1500 bytes</li>
+<li><p>需要将数据分为3片来发送</p>
+</li>
+<li><p><code>length</code>：片长度，包括了 20 bytes IP首部部分，最大为MTU</p>
+<ul>
+<li>length为1500的数据报，实际包含 $1500-20=1480\ bytes$ 的data部分</li>
+<li>最后一片的length为 $(4000-20) - 1480\times 2 + 20 = 1040$</li>
+</ul>
+</li>
+<li><code>fragflag</code>：3 bits<ul>
+<li>第二个bit为 DF（Don’t Flag）：为0则该数据报分片，为1则不分片</li>
+<li>第三个bit为 MF：为0则后面没有片了，为1则后面还有片</li>
+<li>前两片为 1（001），表示该IP数据报分片，且后面还有片</li>
+<li>最后一片为 0（000），表示该IP数据报分片，后面没片（即最后一片）</li>
+</ul>
+</li>
+<li><code>offset</code>：data部分偏移量，以 8 bytes 为单位，只计算data部分<ul>
+<li>第一片的offset为 0</li>
+<li>第二片的offset为 $1480\ bytes/8\ bytes = 185$</li>
+</ul>
+</li>
+</ul>
+<h3 id="IPv4编址"><a href="#IPv4编址" class="headerlink" title="IPv4编址"></a>IPv4编址</h3><h4 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h4><ul>
+<li>IP地址：32位、主机和路由器接口的ID</li>
+<li><strong>接口</strong>（interface）：主机/路由器 和 物理链接 之间的连接<ul>
+<li>路由器一般有多个接口</li>
+<li>主机一般有1到2个接口</li>
+</ul>
+</li>
+<li>每个接口都有一个对应的IP地址</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_IP-and-subnets.png" style="zoom: 50%;" /></p>
+<p><strong>接口连接方式</strong></p>
+<ul>
+<li>通过<strong>路由器</strong>连接</li>
+<li>有线以太网通过<strong>以太网交换机</strong>连接</li>
+<li>无线网络通过<strong>WiFi基站</strong>连接</li>
+</ul>
+<h4 id="子网（Subnet）"><a href="#子网（Subnet）" class="headerlink" title="子网（Subnet）"></a>子网（Subnet）</h4><p><strong>IP地址</strong></p>
+<ul>
+<li>子网部分 —— 高位</li>
+<li>主机部分 —— 低位</li>
+</ul>
+<p><strong>子网</strong></p>
+<ul>
+<li>子网部分相同</li>
+<li>可以不通过路由器到达彼此</li>
+</ul>
+<p>&emsp;&emsp;把路由器去掉，剩下的每个区域都是一个子网。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_subnets.png" style="zoom: 50%;" /></p>
+<p>&emsp;&emsp;上图中有6个子网。</p>
+<h4 id="分类编制（Classful-Addressing）"><a href="#分类编制（Classful-Addressing）" class="headerlink" title="分类编制（Classful Addressing）"></a>分类编制（Classful Addressing）</h4><ul>
+<li>A类<ul>
+<li>子网部分前1位 —— 0</li>
+<li>子网部分 8 bits，主机部分 24 bits</li>
+<li>IP地址范围：<code>1.0.0.0</code> ～ <code>127.255.255.255</code></li>
+</ul>
+</li>
+<li>B类<ul>
+<li>子网部分前2位 —— 10</li>
+<li>子网部分 16 bits，主机部分 16 bits</li>
+<li>IP地址范围：<code>128.0.0.0</code> ～ <code>191.255.255.255</code></li>
+</ul>
+</li>
+<li>C类<ul>
+<li>子网部分前3位 —— 110</li>
+<li>子网部分 24 bits，主机部分 8 bits</li>
+<li>IP地址范围：<code>192.0.0.0</code> ～ <code>223.255.255.255</code></li>
+</ul>
+</li>
+<li>D类<ul>
+<li>前4位 —— 1110</li>
+<li>用于多播地址</li>
+</ul>
+</li>
+<li>E类<ul>
+<li>前4位 —— 1111</li>
+<li>被留作将来使用</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Classful-Addressing.png" style="zoom: 30%;" /></p>
 ]]></content>
       <categories>
         <category>计算机网络</category>
@@ -3984,8 +4211,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
