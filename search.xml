@@ -2104,7 +2104,12 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <li><strong>服务类别</strong>（Type Of Service，<strong>8bit</strong>）</li>
 <li><strong>报文长度</strong>（Length, <strong>16bit</strong>）<br>IP首部+数据部分的总长度</li>
 <li><strong>标识</strong>（Identification, <strong>16bit</strong>）<br>用于在IP层对数据报进行分片的时候，标识数据包。</li>
-<li><strong>标志</strong> （Flags, <strong>3bit</strong>）<br>这个3位字段用于控制和识别分片，它们是：<br>位0：保留，必须为0；<br>位1：禁止分片（Don’t Fragment，DF），当DF=0时才允许分片；<br>位2：更多分片（More Fragment，MF），MF=1代表后面还有分片，MF=0 代表已经是最后一个分片。<br>如果DF标志被设置为1，但路由要求必须分片报文，此报文会被丢弃。这个标志可被用于发往没有能力组装分片的主机。<br>当一个报文被分片，除了最后一片外的所有分片都设置MF为1。最后一个片段具有非零片段偏移字段，将其与未分片数据包区分开，未分片的偏移字段为0。</li>
+<li><strong>标志</strong> （Flags, <strong>3bit</strong>）<br>这个3位字段用于控制和识别分片，它们是：<ul>
+<li>位0：保留，必须为0；</li>
+<li>位1：禁止分片（Don’t Fragment，DF），当DF=0时才允许分片；</li>
+<li>位2：更多分片（More Fragment，MF），MF=1代表后面还有分片，MF=0 代表已经是最后一个分片。<br>如果DF标志被设置为1，但路由要求必须分片报文，此报文会被丢弃。这个标志可被用于发往没有能力组装分片的主机。<br>当一个报文被分片，除了最后一片外的所有分片都设置MF为1。最后一个片段具有非零片段偏移字段，将其与未分片数据包区分开，未分片的偏移字段为0。</li>
+</ul>
+</li>
 <li><strong>分片偏移</strong> （Fragment Offset, <strong>13bit</strong>）<br>这个13位字段指明了每个分片相对于原始报文开头的偏移量，以8字节作单位。</li>
 <li><strong>存活时间</strong>（Time To Live，TTL, <strong>8bit</strong>）<br>本数据报的TTL.</li>
 <li><strong>协议</strong> （Protocol, <strong>8bit</strong>）<br>1—-icmp, 2—-igmp, 6—-tcp, 17—-udp, 89—-ospf</li>
@@ -2165,7 +2170,7 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 </ul>
 <h4 id="子网（Subnet）"><a href="#子网（Subnet）" class="headerlink" title="子网（Subnet）"></a>子网（Subnet）</h4><p><strong>IP地址</strong></p>
 <ul>
-<li>子网部分 —— 高位</li>
+<li>网络部分 —— 高位</li>
 <li>主机部分 —— 低位</li>
 </ul>
 <p><strong>子网</strong></p>
@@ -2178,35 +2183,83 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <p>&emsp;&emsp;上图中有6个子网。</p>
 <h4 id="分类编制（Classful-Addressing）"><a href="#分类编制（Classful-Addressing）" class="headerlink" title="分类编制（Classful Addressing）"></a>分类编制（Classful Addressing）</h4><ul>
 <li>A类<ul>
-<li>子网部分前1位 —— 0</li>
-<li>子网部分 8 bits，主机部分 24 bits</li>
+<li>网络部分前1位 —— <code>0</code></li>
+<li>网络部分 8 bits，主机部分 24 bits</li>
 <li>IP地址范围：<code>1.0.0.0</code> ～ <code>127.255.255.255</code></li>
 </ul>
 </li>
 <li>B类<ul>
-<li>子网部分前2位 —— 10</li>
-<li>子网部分 16 bits，主机部分 16 bits</li>
+<li>网络部分前2位 —— <code>10</code></li>
+<li>网络部分 16 bits，主机部分 16 bits</li>
 <li>IP地址范围：<code>128.0.0.0</code> ～ <code>191.255.255.255</code></li>
 </ul>
 </li>
 <li>C类<ul>
-<li>子网部分前3位 —— 110</li>
-<li>子网部分 24 bits，主机部分 8 bits</li>
+<li>网络部分前3位 —— <code>110</code></li>
+<li>网络部分 24 bits，主机部分 8 bits</li>
 <li>IP地址范围：<code>192.0.0.0</code> ～ <code>223.255.255.255</code></li>
 </ul>
 </li>
 <li>D类<ul>
-<li>前4位 —— 1110</li>
+<li>前4位 —— <code>1110</code></li>
 <li>用于多播地址</li>
 </ul>
 </li>
 <li>E类<ul>
-<li>前4位 —— 1111</li>
+<li>前4位 —— <code>1111</code></li>
 <li>被留作将来使用</li>
 </ul>
 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Classful-Addressing.png" style="zoom: 30%;" /></p>
+<h4 id="子网掩码（subnet-mask）"><a href="#子网掩码（subnet-mask）" class="headerlink" title="子网掩码（subnet mask）"></a>子网掩码（subnet mask）</h4><ul>
+<li>IP地址采用点分十进制：例如 <code>192.32.216.9</code></li>
+<li>分类编制导致了地址资源的浪费</li>
+<li>子网和子网掩码：可以减小地址资源的浪费</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_subnetting.png" style="zoom: 30%;" /></p>
+<p>&emsp;&emsp;<code>200.23.16.64/27</code>中的<code>27</code>为 <strong>网络部分+子网部分 的位数</strong></p>
+<ul>
+<li>子网掩码<ul>
+<li>网络部分+子网部分 置1</li>
+<li>主机部分 置0</li>
+</ul>
+</li>
+<li>子网的网络ID<ul>
+<li>网络部分+子网部分 不变</li>
+<li>主机部分 置0</li>
+</ul>
+</li>
+</ul>
+<h4 id="CIDR：无类的域间路由（Classless-InterDomain-Routing）"><a href="#CIDR：无类的域间路由（Classless-InterDomain-Routing）" class="headerlink" title="CIDR：无类的域间路由（Classless InterDomain Routing）"></a>CIDR：无类的域间路由（Classless InterDomain Routing）</h4><ul>
+<li>IP分为两个部分 —— 子网部分 + 主机部分</li>
+<li>子网部分可以是任意长度</li>
+<li>地址格式：<code>a.b.c.d / x</code>，其中x是子网部分位数</li>
+<li>网络部分称为前缀（prefix）</li>
+</ul>
+<h4 id="如何获取IP地址"><a href="#如何获取IP地址" class="headerlink" title="如何获取IP地址"></a>如何获取IP地址</h4><h5 id="主机如何获取IP地址"><a href="#主机如何获取IP地址" class="headerlink" title="主机如何获取IP地址"></a>主机如何获取IP地址</h5><p>主机获取IP地址：</p>
+<ul>
+<li>硬编码：自己设置静态的IP设置</li>
+<li><strong>DHCP</strong>：动态主机配置（Dynamic Host Configuration Protocol）<br>&emsp;&emsp;当主机连接网络时，允许主机从网络服务器动态获取IP地址。</li>
+</ul>
+<h6 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h6><ul>
+<li>即插即用</li>
+<li>可以更新IP</li>
+<li>地址重用：主机的IP只有在上线时才固定，下线即释放</li>
+<li>支持移动用户</li>
+</ul>
+<p>&emsp;&emsp;当一台主机加入网络时，从子网中的DHCP服务器获取IP地址。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DHCP.png" style="zoom: 50%;" /></p>
+<h5 id="网络如何获取IP地址"><a href="#网络如何获取IP地址" class="headerlink" title="网络如何获取IP地址"></a>网络如何获取IP地址</h5><p>&emsp;&emsp;从ISP处获取分配的IP地址。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Network_Network-route.png" style="zoom: 30%;" /></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Network-get-IP.png" style="zoom: 30%;" /></p>
+<h5 id="ISP如何获取IP地址"><a href="#ISP如何获取IP地址" class="headerlink" title="ISP如何获取IP地址"></a>ISP如何获取IP地址</h5><p>&emsp;&emsp;ISP从ICANN组织获取IP地址</p>
+<p>ICANN：Internet Corporation for Assigned Names and Numbers</p>
+<ul>
+<li>分配地址</li>
+<li>管理DNS</li>
+<li>分配域名、解决争议</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算机网络</category>
