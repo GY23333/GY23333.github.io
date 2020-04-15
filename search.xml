@@ -2525,7 +2525,57 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Dual-Stack.png" style="zoom:33%;" /></p>
 <h4 id="隧道（Tunneling）"><a href="#隧道（Tunneling）" class="headerlink" title="隧道（Tunneling）"></a>隧道（Tunneling）</h4><p>&emsp;&emsp;当IPv6穿过IPv4的路由器上时，将IPv6作为载荷承载在IPv4上。就是像一个连接两个IPv6路由器的IPv4隧道</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Tunneling.png" style="zoom:50%;" /></p>
-<h1 id="链路层（Link-Layer）"><a href="#链路层（Link-Layer）" class="headerlink" title="链路层（Link Layer）"></a>链路层（Link Layer）</h1>]]></content>
+<h1 id="链路层（Link-Layer）"><a href="#链路层（Link-Layer）" class="headerlink" title="链路层（Link Layer）"></a>链路层（Link Layer）</h1><h2 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h2><p>保证<strong>帧</strong>流的透明传输</p>
+<p><strong>链路层服务：</strong></p>
+<ul>
+<li><p><strong>成帧</strong>（Framing）、<strong>接入链路</strong>（link access）</p>
+<ul>
+<li><p>将来自上级的数据报分装成帧，加上header、trailer</p>
+</li>
+<li><p>完成共享媒体的信道连接</p>
+</li>
+<li>物理地址，用来 indentify 源/目的，在帧头中</li>
+</ul>
+</li>
+<li><p>可靠交付（Reliable delivery）</p>
+<ul>
+<li>可靠数据传输协议（rdt）</li>
+<li>在可靠的传输情况下很少应用，一般应用在高错误概率的链路传输中</li>
+</ul>
+</li>
+<li><p>流量控制（Flow Control）</p>
+<ul>
+<li>协调发送方和接收方</li>
+</ul>
+</li>
+<li><p>差错检测（Error Detection）</p>
+</li>
+<li><p>差错纠正（Error Correction）</p>
+</li>
+</ul>
+<h2 id="成帧（Framing）"><a href="#成帧（Framing）" class="headerlink" title="成帧（Framing）"></a>成帧（Framing）</h2><p>&emsp;&emsp;主要考虑帧的界定，即如何将前一帧和后一帧分开。</p>
+<h3 id="字符计数法（Character-count-method）"><a href="#字符计数法（Character-count-method）" class="headerlink" title="字符计数法（Character count method）"></a>字符计数法（Character count method）</h3><p>&emsp;&emsp;在每帧的前面添加 Counting header（本帧长度） </p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Character-count-method.png" style="zoom:33%;" /></p>
+<h3 id="基于字符的首尾界定法（First-and-tail-bound-method-based-on-character）"><a href="#基于字符的首尾界定法（First-and-tail-bound-method-based-on-character）" class="headerlink" title="基于字符的首尾界定法（First and tail bound method based on character）"></a>基于字符的首尾界定法（First and tail bound method based on character）</h3><p>&emsp;&emsp;设定两个ASCII——SOH、EOT，SOH为标注开始的字符，EOT为标注结尾的字符。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Framing-First-and-tail.png" style="zoom:33%;" /></p>
+<p>&emsp;&emsp;如果中间的数据部分也有SOH或EOT，则加入转义字符 EOT 标识。类似于C语言中的<code>\</code>的作用。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_EOT.png" style="zoom:33%;" /></p>
+<h3 id="基于bit的首尾界定法（First-and-tail-bound-method-based-on-bit）"><a href="#基于bit的首尾界定法（First-and-tail-bound-method-based-on-bit）" class="headerlink" title="基于bit的首尾界定法（First and tail bound method based on bit）"></a>基于bit的首尾界定法（First and tail bound method based on bit）</h3><p>&emsp;&emsp;与基于字符的首尾界定法的思路相似，但开始和结束的标志为<code>01111110</code></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Framing-First-and-tail-bit.png" style="zoom:33%;" /></p>
+<p>&emsp;&emsp;为防止中间的数据部分也有<code>01111110</code>导致提前结束</p>
+<ul>
+<li>发送方：每5个<code>1</code>后插入一个<code>0</code></li>
+<li>接收方：每5个<code>1</code>后删除一个<code>0</code></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_insert0.png" style="zoom:33%;" /></p>
+<h3 id="物理层违逆码法（Pysical-layer-coding-violation-method）"><a href="#物理层违逆码法（Pysical-layer-coding-violation-method）" class="headerlink" title="物理层违逆码法（Pysical layer coding violation method）"></a>物理层违逆码法（Pysical layer coding violation method）</h3><p>比如在曼切斯特编码中，如果</p>
+<ul>
+<li>高低表示<code>1</code></li>
+<li>低高表示<code>0</code></li>
+<li>那么 低低/高高 就可以用来表示开始和结束</li>
+</ul>
+<p>&emsp;&emsp;违逆码只能应用在物理层，因为违逆码无法储存。</p>
+<h2 id="差错检测（Error-Detection）"><a href="#差错检测（Error-Detection）" class="headerlink" title="差错检测（Error Detection）"></a>差错检测（Error Detection）</h2>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
