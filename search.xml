@@ -1491,7 +1491,8 @@ TimeoutInterval = EstimatedRTT + 4*DevRTT</script><h3 id="TCP可靠数据传输"
 <h3 id="场景二：2个Sender-和1个有限buffer的Router"><a href="#场景二：2个Sender-和1个有限buffer的Router" class="headerlink" title="场景二：2个Sender, 和1个有限buffer的Router"></a>场景二：2个Sender, 和1个有限buffer的Router</h3><ul>
 <li>一个router、有限buffer</li>
 <li>重传timeout的packet<ul>
-<li>$\lambda <em>{in}$ —— 源数据，$\lambda </em>{in}’$ —— 源数据+重传<script type="math/tex; mode=display">
+<li>$\lambda _{in}$ —— 源数据</li>
+<li>$\lambda _{in}’$ —— 源数据+重传<script type="math/tex; mode=display">
 \lambda _{in}' \geq \lambda _{in}</script></li>
 </ul>
 </li>
@@ -2251,7 +2252,7 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <p>&emsp;&emsp;当一台主机加入网络时，从子网中的DHCP服务器获取IP地址。</p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_DHCP.png" style="zoom: 50%;" /></p>
 <h5 id="网络如何获取IP地址"><a href="#网络如何获取IP地址" class="headerlink" title="网络如何获取IP地址"></a>网络如何获取IP地址</h5><p>&emsp;&emsp;从ISP处获取分配的IP地址。</p>
-<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Network_Network-route.png" style="zoom: 30%;" /></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Network-route.png" style="zoom: 30%;" /></p>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Network-get-IP.png" style="zoom: 30%;" /></p>
 <h5 id="ISP如何获取IP地址"><a href="#ISP如何获取IP地址" class="headerlink" title="ISP如何获取IP地址"></a>ISP如何获取IP地址</h5><p>&emsp;&emsp;ISP从ICANN组织获取IP地址</p>
 <p>ICANN：Internet Corporation for Assigned Names and Numbers</p>
@@ -2260,7 +2261,271 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <li>管理DNS</li>
 <li>分配域名、解决争议</li>
 </ul>
-]]></content>
+<h4 id="NAT：网络地址转换（Network-Address-Translation）"><a href="#NAT：网络地址转换（Network-Address-Translation）" class="headerlink" title="NAT：网络地址转换（Network Address Translation）"></a>NAT：网络地址转换（Network Address Translation）</h4><ul>
+<li>从这个本地网络出去的报文都有着：相同的源IP+不同的端口号</li>
+<li>对于外界网络来说，这个本地网络都是一个IP<ul>
+<li>本地网络有内部地址，改变该内部地址不需要通知外部网络</li>
+<li>改变ISP不需要改变本地网络的内部地址</li>
+<li>内部地址在外部不可见（保障安全性）</li>
+</ul>
+</li>
+<li>实现方式<ul>
+<li>发送出去的报文：（源IP(内部的IP)，端口号）—&gt; （NAT IP(NAT统一的IP)，新端口号）<ul>
+<li>外部发来的报文的目的地址填写：（NAT IP(NAT统一的IP)，新端口号）</li>
+</ul>
+</li>
+<li>NAT转换表：记住（源IP(内部的IP)，端口号）&lt;—&gt; （NAT IP(NAT统一的IP)，新端口号）的转换对</li>
+<li>收到的报文：根据NAT转换表，（NAT IP(NAT统一的IP)，新端口号）—&gt; （源IP(内部的IP)，端口号）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network-address-translation.png" style="zoom: 50%;" /></p>
+<ul>
+<li>外部不知道内部的情况，所以外部不能发起通信</li>
+<li>预留给内部的IP地址：<ul>
+<li><code>10.0.0.0</code>~<code>10.255.255.255</code>（A类）</li>
+<li><code>176.16.0.0</code>~<code>172.31.255.255</code>（B类）</li>
+<li><code>192.168.0.0</code>~<code>192.168.255.255</code>（C类）</li>
+</ul>
+</li>
+<li>可以有16bit的主机地址位（<code>10.0.0.0</code>~<code>10.255.255.255</code>），一个NAT支持内部60000+的连接</li>
+<li>NAT存在争议<ul>
+<li>路由器本来是在第3层，但NAT修改了端口号，而端口号包含在TCP/UDP的段结构里，即改了第4层的内容</li>
+<li>违反了端到端</li>
+<li>所以用IPv6来解决地址短缺</li>
+</ul>
+</li>
+</ul>
+<h4 id="ICMP：因特网控制消息协议（Internet-Control-Message-Protocol）"><a href="#ICMP：因特网控制消息协议（Internet-Control-Message-Protocol）" class="headerlink" title="ICMP：因特网控制消息协议（Internet Control Message Protocol）"></a>ICMP：因特网控制消息协议（Internet Control Message Protocol）</h4><h5 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h5><ul>
+<li>主机、路由器、网关来交流网络层信息<ul>
+<li>报错：到达不了主机、网络、端口、协议等等</li>
+<li>用于探测：echo request/reply（使用ping）</li>
+</ul>
+</li>
+<li>IP的一部分，但体系结构在IP之上：ICMP消息搭载在IP数据报上</li>
+<li><strong>ICMP消息</strong>：type，code，引发错误的IP数据报首部和前8个字节</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th><strong>Code</strong></th>
+<th>description</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>echo reply (ping)</td>
+<td>echo响应 (被程序ping使用）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>dest. network unreachable</td>
+<td>目标网络不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>dest host unreachable</td>
+<td>目标主机不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>dest protocol unreachable</td>
+<td>目标协议不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>dest port unreachable</td>
+<td>目标端口不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+<td>dest network unknown</td>
+<td>未知的目标网络</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+<td>dest host unknown</td>
+<td>未知的目标主机</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>source quench (congestion control - not used)</td>
+<td>源端关闭（拥塞控制）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0</td>
+<td>echo request (ping)</td>
+<td>Echo请求</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0</td>
+<td>route advertisement</td>
+<td>路由通告</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0</td>
+<td>router discovery</td>
+<td>路由器的发现/选择/请求</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0</td>
+<td>TTL expired</td>
+<td>TTL 超时</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0</td>
+<td>bad IP header</td>
+<td>IP 报首部参数错误</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>ICMP是管控制的IP的“兄弟”</li>
+<li>ICMP被IP使用，同时作为网络层协议使用IP</li>
+<li>ping、traceroute、path MTU discovery 都使用到了ICMP<ul>
+<li>ping：使用 ICMP Echo request/repley msgs</li>
+<li>path MTU discovery<ul>
+<li>发送一个大的IP数据报，该数据报的 don’t fragment 置 1（即不分片）</li>
+<li>减小数据报大小，直至成功（成功标志：没有接收到返回的ICMP消息）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Traceroute"><a href="#Traceroute" class="headerlink" title="Traceroute"></a>Traceroute</h5><p>&emsp;&emsp;Traceroute程序：跟踪从一台主机到其他主机之间的路由，用ICMP报文实现。</p>
+<ul>
+<li>源发送一系列 UDP报文段 到目的<ul>
+<li>第一个数据报 TTL=1，第二个数据报 TTL=2，以此类推</li>
+<li>使用不常见的端口号</li>
+</ul>
+</li>
+<li>当第n个数据报到达第n台主机时<ul>
+<li>这个第n个数据报TTL刚好过期</li>
+<li>路由器丢弃该数据报</li>
+<li>路由器发送一个ICMP告警报文（type 11，code 0）给源</li>
+<li>该ICMP告警报文包括第n台路由器名字及其IP</li>
+</ul>
+</li>
+<li>当该ICMP报文返回到源主机，源主机计算RTT（往返时延），得到第n台路由器名字及其IP</li>
+<li>标准的Traceroute程序用相同的TTL发送3个一组的分组，输出对每个TTL提供3个结果</li>
+<li>停止条件步骤<ul>
+<li>UDP数据报到达目的主机</li>
+<li>目的主机返回 ICMP端口不可到达报文（type 3，code 3）</li>
+<li>源主机接收到该ICMP报文，则停止</li>
+</ul>
+</li>
+</ul>
+<p>在Mac上可在app“系统信息”中的<code>窗口</code>-&gt;<code>网络实用工具</code>中使用Ping、Traceroute等工具。</p>
+<h3 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h3><ul>
+<li>动机<ul>
+<li>初动机：解决32位IP地址空间分配完的问题</li>
+<li>更快处理/转发的头部格式</li>
+<li>头部支持QoS</li>
+</ul>
+</li>
+<li>IPv6数据报格式<ul>
+<li>固定长度的头部：40 byte （IPv4头部长度不固定）</li>
+<li>不允许分片</li>
+</ul>
+</li>
+</ul>
+<h4 id="IPv6数据报结构"><a href="#IPv6数据报结构" class="headerlink" title="IPv6数据报结构"></a>IPv6数据报结构</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_IPv6-datagram-format.png" style="zoom:50%;" /></p>
+<ul>
+<li><p><strong>版本</strong>（Version, <strong>4 bit</strong>）<br>对于IPv6，字段的值是6（0110）。</p>
+</li>
+<li><p><strong>流量类型</strong>（Traffic class，<strong>8 bit</strong>）</p>
+<p>用来标识对应IPv6的通信流类别，类似于IPv4中的ToS。</p>
+</li>
+<li><p><strong>流标签</strong>（Flow label，<strong>20 bit</strong>）</p>
+<p>用来标记报文的数据流类型，以便在网络层区分不同的报文。</p>
+</li>
+<li><p><strong>有效载荷长度</strong>（Payload length，<strong>16 bit</strong>）</p>
+<p>给出了IPv6数据报中跟在定长的40 byte数据报头部后面的字节数量。</p>
+</li>
+<li><p><strong>下一个头部</strong>（Next Header，<strong>8 bit</strong>）</p>
+<p>该字段标识数据报中的内容（数据字段）需要交付给哪个协议（如TCP或UDP）。无扩展的头部，Next Header指向TCP/UDP；有扩展的头部，Next Header指向的下一个头部比如路由选择。与IPv4头部 协议（Protocol）字段相同。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Next-Header.png" style="zoom: 25%;" /></p>
+</li>
+<li><p><strong>跳段数限制</strong>（Hop limit，<strong>8 bit</strong>）</p>
+<p>生存时间，相当于IPv4中的TTL。转发数据报的每台路由器讲对该字段内容 -1，如果跳转限制计数到0时，则丢弃该数据报</p>
+</li>
+<li><p><strong>源IP地址</strong>（Source Address，<strong>128 bit</strong>）</p>
+</li>
+<li><p><strong>目的IP地址</strong>（Destination Address，<strong>128 bit</strong>）</p>
+</li>
+<li><p><strong>数据</strong>（Data）</p>
+</li>
+</ul>
+<h4 id="IPv6相较于IPv4的部分改变"><a href="#IPv6相较于IPv4的部分改变" class="headerlink" title="IPv6相较于IPv4的部分改变"></a>IPv6相较于IPv4的部分改变</h4><ul>
+<li><strong>去除Checksum</strong>：加快了转发速度</li>
+<li><strong>Options</strong>：依旧允许可选项，但是不放在头部，而是放在 Next Header 指出的位置上</li>
+<li><strong>ICMPv6</strong>：ICMP的IPv6版本<ul>
+<li>增加新的 type：比如“Packet Too Big”</li>
+<li>包含<strong>多播组管理</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="IPv6地址"><a href="#IPv6地址" class="headerlink" title="IPv6地址"></a>IPv6地址</h4><ul>
+<li><p>三种类型：<strong>单播</strong>（unicast）、<strong>多播</strong>（multicast）、<strong>任意播</strong>（anycast）</p>
+</li>
+<li><p><strong>冒号划分的十六进制</strong>（128 bit）</p>
+<p>eg.  <code>68E6:8C64:FFFF:FFFF:0:1180:960A:FFFF</code></p>
+</li>
+<li><p><strong>0的压缩</strong></p>
+<p>用双冒号<code>::</code>表示一组0或多组连续的0，但只能出现一次。</p>
+<ul>
+<li><code>FF05:0:0:0:0:0:0:B3</code> = <code>FF05::B3</code></li>
+<li><code>0:0:0:0:0:0:128.10.2.1</code> = <code>::128.10.2.1</code>（IPv4和IPv6兼容的IP）</li>
+<li><code>12AB:0:0:CD30:0:0:0:0</code> = <code>12AB::CD30:0:0:0:0</code> = <code>12AB:0:0:CD30::</code>（如果出现两个多个0，随意压一个都行）</li>
+</ul>
+</li>
+</ul>
+<h4 id="单播（Unicast-address）"><a href="#单播（Unicast-address）" class="headerlink" title="单播（Unicast address）"></a>单播（Unicast address）</h4><p>单播的地址格式（一共 128 bit）：</p>
+<ul>
+<li><p><strong>全球路由前缀</strong>（Global routing prefix，<strong>48 bit</strong>）</p>
+<p>前3位为<code>001</code>，分配给公司和组织。</p>
+</li>
+<li><p><strong>子网ID</strong>（Subnet ID，<strong>16 bit</strong>）</p>
+<p>如果是小公司，只需要1个子网的话，全设为0</p>
+</li>
+<li><p><strong>接口ID</strong>（Interface ID，<strong>64 bit</strong>）</p>
+<p>基于 EUI-64</p>
+</li>
+</ul>
+<h3 id="IPv4到IPv6的迁移"><a href="#IPv4到IPv6的迁移" class="headerlink" title="IPv4到IPv6的迁移"></a>IPv4到IPv6的迁移</h3><ul>
+<li>现在的网络既有IPv4，也有IPv6。世界上的所有网从IPv4到IPv6需要很长的转换时间。</li>
+<li>两种IPv4到IPv6的迁移<ul>
+<li><strong>双栈</strong>（Dual Stack）：一些路由器可以兼容IPv4和IPv6</li>
+<li><strong>隧道</strong>（Tunneling）：当IPv6穿过IPv4的路由器上时，将IPv6作为载荷承载在IPv4上</li>
+</ul>
+</li>
+</ul>
+<h4 id="双栈（Dual-Stack）"><a href="#双栈（Dual-Stack）" class="headerlink" title="双栈（Dual Stack）"></a>双栈（Dual Stack）</h4><ul>
+<li>早期的设计</li>
+<li>一些路由器有双栈（IPv4 &amp; IPv6），可以翻译这两种格式</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Dual-Stack.png" style="zoom:33%;" /></p>
+<h4 id="隧道（Tunneling）"><a href="#隧道（Tunneling）" class="headerlink" title="隧道（Tunneling）"></a>隧道（Tunneling）</h4><p>&emsp;&emsp;当IPv6穿过IPv4的路由器上时，将IPv6作为载荷承载在IPv4上。就是像一个连接两个IPv6路由器的IPv4隧道</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Tunneling.png" style="zoom:50%;" /></p>
+<h1 id="链路层（Link-Layer）"><a href="#链路层（Link-Layer）" class="headerlink" title="链路层（Link Layer）"></a>链路层（Link Layer）</h1>]]></content>
       <categories>
         <category>计算机网络</category>
       </categories>
