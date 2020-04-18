@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>图像的傅立叶变换</title>
+    <url>/2020/04/17/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;&emsp;空域上的图像利于人眼分析，但是对于计算机来说分析困难，所以在很多情况下（比如滤波），需要在频域对图像进行处理。傅立叶变换把信号拆分成不同频率sin的组合，即可将空域的图像化到频域。</p>
+<a id="more"></a>
+<h1 id="傅立叶变换"><a href="#傅立叶变换" class="headerlink" title="傅立叶变换"></a>傅立叶变换</h1><h2 id="一维傅立叶变换"><a href="#一维傅立叶变换" class="headerlink" title="一维傅立叶变换"></a>一维傅立叶变换</h2><p>&emsp;&emsp;一维傅立叶变换，即任何信号都可以拆分成 $A\sin (wx+\varPhi )$ 的组合。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Fourier_transform_time_and_frequency_domains_%28small%29.gif" alt=""></p>
+<p><strong>连续的傅立叶变换</strong></p>
+<script type="math/tex; mode=display">
+H(w)=\int_{-\infty}^{\infty}h(x)e^{-jwx}dx</script><p><strong>离散的傅立叶变换（DFT）</strong></p>
+<script type="math/tex; mode=display">
+H(k)=\frac 1N\sum\limits_{x=0}^{N-1}h(x)e^{-j\frac{2\pi kx}{N}}\ ,\quad k= -N/2..N/2</script><p><strong>快速傅立叶变换（FFT）时间复杂度</strong>：$N\log N$</p>
+<p>&emsp;&emsp;对于每个频率w来说，都有一个$A\sin (wx+\varPhi )$，其中</p>
+<p><strong>幅值</strong>（R为H(w)的实部，I为H(w)的虚部）构成频谱图</p>
+<script type="math/tex; mode=display">
+A=\pm\sqrt{R(w)^2+I(w)^2}</script><p><strong>相位</strong>（R为H(w)的实部，I为H(w)的虚部）构成相位图</p>
+<script type="math/tex; mode=display">
+\varPhi = \arctan\frac {I(w)}{R(w)}</script><h2 id="二维傅立叶变换"><a href="#二维傅立叶变换" class="headerlink" title="二维傅立叶变换"></a>二维傅立叶变换</h2><p>&emsp;&emsp;图像的傅立叶变换是二维的傅立叶变换。</p>
+<p><strong>二维的连续傅立叶变换</strong></p>
+<script type="math/tex; mode=display">
+F(u,v)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)e^{-j(ux+vy)}dxdy</script><p><strong>二维离散的傅立叶变换</strong>（对于$M\times N$的图像）</p>
+<script type="math/tex; mode=display">
+F(u,v)=\sum\limits_{x=0}^{M-1}\sum\limits_{y=0}^{N-1}f(x,y)e^{-j2\pi (\frac{ux}{M}+\frac{vy}{N})}\ ,\quad u = 0,1,2,···,M-1\ , \quad v = 0,1,2,···,N-1</script><p>&emsp;&emsp;如此图像从$(x,y)$的空域矩阵，变成了$(u,v)$的频域矩阵。（频域矩阵的大小与原空间域矩阵大小相同）</p>
+<p><strong>幅值</strong>（R为H(u,v)的实部，I为H(u,v)的虚部）</p>
+<script type="math/tex; mode=display">
+A=\pm\sqrt{R(u,v)^2+I(u,v)^2}</script><p><strong>相位</strong>（R为H(u,v)的实部，I为H(u,v)的虚部）</p>
+<script type="math/tex; mode=display">
+\varPhi = \arctan\frac {I(u,v)}{R(u,v)}</script><div class="note info">
+            <p>一维傅立叶变换的三角函数系是$sin(wx)$、$cos(wx)$以及常数$1$，二维傅立叶变换的三角函数系是$sin(ux+vy)$、$cos(ux+vy)$和常数$1$。</p>
+          </div>
+<h1 id="频谱图"><a href="#频谱图" class="headerlink" title="频谱图"></a>频谱图</h1><h2 id="频谱图生成"><a href="#频谱图生成" class="headerlink" title="频谱图生成"></a>频谱图生成</h2><p>图像频谱图生成Matlab代码如下</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">img = imread(<span class="string">'Lenna.jpg'</span>);</span><br><span class="line">img = rgb2gray(img);</span><br><span class="line">img = double(img);</span><br><span class="line">f1 = fft2(img); <span class="comment">% 二维快速傅里叶变换 </span></span><br><span class="line">f2 = fftshift(f1); <span class="comment">% FFT频谱平移</span></span><br><span class="line">magnitude1 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(f1)); <span class="comment">% （未中心化）频谱对数变换（由于幅度值范围很大，所以要取对数处理）</span></span><br><span class="line">magnitude2 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(f2)); <span class="comment">% （中心化）</span></span><br><span class="line">imshow(magnitude2,[]),title(<span class="string">'频谱图'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="二维傅里叶变换"><a href="#二维傅里叶变换" class="headerlink" title="二维傅里叶变换"></a>二维傅里叶变换</h3><p>&emsp;&emsp;首先需将图像进行二维傅里叶变换，得到未中心化的频谱图。此时频谱图中间区域是高频，而四个角则是DC低频分量。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT1.jpg" style="zoom:75%;" /></p>
+<h3 id="频谱的中心化"><a href="#频谱的中心化" class="headerlink" title="频谱的中心化"></a>频谱的中心化</h3><p>&emsp;&emsp;DFT具有周期性，且频谱图关于原点对称。</p>
+<p>&emsp;&emsp;在原图像乘以系数$(-1)^{x+y}$，再进行傅立叶变换，可以得到中心化的频谱图（中间低频、四周高频）。相当于对未中心化的频谱图的四个象限进行对调：1 &lt;—&gt; 3、2 &lt;—&gt; 4</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT_center.png" style="zoom:80%;" /></p>
+<p>频谱图进行中心化</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT2.jpg" style="zoom:75%;" /></p>
+<p>如此得到最终的频谱图</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT3.jpg" style="zoom:75%;" /></p>
+<h2 id="频率分布"><a href="#频率分布" class="headerlink" title="频率分布"></a>频率分布</h2><p>&emsp;&emsp;经过频谱居中后的频谱中，中间最亮的点是最低频率，属于直流分量（DC分量）。越往边外走，频率越高。所以，频谱图中的四个角和X,Y轴的尽头都是高频。</p>
+<p>&emsp;&emsp;频谱图的亮度表示对应频率的幅度的大小。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT4.png" style="zoom: 40%;" /></p>
+<h2 id="平移和旋转"><a href="#平移和旋转" class="headerlink" title="平移和旋转"></a>平移和旋转</h2><ul>
+<li>原图像平移，频谱图不变；</li>
+<li>原图像旋转，频谱随着原图像旋转相同的角度。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT5.jpg" style="zoom:75%;" /></p>
+<p>Matlab代码</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">Isize = <span class="number">512</span>;</span><br><span class="line">Rwidth = <span class="number">50</span>;</span><br><span class="line">Rlength = <span class="number">3</span>*Rwidth;</span><br><span class="line"> </span><br><span class="line">Irect = <span class="built_in">zeros</span>(Isize);</span><br><span class="line">Irect(<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + <span class="number">1</span>:<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + Rlength,...</span><br><span class="line">     (<span class="built_in">floor</span>(Isize - Rwidth)/<span class="number">2</span>) + <span class="number">1</span>:<span class="built_in">floor</span>((Isize - Rwidth)/<span class="number">2</span>) + Rwidth) = <span class="number">1</span>;</span><br><span class="line">Idft = fft2(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(Irect),title(<span class="string">'原图'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>),imshow(<span class="built_in">log</span>(<span class="built_in">abs</span>(fftshift(Idft))+<span class="number">1</span>),[]),title(<span class="string">'原图的频谱图'</span>);</span><br><span class="line"> </span><br><span class="line">Irect = <span class="built_in">zeros</span>(Isize);</span><br><span class="line">Irect(<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + <span class="number">150</span> + <span class="number">1</span>:<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + <span class="number">150</span> + Rlength,...</span><br><span class="line">     (<span class="built_in">floor</span>(Isize - Rwidth)/<span class="number">2</span>) + <span class="number">1</span> + <span class="number">200</span>:<span class="built_in">floor</span>((Isize - Rwidth)/<span class="number">2</span>) + Rwidth + <span class="number">200</span>) = <span class="number">1</span>;</span><br><span class="line">Idft = fft2(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(Irect),title(<span class="string">'平移'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>),imshow(<span class="built_in">log</span>(<span class="built_in">abs</span>(fftshift(Idft))+<span class="number">1</span>),[]),title(<span class="string">'平移后的频谱图'</span>);</span><br><span class="line"></span><br><span class="line">Irect = <span class="built_in">zeros</span>(Isize);</span><br><span class="line">Irect(<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + <span class="number">1</span>:<span class="built_in">floor</span>((Isize - Rlength)/<span class="number">2</span>) + Rlength,...</span><br><span class="line">     (<span class="built_in">floor</span>(Isize - Rwidth)/<span class="number">2</span>) + <span class="number">1</span>:<span class="built_in">floor</span>((Isize - Rwidth)/<span class="number">2</span>) + Rwidth) = <span class="number">1</span>;</span><br><span class="line">Irot = imrotate(Irect, <span class="number">45</span>, <span class="string">'crop'</span>, <span class="string">'bilinear'</span>);</span><br><span class="line">Idft = fft2(Irot);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(Irot),title(<span class="string">'旋转'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>),imshow(<span class="built_in">log</span>(<span class="built_in">abs</span>(fftshift(Idft))+<span class="number">1</span>),[]),title(<span class="string">'旋转后的频谱图'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="方向性"><a href="#方向性" class="headerlink" title="方向性"></a>方向性</h2><p>&emsp;&emsp;在二维傅里叶变换中，空间域中横向的周期变化会反应在频谱图中的Y轴上，而空间域中纵向的周期变化会反应在频谱图中的X轴上。空间域中东南方向的周期变化会反应在频谱图中的东北方向，反之亦然。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DFT6.jpg" style="zoom: 40%;" /></p>
+<p>Matlab代码</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">Isize = <span class="number">512</span>;</span><br><span class="line"></span><br><span class="line">Irect = <span class="built_in">zeros</span>(Isize);</span><br><span class="line">Irect(<span class="built_in">floor</span>(Isize/<span class="number">2</span>)+<span class="number">1</span>:Isize, <span class="number">1</span>:Isize) = <span class="number">0.1</span>;</span><br><span class="line">Irect(<span class="number">1</span>:<span class="built_in">floor</span>(Isize/<span class="number">2</span>), <span class="number">1</span>:Isize) = <span class="number">1</span>;</span><br><span class="line">Idft = fft2(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>),imshow(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>),imshow(<span class="built_in">log</span>(<span class="built_in">abs</span>(fftshift(Idft))+<span class="number">1</span>),[]);</span><br><span class="line"></span><br><span class="line">Irect = <span class="built_in">zeros</span>(Isize);</span><br><span class="line">Irect(<span class="number">1</span>:Isize, <span class="built_in">floor</span>(Isize/<span class="number">2</span>)+<span class="number">1</span>:Isize) = <span class="number">0.1</span>;</span><br><span class="line">Irect(<span class="number">1</span>:Isize, <span class="number">1</span>:<span class="built_in">floor</span>(Isize/<span class="number">2</span>)) = <span class="number">1</span>;</span><br><span class="line">Idft = fft2(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>),imshow(Irect);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>),imshow(<span class="built_in">log</span>(<span class="built_in">abs</span>(fftshift(Idft))+<span class="number">1</span>),[]);</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/daduzimama/article/details/80109139" target="_blank" rel="noopener">图像的傅里叶变换的频谱特征 一（周期性，能量分布，fftshift，交错性）</a></li>
+<li><a href="https://blog.csdn.net/daduzimama/article/details/80394596?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1" target="_blank" rel="noopener">图像的傅里叶变换的频谱特征 三（平移，旋转，相位的重要性）</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2" target="_blank" rel="noopener">WiKi 傅立叶变换</a></li>
+<li><a href="https://imlogm.github.io/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/image-fft/" target="_blank" rel="noopener">二维图像的傅立叶变换</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Computer Vision</category>
+      </categories>
+      <tags>
+        <tag>傅立叶变换</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图像金字塔</title>
+    <url>/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>问题：假设要进行人脸识别，但是人脸与摄像头之间距离忽远忽近，单一分辨率的识别算法无法识别所有距离下的人脸特征。</p>
+<p>图像金字塔是一种以多分辨率来解释图像的结构，通过对原始图像进行多尺度像素采样的方式，生成N个不同分辨率的图像。<br>把具有最高级别分辨率的图像放在底部，以金字塔形状排列，往上是一系列像素（尺寸）逐渐降低的图像，一直到金字塔的顶部只包含一个像素点的图像，这就构成了传统意义上的图像金字塔。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Image_pyramid.svg/600px-Image_pyramid.svg.png" style="zoom: 67%;" /></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://shartoo.github.io/2019/02/24/image-pramid/" target="_blank" rel="noopener">图像中的各种金字塔</a></li>
+<li><a href="https://www.uio.no/studier/emner/matnat/its/UNIK4690/v16/forelesninger/lecture_2_3_blending.pdf" target="_blank" rel="noopener">图像金字塔的算法构建图示</a></li>
+<li><a href="https://docs.opencv.org/3.4/d4/d1f/tutorial_pyramids.html" target="_blank" rel="noopener">opencv 官方文档</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pyramid_(image_processing" target="_blank" rel="noopener">WiKi百科：金字塔（图像处理）</a>)</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>Xcode调用Mac摄像头</title>
     <url>/2020/03/31/Xcode%E8%B0%83%E7%94%A8Mac%E6%91%84%E5%83%8F%E5%A4%B4/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">OpenCV: not authorized to capture video (status 0), requesting... OpenCV: camera failed to properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
@@ -2705,6 +2788,7 @@ Path(W,Z) = W,Path(X,Z)</script></li>
 <h3 id="子图"><a href="#子图" class="headerlink" title="子图"></a>子图</h3><p>​    使用 <code>subplot</code> 函数可以在同一窗口的不同子区域显示多个绘图。</p>
 <p>格式：<code>subplot(a, b, c)</code> </p>
 <p>功能：a⨉b网格中的第c个位置显示图形。</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">t = <span class="number">0</span>:<span class="built_in">pi</span>/<span class="number">10</span>:<span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">[X,Y,Z] = cylinder(<span class="number">4</span>*<span class="built_in">cos</span>(t));</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>); mesh(X); title(<span class="string">'X'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>); mesh(Y); title(<span class="string">'Y'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>); mesh(Z); title(<span class="string">'Z'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>); mesh(X,Y,Z); title(<span class="string">'X,Y,Z'</span>);</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/03/05/q4OePTnEXGZxFJY.jpg" style="zoom:33%;" /></p>
 ]]></content>
       <categories>
@@ -3526,6 +3610,10 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
 <tr>
 <td>$\approx$</td>
 <td><code>\approx</code></td>
+</tr>
+<tr>
+<td>$\pm$</td>
+<td><code>\pm</code></td>
 </tr>
 </tbody>
 </table>
