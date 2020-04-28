@@ -1577,7 +1577,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
             <p>&emsp;&emsp;校验和相同只能说是“检验不出错误”，不能保障没有错误。比如传输中多个16bit字发生错误，但是可能恰巧相加校验和不变。</p>
           </div>
 <div class="note warning">
-            <p>  例题：有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">  \begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wrap\ around\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011   \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
+            <p>  例题：有两个16-bit的字，1110011001100110 和 1101010101010101，求校验和。</p><script type="math/tex; mode=display">\begin{split}   &1110011001100110\\\\  +\ &1101010101010101\\\\  ———————&—————————\\\\  wrap\ around\quad1&1011101110111011\quad\\\\  sum\quad&1011101110111100\\\\  checksum\quad&0100010001000011  \end{split}</script><p>  &emsp;&emsp;wraparound存在溢出，进位的部分回卷，加到最后一位。</p>
           </div>
 </li>
 </ul>
@@ -3147,6 +3147,293 @@ D\times 2^r \oplus R = nG</script><p>先将信息$D$乘以$2^r$，即左移$r$ b
 </li>
 <li><p>接收方检错</p>
 <p>&emsp;&emsp;接收方收到发送方发来的<code>101110011</code>后，将其除以生成多项式$G$ <code>1001</code>。如果整除则未检测到差错，否则检测到差错。</p>
+</li>
+</ul>
+<h2 id="多路访问链路和协议（Multiple-Access-Links-and-Protocols）"><a href="#多路访问链路和协议（Multiple-Access-Links-and-Protocols）" class="headerlink" title="多路访问链路和协议（Multiple Access Links and Protocols）"></a>多路访问链路和协议（Multiple Access Links and Protocols）</h2><p>链路的两种类型：</p>
+<ul>
+<li><p>点对点链路（point-to-point link）</p>
+<p>&emsp;&emsp;由链路一端的单个发送方和链路另一端的单个接收方组成。</p>
+</li>
+<li><p><strong>广播链路</strong>（broadcast link）</p>
+<p>&emsp;&emsp;多个发送方和接收方，单一的、共享的信道。</p>
+<p>&emsp;&emsp;<strong>多路访问协议</strong>（Multiple access protocol），规范结点在共享的广播信道上的传输行为。</p>
+</li>
+</ul>
+<p>多路访问协议分类：</p>
+<ul>
+<li><strong>信道划分协议</strong>（channel partitioning protocol）<ul>
+<li>静态</li>
+<li>将信道平分给各节点</li>
+<li>优点：公平、相互不干扰</li>
+<li>缺点：闲置占有带宽</li>
+</ul>
+</li>
+<li><strong>随机接入协议</strong>（random access protocol）<ul>
+<li>动态</li>
+<li>独占信道</li>
+<li>允许冲突，并能从冲突中恢复</li>
+</ul>
+</li>
+<li><strong>轮流协议</strong>（taking-turns protocol）<ul>
+<li>上两种的结合</li>
+<li>紧密协调共享访问以避免冲突</li>
+</ul>
+</li>
+</ul>
+<p>多路访问协议的目标：高效、公平、简单、分布式</p>
+<h3 id="信道划分协议（Channel-Partitioning-protocols）"><a href="#信道划分协议（Channel-Partitioning-protocols）" class="headerlink" title="信道划分协议（Channel Partitioning protocols）"></a>信道划分协议（Channel Partitioning protocols）</h3><h4 id="时分多路复用（TDMA）"><a href="#时分多路复用（TDMA）" class="headerlink" title="时分多路复用（TDMA）"></a>时分多路复用（TDMA）</h4><p>&emsp;&emsp;TDM将时间划分为时间帧（frame），并进一步划分每个时间帧为$N$个时隙（slot），链路中的每条连接专用一个时隙。</p>
+<p>&emsp;&emsp;详见 <a href="https://gy23333.github.io/2020/03/16/《计算机网络-自顶向下方法》笔记/#时分多路复用（TDM）">时分多路复用（TDM）</a>。</p>
+<h4 id="频分多路复用（FDMA）"><a href="#频分多路复用（FDMA）" class="headerlink" title="频分多路复用（FDMA）"></a>频分多路复用（FDMA）</h4><p>&emsp;&emsp;链路中的每条连接专用一个频段。</p>
+<p> &emsp;&emsp;详见 <a href="https://gy23333.github.io/2020/03/16/《计算机网络-自顶向下方法》笔记/#时分多路复用（TDM）">时分多路复用（FDM）</a> 。</p>
+<h4 id="码分多址（CDMA）"><a href="#码分多址（CDMA）" class="headerlink" title="码分多址（CDMA）"></a>码分多址（CDMA）</h4><p> &emsp;&emsp;详见 <a href="[https://gy23333.github.io/2020/03/16/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/#%E7%A0%81%E5%88%86%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%EF%BC%88Code-division-multiplexing%EF%BC%8CCDM%EF%BC%89](https://gy23333.github.io/2020/03/16/《计算机网络-自顶向下方法》笔记/#码分多路复用（Code-division-multiplexing，CDM）">码分多路复用（Code division multiplexing，CDM）</a>) 。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_CDMA.png" style="zoom:50%;" /></p>
+<h3 id="随机接入协议（Random-Access-protocols）"><a href="#随机接入协议（Random-Access-protocols）" class="headerlink" title="随机接入协议（Random Access protocols）"></a>随机接入协议（Random Access protocols）</h3><ul>
+<li>结点传输pkt时，占有信道全部带宽，结点间无优先级</li>
+<li>存在多个传输结点 =&gt; 碰撞</li>
+<li>随机接入协议明确了：<ul>
+<li>如何检测碰撞</li>
+<li>如何从碰撞中恢复</li>
+</ul>
+</li>
+<li>常用的随机接入协议<ul>
+<li>ALOHA</li>
+<li>Slotted ALOHA</li>
+<li>CSMA 和 CSMA/CD</li>
+</ul>
+</li>
+</ul>
+<h4 id="纯ALOHA（Pure-ALOHA）"><a href="#纯ALOHA（Pure-ALOHA）" class="headerlink" title="纯ALOHA（Pure ALOHA）"></a>纯ALOHA（Pure ALOHA）</h4><ul>
+<li>非时隙、简单、完全分散</li>
+<li>最早的ALOHA，目前已经不再使用</li>
+<li>帧长一定 =&gt; 帧传输时间一定</li>
+<li>当一帧首次到达（从网络层传下来），结点立即将该帧完整传输进广播信道</li>
+<li>如果发送碰撞，则该结点<ul>
+<li>有$p$的概率，将立即以重传该帧</li>
+<li>有$1-p$的概率，等待一个帧传输时间，再以$p$的概率判断是否重传</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Pure-ALOHA.png" style="zoom:50%;" /></p>
+<p>&emsp;&emsp;假设一帧在$t_0$处开始传输，则在$[t_0-1,t_0+1]$，其他结点如有传输，发生碰撞，则易损时间区长度为$2\tau$（$tau$为一帧的传输时间）。</p>
+<p>&emsp;&emsp;一个结点发送成功，则需要本结点发送、其他结点在$[t_0-1,t_0]$和$[t_0,t_0+1]$不发送。一个给定结点成功传送的概率为</p>
+<script type="math/tex; mode=display">
+\begin{split} 
+  P(success\ by\ given\ node)=&P(node\ transmits)\times\\
+    & P(no\ other\ node\ transmits\ in\ [t_0-1,t_0])\times\\
+    & P(no\ other\ node\ transmits\ in\ [t_0,t_0+1])\\
+    =&p\times (1-p)^{N-1}\times (1-p)^{N-1}\\
+    =&p\times (1-p)^{2(N-1)}
+ \end{split}</script><p>则有$N$个结点，任意一个结点成功传送的概率为</p>
+<script type="math/tex; mode=display">
+S=Np(1-p)^{2(N-1)}</script><p>如此，求得纯ALOHA的最大效率为$1/(2e)\approx 0.18$（改变$p$，使$S$最大化）。</p>
+<h4 id="时隙ALOHA（Slotted-ALOHA）"><a href="#时隙ALOHA（Slotted-ALOHA）" class="headerlink" title="时隙ALOHA（Slotted ALOHA）"></a>时隙ALOHA（Slotted ALOHA）</h4><ul>
+<li>时间被划分成长度相等的时隙（slot）</li>
+<li>结点只在时隙起点开始传输帧</li>
+<li>如果碰撞，在下一时隙的开始以$p$的概率重传，直至成功。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Slotted-ALOHA.png" style="zoom:50%;" /></p>
+<p>&emsp;&emsp;假设一帧在$t_0$处开始传输，则在本时隙中，其他结点如有传输，发生碰撞，则易损时间区长度为$tau$（$tau$为一帧的传输时间）。</p>
+<p>&emsp;&emsp;一个给定结点成功传送的概率为</p>
+<script type="math/tex; mode=display">
+S=p(1-p)^{N-1}</script><p>&emsp;&emsp;如果有$N$个活跃结点，任意一个结点成功传送的概率为</p>
+<script type="math/tex; mode=display">
+S=Np(1-p)^{N-1}</script><p>如此，求得时隙ALOHA的最大效率为$1/e\approx 0.37$（改变$p$，使$S$最大化）。即在有大量结点有帧要传输时，最多$37%$的时隙做有用的工作，信道传输速率不是$R$ bps，而是$0.37R$ bps。</p>
+<p>&emsp;&emsp;时隙ALOHA的最大效率是纯ALOHA的两倍。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_ALOHA-Compare.png" style="zoom: 33%;" /></p>
+<h4 id="CSMA：载波侦听多路访问"><a href="#CSMA：载波侦听多路访问" class="headerlink" title="CSMA：载波侦听多路访问"></a>CSMA：载波侦听多路访问</h4><p>&emsp;&emsp;载波侦听多路访问（CSMA，Carrier Sense Multiple Access），一个结点在传输前先侦听信道。</p>
+<ul>
+<li><p>如果侦听到<strong>信道空闲</strong>，则传输帧</p>
+</li>
+<li><p>如果侦听到<strong>信道正忙</strong>，则推迟传输。再传输方式分为坚持型和非坚持型：</p>
+<ul>
+<li><strong>坚持型CSMA</strong>（Persisitent CSMA）：一直坚持监听，直到信道空闲时，立即以概率$p$重试（可能导致不稳定）。其中<strong>1-坚持型CSMA</strong>的$p=1$，即立即重试。</li>
+<li><strong>非坚持型CSMA</strong>（Non-Persisitent CSMA）：不再监听，等待一个随机的时间之后再进行监听。</li>
+</ul>
+</li>
+<li><p>CSMA依旧会发生<strong>碰撞</strong></p>
+<p>&emsp;&emsp;只要共享信道，那么碰撞就是不可避免的，即使CSMA有侦听。</p>
+<p>&emsp;&emsp;比如下图中，B结点在$t_0$时传输帧，但是帧的传输是需要一定时间的，这就导致在$t_1$时，D结点侦听判断信道空闲，传输帧。两信号发生碰撞。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_CSMA-Collision.png" style="zoom: 40%;" /></p>
+<p>&emsp;&emsp;如此，整个帧传输时间被浪费了。可以看出，广播信道的端到端<strong>信道传播时延</strong>（distance and propagation delay）（信号从一个结点到另一个结点的传播时间）在决定性能上起关键作用。</p>
+</li>
+</ul>
+<h4 id="CSMA-CD：具有碰撞检测的载波侦听多路访问"><a href="#CSMA-CD：具有碰撞检测的载波侦听多路访问" class="headerlink" title="CSMA/CD：具有碰撞检测的载波侦听多路访问"></a>CSMA/CD：具有碰撞检测的载波侦听多路访问</h4><ul>
+<li>碰撞要在短时间内检测出来（最好在一个争用期内）</li>
+<li>一旦检测到碰撞立即停止传输，以减少信道的浪费</li>
+<li>采样坚持型或非坚持型重传</li>
+<li>碰撞检测<ul>
+<li>有线网络检测碰撞比较简单：如阈值法、过零法等等</li>
+<li>无线网络检测碰撞比较困难</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;如下图，当B结点和D结点检测到碰撞时，立即停止继续发送。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_CSMA%3ACD.png" style="zoom: 40%;" /></p>
+<p><strong>争用期</strong>：以太网的端到端往返时间$2\tau$</p>
+<p>&emsp;&emsp;A结点给B结点发送帧流，最坏情况就是在即将发送到B结点时，发生碰撞，返回碰撞信息，最大用时即为$2\tau$。</p>
+<p><strong>最短帧</strong>：最短帧长度为$2\tau R$（$R$为信道速率）</p>
+<p>&emsp;&emsp;和上述同样的最坏情况中，从A结点发送帧，到碰撞信号返回到A结点花费$2\tau$的时间，在此期间A结点不能停止帧的发送，所以最短帧的长度为$2\tau R$。</p>
+<p>&emsp;&emsp;如此可以最大利用网络效率，而且不会产生二义型。如果发送完了这个帧，没有发生碰撞，则发生成功。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_CSMA%3ACD1.png" style="zoom:50%;" /></p>
+<p><strong>CSMA/CD 效率</strong></p>
+<p>&emsp;&emsp;CSMA/CD 效率：当有大量的活跃结点，且每个结点有大量的帧要发送时，帧在信道中无碰撞地传输的那部分时间在长期运行时间中所占的份额。</p>
+<script type="math/tex; mode=display">
+efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两结点之间的最大传播时间；</p>
+<p>&emsp;&emsp;&emsp;$t_{trans}$为传输一个最大长度的帧的时间。</p>
+<p>效率趋近1，则需</p>
+<ul>
+<li>$t_{prop}$ -&gt; 0</li>
+<li>或，$t_{trans}$ -&gt; $\infty$</li>
+</ul>
+<p>&emsp;&emsp;CSMA/CD 比 ALOHA 简单、便宜、分布式。</p>
+<h3 id="轮流协议（Taking-Turns-protocol）"><a href="#轮流协议（Taking-Turns-protocol）" class="headerlink" title="轮流协议（Taking-Turns protocol）"></a>轮流协议（Taking-Turns protocol）</h3><h4 id="轮询协议（Polling-protocol）"><a href="#轮询协议（Polling-protocol）" class="headerlink" title="轮询协议（Polling protocol）"></a>轮询协议（Polling protocol）</h4><ul>
+<li><p>有一个主结点</p>
+</li>
+<li><p>主结点以循环的方式轮询每个结点</p>
+</li>
+<li><p>主结点先向一个结点发送报文，告诉能够传输的帧的最多的数量，这个结点传输完帧后，主机点再发给下一个结点报文，循环轮询。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Polling-protocol.png" style="zoom:30%;" /></p>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>主结点需先给结点发送报文，增加开销</li>
+<li>轮询时延，不及时</li>
+<li>如果主结点出故障，则整个网络无法工作</li>
+</ul>
+</li>
+</ul>
+<h4 id="令牌传递协议（Token-Passing-protocol）"><a href="#令牌传递协议（Token-Passing-protocol）" class="headerlink" title="令牌传递协议（Token-Passing protocol）"></a>令牌传递协议（Token-Passing protocol）</h4><ul>
+<li><p><strong>令牌</strong>（token）在结点之间以某种固定次序进行交换</p>
+</li>
+<li><p>结点只有在拿到令牌时，才能发送帧</p>
+</li>
+<li><p>受控的，不会发生碰撞</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Token-Passing-protocol.png" style="zoom:30%;" /></p>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>令牌开销</li>
+<li>时延</li>
+<li>令牌环会故障</li>
+</ul>
+</li>
+</ul>
+<h2 id="局域网技术"><a href="#局域网技术" class="headerlink" title="局域网技术"></a>局域网技术</h2><h3 id="局域网模型"><a href="#局域网模型" class="headerlink" title="局域网模型"></a>局域网模型</h3><p>&emsp;&emsp;局域网模型中，<strong>数据链路层</strong>分为LLC子层和MAC子层。</p>
+<ul>
+<li><strong>逻辑链路控制层</strong>（Logical Link Control，<strong>LLC</strong>）：为上层（网络层）提供连接环境</li>
+<li><strong>媒体接入层</strong>（Media Access Control，<strong>MAC</strong>）：为下层（物理层）提供媒体接入</li>
+</ul>
+<h3 id="局域网地址和ARP"><a href="#局域网地址和ARP" class="headerlink" title="局域网地址和ARP"></a>局域网地址和ARP</h3><h4 id="MAC-地址"><a href="#MAC-地址" class="headerlink" title="MAC 地址"></a>MAC 地址</h4><ul>
+<li><p>可以叫<strong>MAC 地址</strong>、<strong>LAN地址</strong>、<strong>物理地址</strong></p>
+</li>
+<li><p>用于从一个接口到另一个物理连接的接口（同一网络）获取数据报</p>
+</li>
+<li><p>MAC地址长度：$48$ bit / $6$ byte</p>
+</li>
+<li><p>与硬件有关，一个网卡（适配器）对应一个MAC地址</p>
+</li>
+<li><p>例如：<code>1A-2F-BB-76-09-AD</code></p>
+</li>
+<li><p>与局域网相连的每个接口都有唯一的MAC地址</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_MAC-address.png" style="zoom:50%;" /></p>
+</li>
+<li><p>MAC地址由IEEE分配</p>
+</li>
+<li><p>IEEE给公司固定MAC地址的前$24$ bit，后$24$ bit由公司保证每个适配器MAC地址的唯一性</p>
+</li>
+<li><p>IP地址和MAC地址的关系：IP地址就像是一个邮件地址，解决在哪上网的问题；MAC地址像身份证，解决谁在上网的问题</p>
+<ul>
+<li>IP地址<strong>层次结构</strong>，主机移动，主机的IP地址也改变</li>
+<li>MAC地址<strong>扁平寻址结构</strong>，不会因为位置改变MAC地址</li>
+</ul>
+</li>
+</ul>
+<h4 id="ARP：地址解析协议"><a href="#ARP：地址解析协议" class="headerlink" title="ARP：地址解析协议"></a>ARP：地址解析协议</h4><p>&emsp;&emsp;ARP（Address Resolution Protocol），地址解析协议</p>
+<ul>
+<li><p>局域网中的每个IP结点（主机、路由器）都有ARP表</p>
+</li>
+<li><p><strong>ARP表</strong>：局域网结点的IP地址和MAC地址的对应关系</p>
+<ul>
+<li>每行的结构：<code>&lt;IP address; MAC address; TTL&gt;</code></li>
+<li><code>TTL</code>：存活时间，过TTL的时间要丢弃这一行数据</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_APR.png" style="zoom:50%;" /></p>
+</li>
+</ul>
+<h5 id="同一子网内的地址解析"><a href="#同一子网内的地址解析" class="headerlink" title="同一子网内的地址解析"></a>同一子网内的地址解析</h5><p>&emsp;&emsp;A想要发送数据报给B，但是B的MAC地址没有记录在A的ARP表中。</p>
+<ul>
+<li>A发送一个<strong>广播帧</strong>——查询ARP分组，包含B的IP地址<ul>
+<li>目的MAC地址：<code>FF-FF-FF-FF-FF-FF</code></li>
+<li>所有结点都会收到该ARP查询分组</li>
+</ul>
+</li>
+<li>B接收到ARP分组，给A回复B的MAC地址<ul>
+<li>给A的MAC地址<strong>单播</strong>帧——响应APR分组</li>
+</ul>
+</li>
+<li>A在ARP表中缓存IP到MAC地址对，直至超时TTL</li>
+</ul>
+<p>&emsp;&emsp;ARP即插即用：ARP表自动建立，不需要系统管理员来配置</p>
+<h5 id="不同子网的地址解析"><a href="#不同子网的地址解析" class="headerlink" title="不同子网的地址解析"></a>不同子网的地址解析</h5><p>&emsp;&emsp;不同子网的A和B通过路由器R发送数据报，A只知道B的IP地址，不知道B的MAC地址</p>
+<ul>
+<li>A创建IP报文（IP地址在整个传输过程中不改变）<ul>
+<li>源IP地址：A的IP</li>
+<li>目的IP地址：B的IP</li>
+</ul>
+</li>
+<li>A创建数据帧，在IP报文的基础上，加上MAC地址<ul>
+<li>源MAC地址：A的MAC</li>
+<li>目的MAC地址：路由器R左端的MAC（路由器R左端与A在一个子网中）</li>
+</ul>
+</li>
+<li>帧从A传到路由器R</li>
+<li>路由器R接收帧，并从路由器R的数据链路层传到网络层，从数据帧拆成IP数据报</li>
+<li>路由器R在IP报文的基础上，加上新的MAC地址段，传到数据链路层<ul>
+<li>源MAC地址：路由器R右端的MAC（路由器R右端与B在一个子网中）</li>
+<li>目的MAC地址：B的MAC</li>
+</ul>
+</li>
+<li>帧从路由器R传到B，B接收到数据</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_ARP.gif" alt=""></p>
+<h3 id="以太网（Enternet）"><a href="#以太网（Enternet）" class="headerlink" title="以太网（Enternet）"></a>以太网（Enternet）</h3><h4 id="以太网物理拓扑"><a href="#以太网物理拓扑" class="headerlink" title="以太网物理拓扑"></a>以太网物理拓扑</h4><ul>
+<li><p><strong>总线型</strong></p>
+<p>&emsp;&emsp;早期流行，所有的结点共用一条总线。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Ethernet-Bus.png" style="zoom:35%;" /></p>
+</li>
+<li><p><strong>星型</strong></p>
+<p>&emsp;&emsp;以太网现在使用的拓扑结构，中间是交换机，所有结点和交换机的连接是唯一的，不会发生冲突。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Ethernet-Star.png" style="zoom:27%;" /></p>
+</li>
+</ul>
+<h4 id="以太网帧结构"><a href="#以太网帧结构" class="headerlink" title="以太网帧结构"></a>以太网帧结构</h4><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_Ethernet-Frame-Structure.png" style="zoom:50%;" /></p>
+<ul>
+<li><p><strong>前导码</strong>（Preamble，<strong>7 byte</strong>）</p>
+<p>7 bytes 的方波<code>10101010</code>，用于“唤醒”接收适配器，并将它们的时钟与发送方的时钟同步。</p>
+</li>
+<li><p><strong>帧开始符</strong>（Start of Frame Delimiter(SFD)，<strong>1 byte</strong>）</p>
+<p><code>10101011</code>，用来警告接收适配器，要开始了。</p>
+</li>
+<li><p><strong>目的MAC地址</strong>（Destination address，<strong>6 byte</strong>）</p>
+<p>目的适配器的MAC地址</p>
+</li>
+<li><p><strong>源MAC地址</strong>（Source address，<strong>6 byte</strong>）</p>
+<p>源适配器的MAC地址</p>
+</li>
+<li><p><strong>类型</strong>（Type，<strong>2 byte</strong>）</p>
+<p>上层的协议。比如，IP协议对应<code>0X0800</code></p>
+</li>
+<li><p><strong>数据</strong>（Data，<strong>46~1500 byte</strong>）</p>
+<p>IP数据报。</p>
+<ul>
+<li><p>最小长度——46 byte</p>
+<p>由$2\tau R$决定，详见</p>
+</li>
+<li><p>最大长度——1500 byte</p>
+</li>
+</ul>
+</li>
+<li><p><strong>帧校验序列</strong>（FCS，<strong>4 byte</strong>）</p>
 </li>
 </ul>
 ]]></content>
