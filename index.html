@@ -237,7 +237,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-19 15:29:04" itemprop="dateModified" datetime="2021-04-19T15:29:04+08:00">2021-04-19</time>
+                <time title="Modified: 2022-01-04 01:15:35" itemprop="dateModified" datetime="2022-01-04T01:15:35+08:00">2022-01-04</time>
               </span>
 
           
@@ -265,31 +265,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="合成雾图"><a href="#合成雾图" class="headerlink" title="合成雾图"></a>合成雾图</h1><p>参考Semantic Foggy Scene Understanding with Synthetic Data</p>
-<h2 id="雾天图像退化模型"><a href="#雾天图像退化模型" class="headerlink" title="雾天图像退化模型"></a>雾天图像退化模型</h2><p>光线在大气中传播的过程中会接触到空气中的颗粒，形成散射，使得原方向上的光线强度衰减，能量发散到其他方向。随着雾的浓度的增大，空气中的颗粒也就愈加密集，光的散射程度也随之增加。</p>
-<p>雾天图像退化模型中，光学传感器接收到的光分为两个部分：一是目标物体反射的光，反射光从目标物体传播到光学传感器，途中会受到空气颗粒的散射，导致光强减小；二是周围的环境光，也叫大气光，由大气中其他光源散射至光学传感器。</p>
-<p>根据能量守恒定律，目标物体反射光中散射掉的比例应等于大气光散射到光学传感器的比例，由此可以得到以下雾成像机理的线性模型</p>
-<script type="math/tex; mode=display">
-I(x)=J(x)t(x)+A(1-t(x))</script><p>其中，I(x)为有雾图像，J(x)为晴天图像，t(x)为中间介质透射率（即目标物体反射光中成功到达相机，没有被散射掉的光的比例），A为全局大气光强。有雾图像I(x)可分为衰减模型J(x)t(x)和环境光模型A(1-t(x))。</p>
-<h2 id="雾合成"><a href="#雾合成" class="headerlink" title="雾合成"></a>雾合成</h2><p>根据雾成像机制公式</p>
-<script type="math/tex; mode=display">
-I(x)=R(x)t(x)+L(1-t(x))</script><p>要从晴图R(x)得到雾图I(x)，还需要两个参数——中间透射率t(x)和大气光L。</p>
-<h3 id="求中间透射率t-x"><a href="#求中间透射率t-x" class="headerlink" title="求中间透射率t(x)"></a>求中间透射率t(x)</h3><p>数据集通过双目相机对街道进行拍摄，再通过双目匹配算法可以得到以下输入：</p>
-<ul>
-<li>晴图左通道R</li>
-<li>晴图右通道Q</li>
-<li>双目相机参数</li>
-<li>预估视差D</li>
-<li>无视差值D的所有像素点集合</li>
-</ul>
-<p>计算中间透射率t(x)的步骤：</p>
-<ol>
-<li>通过视差D计算出大致的深度图d</li>
-<li>去噪，完成一个以米为单位的深度图d’</li>
-<li>从深度图d’得场景距离图l</li>
-<li></li>
-</ol>
-
+          <p>在自动驾驶的过程中，图像语义分割是其视觉系统中很重要的一环，现有的不少算法在晴天条件下对图像进行处理表现良好，但是一旦出现如雾天等恶劣天气，原有系统对图像的处理效果将大大降低。</p>
+<p>本课题旨在通过算法途径，以图像复原为手段，提升图像理解算法在雾天条件下的感知能力，基于大气退化物理模型对雾天图像进行语义分割。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
