@@ -46,15 +46,19 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="GuoYi的博客">
-<meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;archives&#x2F;2019&#x2F;index.html">
+  <meta name="description" content="合成雾图参考Semantic Foggy Scene Understanding with Synthetic Data 雾天图像退化模型光线在大气中传播的过程中会接触到空气中的颗粒，形成散射，使得原方向上的光线强度衰减，能量发散到其他方向。随着雾的浓度的增大，空气中的颗粒也就愈加密集，光的散射程度也随之增加。 雾天图像退化模型中，光学传感器接收到的光分为两个部分：一是目标物体反射的光，反射光从目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雾天图像理解算法研究">
+<meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2021&#x2F;04&#x2F;04&#x2F;%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="合成雾图参考Semantic Foggy Scene Understanding with Synthetic Data 雾天图像退化模型光线在大气中传播的过程中会接触到空气中的颗粒，形成散射，使得原方向上的光线强度衰减，能量发散到其他方向。随着雾的浓度的增大，空气中的颗粒也就愈加密集，光的散射程度也随之增加。 雾天图像退化模型中，光学传感器接收到的光分为两个部分：一是目标物体反射的光，反射光从目">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-04T13:47:00.000Z">
+<meta property="article:modified_time" content="2021-04-19T07:29:04.247Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://gy23333.github.io/archives/2019/">
+<link rel="canonical" href="https://gy23333.github.io/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/">
 
 
 <script id="page-configurations">
@@ -62,11 +66,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Archive | GuoYi的博客</title>
+  <title>雾天图像理解算法研究 | GuoYi的博客</title>
   
 
 
@@ -200,194 +204,126 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          雾天图像理解算法研究
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-04 21:47:00" itemprop="dateCreated datePublished" datetime="2021-04-04T21:47:00+08:00">2021-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-19 15:29:04" itemprop="dateModified" datetime="2021-04-19T15:29:04+08:00">2021-04-19</time>
+              </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">OK! 33 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-21T15:24:14+08:00"
-              content="2019-12-21">
-          12-21
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/21/Mac-WiFi%E8%BF%9E%E6%8E%A5%E6%97%A0%E6%B3%95%E5%BC%B9%E5%87%BA%E9%AA%8C%E8%AF%81%E9%A1%B5%E9%9D%A2%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" itemprop="url">
-            <span itemprop="name">Mac WiFi连接无法弹出验证页面问题解决办法</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-20T19:06:56+08:00"
-              content="2019-12-20">
-          12-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/20/hough%E5%8F%98%E6%8D%A2/" itemprop="url">
-            <span itemprop="name">hough变换</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-20T15:56:45+08:00"
-              content="2019-12-20">
-          12-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/20/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">汇编学习笔记</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-17T12:10:28+08:00"
-              content="2019-12-17">
-          12-17
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/" itemprop="url">
-            <span itemprop="name">某不科学的C课设入门（华科自动化C课设）</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-16T21:39:02+08:00"
-              content="2019-12-16">
-          12-16
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/16/Mac%E4%BD%BF%E7%94%A8Matlab%E5%8D%A1%E9%A1%BF%E4%B8%A5%E9%87%8D%E4%B8%94%E9%97%AA%E9%80%80%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" itemprop="url">
-            <span itemprop="name">Mac使用Matlab卡顿严重且闪退的解决办法</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-16T20:50:50+08:00"
-              content="2019-12-16">
-          12-16
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/16/Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88C++%E5%AE%9E%E7%8E%B0%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Canny边缘检测算法（C++实现）</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-16T19:50:26+08:00"
-              content="2019-12-16">
-          12-16
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/16/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8Chexo-d%E5%90%8E%EF%BC%8C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AFERROR-Deployer-not-found-git/" itemprop="url">
-            <span itemprop="name">命令行执行hexo d后，出现错误ERROR Deployer not found: git</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-16T16:33:33+08:00"
-              content="2019-12-16">
-          12-16
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/16/Mac%E6%9D%83%E9%99%90%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" itemprop="url">
-            <span itemprop="name">Mac权限无法修改问题解决办法</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+        <h1 id="合成雾图"><a href="#合成雾图" class="headerlink" title="合成雾图"></a>合成雾图</h1><p>参考Semantic Foggy Scene Understanding with Synthetic Data</p>
+<h2 id="雾天图像退化模型"><a href="#雾天图像退化模型" class="headerlink" title="雾天图像退化模型"></a>雾天图像退化模型</h2><p>光线在大气中传播的过程中会接触到空气中的颗粒，形成散射，使得原方向上的光线强度衰减，能量发散到其他方向。随着雾的浓度的增大，空气中的颗粒也就愈加密集，光的散射程度也随之增加。</p>
+<p>雾天图像退化模型中，光学传感器接收到的光分为两个部分：一是目标物体反射的光，反射光从目标物体传播到光学传感器，途中会受到空气颗粒的散射，导致光强减小；二是周围的环境光，也叫大气光，由大气中其他光源散射至光学传感器。</p>
+<p>根据能量守恒定律，目标物体反射光中散射掉的比例应等于大气光散射到光学传感器的比例，由此可以得到以下雾成像机理的线性模型</p>
+<script type="math/tex; mode=display">
+I(x)=J(x)t(x)+A(1-t(x))</script><p>其中，I(x)为有雾图像，J(x)为晴天图像，t(x)为中间介质透射率（即目标物体反射光中成功到达相机，没有被散射掉的光的比例），A为全局大气光强。有雾图像I(x)可分为衰减模型J(x)t(x)和环境光模型A(1-t(x))。</p>
+<h2 id="雾合成"><a href="#雾合成" class="headerlink" title="雾合成"></a>雾合成</h2><p>根据雾成像机制公式</p>
+<script type="math/tex; mode=display">
+I(x)=R(x)t(x)+L(1-t(x))</script><p>要从晴图R(x)得到雾图I(x)，还需要两个参数——中间透射率t(x)和大气光L。</p>
+<h3 id="求中间透射率t-x"><a href="#求中间透射率t-x" class="headerlink" title="求中间透射率t(x)"></a>求中间透射率t(x)</h3><p>数据集通过双目相机对街道进行拍摄，再通过双目匹配算法可以得到以下输入：</p>
+<ul>
+<li>晴图左通道R</li>
+<li>晴图右通道Q</li>
+<li>双目相机参数</li>
+<li>预估视差D</li>
+<li>无视差值D的所有像素点集合</li>
+</ul>
+<p>计算中间透射率t(x)的步骤：</p>
+<ol>
+<li>通过视差D计算出大致的深度图d</li>
+<li>去噪，完成一个以米为单位的深度图d’</li>
+<li>从深度图d’得场景距离图l</li>
+<li></li>
+</ol>
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/06/Daily-English-Dictation/" rel="prev" title="Daily English Dictation">
+      <i class="fa fa-chevron-left"></i> Daily English Dictation
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -434,6 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#合成雾图"><span class="nav-number">1.</span> <span class="nav-text">合成雾图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#雾天图像退化模型"><span class="nav-number">1.1.</span> <span class="nav-text">雾天图像退化模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#雾合成"><span class="nav-number">1.2.</span> <span class="nav-text">雾合成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求中间透射率t-x"><span class="nav-number">1.2.1.</span> <span class="nav-text">求中间透射率t(x)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
