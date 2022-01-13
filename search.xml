@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Makefile教程</title>
+    <url>/2022/01/13/Makefile%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+<h1 id="一个简单的示例"><a href="#一个简单的示例" class="headerlink" title="一个简单的示例"></a>一个简单的示例</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
+<p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
+<p>如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。</p>
+<p>所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作。</p>
+<p>在该文件夹下生成一个空文件，命名为<code>Makeflie</code>或<code>makefile</code></p>
+<figure class="highlight makefile"><figcaption><span>makefile</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="section">test: test.cpp</span></span><br><span class="line">	gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
+<div class="note warning">
+            <p>第二行的开头为Tab键，如为空格键则会出现<code>makefile:2: *** missing separator.  Stop.</code>的报错。</p><p>VSCode中默认Tab键转化为空格，如需输入Tab键，关闭设置中Editor: Insert Spaces选项。</p>
+          </div>
+<p>在命令行中输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>即可对<code>test.cpp</code>文件进行编译，效果与<code>gcc test.cpp -o test</code>相同。</p>
+]]></content>
+      <tags>
+        <tag>Makefile</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雾天图像理解算法研究</title>
     <url>/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>在自动驾驶的过程中，图像语义分割是其视觉系统中很重要的一环，现有的不少算法在晴天条件下对图像进行处理表现良好，但是一旦出现如雾天等恶劣天气，原有系统对图像的处理效果将大大降低。</p>
@@ -625,8 +647,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SURF算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -747,8 +769,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SIFT算子</tag>
         <tag>特征描述</tag>
+        <tag>SIFT算子</tag>
       </tags>
   </entry>
   <entry>
@@ -5114,8 +5136,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Latex</tag>
         <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
@@ -6136,8 +6158,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
