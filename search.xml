@@ -3,7 +3,8 @@
   <entry>
     <title>Makefile教程</title>
     <url>/2022/01/13/Makefile%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
+<a id="more"></a>
 <h1 id="一个简单的示例"><a href="#一个简单的示例" class="headerlink" title="一个简单的示例"></a>一个简单的示例</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>

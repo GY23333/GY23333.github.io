@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="一个简单的示例如果有一个test.cpp文件，在命令行里输入 1gcc test.cpp -o test 即可对cpp文件进行编译，生成test可执行文件。 如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。 所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作">
+  <meta name="description" content="一份简单的Makefile介绍入门，帮助在Linux系统下编译C&#x2F;C++。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Makefile教程">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2022&#x2F;01&#x2F;13&#x2F;Makefile%E6%95%99%E7%A8%8B&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="一个简单的示例如果有一个test.cpp文件，在命令行里输入 1gcc test.cpp -o test 即可对cpp文件进行编译，生成test可执行文件。 如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。 所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作">
+<meta property="og:description" content="一份简单的Makefile介绍入门，帮助在Linux系统下编译C&#x2F;C++。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-13T09:27:19.000Z">
-<meta property="article:modified_time" content="2022-01-13T10:22:01.942Z">
+<meta property="article:modified_time" content="2022-01-13T10:39:14.927Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Makefile">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-01-13 17:27:19 / Modified: 18:22:01" itemprop="dateCreated datePublished" datetime="2022-01-13T17:27:19+08:00">2022-01-13</time>
+              <time title="Created: 2022-01-13 17:27:19 / Modified: 18:39:14" itemprop="dateCreated datePublished" datetime="2022-01-13T17:27:19+08:00">2022-01-13</time>
             </span>
 
           
@@ -262,7 +262,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
+        <p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
+<a id="more"></a>
 <h1 id="一个简单的示例"><a href="#一个简单的示例" class="headerlink" title="一个简单的示例"></a>一个简单的示例</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
