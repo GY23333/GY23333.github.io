@@ -5248,8 +5248,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
@@ -6270,8 +6270,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
