@@ -5,7 +5,7 @@
     <url>/2022/01/13/Makefile%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
 <a id="more"></a>
-<h1 id="一个简单的示例"><a href="#一个简单的示例" class="headerlink" title="一个简单的示例"></a>一个简单的示例</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
+<h1 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
 <p>如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。</p>
@@ -25,7 +25,13 @@
 <li><strong>command</strong>（命令）：该target要执行的命令（任意的shell命令）</li>
 </ul>
 <p>target这一个或多个的目标文件依赖于prerequisites中的文件，其生成规则定义在command中。</p>
-<h2 id="Makefile中使用变量"><a href="#Makefile中使用变量" class="headerlink" title="Makefile中使用变量"></a>Makefile中使用变量</h2><h1 id="Makefile的运行"><a href="#Makefile的运行" class="headerlink" title="Makefile的运行"></a>Makefile的运行</h1><p>输入<code>make</code>命令后，</p>
+<h2 id="一个示例"><a href="#一个示例" class="headerlink" title="一个示例"></a>一个示例</h2><figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">edit : main.o kbd.o command.o display.o \</span><br><span class="line">        insert.o search.o files.o utils.o</span><br><span class="line">    cc -o edit main.o kbd.o command.o display.o \</span><br><span class="line">        insert.o search.o files.o utils.o</span><br><span class="line"></span><br><span class="line">main.o : main.c defs.h</span><br><span class="line">    cc -c main.c</span><br><span class="line">kbd.o : kbd.c defs.h command.h</span><br><span class="line">    cc -c kbd.c</span><br><span class="line">command.o : command.c defs.h command.h</span><br><span class="line">    cc -c command.c</span><br><span class="line">display.o : display.c defs.h buffer.h</span><br><span class="line">    cc -c display.c</span><br><span class="line">insert.o : insert.c defs.h buffer.h</span><br><span class="line">    cc -c insert.c</span><br><span class="line">search.o : search.c defs.h buffer.h</span><br><span class="line">    cc -c search.c</span><br><span class="line">files.o : files.c defs.h buffer.h command.h</span><br><span class="line">    cc -c files.c</span><br><span class="line">utils.o : utils.c defs.h</span><br><span class="line">    cc -c utils.c</span><br><span class="line">clean :</span><br><span class="line">    rm edit main.o kbd.o command.o display.o \</span><br><span class="line">        insert.o search.o files.o utils.o</span><br></pre></td></tr></table></figure>
+<h2 id="Makefile中使用变量"><a href="#Makefile中使用变量" class="headerlink" title="Makefile中使用变量"></a>Makefile中使用变量</h2><p>在makefile中使用变量类似于C/C++中的宏。</p>
+<p>定义一个变量<code>objects</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">objects = main.o kbd.o command.o display.o</span><br></pre></td></tr></table></figure>
+<p>则可以在makefile中以<code>$(objects)</code>的方式来使用这个变量。</p>
+<h2 id="隐晦规则"><a href="#隐晦规则" class="headerlink" title="隐晦规则"></a>隐晦规则</h2><p>make可以自动识别和推倒指令。只要make看到一个 <code>.o</code> 文件，它就会自动的把 <code>.c</code> 文件加在依赖关系中，如果make找到一个<code>whatever.o</code> ，那么 <code>whatever.c</code> 就会是 <code>whatever.o</code> 的依赖文件， <code>cc -c whatever.c</code> 就会被推导出来。</p>
+<h1 id="Makefile的运行"><a href="#Makefile的运行" class="headerlink" title="Makefile的运行"></a>Makefile的运行</h1><p>输入<code>make</code>命令后，</p>
 <ol>
 <li>在当前目录下找名字叫“Makefile”或“makefile”的文件；</li>
 <li>找文件中的第一个目标文件（target），并把这个文件作为最终的目标文件；</li>
@@ -4588,41 +4594,112 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
  <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">flowchart:</span></span><br><span class="line"><span class="comment"># raphael:   # optional, the source url of raphael.js</span></span><br><span class="line"><span class="comment"># flowchart: # optional, the source url of flowchart.js</span></span><br><span class="line"><span class="attr">options:</span> <span class="comment"># options used for `drawSVG`</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>绘制流程图</p>
+<p>范例：下列代码包在flow之间</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">st=&gt;start: Start|past:&gt;http://www.google.com[blank]</span><br><span class="line">e=&gt;end: End:&gt;http://www.google.com</span><br><span class="line">op1=&gt;operation: My Operation|past</span><br><span class="line">op2=&gt;operation: Stuff|current</span><br><span class="line">sub1=&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond=&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http://www.google.com</span><br><span class="line">c2=&gt;condition: Good idea|rejected</span><br><span class="line">io=&gt;inputoutput: catch something...|request</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p> 范例：下列代码包在flow之间</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">st=&gt;start: Start|past:&gt;http://www.google.com[blank]</span><br><span class="line">e=&gt;end: End:&gt;http://www.google.com</span><br><span class="line">op1=&gt;operation: My Operation|past</span><br><span class="line">op2=&gt;operation: Stuff|current</span><br><span class="line">sub1=&gt;subroutine: My Subroutine|invalid</span><br><span class="line">cond=&gt;condition: Yes</span><br><span class="line">or No?|approved:&gt;http://www.google.com</span><br><span class="line">c2=&gt;condition: Good idea|rejected</span><br><span class="line">io=&gt;inputoutput: catch something...|request</span><br><span class="line"></span><br><span class="line">st-&gt;op1(right)-&gt;cond</span><br><span class="line">cond(yes, right)-&gt;c2</span><br><span class="line">cond(no)-&gt;sub1(left)-&gt;op1</span><br><span class="line">c2(yes)-&gt;io-&gt;e</span><br><span class="line">c2(no)-&gt;op2-&gt;e</span><br></pre></td></tr></table></figure>
 <div id="flowchart-0" class="flow-chart"></div>
 
-<h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
-<h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
-<li><p>新建一个页面</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在新生成的  /source/music/index.md  中</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: 歌单</span><br><span class="line">date: 2020-02-25 19:50:11</span><br><span class="line">type: &quot;music&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在主题的 _config.yml文件中，设置页面</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: &#x2F; || home</span><br><span class="line">  archives: &#x2F;archives&#x2F; || archive</span><br><span class="line">  categories: &#x2F;categories&#x2F; || th</span><br><span class="line">  tags: &#x2F;tags&#x2F; || tags</span><br><span class="line">  music: &#x2F;music&#x2F; || music</span><br></pre></td></tr></table></figure>
-<p>​    页面创建成功！</p>
-<h3 id="使用hexo-tag-aplayer插件"><a href="#使用hexo-tag-aplayer插件" class="headerlink" title="使用hexo-tag-aplayer插件"></a>使用hexo-tag-aplayer插件</h3><ol>
-<li><p>安装hexo-tag-aplayer</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MeingJS支持</p>
-<p><a href="https://github.com/metowolf/MetingJS" target="_blank" rel="noopener">    MetingJS</a> 是基于<a href="https://github.com/metowolf/Meting" target="_blank" rel="noopener">Meting API</a> 的 APlayer 衍生播放器，引入 MetingJS 后，播放器将支持对于 QQ音乐、网易云音乐、虾米、酷狗、百度等平台的音乐播放。</p>
-<p>如果想在本插件中使用 MetingJS，请在 Hexo 配置文件 <code>_config.yml</code> 中设置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 MetingJS 播放器</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!-- 简单示例 (id, server, type)  --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" %&#125;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- 进阶示例 --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" "autoplay" "mutex:false" "listmaxheight:340px" "preload:none" "theme:#ad7a86"%&#125;</span><br></pre></td></tr></table></figure>
-<p>有关选项列表如下:</p>
-<p>| 选项          | 默认值     | 描述                                                         |<br>| ——————- | ————— | —————————————————————————————— |<br>| id            | <strong>必须值</strong> | 歌曲 id / 播放列表 id / 相册 id / 搜索关键字                 |<br>| server        | <strong>必须值</strong> | 音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code>    |<br>| type          | <strong>必须值</strong> | <code>song</code>（单首歌）, <code>playlist</code>（歌单）, <code>album</code>, <code>search</code>, <code>artist</code> |<br>| fixed         | <code>false</code>    | 开启固定模式                                                 |<br>| mini          | <code>false</code>    | 开启迷你模式                                                 |<br>| loop          | <code>all</code>      | 列表循环模式：<code>all</code>, <code>one</code>,<code>none</code>                            |<br>| order         | <code>list</code>     | 列表播放模式： <code>list</code>, <code>random</code>                              |<br>| volume        | 0.7        | 播放器音量                                                   |<br>| lrctype       | 0          | 歌词格式类型                                                 |<br>| listfolded    | <code>false</code>    | 指定音乐播放列表是否折叠                                     |<br>| storagename   | <code>metingjs</code> | LocalStorage 中存储播放器设定的键名                          |<br>| autoplay      | <code>true</code>     | 自动播放，移动端浏览器暂时不支持此功能                       |<br>| mutex         | <code>true</code>     | 该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停  |<br>| listmaxheight | <code>340px</code>    | 播放列表的最大长度                                           |<br>| preload       | <code>auto</code>     | 音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code>      |<br>| theme         | <code>#ad7a86</code>  | 播放器风格色彩设置                                           |</p>
-<p>配置结束！</p>
-</li>
-</ol>
+<h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>markdown的代码块写法有两种—— <code>````` 和`{ % ... % }`，这里主要使用</code> ````` 来实现功能。</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">​&#96;&#96;&#96;[language] [:title] [lang:language] [line_number:(true|false)] [first_line:number] [mark:#,#-#] [diff:true|false] [url:http...]</span><br><span class="line">code snippet</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### 设置语言</span><br><span class="line"></span><br><span class="line">- 格式</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96; line_number:false</span><br><span class="line">  &#96;&#96;&#96; language</span><br><span class="line">  code snippet</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">- 示例</span><br><span class="line"></span><br><span class="line">- 效果</span><br><span class="line"></span><br><span class="line">### 设置标题</span><br><span class="line"></span><br><span class="line">### 是否显示行号</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## Aplayer音乐播放器</span><br><span class="line"></span><br><span class="line">&amp;emsp;&amp;emsp;在blog中添加一个音乐播放页面 [Aplayer官方中文文档](https:&#x2F;&#x2F;github.com&#x2F;MoePlayer&#x2F;hexo-tag-aplayer&#x2F;blob&#x2F;master&#x2F;docs&#x2F;README-zh_cn.md)</span><br><span class="line"></span><br><span class="line">### 新建音乐页面</span><br><span class="line"></span><br><span class="line">1. 新建一个页面</span><br></pre></td></tr></table></figure>
+<p>   hexo new page music<br>   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. 在新生成的  &#x2F;source&#x2F;music&#x2F;index.md  中</span><br></pre></td></tr></table></figure><br>   title: 歌单<br>   date: 2020-02-25 19:50:11<br>   type: “music”<br>   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">3. 在主题的 _config.yml文件中，设置页面</span><br></pre></td></tr></table></figure><br>menu:<br>  home: / || home<br>  archives: /archives/ || archive<br>  categories: /categories/ || th<br>  tags: /tags/ || tags<br>  music: /music/ || music<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">​	页面创建成功！</span><br><span class="line"></span><br><span class="line">### 使用hexo-tag-aplayer插件</span><br><span class="line"></span><br><span class="line">1. 安装hexo-tag-aplayer</span><br></pre></td></tr></table></figure><br>   npm install —save hexo-tag-aplayer<br>   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. MeingJS支持</span><br><span class="line"></span><br><span class="line">   [	MetingJS](https:&#x2F;&#x2F;github.com&#x2F;metowolf&#x2F;MetingJS) 是基于[Meting API](https:&#x2F;&#x2F;github.com&#x2F;metowolf&#x2F;Meting) 的 APlayer 衍生播放器，引入 MetingJS 后，播放器将支持对于 QQ音乐、网易云音乐、虾米、酷狗、百度等平台的音乐播放。</span><br><span class="line"></span><br><span class="line">   如果想在本插件中使用 MetingJS，请在 Hexo 配置文件 &#96;_config.yml&#96; 中设置：</span><br></pre></td></tr></table></figure><br>   aplayer:<br>     meting: true<br>   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">3. 使用 MetingJS 播放器</span><br><span class="line"></span><br><span class="line">   &#96;&#96;&#96;markdown</span><br><span class="line">   &lt;!-- 简单示例 (id, server, type)  --&gt;</span><br><span class="line">   &#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line">   </span><br><span class="line">   &lt;!-- 进阶示例 --&gt;</span><br><span class="line">   &#123;% meting &quot;60198&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:340px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   有关选项列表如下:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><strong>必须值</strong></td>
+<td>歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
+</tr>
+<tr>
+<td>server</td>
+<td><strong>必须值</strong></td>
+<td>音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td><strong>必须值</strong></td>
+<td><code>song</code>（单首歌）, <code>playlist</code>（歌单）, <code>album</code>, <code>search</code>, <code>artist</code></td>
+</tr>
+<tr>
+<td>fixed</td>
+<td><code>false</code></td>
+<td>开启固定模式</td>
+</tr>
+<tr>
+<td>mini</td>
+<td><code>false</code></td>
+<td>开启迷你模式</td>
+</tr>
+<tr>
+<td>loop</td>
+<td><code>all</code></td>
+<td>列表循环模式：<code>all</code>, <code>one</code>,<code>none</code></td>
+</tr>
+<tr>
+<td>order</td>
+<td><code>list</code></td>
+<td>列表播放模式： <code>list</code>, <code>random</code></td>
+</tr>
+<tr>
+<td>volume</td>
+<td>0.7</td>
+<td>播放器音量</td>
+</tr>
+<tr>
+<td>lrctype</td>
+<td>0</td>
+<td>歌词格式类型</td>
+</tr>
+<tr>
+<td>listfolded</td>
+<td><code>false</code></td>
+<td>指定音乐播放列表是否折叠</td>
+</tr>
+<tr>
+<td>storagename</td>
+<td><code>metingjs</code></td>
+<td>LocalStorage 中存储播放器设定的键名</td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td><code>true</code></td>
+<td>自动播放，移动端浏览器暂时不支持此功能</td>
+</tr>
+<tr>
+<td>mutex</td>
+<td><code>true</code></td>
+<td>该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
+</tr>
+<tr>
+<td>listmaxheight</td>
+<td><code>340px</code></td>
+<td>播放列表的最大长度</td>
+</tr>
+<tr>
+<td>preload</td>
+<td><code>auto</code></td>
+<td>音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code></td>
+</tr>
+<tr>
+<td>theme</td>
+<td><code>#ad7a86</code></td>
+<td>播放器风格色彩设置</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   配置结束！</p>
 <p><img src="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png" style="zoom: 20%;" /></p>
 <h3 id="手动建立歌单（不推荐）"><a href="#手动建立歌单（不推荐）" class="headerlink" title="手动建立歌单（不推荐）"></a>手动建立歌单（不推荐）</h3><p>​    强迫症可手动将各平台的歌单整合在一起，这里提供一个<a href="https://music.liuzhijin.cn/" target="_blank" rel="noopener">下载各平台音乐的神器</a>。</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line"><span class="code">    "narrow": false,                          // （可选）播放器袖珍风格</span></span><br><span class="line"><span class="code">    "autoplay": true,                         // （可选) 自动播放，移动端浏览器暂时不支持此功能</span></span><br><span class="line"><span class="code">    "mode": "random",                         // （可选）曲目循环类型，有 'random'（随机播放）, 'single' (单曲播放), 'circulation' (循环播放), 'order' (列表播放)， 默认：'circulation' </span></span><br><span class="line"><span class="code">    "showlrc": 3,                             // （可选）歌词显示配置项，可选项有：1,2,3</span></span><br><span class="line"><span class="code">    "mutex": true,                            // （可选）该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</span></span><br><span class="line"><span class="code">    "theme": "#e6d0b2",	                      // （可选）播放器风格色彩设置，默认：#b7daff</span></span><br><span class="line"><span class="code">    "preload": "metadata",                    // （可选）音乐文件预载入模式，可选项： 'none' 'metadata' 'auto', 默认: 'auto'</span></span><br><span class="line"><span class="code">    "listmaxheight": "513px",                 // (可选) 该播放列表的最大长度</span></span><br><span class="line"><span class="code">    "music": [</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "CoCo",</span></span><br><span class="line"><span class="code">            "author": "Jeff Williams",</span></span><br><span class="line"><span class="code">            "url": "caffeine.mp3",</span></span><br><span class="line"><span class="code">            "pic": "caffeine.jpeg",</span></span><br><span class="line"><span class="code">            "lrc": "caffeine.txt"</span></span><br><span class="line"><span class="code">        &#125;,</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "アイロニ",</span></span><br><span class="line"><span class="code">            "author": "鹿乃",</span></span><br><span class="line"><span class="code">            "url": "irony.mp3",</span></span><br><span class="line"><span class="code">            "pic": "irony.jpg"</span></span><br><span class="line"><span class="code">        &#125;</span></span><br><span class="line"><span class="code">    ]</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
@@ -4657,8 +4734,9 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ol>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方文档</a></li>
-<li><a href="http://yearito.cn/" target="_blank" rel="noopener">Yearito’s Blog</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+<li><a href="http://yearito.cn/posts/hexo-writing-skills.html" target="_blank" rel="noopener">Yearito’s Blog|Hexo 搭建个人博客系列：写作技巧篇</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a></li>
+<li><a href="https://www.ofind.cn/blog/HEXO/HEXO下的语法高亮拓展修改.html#设置代码添加删除标记" target="_blank" rel="noopener">猪猪侠 | Hexo 下的语法高亮拓展修改</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
 e=>end: End:>http://www.google.com
 op1=>operation: My Operation|past
 op2=>operation: Stuff|current
@@ -5157,8 +5235,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Latex</tag>
         <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
@@ -6179,8 +6257,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
