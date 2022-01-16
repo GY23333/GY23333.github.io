@@ -674,8 +674,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -796,8 +796,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -4667,34 +4667,34 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="设置起始行号"><a href="#设置起始行号" class="headerlink" title="设置起始行号"></a>设置起始行号</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;[first_line:number]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [first_line:number] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 <p><code>first_line</code>的默认值为1。</p>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C   first_line:10</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C first_line:10 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
-<figure class="highlight c"><figcaption><span>lfirst_line:10</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="标记选定行"><a href="#标记选定行" class="headerlink" title="标记选定行"></a>标记选定行</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;[mark:#,#-#]             &#x2F;&#x2F;#行号，#-#行号范围</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [mark:#,#-#] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="行号，-行号范围。"><a href="#行号，-行号范围。" class="headerlink" title="行号，#-#行号范围。"></a>行号，#-#行号范围。</h1></li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C   mark:1,3-6</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C mark:1,3-6 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
-<figure class="highlight c"><figcaption><span>mark:1,3-6</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line marked"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line marked"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line marked">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line marked">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line marked">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="设置代码添加删除标记"><a href="#设置代码添加删除标记" class="headerlink" title="设置代码添加删除标记"></a>设置代码添加删除标记</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;[diff:true|false]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [diff:true|false] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 <p><code>diff</code>的默认值为false。</p>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C   diff:true</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">-    printf(&quot;delete\n&quot;);</span><br><span class="line">+    printf(&quot;add\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C diff:true %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">-    printf(&quot;delete\n&quot;);</span><br><span class="line">+    printf(&quot;add\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><figcaption><span>diff:true</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">-    <span class="built_in">printf</span>(<span class="string">"delete\n"</span>);</span><br><span class="line">+    <span class="built_in">printf</span>(<span class="string">"add\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -5358,8 +5358,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
