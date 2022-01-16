@@ -4572,22 +4572,23 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
   <entry>
     <title>Hexo搭建记录</title>
     <url>/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;​&emsp;记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。</p>
 <a id="more"></a>
-<h1 id="Hexo书写技巧"><a href="#Hexo书写技巧" class="headerlink" title="Hexo书写技巧"></a>Hexo书写技巧</h1><h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><h3 id="Hexo引入数学公式"><a href="#Hexo引入数学公式" class="headerlink" title="Hexo引入数学公式"></a>Hexo引入数学公式</h3><p>&emsp;​&emsp;Hexo默认不支持数学公式，需要引入数学公式的响应环境。</p>
+<h1 id="Hexo书写技巧"><a href="#Hexo书写技巧" class="headerlink" title="Hexo书写技巧"></a>Hexo书写技巧</h1><h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><h3 id="Hexo引入数学公式"><a href="#Hexo引入数学公式" class="headerlink" title="Hexo引入数学公式"></a>Hexo引入数学公式</h3><p>Hexo默认不支持数学公式，需要引入数学公式的响应环境。</p>
 <ol>
-<li><p>更换Hexo的markdown渲染引擎</p>
-<p>​    卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
-</li>
+<li>更换Hexo的markdown渲染引擎</li>
+</ol>
+<p>卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
+   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
+<ol>
 <li><p>在next主题中开启mathJax开关</p>
-<p>​    在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
+<p>在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
 <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line"> <span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"> <span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"> <span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"> <span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"> <span class="attr">mathjax:</span></span><br><span class="line">   <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>&emsp;​&emsp;如此即可在每片文章中自动允许数学公式。</p>
-<h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>&emsp;​&emsp;Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
-<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入流程图"><a href="#Hexo引入流程图" class="headerlink" title="Hexo引入流程图"></a>Hexo引入流程图</h3><p>&emsp;&emsp;Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
+<p>如此即可在每片文章中自动允许数学公式。</p>
+<h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入流程图"><a href="#Hexo引入流程图" class="headerlink" title="Hexo引入流程图"></a>Hexo引入流程图</h3><p>Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
 <ol>
 <li>安装hexo-filter-flowchart插件<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-filter-flowchart</span><br></pre></td></tr></table></figure></li>
 <li><p>在主题配置文件下添加flowchart配置</p>
@@ -4606,8 +4607,6 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <li><p>格式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<ul>
 <li><p>示例</p>
 </li>
 <li><p>效果</p>
