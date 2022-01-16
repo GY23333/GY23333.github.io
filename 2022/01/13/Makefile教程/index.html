@@ -271,7 +271,7 @@
         <p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
 <a id="more"></a>
 <h1 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc <span class="keyword">test</span>.cpp -o <span class="keyword">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
 <p>如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。</p>
 <p>所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作。</p>
@@ -281,7 +281,7 @@
             <p>第二行的开头为Tab键，如为空格键则会出现<code>makefile:2: *** missing separator.  Stop.</code>的报错。</p><p>VSCode中默认Tab键转化为空格，如需输入Tab键，关闭设置中Editor: Insert Spaces选项。</p>
           </div>
 <p>在命令行中输入</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">make</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
 <p>即可对<code>test.cpp</code>文件进行编译，效果与<code>gcc test.cpp -o test</code>相同。</p>
 <h1 id="Makefile的规则"><a href="#Makefile的规则" class="headerlink" title="Makefile的规则"></a>Makefile的规则</h1><h2 id="Makefile的基础框架"><a href="#Makefile的基础框架" class="headerlink" title="Makefile的基础框架"></a>Makefile的基础框架</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">target: prerequisites</span></span><br><span class="line">	command</span><br></pre></td></tr></table></figure>
 <ul>

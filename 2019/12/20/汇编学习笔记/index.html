@@ -280,7 +280,7 @@
         <p>汇编学习</p>
 <a id="more"></a>
 <h1 id="如何在Mac上运行汇编程序"><a href="#如何在Mac上运行汇编程序" class="headerlink" title="如何在Mac上运行汇编程序"></a>如何在Mac上运行汇编程序</h1><h2 id="安装nasm"><a href="#安装nasm" class="headerlink" title="安装nasm"></a>安装nasm</h2><p>在命令行中安装nasm</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span><span class="keyword">install </span>nasm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nasm</span><br></pre></td></tr></table></figure>
 <p>Mac中虽自带nasm，但版本太老，需重新安装。</p>
 <h2 id="新建asm文件"><a href="#新建asm文件" class="headerlink" title="新建asm文件"></a>新建asm文件</h2><p>下面名为 HelloWorld.asm 文件运行可输出hello world!</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">msg: db &quot;hello world!&quot;, 0x0a</span><br><span class="line">len: equ $-msg</span><br><span class="line">   </span><br><span class="line">SECTION .text</span><br><span class="line">global _main</span><br><span class="line">   </span><br><span class="line">kernel:</span><br><span class="line">     syscall</span><br><span class="line">     ret</span><br><span class="line">  </span><br><span class="line">_main:</span><br><span class="line">     mov rax,0x2000004</span><br><span class="line">     mov rdi,1</span><br><span class="line">     mov rsi,msg</span><br><span class="line">     mov rdx,len</span><br><span class="line">     call kernel</span><br><span class="line">   </span><br><span class="line">     mov rax,0x2000001</span><br><span class="line">     mov rdi,0</span><br><span class="line">     call kernel</span><br></pre></td></tr></table></figure>
@@ -289,15 +289,15 @@
 </ul>
 <p>-o outfile    write output to an outfile</p>
 <p>-f format     select an output format（指定编译环境）</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nasm -f macho64 -o <span class="module-access"><span class="module"><span class="identifier">HelloWorld</span>.</span></span>o <span class="module-access"><span class="module"><span class="identifier">HelloWorld</span>.</span></span>asm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nasm -f macho64 -o HelloWorld.o HelloWorld.asm</span><br></pre></td></tr></table></figure>
 <ul>
 <li>生成输出文件HelloWorld（格式：Unix可执行文件）</li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ld</span> <span class="selector-tag">HelloWorld</span><span class="selector-class">.o</span> <span class="selector-tag">-o</span> <span class="selector-tag">HelloWorld</span> <span class="selector-tag">-macosx_version_min</span> 10<span class="selector-class">.13</span> <span class="selector-tag">-lSystem</span> <span class="selector-tag">-no_pie</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld HelloWorld.o -o HelloWorld -macosx_version_min 10.13 -lSystem -no_pie</span><br></pre></td></tr></table></figure>
 <ul>
 <li>运行HelloWorld文件</li>
 </ul>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./HelloWorld</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;HelloWorld</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2019/12/20/fBoJwRNQp2vZ3xA.png" alt=""></p>
 <p>运行成功</p>
 <p>此时可看到文件夹中有三种文件（.asm、.o、Unix可执行文件）</p>
