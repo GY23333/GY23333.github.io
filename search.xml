@@ -4602,7 +4602,14 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <div id="flowchart-0" class="flow-chart"></div>
 
 <h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>markdown的代码块写法有两种——<code>```...``` </code>和<code>{ % ... % }</code>，这里主要使用<code>```...``` </code>来实现功能。</p>
-<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96; [language] [title] [url] [link text] [additional options]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96; [language] [title] [url] [link text] [additional options]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<h4 id="写法二"><a href="#写法二" class="headerlink" title="写法二"></a>写法二</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [lang:language] [title] [url] [link text] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>language: 语言</li>
+<li>title: 标题</li>
+<li>url: 源码下载地址</li>
+<li>link text: 下载地址的文字</li>
+</ul>
 <h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><ul>
 <li><p>格式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
@@ -4616,13 +4623,13 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="设置标题"><a href="#设置标题" class="headerlink" title="设置标题"></a>设置标题</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96; [:title]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language [title]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;   HelloWorld</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C HelloWorld</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>HelloWorld</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="是否显示行号"><a href="#是否显示行号" class="headerlink" title="是否显示行号"></a>是否显示行号</h3><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
@@ -6305,8 +6312,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
