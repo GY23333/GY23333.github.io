@@ -674,8 +674,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -796,8 +796,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -4602,14 +4602,16 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <div id="flowchart-0" class="flow-chart"></div>
 
 <h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>markdown的代码块写法有两种——<code>```...``` </code>和<code>{ % ... % }</code>，这里主要使用<code>```...``` </code>来实现功能。</p>
-<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96; [language] [title] [url] [link text] [additional options]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;[language] [title] [url] [link text] [additional options]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
 <h4 id="写法二"><a href="#写法二" class="headerlink" title="写法二"></a>写法二</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [lang:language] [title] [url] [link text] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>language: 语言</li>
-<li>title: 标题</li>
-<li>url: 源码下载地址</li>
-<li>link text: 下载地址的文字</li>
+<li>language: 语言名称，引导渲染引擎正确解析并高亮显示关键字</li>
+<li>title: 代码块标题，将会显示在左上角</li>
+<li>url: 链接地址，如果没有指定 link text 则会在右上角显示 link</li>
+<li>link text: 链接名称，指定 url 后有效，将会显示在右上角</li>
 </ul>
+<p>url 必须为有效链接地址才会以链接的形式显示在右上角，否则将作为标题显示在左上角。以 url 为分界，左侧除了第一个单词会被解析为 language，其他所有单词都会被解析为 title，而右侧的所有单词都会被解析为 link text。</p>
+<p>如果不想填写 title，可以在 language 和 url 之间添加至少三个空格。</p>
 <h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><ul>
 <li><p>格式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
@@ -4630,6 +4632,21 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><figcaption><span>HelloWorld</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="设置链接"><a href="#设置链接" class="headerlink" title="设置链接"></a>设置链接</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language [title] [url] [link text]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果不含title，<code>language</code>和<code>url</code>中间空三个空格。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;language   [url] [link text]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C HelloWorld https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo搭建记录&#x2F; HelloWorld</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><figcaption><span>HelloWorld</span><a href="https://gy23333.github.io/2020/02/25/Hexo搭建记录/">HelloWorld</a></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="是否显示行号"><a href="#是否显示行号" class="headerlink" title="是否显示行号"></a>是否显示行号</h3><h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
@@ -5290,8 +5307,8 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Latex</tag>
         <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
