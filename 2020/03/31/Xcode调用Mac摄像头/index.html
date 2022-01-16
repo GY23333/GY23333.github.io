@@ -61,8 +61,8 @@
 <meta property="article:modified_time" content="2020-03-30T18:08:53.898Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
-<meta property="article:tag" content="Xcode">
 <meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="Xcode">
 <meta property="article:tag" content="Mac">
 <meta property="article:tag" content="摄像头权限">
 <meta name="twitter:card" content="summary">
@@ -282,7 +282,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenCV: not authorized to capture video (status 0), requesting... OpenCV: camera failed to properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
+        <p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenCV: <span class="literal">not</span> authorized <span class="keyword">to</span> capture video (status <span class="number">0</span>), requesting<span class="params">...</span> OpenCV: camera failed <span class="keyword">to</span> properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
 <a id="more"></a>
 <h1 id="注册摄像头权限"><a href="#注册摄像头权限" class="headerlink" title="注册摄像头权限"></a>注册摄像头权限</h1><p>&emsp;&emsp;Photo Booth作为Mac原生的调用摄像头的app，天生带有设置权限的<code>Info.plist</code>，我们只需要将Photo Booth的<code>Info.plist</code>稍作修改，便可应用于我们的程序中。</p>
 <p>&emsp;&emsp;当然，首先我们得<a href="https://gy23333.github.io/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">在Xcode里配置OpenCV</a>。</p>
@@ -307,8 +307,8 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"># C++</a>
-              <a href="/tags/Xcode/" rel="tag"># Xcode</a>
               <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/Xcode/" rel="tag"># Xcode</a>
               <a href="/tags/Mac/" rel="tag"># Mac</a>
               <a href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4%E6%9D%83%E9%99%90/" rel="tag"># 摄像头权限</a>
           </div>

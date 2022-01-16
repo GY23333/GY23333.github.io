@@ -6,7 +6,7 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
 <a id="more"></a>
 <h1 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">gcc <span class="keyword">test</span>.cpp -o <span class="keyword">test</span></span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
 <p>如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。</p>
 <p>所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作。</p>
@@ -16,7 +16,7 @@
             <p>第二行的开头为Tab键，如为空格键则会出现<code>makefile:2: *** missing separator.  Stop.</code>的报错。</p><p>VSCode中默认Tab键转化为空格，如需输入Tab键，关闭设置中Editor: Insert Spaces选项。</p>
           </div>
 <p>在命令行中输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">make</span></span><br></pre></td></tr></table></figure>
 <p>即可对<code>test.cpp</code>文件进行编译，效果与<code>gcc test.cpp -o test</code>相同。</p>
 <h1 id="Makefile的规则"><a href="#Makefile的规则" class="headerlink" title="Makefile的规则"></a>Makefile的规则</h1><h2 id="Makefile的基础框架"><a href="#Makefile的基础框架" class="headerlink" title="Makefile的基础框架"></a>Makefile的基础框架</h2><figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">target: prerequisites</span></span><br><span class="line">	command</span><br></pre></td></tr></table></figure>
 <ul>
@@ -1076,7 +1076,7 @@ b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到�
   <entry>
     <title>Xcode调用Mac摄像头</title>
     <url>/2020/03/31/Xcode%E8%B0%83%E7%94%A8Mac%E6%91%84%E5%83%8F%E5%A4%B4/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">OpenCV: not authorized to capture video (status 0), requesting... OpenCV: camera failed to properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>&emsp;&emsp;Xcode中OpenCV C++调用Mac摄像头。由于在macOS 10.14中加入了隐私管理，直接调用摄像头会出现报错<br><figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">OpenCV: <span class="literal">not</span> authorized <span class="keyword">to</span> capture video (status <span class="number">0</span>), requesting<span class="params">...</span> OpenCV: camera failed <span class="keyword">to</span> properly initialize!</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;所以涉及摄像头这类隐私问题的项目必须添加<code>Info.plist</code>，在这注册摄像头权限。</p>
 <a id="more"></a>
 <h1 id="注册摄像头权限"><a href="#注册摄像头权限" class="headerlink" title="注册摄像头权限"></a>注册摄像头权限</h1><p>&emsp;&emsp;Photo Booth作为Mac原生的调用摄像头的app，天生带有设置权限的<code>Info.plist</code>，我们只需要将Photo Booth的<code>Info.plist</code>稍作修改，便可应用于我们的程序中。</p>
 <p>&emsp;&emsp;当然，首先我们得<a href="https://gy23333.github.io/2020/01/16/Xcode%E4%B8%8A%E9%85%8D%E7%BD%AEOpenCV%E5%92%8CC-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">在Xcode里配置OpenCV</a>。</p>
@@ -1097,8 +1097,8 @@ b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到�
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
+        <tag>Xcode</tag>
         <tag>Mac</tag>
         <tag>摄像头权限</tag>
       </tags>
@@ -1816,8 +1816,8 @@ Nonpersistent\ HTTP\ response\ time = 2RTT + file\ transmission\ time</script></
 </ul>
 <h3 id="DNS查询工具"><a href="#DNS查询工具" class="headerlink" title="DNS查询工具"></a>DNS查询工具</h3><p>&emsp;&emsp;在命令行用<code>nslookup</code>进行DNS查询。</p>
 <h4 id="nslookup直接查询"><a href="#nslookup直接查询" class="headerlink" title="nslookup直接查询"></a>nslookup直接查询</h4><p>&emsp;&emsp;查询一个域名的A记录，如果没指定dns-server，用系统默认的dns服务器。</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nslookup domain [dns-server]</span><br></pre></td></tr></table></figure>
-<h4 id="nslookup查询其他记录"><a href="#nslookup查询其他记录" class="headerlink" title="nslookup查询其他记录"></a>nslookup查询其他记录</h4>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nslookup -qt&#x3D;type domain [dns-server]</span><br></pre></td></tr></table></figure>
+  <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">nslookup <span class="keyword">domain</span> [dns-<span class="keyword">server</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="nslookup查询其他记录"><a href="#nslookup查询其他记录" class="headerlink" title="nslookup查询其他记录"></a>nslookup查询其他记录</h4>  <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">nslookup -qt=<span class="keyword">type</span> <span class="keyword">domain</span> [dns-<span class="keyword">server</span>]</span><br></pre></td></tr></table></figure>
 <p>type可以是以下这些类型：</p>
 <div class="table-container">
 <table>
@@ -1987,7 +1987,7 @@ D_{P2P} \geq max\{F/u_s, F/d_{min}, NF/(u_s+\sum\limits^{n} u_i)\}</script></li>
           </div>
 <p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Network_UDP_socket.png" alt="UDP socket.png" style="zoom:50%;" /></p>
 <h4 id="UDP中的socket编程示例"><a href="#UDP中的socket编程示例" class="headerlink" title="UDP中的socket编程示例"></a>UDP中的socket编程示例</h4><p>&emsp;&emsp;这里jupyter notebook中进行编程，安装好jupyter notebook后，在命令行执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">jupyter notebook</span></span><br></pre></td></tr></table></figure>
 <p>即可启动jupyter notebook</p>
 <p>UDP服务器代码</p>
 <figure class="highlight python"><figcaption><span>UDPServer.ipynb</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#引入socket库</span></span><br><span class="line"></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment">#服务器端口号</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_DGRAM) <span class="comment">#创建服务器套接字</span></span><br><span class="line">serverSocket.bind((<span class="string">''</span>, serverPort)) <span class="comment">#给套接字绑定端口号</span></span><br><span class="line">print(<span class="string">'The server is ready to receive.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment">#服务器要一直在线等待，所以给一个死循环</span></span><br><span class="line">    message, clientAddress = serverSocket.recvfrom(<span class="number">2048</span>) <span class="comment">#从服务器套接字中读取信息（发送的消息和客户机IP地址+端口号）</span></span><br><span class="line">    modifiedMessage = message.decode().upper() <span class="comment">#对消息进行处理（此处是改大写）</span></span><br><span class="line">    </span><br><span class="line">    serverSocket.sendto(modifiedMessage.encode(), clientAddress) <span class="comment">#将处理后的消息发回给客户机</span></span><br></pre></td></tr></table></figure>
@@ -4579,7 +4579,7 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <li>更换Hexo的markdown渲染引擎</li>
 </ol>
 <p>卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
-   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
+   <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> uninstall hexo-renderer-marked</span><br><span class="line"><span class="built_in">npm</span> install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>在next主题中开启mathJax开关</p>
 <p>在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
@@ -4590,7 +4590,7 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
 <h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入流程图"><a href="#Hexo引入流程图" class="headerlink" title="Hexo引入流程图"></a>Hexo引入流程图</h3><p>Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
 <ol>
-<li>安装hexo-filter-flowchart插件<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-filter-flowchart</span><br></pre></td></tr></table></figure></li>
+<li>安装hexo-filter-flowchart插件<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line">npm install --<span class="built_in">save</span> hexo-<span class="built_in">filter</span>-flowchart</span><br></pre></td></tr></table></figure></li>
 <li><p>在主题配置文件下添加flowchart配置</p>
  <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">flowchart:</span></span><br><span class="line"><span class="comment"># raphael:   # optional, the source url of raphael.js</span></span><br><span class="line"><span class="comment"># flowchart: # optional, the source url of flowchart.js</span></span><br><span class="line"><span class="attr">options:</span> <span class="comment"># options used for `drawSVG`</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -4602,7 +4602,7 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <div id="flowchart-0" class="flow-chart"></div>
 
 <h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>markdown的代码块写法有两种——<code>```...``` </code>和<code>{ % ... % }</code>，这里主要使用<code>```...``` </code>来实现功能。</p>
-<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;[language] [title] [url] [link text]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">```<span class="selector-attr">[language]</span> <span class="selector-attr">[title]</span> <span class="selector-attr">[url]</span> <span class="selector-attr">[link text]</span></span><br><span class="line"><span class="selector-tag">code</span> <span class="selector-tag">snippet</span></span><br><span class="line">```</span><br></pre></td></tr></table></figure>
 <ul>
 <li>language: 语言名称，引导渲染引擎正确解析并高亮显示关键字</li>
 <li>title: 代码块标题，将会显示在左上角</li>
@@ -4613,19 +4613,19 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <p>如果不想填写 title，可以在 language 和 url 之间添加至少三个空格。</p>
 <ul>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;&#96;&#96;C HelloWorld https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo搭建记录&#x2F; 下载地址</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">```C HelloWorld https:<span class="comment">//gy23333.github.io/2020/02/25/Hexo搭建记录/ 下载地址</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><figcaption><span>HelloWorld</span><a href="https://gy23333.github.io/2020/02/25/Hexo搭建记录/">下载地址</a></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h4 id="写法二"><a href="#写法二" class="headerlink" title="写法二"></a>写法二</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:language] [url] [link text] [additional options] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="写法二"><a href="#写法二" class="headerlink" title="写法二"></a>写法二</h4><figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock <span class="comment">[title]</span> <span class="comment">[lang:language]</span> <span class="comment">[url]</span> <span class="comment">[link text]</span> <span class="comment">[additional options]</span> %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [lang:language] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [lang:language] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4633,21 +4633,21 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="设置标题"><a href="#设置标题" class="headerlink" title="设置标题"></a>设置标题</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [title] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [title] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
-<figure class="highlight plain"><figcaption><span>HelloWorld</span></figcaption><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><figcaption><span>HelloWorld</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="设置链接"><a href="#设置链接" class="headerlink" title="设置链接"></a>设置链接</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [url] [link text] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [url] [link text] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld lang:C https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo搭建记录&#x2F; 下载地址 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld lang:C https:<span class="comment">//gy23333.github.io/2020/02/25/Hexo搭建记录/ 下载地址 %&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><figcaption><span>HelloWorld</span><a href="https://gy23333.github.io/2020/02/25/Hexo搭建记录/">下载地址</a></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4655,11 +4655,11 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="是否显示行号"><a href="#是否显示行号" class="headerlink" title="是否显示行号"></a>是否显示行号</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [line_number:(true|false)] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [line_number:(true|false)] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 <p><code>line_number</code>的默认值为true。</p>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C line_number:false %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C line_number:<span class="literal">false</span> %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4667,22 +4667,25 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="设置起始行号"><a href="#设置起始行号" class="headerlink" title="设置起始行号"></a>设置起始行号</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [first_line:number] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [first_line:number] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 <p><code>first_line</code>的默认值为1。</p>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C first_line:10 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C first_line:<span class="number">10</span> %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="标记选定行"><a href="#标记选定行" class="headerlink" title="标记选定行"></a>标记选定行</h3><ul>
+<h3 id="标记选定行"><a href="#标记选定行" class="headerlink" title="标记选定行"></a>标记选定行</h3><p>在站点配置文件中设置<code>highlight.auto_detect: true</code>来开启自动语言检测高亮。</p>
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line"><span class="bullet">-</span>  <span class="attr">auto_detect:</span> <span class="literal">false</span></span><br><span class="line"><span class="string">+</span>  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">''</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [mark:#,#-#] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="行号，-行号范围。"><a href="#行号，-行号范围。" class="headerlink" title="行号，#-#行号范围。"></a>行号，#-#行号范围。</h1></li>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [mark:#,#-#] %&#125;</span><br><span class="line"><span class="keyword">code</span> snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<p><code>#</code>代表行号，<code>#-#</code>代表行号范围。</p>
+</li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C mark:1,3-6 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C mark:<span class="number">1</span>,<span class="number">3</span><span class="number">-6</span> %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line marked"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line marked"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line marked">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line marked">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line marked">&#125;</span><br></pre></td></tr></table></figure>
@@ -4690,11 +4693,11 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 </ul>
 <h3 id="设置代码添加删除标记"><a href="#设置代码添加删除标记" class="headerlink" title="设置代码添加删除标记"></a>设置代码添加删除标记</h3><ul>
 <li><p>格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [diff:true|false] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">codeblock</span> [diff:true|false] %&#125;</span></span><br><span class="line"><span class="xml">code snippet</span></span><br><span class="line"><span class="template-tag">&#123;% <span class="name">endcodeblock</span> %&#125;</span></span><br></pre></td></tr></table></figure>
 <p><code>diff</code>的默认值为false。</p>
 </li>
 <li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C diff:true %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">-    printf(&quot;delete\n&quot;);</span><br><span class="line">+    printf(&quot;add\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock lang:C diff:<span class="literal">true</span> %&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">-    <span class="built_in">printf</span>(<span class="string">"delete\n"</span>);</span><br><span class="line">+    <span class="built_in">printf</span>(<span class="string">"add\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>效果</p>
 <figure class="highlight c"><figcaption><span>diff:true</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">-    <span class="built_in">printf</span>(<span class="string">"delete\n"</span>);</span><br><span class="line">+    <span class="built_in">printf</span>(<span class="string">"add\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4704,25 +4707,25 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
 <li>新建一个页面</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">hexo new<span class="built_in"> page </span>music</span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>在新生成的  /source/music/index.md  中</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: 歌单</span><br><span class="line">date: 2020-02-25 19:50:11</span><br><span class="line">type: &quot;music&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">歌单</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2020</span><span class="number">-02</span><span class="number">-25</span> <span class="number">19</span><span class="string">:50:11</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"music"</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在主题的 _config.yml文件中，设置页面</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: &#x2F; || home</span><br><span class="line">  archives: &#x2F;archives&#x2F; || archive</span><br><span class="line">  categories: &#x2F;categories&#x2F; || th</span><br><span class="line">  tags: &#x2F;tags&#x2F; || tags</span><br><span class="line">  music: &#x2F;music&#x2F; || music</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">menu:</span></span><br><span class="line"><span class="symbol">  home:</span> / || home</span><br><span class="line"><span class="symbol">  archives:</span> <span class="meta-keyword">/archives/</span> || archive</span><br><span class="line"><span class="symbol">  categories:</span> <span class="meta-keyword">/categories/</span> || th</span><br><span class="line"><span class="symbol">  tags:</span> <span class="meta-keyword">/tags/</span> || tags</span><br><span class="line"><span class="symbol">  music:</span> <span class="meta-keyword">/music/</span> || music</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>页面创建成功！</p>
 <h3 id="使用hexo-tag-aplayer插件"><a href="#使用hexo-tag-aplayer插件" class="headerlink" title="使用hexo-tag-aplayer插件"></a>使用hexo-tag-aplayer插件</h3><ol>
 <li>安装hexo-tag-aplayer</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> <span class="comment">--save hexo-tag-aplayer</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>MeingJS支持</p>
 <p><a href="https://github.com/metowolf/MetingJS" target="_blank" rel="noopener">    MetingJS</a> 是基于<a href="https://github.com/metowolf/Meting" target="_blank" rel="noopener">Meting API</a> 的 APlayer 衍生播放器，引入 MetingJS 后，播放器将支持对于 QQ音乐、网易云音乐、虾米、酷狗、百度等平台的音乐播放。</p>
 <p>如果想在本插件中使用 MetingJS，请在 Hexo 配置文件 <code>_config.yml</code> 中设置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用 MetingJS 播放器</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!-- 简单示例 (id, server, type)  --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" %&#125;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- 进阶示例 --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" "autoplay" "mutex:false" "listmaxheight:340px" "preload:none" "theme:#ad7a86"%&#125;</span><br></pre></td></tr></table></figure>
@@ -4841,11 +4844,11 @@ g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class
 <p>​    如果 custom.swig 文件不存在，需要手动新建并在布局页面 themes\next\layout_layout.swig 中 body 末尾引入：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% include '_custom/custom.swig' %&#125;</span><br></pre></td></tr></table></figure>
 <p>​    在主题配置文件 themes\next_config.yml 中添加：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># mouse click effect: fireworks | explosion | love | text</span><br><span class="line">cursor_effect: fireworks</span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line"># mouse click effect: fireworks | <span class="type">explosion</span> | <span class="type">love</span> | <span class="type">text</span></span><br><span class="line">cursor_effect: fireworks</span><br></pre></td></tr></table></figure>
 <p>​    则可通过配置主题配置文件来设置鼠标点击效果。</p>
 <p>​    如explosion的效果</p>
 <p><img src="https://i.loli.net/2020/03/16/KDVTNgcn7uxvmjS.gif" alt="explosion.gif"></p>
-<h1 id="Hexo常见问题"><a href="#Hexo常见问题" class="headerlink" title="Hexo常见问题"></a>Hexo常见问题</h1><h2 id="hexo-d报错"><a href="#hexo-d报错" class="headerlink" title="hexo d报错"></a>hexo d报错</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fatal: Authentication failed for ‘https:&#x2F;&#x2F;github.com&#x2F;gy23333&#x2F;gy23333.github.io.git&#x2F;‘</span><br></pre></td></tr></table></figure>
+<h1 id="Hexo常见问题"><a href="#Hexo常见问题" class="headerlink" title="Hexo常见问题"></a>Hexo常见问题</h1><h2 id="hexo-d报错"><a href="#hexo-d报错" class="headerlink" title="hexo d报错"></a>hexo d报错</h2><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="string">fatal:</span> Authentication failed <span class="keyword">for</span> ‘<span class="string">https:</span><span class="comment">//github.com/gy23333/gy23333.github.io.git/‘</span></span><br></pre></td></tr></table></figure>
 <p>Github开启二次验证后导致博客提交错误，解决方法参考<a href="http://fezl.me/2017/05/20/GitHub二次验证带来的问题/" target="_blank" rel="noopener">GitHub二次验证带来的问题</a>。</p>
 <p>生成<strong>Personal access tokens</strong>令牌码，使用该码作为密码登录。</p>
 <ol>
@@ -5177,7 +5180,7 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
 <h2 id="浮动体"><a href="#浮动体" class="headerlink" title="浮动体"></a>浮动体</h2><p>​    浮动体用于实现灵活分页，给图表添加标题，交叉应用。</p>
 <p>​    图片使用 figure环境，表格使用 table环境。</p>
 <p>格式（以figure为例）：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\begin&#123;figure&#125;[&lt;允许位置&gt;]</span><br><span class="line">&lt; 任意内容 &gt;</span><br><span class="line">\end&#123;figure&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line">\<span class="keyword">begin</span>&#123;figure&#125;<span class="meta">[&lt;允许位置&gt;]</span></span><br><span class="line">&lt; 任意内容 &gt;</span><br><span class="line">\<span class="keyword">end</span>&#123;figure&#125;</span><br></pre></td></tr></table></figure>
 <p>&lt;允许位置&gt;参数（默认tbp）：</p>
 <ul>
 <li>h —- 此处（here），代码所在的上下文位置</li>
@@ -5582,20 +5585,20 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
 <a id="more"></a>
 <h1 id="Xcode配置OpenCV步骤"><a href="#Xcode配置OpenCV步骤" class="headerlink" title="Xcode配置OpenCV步骤"></a>Xcode配置OpenCV步骤</h1><p>​    首先先新建好C++工程。</p>
 <h2 id="设置库文件搜索路径-Header-Search-Paths"><a href="#设置库文件搜索路径-Header-Search-Paths" class="headerlink" title="设置库文件搜索路径(Header Search Paths)"></a>设置库文件搜索路径(Header Search Paths)</h2><p>​    找到OpenCV的header路径添加进Header Search Paths。</p>
-<h3 id="用SpotLight搜索到隐藏文件夹"><a href="#用SpotLight搜索到隐藏文件夹" class="headerlink" title="用SpotLight搜索到隐藏文件夹"></a>用SpotLight搜索到隐藏文件夹</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;opencv&#x2F;</span><br></pre></td></tr></table></figure>
+<h3 id="用SpotLight搜索到隐藏文件夹"><a href="#用SpotLight搜索到隐藏文件夹" class="headerlink" title="用SpotLight搜索到隐藏文件夹"></a>用SpotLight搜索到隐藏文件夹</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>opencv<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/16/UrLiybZHk8pmPwF.png" style="zoom: 50%;" /></p>
 <h3 id="找到header的最终路径"><a href="#找到header的最终路径" class="headerlink" title="找到header的最终路径"></a>找到header的最终路径</h3><p>​    这里我的最终路径是</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;opencv&#x2F;4.1.1_2&#x2F;include&#x2F;opencv4</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>opencv<span class="regexp">/4.1.1_2/i</span>nclude<span class="regexp">/opencv4</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/16/41CqVSymTiX75u3.png" alt=""></p>
 <h3 id="将OpenCV的header路径添加进Header-Search-Paths"><a href="#将OpenCV的header路径添加进Header-Search-Paths" class="headerlink" title="将OpenCV的header路径添加进Header Search Paths"></a>将OpenCV的header路径添加进Header Search Paths</h3><p>​    在该Xcode项目下，选择Building Settings -&gt; Header Search Paths，添加进入header的搜索路径。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;opencv&#x2F;4.1.1_2&#x2F;include&#x2F;opencv4</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>opencv<span class="regexp">/4.1.1_2/i</span>nclude<span class="regexp">/opencv4</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/16/9fd3wCzqQSybgZA.png" alt=""></p>
 <h2 id="设置库搜索路径（Library-Search-Paths）"><a href="#设置库搜索路径（Library-Search-Paths）" class="headerlink" title="设置库搜索路径（Library Search Paths）"></a>设置库搜索路径（Library Search Paths）</h2><p>​    在刚刚查询到的目录里面找到与include同级的lib文件夹</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;opencv&#x2F;4.1.1_2&#x2F;lib</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">/usr/local/Cellar/opencv/<span class="number">4.1</span>.<span class="number">1_2</span>/<span class="class"><span class="keyword">lib</span></span></span><br></pre></td></tr></table></figure>
 <p>​    在该Xcode项目下，选择Building Settings -&gt; Library Search Paths，添加进入lib路径。    </p>
 <p><img src="https://i.loli.net/2020/01/16/hi1cpuoNLPtfgJQ.png" alt=""></p>
 <h2 id="设置其他链接器标志（Other-Linker-Flags）"><a href="#设置其他链接器标志（Other-Linker-Flags）" class="headerlink" title="设置其他链接器标志（Other Linker Flags）"></a>设置其他链接器标志（Other Linker Flags）</h2><p>​    通过pkg-config获取opencv所有的Linker Flags，添加进Other Linker Flags。</p>
-<h3 id="在命令行中输入pkg-config命令，得到所有的Linker-Flags"><a href="#在命令行中输入pkg-config命令，得到所有的Linker-Flags" class="headerlink" title="在命令行中输入pkg-config命令，得到所有的Linker Flags"></a>在命令行中输入pkg-config命令，得到所有的Linker Flags</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pkg-config --libs opencv4</span><br></pre></td></tr></table></figure>
+<h3 id="在命令行中输入pkg-config命令，得到所有的Linker-Flags"><a href="#在命令行中输入pkg-config命令，得到所有的Linker-Flags" class="headerlink" title="在命令行中输入pkg-config命令，得到所有的Linker Flags"></a>在命令行中输入pkg-config命令，得到所有的Linker Flags</h3><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">pkg-<span class="built_in">config</span> <span class="comment">--libs opencv4</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/16/QUBPeHwdRZzV2up.png" alt=""></p>
 <h3 id="将Linker-Flags添加进Other-Linker-Flags"><a href="#将Linker-Flags添加进Other-Linker-Flags" class="headerlink" title="将Linker Flags添加进Other Linker Flags"></a>将Linker Flags添加进Other Linker Flags</h3><p>​    在该Xcode项目下，选择Building Settings -&gt; Other Linker Flags，添加Linker Flags。</p>
 <p><img src="https://i.loli.net/2020/01/16/vFzYhxpQOVGKJ8m.png" alt=""></p>
@@ -5616,9 +5619,9 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
+        <tag>Xcode</tag>
         <tag>环境配置</tag>
       </tags>
   </entry>
@@ -5868,7 +5871,7 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
 <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>​    C++输入输出需使用iostream库</p>
 <h3 id="Xcode引入iostream库失败"><a href="#Xcode引入iostream库失败" class="headerlink" title="Xcode引入iostream库失败"></a>Xcode引入iostream库失败</h3><p>​    提示 ‘iostream’ file not found的解决办法：</p>
 <p>在Build Settings -&gt; Search paths -&gt;System Header Search Paths中添加路径</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Toolchains&#x2F;XcodeDefault.xctoolchain&#x2F;usr&#x2F;include&#x2F;c++&#x2F;v1&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/Applications/</span>Xcode.app<span class="regexp">/Contents/</span>Developer<span class="regexp">/Toolchains/</span>XcodeDefault.xctoolchain<span class="regexp">/usr/i</span>nclude<span class="regexp">/c++/</span>v1<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/10/DT7fHNvbGzyVXIM.png" alt=""></p>
 <p>添加后，C++库引入成功。</p>
 <h3 id="标准输出cout"><a href="#标准输出cout" class="headerlink" title="标准输出cout"></a>标准输出cout</h3><p>std :: cout 是输出内容，&lt;&lt; 是输出运算符，std :: endl 结束改行，相当于一个”\n”</p>
@@ -6104,7 +6107,7 @@ c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none
 <h1 id="创建新的GUI界面"><a href="#创建新的GUI界面" class="headerlink" title="创建新的GUI界面"></a>创建新的GUI界面</h1><p>​    GUI系统包含两种文件，一种是.fig文件，用于设计页面，另一种是.m文件，用来存放控件操作。</p>
 <h2 id="创建-fig文件"><a href="#创建-fig文件" class="headerlink" title="创建.fig文件"></a>创建.fig文件</h2><ol>
 <li><p>打开Matlab，在命令行窗口中输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">guide</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">guide</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/08/NA8QGvdIXoH6f9q.png" alt="命令行窗口中输入GUI"></p>
 </li>
 <li><p>回车，弹出GUIDE快速入门弹窗；</p>
@@ -6229,7 +6232,7 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>汇编学习</p>
 <a id="more"></a>
 <h1 id="如何在Mac上运行汇编程序"><a href="#如何在Mac上运行汇编程序" class="headerlink" title="如何在Mac上运行汇编程序"></a>如何在Mac上运行汇编程序</h1><h2 id="安装nasm"><a href="#安装nasm" class="headerlink" title="安装nasm"></a>安装nasm</h2><p>在命令行中安装nasm</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install nasm</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">brew </span><span class="keyword">install </span>nasm</span><br></pre></td></tr></table></figure>
 <p>Mac中虽自带nasm，但版本太老，需重新安装。</p>
 <h2 id="新建asm文件"><a href="#新建asm文件" class="headerlink" title="新建asm文件"></a>新建asm文件</h2><p>下面名为 HelloWorld.asm 文件运行可输出hello world!</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msg: db &quot;hello world!&quot;, 0x0a</span><br><span class="line">len: equ $-msg</span><br><span class="line">   </span><br><span class="line">SECTION .text</span><br><span class="line">global _main</span><br><span class="line">   </span><br><span class="line">kernel:</span><br><span class="line">     syscall</span><br><span class="line">     ret</span><br><span class="line">  </span><br><span class="line">_main:</span><br><span class="line">     mov rax,0x2000004</span><br><span class="line">     mov rdi,1</span><br><span class="line">     mov rsi,msg</span><br><span class="line">     mov rdx,len</span><br><span class="line">     call kernel</span><br><span class="line">   </span><br><span class="line">     mov rax,0x2000001</span><br><span class="line">     mov rdi,0</span><br><span class="line">     call kernel</span><br></pre></td></tr></table></figure>
@@ -6238,15 +6241,15 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
 </ul>
 <p>-o outfile    write output to an outfile</p>
 <p>-f format     select an output format（指定编译环境）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nasm -f macho64 -o HelloWorld.o HelloWorld.asm</span><br></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">nasm -f macho64 -o <span class="module-access"><span class="module"><span class="identifier">HelloWorld</span>.</span></span>o <span class="module-access"><span class="module"><span class="identifier">HelloWorld</span>.</span></span>asm</span><br></pre></td></tr></table></figure>
 <ul>
 <li>生成输出文件HelloWorld（格式：Unix可执行文件）</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ld HelloWorld.o -o HelloWorld -macosx_version_min 10.13 -lSystem -no_pie</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">ld</span> <span class="selector-tag">HelloWorld</span><span class="selector-class">.o</span> <span class="selector-tag">-o</span> <span class="selector-tag">HelloWorld</span> <span class="selector-tag">-macosx_version_min</span> 10<span class="selector-class">.13</span> <span class="selector-tag">-lSystem</span> <span class="selector-tag">-no_pie</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>运行HelloWorld文件</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;HelloWorld</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="string">./HelloWorld</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2019/12/20/fBoJwRNQp2vZ3xA.png" alt=""></p>
 <p>运行成功</p>
 <p>此时可看到文件夹中有三种文件（.asm、.o、Unix可执行文件）</p>
@@ -6380,8 +6383,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>Mac</tag>
         <tag>MATLAB</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
@@ -6589,8 +6592,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>图像处理</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>Canny</tag>
+        <tag>C++</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
       </tags>
@@ -6623,7 +6626,7 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
 <h4 id="在共享与权限设置中点击“应用到包含的项目”"><a href="#在共享与权限设置中点击“应用到包含的项目”" class="headerlink" title="在共享与权限设置中点击“应用到包含的项目”"></a>在共享与权限设置中点击“应用到包含的项目”</h4><p>先在“共享与权限”右下角的地方解锁，再在设置中选中“应用到包含的项目”，等待进度条结束即可。</p>
 <p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577419/gy/img2_jmxbhq.png" style="zoom:40%;" /></p>
 <h4 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h4><p>打开命令行，在根目录下输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">diskutil resetUserPermissions &#x2F; &#96;id -u&#96;</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">diskutil resetUserPermissions / `<span class="built_in">id</span> -u`</span><br></pre></td></tr></table></figure>
 <p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577450/gy/img3_uogrou.png" style="zoom:40%;" /></p>
 <h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><p>命令行运行结束后重启电脑。</p>
 <h4 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h4><p>重启后再次打开该文件夹的“简介”，发现权限可修改了，权限修改完成。</p>
