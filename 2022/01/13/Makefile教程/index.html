@@ -54,7 +54,7 @@
 <meta property="og:description" content="一份简单的Makefile介绍入门，帮助在Linux系统下编译C&#x2F;C++。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-13T09:27:19.000Z">
-<meta property="article:modified_time" content="2022-01-17T06:33:18.833Z">
+<meta property="article:modified_time" content="2022-01-20T06:01:35.785Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Makefile">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-17 14:33:18" itemprop="dateModified" datetime="2022-01-17T14:33:18+08:00">2022-01-17</time>
+                <time title="Modified: 2022-01-20 14:01:35" itemprop="dateModified" datetime="2022-01-20T14:01:35+08:00">2022-01-20</time>
               </span>
 
           
@@ -271,12 +271,12 @@
         <p>一份简单的Makefile介绍入门，帮助在Linux系统下编译C/C++。</p>
 <a id="more"></a>
 <h1 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h1><p>如果有一个<code>test.cpp</code>文件，在命令行里输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ test.cpp -o test</span><br></pre></td></tr></table></figure>
 <p>即可对cpp文件进行编译，生成<code>test</code>可执行文件。</p>
 <p>如此，每次对cpp文件进行修改后，都要重新输入该命令进行编译，过程复杂且重复。</p>
 <p>所以，可以将这些命令打包成makefile文件，定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作。</p>
 <p>在该文件夹下生成一个空文件，命名为<code>Makeflie</code>或<code>makefile</code></p>
-<figure class="highlight makefile"><figcaption><span>makefile</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">test: test.cpp</span></span><br><span class="line">	gcc test.cpp -o test</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><figcaption><span>makefile</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">test: test.cpp</span></span><br><span class="line">	g++ test.cpp -o test</span><br></pre></td></tr></table></figure>
 <div class="note warning">
             <p>第二行的开头为Tab键，如为空格键则会出现<code>makefile:2: *** missing separator.  Stop.</code>的报错。</p><p>VSCode中默认Tab键转化为空格，如需输入Tab键，关闭设置中Editor: Insert Spaces选项。</p>
           </div>

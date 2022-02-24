@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。">
+  <meta name="description" content="​    微信小程序+云开发的入门讲解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信小程序（云开发）">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;03&#x2F;%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BA%91%E5%BC%80%E5%8F%91%EF%BC%89&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。">
+<meta property="og:description" content="​    微信小程序+云开发的入门讲解。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-03T12:45:44.000Z">
-<meta property="article:modified_time" content="2020-02-03T12:52:01.812Z">
+<meta property="article:modified_time" content="2022-02-24T06:21:36.358Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="微信小程序">
@@ -234,10 +234,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-02-03 20:45:44 / Modified: 20:52:01" itemprop="dateCreated datePublished" datetime="2020-02-03T20:45:44+08:00">2020-02-03</time>
+              <time title="Created: 2020-02-03 20:45:44" itemprop="dateCreated datePublished" datetime="2020-02-03T20:45:44+08:00">2020-02-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-24 14:21:36" itemprop="dateModified" datetime="2022-02-24T14:21:36+08:00">2022-02-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -275,9 +281,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​    微信小程序+云开发的入门讲解，以人工智能与自动化学院权益服务部小程序为范例。</p>
+        <p>​    微信小程序+云开发的入门讲解。</p>
 <a id="more"></a>
-<h1 id="小程序基础"><a href="#小程序基础" class="headerlink" title="小程序基础"></a>小程序基础</h1><h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><h3 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h3><h3 id="wxss"><a href="#wxss" class="headerlink" title="wxss"></a>wxss</h3>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="搭建云开发环境"><a href="#搭建云开发环境" class="headerlink" title="搭建云开发环境"></a>搭建云开发环境</h2><ol>
+<li><p>新建一个文件夹</p>
+</li>
+<li><p>在微信开发者工具中新建一个小程序，注册AppID，选择云开发</p>
+</li>
+<li><p>点击云开发按钮，开通云开发</p>
+</li>
+<li><p>创建资源环境，并在<code>miniprogram/app.js</code>中配置环境</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app.js</span></span><br><span class="line">App(&#123;</span><br><span class="line">  onLaunch: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!wx.cloud) &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">'请使用 2.2.3 或以上的基础库以使用云能力'</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      wx.cloud.init(&#123;</span><br><span class="line">        <span class="comment">// env 参数说明：</span></span><br><span class="line">        <span class="comment">//   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源</span></span><br><span class="line">        <span class="comment">//   此处请填入环境 ID, 环境 ID 可打开云控制台查看</span></span><br><span class="line">        <span class="comment">//   如不填则使用默认环境（第一个创建的环境）</span></span><br><span class="line">        env: <span class="string">'test-6ga7apra89fe93e5'</span>,</span><br><span class="line">        traceUser: <span class="literal">true</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.globalData = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>云开发环境搭建完成，后续可根据指引浏览小程序。</p>
+</li>
+</ol>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>云开发小程序一经搭建，就提供一个基础框架。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── cloudfunctions				&#x2F;&#x2F;云函数根目录</span><br><span class="line">│   ├── callback</span><br><span class="line">│   ├── echo</span><br><span class="line">│   ├── login</span><br><span class="line">│   └── openapi</span><br><span class="line">│</span><br><span class="line">├── miniprogram					&#x2F;&#x2F;小程序根目录</span><br><span class="line">│   ├── components					&#x2F;&#x2F;自定义组件目录</span><br><span class="line">│   ├── images						&#x2F;&#x2F;图片目录</span><br><span class="line">│   ├── pages						&#x2F;&#x2F;页面目录</span><br><span class="line">│   ├── style						&#x2F;&#x2F;样式目录</span><br><span class="line">│</span><br><span class="line">│   ├── app.js						&#x2F;&#x2F;小程序逻辑</span><br><span class="line">│   ├── app.json					&#x2F;&#x2F;小程序公共配置</span><br><span class="line">│   ├── app.wxss					&#x2F;&#x2F;小程序公共样式表</span><br><span class="line">│   └── sitemap.json				&#x2F;&#x2F;sitemap配置</span><br><span class="line">│ </span><br><span class="line">└── project.config.json</span><br></pre></td></tr></table></figure>
+<h1 id="用户登录"><a href="#用户登录" class="headerlink" title="用户登录"></a>用户登录</h1><p>用户登录主要是要获取用户的<code>userInfo</code>和<code>openid</code>，流程如下</p>
+
     </div>
 
     
@@ -364,7 +386,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序基础"><span class="nav-number">1.</span> <span class="nav-text">小程序基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#起步"><span class="nav-number">1.1.</span> <span class="nav-text">起步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#js"><span class="nav-number">1.1.1.</span> <span class="nav-text">js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json"><span class="nav-number">1.1.2.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxml"><span class="nav-number">1.1.3.</span> <span class="nav-text">wxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxss"><span class="nav-number">1.1.4.</span> <span class="nav-text">wxss</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建云开发环境"><span class="nav-number">1.1.</span> <span class="nav-text">搭建云开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">1.2.</span> <span class="nav-text">目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户登录"><span class="nav-number">2.</span> <span class="nav-text">用户登录</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
