@@ -5453,6 +5453,32 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
 <h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>云开发小程序一经搭建，就提供一个基础框架。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── cloudfunctions				&#x2F;&#x2F;云函数根目录</span><br><span class="line">│   ├── callback</span><br><span class="line">│   ├── echo</span><br><span class="line">│   ├── login</span><br><span class="line">│   └── openapi</span><br><span class="line">│</span><br><span class="line">├── miniprogram					&#x2F;&#x2F;小程序根目录</span><br><span class="line">│   ├── components					&#x2F;&#x2F;自定义组件目录</span><br><span class="line">│   ├── images						&#x2F;&#x2F;图片目录</span><br><span class="line">│   ├── pages						&#x2F;&#x2F;页面目录</span><br><span class="line">│   ├── style						&#x2F;&#x2F;样式目录</span><br><span class="line">│</span><br><span class="line">│   ├── app.js						&#x2F;&#x2F;小程序逻辑</span><br><span class="line">│   ├── app.json					&#x2F;&#x2F;小程序公共配置</span><br><span class="line">│   ├── app.wxss					&#x2F;&#x2F;小程序公共样式表</span><br><span class="line">│   └── sitemap.json				&#x2F;&#x2F;sitemap配置</span><br><span class="line">│ </span><br><span class="line">└── project.config.json</span><br></pre></td></tr></table></figure>
 <h1 id="用户登录"><a href="#用户登录" class="headerlink" title="用户登录"></a>用户登录</h1><p>用户登录主要是要获取用户的<code>userInfo</code>和<code>openid</code>，流程如下</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line"></span><br><span class="line">  data: &#123;</span><br><span class="line">    userInfo: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  onLoad() &#123;</span><br><span class="line">    <span class="comment">// 获取本地缓存的userInfo</span></span><br><span class="line">    <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">      userInfo: wx.getStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权登录</span></span><br><span class="line">  <span class="comment">// 1.getUserProfile获取userInfo</span></span><br><span class="line">  <span class="comment">// 2.获取userInfo成功，再通过云函数getOpenid获取openid，将openid添加进userInfo中</span></span><br><span class="line">  <span class="comment">// 3.将userInfo加入本地缓存</span></span><br><span class="line">  login()&#123;</span><br><span class="line">    <span class="comment">// 1.获取userInfo</span></span><br><span class="line">    wx.getUserProfile(&#123;</span><br><span class="line">      desc: <span class="string">'用于完善用户资料'</span>, <span class="comment">// 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写</span></span><br><span class="line">      success: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">          userInfo: res.userInfo</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 2.获取OpenID</span></span><br><span class="line">        wx.cloud.callFunction(&#123;</span><br><span class="line">          name: <span class="string">"getOpenid"</span>,</span><br><span class="line">          success: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.data.userInfo.openid = res.result.openid</span><br><span class="line">            <span class="comment">// 3.加入本地缓存</span></span><br><span class="line">            wx.setStorageSync(<span class="string">'userInfo'</span>, <span class="keyword">this</span>.data.userInfo)</span><br><span class="line">          &#125;,</span><br><span class="line">          fail: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">              userInfo: &#123;&#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"获取OpenID登录失败"</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 登出</span></span><br><span class="line">  logout()&#123;</span><br><span class="line">    <span class="comment">// 清空用户信息缓存</span></span><br><span class="line">    wx.removeStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">      userInfo: <span class="literal">null</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: start
+op1=>operation: 未登录状态
+op2=>operation: 点击授权登录
+cond1=>condition: 获取userInfo
+(getUserProfile函数)
+op3=>operation: 拒绝授权
+(未获得userInfo)
+op4=>operation: 同意授权
+(获得userInfo)
+cond2=>condition: 获取openid
+(getOpenid云函数)
+op5=>operation: openid获取失败
+op6=>operation: 清空userInfo
+op7=>operation: openid获取成功
+op8=>operation: 将userInfo和openid加入本地缓存
+op9=>operation: 登录成功
+e=>end: end
+
+st->op1->op2->cond1
+cond1(no)->op3(right)->op1
+cond1(yes)->op4->cond2
+cond2(no)->op5->op6(right)->op1
+cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
 ]]></content>
       <categories>
         <category>微信小程序</category>
@@ -6172,6 +6198,215 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
 <p><img src="https://i.loli.net/2020/01/15/opaRJDAg7B2nd54.png" style="zoom: 50%;" /></p>
 <h3 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h3><p>​    try语句块，异常处理部分使用try语句块<strong>处理</strong>异常。try尝试一个代码块，如有异常通常会被catch捕捉处理。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="comment">//测试的代码块</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(exception-declaration) &#123; <span class="comment">//exception-declaration异常声明</span></span><br><span class="line">	<span class="comment">//异常处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h2><p>STL（Standard Template Library），即标准模板库。</p>
+<p>STL由三大组件构成：容器、算法、迭代器。</p>
+<ul>
+<li><p><strong>容器</strong>：特定的数据结构，如 向量（vector）、双端队列（deque）、链表（list）、集合（set）、多重集合（multiset）、映射（map）和多重映射（multimap）等</p>
+</li>
+<li><p><strong>算法</strong>：常用的各种算法，如 sort、find、copy、for_each等</p>
+</li>
+<li><p><strong>迭代器</strong>：检查容器内元素并遍历元素的数据类型</p>
+</li>
+</ul>
+<h3 id="set（集合）"><a href="#set（集合）" class="headerlink" title="set（集合）"></a>set（集合）</h3><blockquote>
+<p>set（集合）的每个元素只出现一次，且默认升序排列。</p>
+</blockquote>
+<h4 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.begin()</td>
+<td>返回set容器的第一个元素的地址（迭代器）</td>
+</tr>
+<tr>
+<td>s.end()</td>
+<td>返回set容器的最后一个元素的下一个地址（迭代器）</td>
+</tr>
+<tr>
+<td>s.rbegin()</td>
+<td>返回逆序迭代器，指向容器元素最后一个位置</td>
+</tr>
+<tr>
+<td>s.rend()</td>
+<td>返回逆序迭代器，指向容器第一个元素前面的位置</td>
+</tr>
+<tr>
+<td>s.clear()</td>
+<td>删除set容器中的所有的元素,返回unsigned int类型O(N)</td>
+</tr>
+<tr>
+<td>s.empty()</td>
+<td>判断set容器是否为空</td>
+</tr>
+<tr>
+<td>s.insert()</td>
+<td>插入一个元素</td>
+</tr>
+<tr>
+<td>s.size()</td>
+<td>返回当前set容器中的元素个数O(1)</td>
+</tr>
+<tr>
+<td>erase(iterator)</td>
+<td>删除定位器iterator指向的值</td>
+</tr>
+<tr>
+<td>erase(first,second）</td>
+<td>删除定位器first和second之间的值</td>
+</tr>
+<tr>
+<td>erase(key_value)</td>
+<td>删除键值key_value的值</td>
+</tr>
+<tr>
+<td>s.find(元素)</td>
+<td>查找set中的某一元素，有则返回该元素对应的迭代器，无则返回结束迭代器，即s.end()</td>
+</tr>
+<tr>
+<td>s.lower_bound(k)</td>
+<td>返回大于等于k的第一个元素的迭代器</td>
+</tr>
+<tr>
+<td>s.upper_bound(k)</td>
+<td>返回大于k的第一个元素的迭代器</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h4><p>运用set容器需要引用set头文件</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>set构造函数</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; s; <span class="comment">//默认按键值升序</span></span><br><span class="line"><span class="built_in">set</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt; p; <span class="comment">//降序</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历set集合</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//迭代器遍历访问</span></span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;::iterator it = s.<span class="built_in">begin</span>(); it != s.<span class="built_in">end</span>(); it++)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//另一种遍历访问方式</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : s)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="map（映射）"><a href="#map（映射）" class="headerlink" title="map（映射）"></a>map（映射）</h3><blockquote>
+<p>map（映射）的每个元素都是一个pair，包含 &lt;键值，实值&gt;，map不允许两个元素有相同的键值，所有元素根据键值自动排序。</p>
+</blockquote>
+<h4 id="函数方法-1"><a href="#函数方法-1" class="headerlink" title="函数方法"></a>函数方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mp.find(key)</td>
+<td>返回键为key的映射的迭代器，当数据存在时，返回数据所在位置的迭代器，数据不存在时，返回mp.end()</td>
+</tr>
+<tr>
+<td>mp.erase(it)</td>
+<td>删除迭代器对应的键和值</td>
+</tr>
+<tr>
+<td>mp.erase(key)</td>
+<td>根据映射的键删除键和值</td>
+</tr>
+<tr>
+<td>mp.erase(first,last)</td>
+<td>删除左闭右开区间迭代器对应的键和值</td>
+</tr>
+<tr>
+<td>mp.size()</td>
+<td>返回映射的对数</td>
+</tr>
+<tr>
+<td>mp.clear()</td>
+<td>清空map中的所有元素</td>
+</tr>
+<tr>
+<td>mp.insert()</td>
+<td>插入元素，插入时要构造键值对</td>
+</tr>
+<tr>
+<td>mp.empty()</td>
+<td>如果map为空，返回true，否则返回false</td>
+</tr>
+<tr>
+<td>mp.begin()</td>
+<td>返回指向map第一个元素的迭代器（地址）</td>
+</tr>
+<tr>
+<td>mp.end()</td>
+<td>返回指向map尾部的迭代器（最后一个元素的下一个地址）</td>
+</tr>
+<tr>
+<td>mp.rbegin()</td>
+<td>返回指向map最后一个元素的反向迭代器（地址）</td>
+</tr>
+<tr>
+<td>mp.rend()</td>
+<td>返回指向map第一个元素前面(上一个）的反向迭代器（地址）</td>
+</tr>
+<tr>
+<td>mp.count(key)</td>
+<td>查看元素是否存在，因为map中键是唯一的，所以存在返回1，不存在返回0</td>
+</tr>
+<tr>
+<td>mp.lower_bound()</td>
+<td>返回一个迭代器，指向键值&gt;= key的第一个元素</td>
+</tr>
+<tr>
+<td>mp.upper_bound()</td>
+<td>返回一个迭代器，指向键值&gt; key的第一个元素</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="常用API-1"><a href="#常用API-1" class="headerlink" title="常用API"></a>常用API</h4><p>运用map容器需要引用map头文件</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>map构造函数</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; m; <span class="comment">//键值为string，实值为int</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加元素</p>
+<ul>
+<li><p>方法一：通过数组的方式插入值</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">m[<span class="string">"a"</span>] = <span class="number">1</span>; <span class="comment">//mp[key]，如果不存在对应的key时，会自动创建一个键值对</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二：通过pair的方式插入对象</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">m.insert(&#123;<span class="string">"a"</span>, <span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">m.insert(make_pair(<span class="string">"a"</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">m.insert(&#123;<span class="string">"a"</span>,<span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">m.insert(pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; (<span class="string">"a"</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>访问元素</p>
+<ul>
+<li><p>通过下标访问</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; m[<span class="string">"a"</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过find函数访问</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator it = m.<span class="built_in">find</span>(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>遍历元素</p>
+<ul>
+<li><p>通过迭代器遍历</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正向遍历（利用begin和end函数）</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = m.<span class="built_in">begin</span>(); it != m.<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 逆向遍历（利用rbegin和rend函数）</span></span><br><span class="line"><span class="keyword">auto</span> it = m.rbegin();</span><br><span class="line"><span class="keyword">while</span> (it != m.rend()) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    it++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>范围for语句遍历</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 只能访问，无法改变容器中的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : m)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i.first &lt;&lt; <span class="string">" "</span> &lt;&lt; i.second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如需改变值，则用引用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;i : m)&#123;</span><br><span class="line">    i.second *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过迭代器遍历时，迭代器<code>it</code>可以理解为指向元素的指针，指针用<code>-&gt;</code>访问，即<code>it-&gt;first</code>，或用<code>(*it).first</code>，可改变容器中的值</p>
+<p>范围for语句遍历时，<code>i</code>是一个pair对象，直接用<code>.</code>访问，即<code>it.first</code>。只访问时，用<code>auto i : m</code>，当需要改变值时，用<code>auto &amp;i : m</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>C++</category>

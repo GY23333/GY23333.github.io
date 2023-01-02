@@ -54,7 +54,7 @@
 <meta property="og:description" content="​    微信小程序+云开发的入门讲解。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-03T12:45:44.000Z">
-<meta property="article:modified_time" content="2022-02-24T06:21:36.358Z">
+<meta property="article:modified_time" content="2022-02-24T08:14:13.709Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="微信小程序">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-24 14:21:36" itemprop="dateModified" datetime="2022-02-24T14:21:36+08:00">2022-02-24</time>
+                <time title="Modified: 2022-02-24 16:14:13" itemprop="dateModified" datetime="2022-02-24T16:14:13+08:00">2022-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -299,6 +299,32 @@
 <h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>云开发小程序一经搭建，就提供一个基础框架。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── cloudfunctions				&#x2F;&#x2F;云函数根目录</span><br><span class="line">│   ├── callback</span><br><span class="line">│   ├── echo</span><br><span class="line">│   ├── login</span><br><span class="line">│   └── openapi</span><br><span class="line">│</span><br><span class="line">├── miniprogram					&#x2F;&#x2F;小程序根目录</span><br><span class="line">│   ├── components					&#x2F;&#x2F;自定义组件目录</span><br><span class="line">│   ├── images						&#x2F;&#x2F;图片目录</span><br><span class="line">│   ├── pages						&#x2F;&#x2F;页面目录</span><br><span class="line">│   ├── style						&#x2F;&#x2F;样式目录</span><br><span class="line">│</span><br><span class="line">│   ├── app.js						&#x2F;&#x2F;小程序逻辑</span><br><span class="line">│   ├── app.json					&#x2F;&#x2F;小程序公共配置</span><br><span class="line">│   ├── app.wxss					&#x2F;&#x2F;小程序公共样式表</span><br><span class="line">│   └── sitemap.json				&#x2F;&#x2F;sitemap配置</span><br><span class="line">│ </span><br><span class="line">└── project.config.json</span><br></pre></td></tr></table></figure>
 <h1 id="用户登录"><a href="#用户登录" class="headerlink" title="用户登录"></a>用户登录</h1><p>用户登录主要是要获取用户的<code>userInfo</code>和<code>openid</code>，流程如下</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line"></span><br><span class="line">  data: &#123;</span><br><span class="line">    userInfo: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  onLoad() &#123;</span><br><span class="line">    <span class="comment">// 获取本地缓存的userInfo</span></span><br><span class="line">    <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">      userInfo: wx.getStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 授权登录</span></span><br><span class="line">  <span class="comment">// 1.getUserProfile获取userInfo</span></span><br><span class="line">  <span class="comment">// 2.获取userInfo成功，再通过云函数getOpenid获取openid，将openid添加进userInfo中</span></span><br><span class="line">  <span class="comment">// 3.将userInfo加入本地缓存</span></span><br><span class="line">  login()&#123;</span><br><span class="line">    <span class="comment">// 1.获取userInfo</span></span><br><span class="line">    wx.getUserProfile(&#123;</span><br><span class="line">      desc: <span class="string">'用于完善用户资料'</span>, <span class="comment">// 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写</span></span><br><span class="line">      success: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">          userInfo: res.userInfo</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 2.获取OpenID</span></span><br><span class="line">        wx.cloud.callFunction(&#123;</span><br><span class="line">          name: <span class="string">"getOpenid"</span>,</span><br><span class="line">          success: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.data.userInfo.openid = res.result.openid</span><br><span class="line">            <span class="comment">// 3.加入本地缓存</span></span><br><span class="line">            wx.setStorageSync(<span class="string">'userInfo'</span>, <span class="keyword">this</span>.data.userInfo)</span><br><span class="line">          &#125;,</span><br><span class="line">          fail: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">              userInfo: &#123;&#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"获取OpenID登录失败"</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 登出</span></span><br><span class="line">  logout()&#123;</span><br><span class="line">    <span class="comment">// 清空用户信息缓存</span></span><br><span class="line">    wx.removeStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">      userInfo: <span class="literal">null</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: start
+op1=>operation: 未登录状态
+op2=>operation: 点击授权登录
+cond1=>condition: 获取userInfo
+(getUserProfile函数)
+op3=>operation: 拒绝授权
+(未获得userInfo)
+op4=>operation: 同意授权
+(获得userInfo)
+cond2=>condition: 获取openid
+(getOpenid云函数)
+op5=>operation: openid获取失败
+op6=>operation: 清空userInfo
+op7=>operation: openid获取成功
+op8=>operation: 将userInfo和openid加入本地缓存
+op9=>operation: 登录成功
+e=>end: end
+
+st->op1->op2->cond1
+cond1(no)->op3(right)->op1
+cond1(yes)->op4->cond2
+cond2(no)->op5->op6(right)->op1
+cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
 
     </div>
 
@@ -440,7 +466,7 @@
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
