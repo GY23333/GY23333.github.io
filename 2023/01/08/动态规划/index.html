@@ -54,7 +54,7 @@
 <meta property="og:description" content="引入一个典型的动态规划问题：  求序列 nums &#x3D; [1,5,2,4,3]的最长递增子序列长度。 直观可以看出最长递增子序列有[1,2,4]或[1,2,3]，长度为3。  暴力枚举&#x2F;暴力搜索首先容易想到的就是暴力枚举&#x2F;暴力搜索方法。 先利用递归分别计算从每个位置出发的子序列，然后取其中长度的最大值。 序列nums &#x3D; [1,5,2,4,3]，如果从1出发，到5、2、4、3都是递增的，则可得下式">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-08T10:16:25.000Z">
-<meta property="article:modified_time" content="2023-01-08T20:16:30.368Z">
+<meta property="article:modified_time" content="2023-01-08T20:31:21.271Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="动态规划">
@@ -241,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-09 04:16:30" itemprop="dateModified" datetime="2023-01-09T04:16:30+08:00">2023-01-09</time>
+                <time title="Modified: 2023-01-09 04:31:21" itemprop="dateModified" datetime="2023-01-09T04:31:21+08:00">2023-01-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,11 +291,22 @@
 <p>序列<code>nums = [1,5,2,4,3]</code>，如果从<code>1</code>出发，到<code>5</code>、<code>2</code>、<code>4</code>、<code>3</code>都是递增的，则可得下式（设<em>f(x)</em>为从x出发的最长递增子序列长度）</p>
 <script type="math/tex; mode=display">
 f(1) = max\{f(5),f(2),f(4),f(3)\}+1</script><p>由此可递归求得，从<code>1</code>出发最长递增子序列长度。</p>
-<pre class="mermaid">graph TD;
+<pre class="mermaid">graph TD
+    A((1))
+    B((5))
+    C((2))
+    D((4))
+    E((3))
+    F((4))
+    G((3))
+
+
     A-->B;
     A-->C;
-    B-->D;
-    C-->D;</pre>
+    A-->D;
+    A-->E;
+    C-->F;
+    C-->G;</pre>
 
 
     </div>
@@ -527,7 +538,7 @@ f(1) = max\{f(5),f(2),f(4),f(3)\}+1</script><p>由此可递归求得，从<code>
 if (document.querySelectorAll('pre.mermaid').length) {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
     mermaid.initialize({
-      theme: 'forest',
+      theme: 'default',
       logLevel: 3,
       flowchart: { curve: 'linear' },
       gantt: { axisFormat: '%m/%d/%Y' },
