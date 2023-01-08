@@ -57,7 +57,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;15&#x2F;Sl2ne7PQgsriDfO.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;15&#x2F;opaRJDAg7B2nd54.png">
 <meta property="article:published_time" content="2020-01-09T18:36:52.000Z">
-<meta property="article:modified_time" content="2023-01-02T18:08:44.640Z">
+<meta property="article:modified_time" content="2023-01-07T07:14:19.973Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="入门">
@@ -246,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 02:08:44" itemprop="dateModified" datetime="2023-01-03T02:08:44+08:00">2023-01-03</time>
+                <time title="Modified: 2023-01-07 15:14:19" itemprop="dateModified" datetime="2023-01-07T15:14:19+08:00">2023-01-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -688,45 +688,129 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>map构造函数</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; m; <span class="comment">//键值为string，实值为int</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; mp; <span class="comment">//键值为string，实值为int</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>添加元素</p>
 <ul>
 <li><p>方法一：通过数组的方式插入值</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[<span class="string">"a"</span>] = <span class="number">1</span>; <span class="comment">//mp[key]，如果不存在对应的key时，会自动创建一个键值对</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mp[<span class="string">"a"</span>] = <span class="number">1</span>; <span class="comment">//mp[key]，如果不存在对应的key时，会自动创建一个键值对</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>方法二：通过pair的方式插入对象</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">m.insert(&#123;<span class="string">"a"</span>, <span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">m.insert(make_pair(<span class="string">"a"</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">m.insert(&#123;<span class="string">"a"</span>,<span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">m.insert(pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; (<span class="string">"a"</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mp.insert(&#123;<span class="string">"a"</span>, <span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">mp.insert(make_pair(<span class="string">"a"</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">mp.insert(&#123;<span class="string">"a"</span>,<span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">mp.insert(pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; (<span class="string">"a"</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>访问元素</p>
 <ul>
 <li><p>通过下标访问</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; m[<span class="string">"a"</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; mp[<span class="string">"a"</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过find函数访问</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator it = m.<span class="built_in">find</span>(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator it = mp.<span class="built_in">find</span>(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>遍历元素</p>
 <ul>
 <li><p>通过迭代器遍历</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正向遍历（利用begin和end函数）</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = m.<span class="built_in">begin</span>(); it != m.<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 逆向遍历（利用rbegin和rend函数）</span></span><br><span class="line"><span class="keyword">auto</span> it = m.rbegin();</span><br><span class="line"><span class="keyword">while</span> (it != m.rend()) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    it++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正向遍历（利用begin和end函数）</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = mp.<span class="built_in">begin</span>(); it != mp.<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 逆向遍历（利用rbegin和rend函数）</span></span><br><span class="line"><span class="keyword">auto</span> it = mp.rbegin();</span><br><span class="line"><span class="keyword">while</span> (it != mp.rend()) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    it++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>范围for语句遍历</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只能访问，无法改变容器中的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : m)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i.first &lt;&lt; <span class="string">" "</span> &lt;&lt; i.second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如需改变值，则用引用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;i : m)&#123;</span><br><span class="line">    i.second *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只能访问，无法改变容器中的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : mp)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i.first &lt;&lt; <span class="string">" "</span> &lt;&lt; i.second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如需改变值，则用引用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;i : mp)&#123;</span><br><span class="line">    i.second *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>通过迭代器遍历时，迭代器<code>it</code>可以理解为指向元素的指针，指针用<code>-&gt;</code>访问，即<code>it-&gt;first</code>，或用<code>(*it).first</code>，可改变容器中的值</p>
-<p>范围for语句遍历时，<code>i</code>是一个pair对象，直接用<code>.</code>访问，即<code>it.first</code>。只访问时，用<code>auto i : m</code>，当需要改变值时，用<code>auto &amp;i : m</code></p>
+<p>范围for语句遍历时，<code>i</code>是一个pair对象，直接用<code>.</code>访问，即<code>it.first</code>。只访问时，用<code>auto i : mp</code>，当需要改变值时，用<code>auto &amp;i : mp</code></p>
 </blockquote>
 </li>
 </ul>
 </li>
 </ul>
+<h3 id="deque（双端队列）"><a href="#deque（双端队列）" class="headerlink" title="deque（双端队列）"></a>deque（双端队列）</h3><blockquote>
+<p>deque（双端队列）首尾都可以插入和删除的队列。</p>
+</blockquote>
+<h4 id="函数方法-2"><a href="#函数方法-2" class="headerlink" title="函数方法"></a>函数方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>push_back(x)</td>
+<td>把x压入后端</td>
+</tr>
+<tr>
+<td>push_front(x)</td>
+<td>把x压入前端</td>
+</tr>
+<tr>
+<td>back()</td>
+<td>访问(不删除)后端元素</td>
+</tr>
+<tr>
+<td>front()</td>
+<td>访问(不删除)前端元素</td>
+</tr>
+<tr>
+<td>pop_back()</td>
+<td>删除后端元素</td>
+</tr>
+<tr>
+<td>pop_front()</td>
+<td>删除前端元素</td>
+</tr>
+<tr>
+<td>erase(iterator it)</td>
+<td>删除双端队列中的某一个元素</td>
+</tr>
+<tr>
+<td>erase(iterator first,iterator last)</td>
+<td>删除双端队列中（first,last）中的元素</td>
+</tr>
+<tr>
+<td>empty()</td>
+<td>判断deque是否空</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>返回deque的元素数量</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>清空deque</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="常用API-2"><a href="#常用API-2" class="headerlink" title="常用API"></a>常用API</h4><p>运用deque容器需要引用deque头文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>deque构造函数</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h3><blockquote>
+<p>map（映射）的每个元素都是一个pair，包含 &lt;键值，实值&gt;，map不允许两个元素有相同的键值，所有元素根据键值自动排序。</p>
+</blockquote>
+<h4 id="函数方法-3"><a href="#函数方法-3" class="headerlink" title="函数方法"></a>函数方法</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
 
@@ -814,7 +898,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-VS-Code-搭建C-开发环境（MAC）"><span class="nav-number">1.</span> <span class="nav-text">使用 VS Code 搭建C++开发环境（MAC）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">2.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">2.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">2.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">2.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">2.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">2.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">2.2.2.</span> <span class="nav-text">for语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历数组中的元素"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">遍历数组中的元素</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第-I-部分-C-基础"><span class="nav-number">3.</span> <span class="nav-text">第 I 部分 : C++基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第2章-变量和基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">第2章 : 变量和基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">3.2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立头文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类定义"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#值初始化"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">3.4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器"><span class="nav-number">3.4.1.</span> <span class="nav-text">使用迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算符"><span class="nav-number">3.4.1.1.</span> <span class="nav-text">迭代器运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器运算"><span class="nav-number">3.4.2.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try语句块和异常处理"><span class="nav-number">3.5.</span> <span class="nav-text">try语句块和异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw表达式"><span class="nav-number">3.5.1.</span> <span class="nav-text">throw表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try语句块"><span class="nav-number">3.5.2.</span> <span class="nav-text">try语句块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL"><span class="nav-number">3.6.</span> <span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set（集合）"><span class="nav-number">3.6.1.</span> <span class="nav-text">set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法"><span class="nav-number">3.6.1.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用API"><span class="nav-number">3.6.1.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map（映射）"><span class="nav-number">3.6.2.</span> <span class="nav-text">map（映射）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法-1"><span class="nav-number">3.6.2.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用API-1"><span class="nav-number">3.6.2.2.</span> <span class="nav-text">常用API</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-VS-Code-搭建C-开发环境（MAC）"><span class="nav-number">1.</span> <span class="nav-text">使用 VS Code 搭建C++开发环境（MAC）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">2.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">2.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">2.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">2.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">2.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">2.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">2.2.2.</span> <span class="nav-text">for语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历数组中的元素"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">遍历数组中的元素</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第-I-部分-C-基础"><span class="nav-number">3.</span> <span class="nav-text">第 I 部分 : C++基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第2章-变量和基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">第2章 : 变量和基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">3.2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立头文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类定义"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#值初始化"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">3.4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器"><span class="nav-number">3.4.1.</span> <span class="nav-text">使用迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算符"><span class="nav-number">3.4.1.1.</span> <span class="nav-text">迭代器运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器运算"><span class="nav-number">3.4.2.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try语句块和异常处理"><span class="nav-number">3.5.</span> <span class="nav-text">try语句块和异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw表达式"><span class="nav-number">3.5.1.</span> <span class="nav-text">throw表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try语句块"><span class="nav-number">3.5.2.</span> <span class="nav-text">try语句块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL"><span class="nav-number">3.6.</span> <span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set（集合）"><span class="nav-number">3.6.1.</span> <span class="nav-text">set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法"><span class="nav-number">3.6.1.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用API"><span class="nav-number">3.6.1.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map（映射）"><span class="nav-number">3.6.2.</span> <span class="nav-text">map（映射）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法-1"><span class="nav-number">3.6.2.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用API-1"><span class="nav-number">3.6.2.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deque（双端队列）"><span class="nav-number">3.6.3.</span> <span class="nav-text">deque（双端队列）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法-2"><span class="nav-number">3.6.3.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用API-2"><span class="nav-number">3.6.3.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string（字符串）"><span class="nav-number">3.6.4.</span> <span class="nav-text">string（字符串）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数方法-3"><span class="nav-number">3.6.4.1.</span> <span class="nav-text">函数方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -830,20 +914,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
