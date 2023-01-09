@@ -3,7 +3,9 @@
   <entry>
     <title>动态规划</title>
     <url>/2023/01/08/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>动态规划（dynamic programming）算法是解决多阶段决策过程最优化问题的一种常用方法，利用动态规划，可以解决很多贪婪算法或分治算活不能解决的。</p>
+<p>最核心的思想，就在于拆分子问题，记住过往，减少重复计算。</p>
+<a id="more"></a>
 <h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>一个典型的动态规划问题：</p>
 <blockquote>
 <p>求序列 <code>nums = [1,5,2,4,3]</code>的最长递增子序列长度。</p>
@@ -35,7 +37,7 @@ f(1) = max\{f(5),f(2),f(4),f(3)\}+1</script><p>由此可递归求得，从<code>
 <p>时间复杂度：</p>
 <p>每个子序列都需要遍历一次，判断是否是递增序列，时间复杂度为$O(2^n)$，每个子序列至多遍历n次，总时间复杂度为$O(n*2^n)$。</p>
 <p>时间复杂度为指数级别的算法，以下针对这个问题进行优化。</p>
-<h2 id="带备忘录的递归（空间换时间）"><a href="#带备忘录的递归（空间换时间）" class="headerlink" title="带备忘录的递归（空间换时间）"></a>带备忘录的递归（空间换时间）</h2><p>暴力枚举中存在大量重复计算问题，如下图中在<code>2</code>的子树中遍历了<code>4</code>，后面又遍历了一次<code>4</code>，重复计算了两次。</p>
+<h2 id="记忆化搜索-剪枝"><a href="#记忆化搜索-剪枝" class="headerlink" title="记忆化搜索/剪枝"></a>记忆化搜索/剪枝</h2><p>暴力枚举中存在大量重复计算问题，如下图中在<code>2</code>的子树中遍历了<code>4</code>，后面又遍历了一次<code>4</code>，重复计算了两次。</p>
 <p>所以可以用一个哈希表记录已计算的“从i开始的最长子序列长度”，用空间换取时间上的缩短。</p>
 <pre class="mermaid">graph TD
     A((1))
@@ -66,8 +68,8 @@ L(3) &= max\{\bcancel{L(4)}\}+1\\
 L(4) &= 1
 \end{aligned}</script><p>可以看出，只要从后往前依次计算，就可以通过迭代方法计算出所有的$L(i)$</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算序列的最长递增子序列长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length_of_LIS</span> <span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; L(nums.<span class="built_in">size</span>(), <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//从倒数第二个开始，从后往前计算L(i)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = L.<span class="built_in">size</span>() - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; L.<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] &gt; nums[i]) &#123;</span><br><span class="line">                L[i] = <span class="built_in">max</span>(L[i], L[j]+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//返回L(i)中的最大值</span></span><br><span class="line">    <span class="keyword">int</span> max_length = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> l : L) &#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; max_length) &#123;</span><br><span class="line">            max_length = l;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max_length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums = &#123;<span class="number">1</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>&#125;;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; length_of_LIS(nums);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>时间复杂度为$O(n^2)$，相比暴力拆解的$O(n*2^n)$，时间大大降低。</p>
-]]></content>
+<p>时间复杂度为$O(n^2)$，相比暴力搜索的$O(n*2^n)$，时间大大降低。</p>
+<h1 id="动态规划的基本思想"><a href="#动态规划的基本思想" class="headerlink" title="动态规划的基本思想"></a>动态规划的基本思想</h1>]]></content>
       <categories>
         <category>算法</category>
       </categories>
