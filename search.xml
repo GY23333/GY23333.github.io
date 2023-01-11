@@ -62,14 +62,57 @@ f(1) = max\{f(5),f(2),f(4),f(3)\}+1</script><p>由此可递归求得，从<code>
 <script type="math/tex; mode=display">
 \begin{aligned}
 L(0) &= max\{L(1),L(2),L(3),L(4)\}+1 \\
-L(1) &= max\{\bcancel{L(2)},\bcancel{L(3)},\bcancel{L(4)}\}+1\\
+L(1) &= max\{\cancel{L(2)},\cancel{L(3)},\cancel{L(4)}\}+1\\
 L(2) &= max\{L(3),L(4)\}+1\\
-L(3) &= max\{\bcancel{L(4)}\}+1\\
+L(3) &= max\{\cancel{L(4)}\}+1\\
 L(4) &= 1
 \end{aligned}</script><p>可以看出，只要从后往前依次计算，就可以通过迭代方法计算出所有的$L(i)$</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算序列的最长递增子序列长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length_of_LIS</span> <span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; L(nums.<span class="built_in">size</span>(), <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//从倒数第二个开始，从后往前计算L(i)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = L.<span class="built_in">size</span>() - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; L.<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] &gt; nums[i]) &#123;</span><br><span class="line">                L[i] = <span class="built_in">max</span>(L[i], L[j]+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//返回L(i)中的最大值</span></span><br><span class="line">    <span class="keyword">int</span> max_length = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> l : L) &#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; max_length) &#123;</span><br><span class="line">            max_length = l;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max_length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums = &#123;<span class="number">1</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>&#125;;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; length_of_LIS(nums);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>时间复杂度为$O(n^2)$，相比暴力搜索的$O(n*2^n)$，时间大大降低。</p>
-<h1 id="动态规划的基本思想"><a href="#动态规划的基本思想" class="headerlink" title="动态规划的基本思想"></a>动态规划的基本思想</h1>]]></content>
+<h1 id="动态规划的基本思想和基本概念"><a href="#动态规划的基本思想和基本概念" class="headerlink" title="动态规划的基本思想和基本概念"></a>动态规划的基本思想和基本概念</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>将待求解的问题分解成若干个子问题，层层分解，直到问题可以直接解决</li>
+<li>对于重复出现的子问题，只在第一次遇到的时候进行求解，并将结果保存起来，下次遇到时直接引用答案</li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>阶段：把问题分为具有一定次序的若干阶段，即第n个子问题就是第n个阶段。</li>
+<li>状态：每个阶段开始时所处的状态，即在求第n个阶段的解时，已求得的第n-1个阶段的解，就是当前的状态。</li>
+<li>决策：目前已知第n-1个阶段的状态，可以通过决策，确定下一个阶段的状态</li>
+<li>状态转移方程：从第n-1个阶段的状态到第n个阶段的状态的方程</li>
+</ul>
+<h1 id="动态规划例题"><a href="#动态规划例题" class="headerlink" title="动态规划例题"></a>动态规划例题</h1><h2 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a>最长回文子串</h2><p>求字符串中最长的回文子串，回文子串即左右对称的串，如ABBA、ABCBA。</p>
+<h3 id="分析步骤"><a href="#分析步骤" class="headerlink" title="分析步骤"></a>分析步骤</h3><ul>
+<li><p>分解问题</p>
+<p>  判断某字符串是否为回文串，可以分解为两个子问题：</p>
+<ul>
+<li><p>去掉头尾两个字符后，剩下的字符串为回文串</p>
+</li>
+<li><p>头尾两个字符相同</p>
+<p>如果满足以上条件，则该字符串为回文串。</p>
+</li>
+</ul>
+</li>
+<li><p>初始化</p>
+<p>  拆解到最后，如果只剩一个字符，则一定是回文串；如果剩两个字符，两字符相同是回文串。</p>
+</li>
+<li><p>状态转移方程</p>
+<p>  设 $dp[i][j]$ 表示从$i$到$j$的子串是否是回文串。</p>
+<script type="math/tex; mode=display">
+  dp[i][j]
+  =\left\{
+      \begin{array}{ll}
+          1 & i=j \\
+          s[i]==s[j]?1:0 & j-i=1 \\
+          s[i]==s[j] \&\& dp[i+1][j-1] & j-i>1
+      \end{array}\right.</script></li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>采用迭代的形式，在计算长串的 $dp[i][j]$ 前，必须要已知 $dp[i+1][j-1]$ ，即要保证左下角的状态已求，所以遍历顺序如下，遍历列优先的上三角。</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1 & 2 & 4 &7\\
+* & 3 & 5 &8\\
+* & * & 6 &9\\
+* & * & * &10\\
+\end{pmatrix}</script><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length_of_LPS</span> <span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt; dp(str.length(), <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(str.length(), <span class="literal">false</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> max_length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dp[<span class="number">0</span>].<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; j; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == j) &#123;</span><br><span class="line">                dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j - i == <span class="number">1</span>) &#123;</span><br><span class="line">                dp[i][j] = (str[i] == str[j])? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][j] = (str[i] == str[j]) &amp;&amp; (dp[i+<span class="number">1</span>][j<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (dp[i][j] &amp;&amp; j - i + <span class="number">1</span> &gt; max_length) &#123;</span><br><span class="line">                max_length = j - i + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> max_length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; str;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; length_of_LPS(str) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法</category>
       </categories>
@@ -774,8 +817,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -896,8 +939,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -5524,8 +5567,8 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
@@ -6881,8 +6924,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>踩坑记录</category>
       </categories>
       <tags>
-        <tag>MATLAB</tag>
         <tag>Mac</tag>
+        <tag>MATLAB</tag>
       </tags>
   </entry>
   <entry>
