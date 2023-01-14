@@ -54,7 +54,7 @@
 <meta property="og:description" content="图的深度优先搜索（DFS）类似于树的先序遍历，尽可能“深”地搜索一个图。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-13T18:30:43.000Z">
-<meta property="article:modified_time" content="2023-01-14T18:56:00.709Z">
+<meta property="article:modified_time" content="2023-01-14T19:01:28.233Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="深度优先搜索（DFS）">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-15 02:56:00" itemprop="dateModified" datetime="2023-01-15T02:56:00+08:00">2023-01-15</time>
+                <time title="Modified: 2023-01-15 03:01:28" itemprop="dateModified" datetime="2023-01-15T03:01:28+08:00">2023-01-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -341,7 +341,7 @@ maze[5][5] = \begin{pmatrix} 0, 1, 0, 0, 0,\\
 </ul>
 <p>示例一</p>
 <blockquote>
-<p>输入：\<br>5 5\<br>0 1 0 0 0\<br>0 1 1 1 0\<br>0 0 0 0 0\<br>0 1 1 1 0\<br>0 0 0 1 0\<br>输出：\<br>(0,0)\<br>(1,0)\<br>(2,0)\<br>(2,1)\<br>(2,2)\<br>(2,3)\<br>(2,4)\<br>(3,4)\<br>(4,4)</p>
+<p>输入：<br>5 5<br>0 1 0 0 0<br>0 1 1 1 0<br>0 0 0 0 0<br>0 1 1 1 0<br>0 0 0 1 0<br>输出：<br>(0,0)<br>(1,0)<br>(2,0)<br>(2,1)<br>(2,2)<br>(2,3)<br>(2,4)<br>(3,4)<br>(4,4)</p>
 </blockquote>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>从迷宫左上角的起点开始，对迷宫进行深度优先遍历，把$1$当作已访问过的点，$0$当作未访问过的点。先尽量“深”地遍历未访问的点，若周围的点都被访问过，则则证明此路不通，回溯到上一个还有未访问的邻接点的点，重新开始深度优先遍历。</p>
 <p>对于深度优先遍历的当前点，</p>
