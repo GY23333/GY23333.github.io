@@ -6811,6 +6811,24 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </li>
 </ul>
 <hr>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><h2 id="sort-排序函数"><a href="#sort-排序函数" class="headerlink" title="sort()排序函数"></a>sort()排序函数</h2><p>sort()函数类似于快速排序，时间复杂度为 $n*log2(n)$</p>
+<ul>
+<li>头文件  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+<li>基本使用方法  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">sort(<span class="built_in">begin</span>, <span class="built_in">end</span>, cmp);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>begin</code>：待排序的数组的第一个元素的指针</li>
+<li><code>end</code>：待排序的数组的最后一个元素的下一个位置的指针</li>
+<li><code>cmp</code>：排序准则，不填则默认为从小到大排序，如想要从大到小排序，则填<code>greater&lt;int&gt;()</code>。如需自行定义排序准则，也可传入bool型函数，返回<code>true</code>则不换位置，返回<code>false</code>则前后调换位置</li>
+</ul>
+</li>
+<li>用例<ul>
+<li>数组排序<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num[<span class="number">5</span>] = &#123;<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">sort(num, num+<span class="number">5</span>); <span class="comment">//从小到大排序：0 1 2 3 4</span></span><br><span class="line">sort(num, num+<span class="number">5</span>, greater&lt;<span class="keyword">int</span>&gt;()); <span class="comment">//从大到小排序：4 3 2 1 0</span></span><br></pre></td></tr></table></figure></li>
+<li>vector排序<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">sort(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()); <span class="comment">//从小到大排序：0 1 2 3 4</span></span><br></pre></td></tr></table></figure></li>
+<li>自定义排序准则<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//个位数从大到小排序</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span> <span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x % <span class="number">10</span> &gt; y % <span class="number">10</span>; <span class="comment">//x个位大于y时，返回true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num[<span class="number">5</span>] = &#123;<span class="number">24</span>, <span class="number">1</span>, <span class="number">83</span>, <span class="number">12</span>, <span class="number">30</span>&#125;;</span><br><span class="line">    sort(num, num + <span class="number">5</span>, cmp); <span class="comment">//个位数从大到小排序：24 83 12 1 30</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>C++</category>
