@@ -57,7 +57,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;15&#x2F;Sl2ne7PQgsriDfO.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;01&#x2F;15&#x2F;opaRJDAg7B2nd54.png">
 <meta property="article:published_time" content="2020-01-09T18:36:52.000Z">
-<meta property="article:modified_time" content="2023-01-15T19:48:04.216Z">
+<meta property="article:modified_time" content="2023-01-17T13:46:33.758Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="入门">
@@ -246,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-16 03:48:04" itemprop="dateModified" datetime="2023-01-16T03:48:04+08:00">2023-01-16</time>
+                <time title="Modified: 2023-01-17 21:46:33" itemprop="dateModified" datetime="2023-01-17T21:46:33+08:00">2023-01-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -793,22 +793,214 @@
   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>&gt;</p>
-<h3 id="函数方法-3"><a href="#函数方法-3" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>string是C++中的一个类，专门实现字符串的相关操作。数据类型为string，字符串结尾没有<code>\0</code>字符。</p>
+<p>与之相比，C语言字符串（C-string），用char数组实现，字符串结尾以<code>\0</code>结尾。</p>
+<h3 id="常用API-3"><a href="#常用API-3" class="headerlink" title="常用API"></a>常用API</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>初始化</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str1; <span class="comment">//生成空字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str2</span><span class="params">(<span class="string">"12345678"</span>)</span></span>; <span class="comment">//结果为"12345678"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str3</span><span class="params">(<span class="string">"12345678"</span>, <span class="number">1</span>, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"234"，从1号开始，长度为3的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(<span class="string">"12345678"</span>, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"123"，从0号开始，长度为3的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(<span class="number">5</span>, <span class="string">'2'</span>)</span></span>; <span class="comment">//结果为"22222"，5个'2'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(str2, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"45678"，从3号开始的字符串</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读入</p>
+<ul>
+<li><p><code>cin &gt;&gt; str</code> 读入字符串，遇到空格或回车结束</p>
+</li>
+<li><p><code>getline(cin, str)</code>，读入一行字符串，包括空格，遇到回车结束</p>
+</li>
+<li><p>注意：<code>cin</code>输入回车结束后，回车仍在输入流中，<code>getline</code>会获取前一个输入的换行符，所以需要在前面添加读取换行符的语句：<code>getchar()</code> 或 <code>cin.get()</code></p>
+<p>  错误读取方式</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str1, str2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; str1;</span><br><span class="line">getline(<span class="built_in">cin</span>, str2); <span class="comment">//此处getline只能读到上一个cin的换行符</span></span><br></pre></td></tr></table></figure>
+<p>  正确读取方式</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str1, str2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; str1;</span><br><span class="line">getchar(); <span class="comment">//或者cin.get()，用于接收上一个换行符</span></span><br><span class="line">getline(<span class="built_in">cin</span>, str2); <span class="comment">//此处getline只能读到上一个cin的换行符</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>获取长度</p>
+</li>
+</ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>代码</th>
-<th>功能</th>
+<th>含义</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td>s.size()或s.length()</td>
+<td>返回string对象的字符个数</td>
+</tr>
+<tr>
+<td>s.max_size()</td>
+<td>返回string对象最多包含的字符数，超出会抛出length_error异常</td>
+</tr>
+<tr>
+<td>s.capacity()</td>
+<td>重新分配内存之前，string对象能包含的最大字符数</td>
 </tr>
 </tbody>
 </table>
 </div>
+<ul>
+<li>插入</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.push_back(element)</td>
+<td>在末尾插入一个字符element</td>
+</tr>
+<tr>
+<td>s.insert(iterator it,element)</td>
+<td>在迭代器it处插入一个字符element</td>
+</tr>
+<tr>
+<td>s.append(str)</td>
+<td>在s字符串结尾添加str字符串</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"123456"</span>;</span><br><span class="line">s.push_back(<span class="string">'a'</span>); <span class="comment">//结果：123456a，在末尾插入一个字符'a'</span></span><br><span class="line">s.insert(s.<span class="built_in">begin</span>(), <span class="string">'b'</span>); <span class="comment">//结果：b123456a，在开头插入一个字符'b'</span></span><br><span class="line">s.append(<span class="string">"cdef"</span>); <span class="comment">//结果：b123456acdef，在末尾添加字符串“cdef”</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.erase(iterator it)</td>
+<td>删除字符串中it所指的字符</td>
+</tr>
+<tr>
+<td>s.erase(iterator first, iterator last)</td>
+<td>删除字符串中迭代器区间[first,last)上所有字符</td>
+</tr>
+<tr>
+<td>s.erase(pos, len)</td>
+<td>删除字符串中从索引位置pos开始的len个字符</td>
+</tr>
+<tr>
+<td>s.clear()</td>
+<td>删除字符串中所有字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"123456789"</span>;</span><br><span class="line">s.erase(s.<span class="built_in">begin</span>()); <span class="comment">//结果：23456789，删除开头的一个字符</span></span><br><span class="line">s.erase(s.<span class="built_in">end</span>()<span class="number">-1</span>); <span class="comment">//结果：2345678，删除结尾的一个字符</span></span><br><span class="line">s.erase(s.<span class="built_in">begin</span>()+<span class="number">2</span>, s.<span class="built_in">end</span>()<span class="number">-2</span>); <span class="comment">//结果：2378，删除[first,last)上所有字符，不删last</span></span><br><span class="line">s.erase(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//结果：28，删除从1号位开始的2个字符</span></span><br><span class="line">s.<span class="built_in">clear</span>(); <span class="comment">//结果：空</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>字符替换</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.replace(pos,n,str)</td>
+<td>把当前字符串从索引pos开始的n个字符替换为str</td>
+</tr>
+<tr>
+<td>s.replace(pos,n,n1,c)</td>
+<td>把当前字符串从索引pos开始的n个字符替换为n1个字符c</td>
+</tr>
+<tr>
+<td>s.replace(iterator first,iterator last,str)</td>
+<td>把当前字符串[first,last)区间替换为str</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"123456789"</span>;</span><br><span class="line">s.replace(<span class="number">0</span>, <span class="number">3</span>, <span class="string">"abcd"</span>); <span class="comment">//结果：abcd456789，将从0号位开始的3个字符替换为"abcd"</span></span><br><span class="line">s.replace(<span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="string">'e'</span>); <span class="comment">//结果：abcd45ee9，将从6号位开始的3个字符替换为2个'e'</span></span><br><span class="line">s.replace(s.<span class="built_in">begin</span>()+<span class="number">2</span>, s.<span class="built_in">end</span>()<span class="number">-2</span>, <span class="string">"fff"</span>); <span class="comment">//结果：abfffe9，将ab‘cd45e’e9中间替换为"fff"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>分割</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.substr(pos,n)</td>
+<td>截取从pos索引开始的n个字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"123456789"</span>;</span><br><span class="line"><span class="built_in">string</span> sub = s.substr(<span class="number">2</span>, <span class="number">3</span>); <span class="comment">//结果：345，截取从2号位开始的3个字符</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>查找</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s.find (str, pos)</td>
+<td>在当前字符串的pos索引位置(默认为0)开始，查找子串str，返回找到的位置索引，-1表示查找不到子串</td>
+</tr>
+<tr>
+<td>s.find (c, pos)</td>
+<td>在当前字符串的pos索引位置(默认为0)开始，查找字符c，返回找到的位置索引，-1表示查找不到字符</td>
+</tr>
+<tr>
+<td>s.rfind (str, pos)</td>
+<td>在当前字符串的pos索引位置开始，反向查找子串s、str，返回找到的位置索引，-1表示查找不到子串</td>
+</tr>
+<tr>
+<td>s.rfind (c,pos)</td>
+<td>在当前字符串的pos索引位置开始，反向查找字符c，返回找到的位置索引，-1表示查找不到字符</td>
+</tr>
+<tr>
+<td>s.find_first_of (str, pos)</td>
+<td>在当前字符串的pos索引位置(默认为0)开始，查找子串str的字符，返回找到的位置索引，-1表示查找不到字符</td>
+</tr>
+<tr>
+<td>s.find_first_not_of (str,pos)</td>
+<td>在当前字符串的pos索引位置(默认为0)开始，查找第一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到字符</td>
+</tr>
+<tr>
+<td>s.find_last_of(str, pos)</td>
+<td>在当前字符串的pos索引位置开始，查找最后一个位于子串s的字符，返回找到的位置索引，-1表示查找不到字符</td>
+</tr>
+<tr>
+<td>s.find_last_not_of (str, pos)</td>
+<td>在当前字符串的pos索引位置开始，查找最后一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到子串</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"This is a string."</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//从首位开始，查找字符的第一个出现的位置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.<span class="built_in">find</span>(<span class="string">'s'</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：3，Thi's'</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//从首位开始，查找字符串第一个出现的位置，返回首字符位置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.<span class="built_in">find</span>(<span class="string">"is"</span>)&lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：2，Th'i's</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//从4号位开始，查找字符串第一个出现的位置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.<span class="built_in">find</span>(<span class="string">"is"</span>, <span class="number">4</span>)&lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：5，'i's a</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//从尾部开始，反向查找字符，即正序的最后一个位置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.rfind(<span class="string">'s'</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：10，'s'tring</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//从尾位开始，反向查找字符串，即正序的最后一个位置，返回首字符位置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.rfind(<span class="string">"is"</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：5，'i's a</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//从4号位开始，反向查找字符串</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.rfind(<span class="string">"is"</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//结果：2，Th'i's</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>排序</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"349725618"</span>;</span><br><span class="line">sort(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>()); <span class="comment">//结果：123456789，默认升序</span></span><br><span class="line">sort(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), greater&lt;<span class="keyword">char</span>&gt;()); <span class="comment">//结果：987654321</span></span><br></pre></td></tr></table></figure>
 <h1 id="常见问题记录"><a href="#常见问题记录" class="headerlink" title="常见问题记录"></a>常见问题记录</h1><h2 id="作为函数参数的多维数组"><a href="#作为函数参数的多维数组" class="headerlink" title="作为函数参数的多维数组"></a>作为函数参数的多维数组</h2><blockquote>
 <p>详见《C和指针》P159</p>
 </blockquote>
@@ -939,7 +1131,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-VS-Code-搭建C-开发环境（MAC）"><span class="nav-number">1.</span> <span class="nav-text">使用 VS Code 搭建C++开发环境（MAC）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">2.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">2.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">2.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">2.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">2.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">2.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">2.2.2.</span> <span class="nav-text">for语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历数组中的元素"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">遍历数组中的元素</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第-I-部分-C-基础"><span class="nav-number">3.</span> <span class="nav-text">第 I 部分 : C++基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第2章-变量和基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">第2章 : 变量和基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">3.2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立头文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类定义"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#值初始化"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">3.4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器"><span class="nav-number">3.4.1.</span> <span class="nav-text">使用迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算符"><span class="nav-number">3.4.1.1.</span> <span class="nav-text">迭代器运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器运算"><span class="nav-number">3.4.2.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try语句块和异常处理"><span class="nav-number">3.5.</span> <span class="nav-text">try语句块和异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw表达式"><span class="nav-number">3.5.1.</span> <span class="nav-text">throw表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try语句块"><span class="nav-number">3.5.2.</span> <span class="nav-text">try语句块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STL"><span class="nav-number">4.</span> <span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#set（集合）"><span class="nav-number">4.1.</span> <span class="nav-text">set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法"><span class="nav-number">4.1.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API"><span class="nav-number">4.1.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map（映射）"><span class="nav-number">4.2.</span> <span class="nav-text">map（映射）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque（双端队列）"><span class="nav-number">4.3.</span> <span class="nav-text">deque（双端队列）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法-2"><span class="nav-number">4.3.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string（字符串）"><span class="nav-number">4.4.</span> <span class="nav-text">string（字符串）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法-3"><span class="nav-number">4.4.1.</span> <span class="nav-text">函数方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见问题记录"><span class="nav-number">5.</span> <span class="nav-text">常见问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作为函数参数的多维数组"><span class="nav-number">5.1.</span> <span class="nav-text">作为函数参数的多维数组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用函数"><span class="nav-number">6.</span> <span class="nav-text">常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort-排序函数"><span class="nav-number">6.1.</span> <span class="nav-text">sort()排序函数</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-VS-Code-搭建C-开发环境（MAC）"><span class="nav-number">1.</span> <span class="nav-text">使用 VS Code 搭建C++开发环境（MAC）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode引入iostream库失败"><span class="nav-number">2.1.1.</span> <span class="nav-text">Xcode引入iostream库失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输出cout"><span class="nav-number">2.1.2.</span> <span class="nav-text">标准输出cout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准输入cin"><span class="nav-number">2.1.3.</span> <span class="nav-text">标准输入cin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用标准库中的名字"><span class="nav-number">2.1.4.</span> <span class="nav-text">使用标准库中的名字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">2.2.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#while语句"><span class="nav-number">2.2.1.</span> <span class="nav-text">while语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数量不定的输入数据"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">读取数量不定的输入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for语句"><span class="nav-number">2.2.2.</span> <span class="nav-text">for语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历数组中的元素"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">遍历数组中的元素</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第-I-部分-C-基础"><span class="nav-number">3.</span> <span class="nav-text">第 I 部分 : C++基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第2章-变量和基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">第2章 : 变量和基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">3.2.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立头文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">建立头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用类定义"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用类定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准库类型-vector"><span class="nav-number">3.3.</span> <span class="nav-text">标准库类型 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和初始化vector对象"><span class="nav-number">3.3.1.</span> <span class="nav-text">定义和初始化vector对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#值初始化"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向vector对象中添加元素"><span class="nav-number">3.3.2.</span> <span class="nav-text">向vector对象中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他vector操作"><span class="nav-number">3.3.3.</span> <span class="nav-text">其他vector操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">3.4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器"><span class="nav-number">3.4.1.</span> <span class="nav-text">使用迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算符"><span class="nav-number">3.4.1.1.</span> <span class="nav-text">迭代器运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器运算"><span class="nav-number">3.4.2.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try语句块和异常处理"><span class="nav-number">3.5.</span> <span class="nav-text">try语句块和异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw表达式"><span class="nav-number">3.5.1.</span> <span class="nav-text">throw表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try语句块"><span class="nav-number">3.5.2.</span> <span class="nav-text">try语句块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STL"><span class="nav-number">4.</span> <span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#set（集合）"><span class="nav-number">4.1.</span> <span class="nav-text">set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法"><span class="nav-number">4.1.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API"><span class="nav-number">4.1.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map（映射）"><span class="nav-number">4.2.</span> <span class="nav-text">map（映射）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque（双端队列）"><span class="nav-number">4.3.</span> <span class="nav-text">deque（双端队列）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数方法-2"><span class="nav-number">4.3.1.</span> <span class="nav-text">函数方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">常用API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string（字符串）"><span class="nav-number">4.4.</span> <span class="nav-text">string（字符串）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用API-3"><span class="nav-number">4.4.1.</span> <span class="nav-text">常用API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见问题记录"><span class="nav-number">5.</span> <span class="nav-text">常见问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作为函数参数的多维数组"><span class="nav-number">5.1.</span> <span class="nav-text">作为函数参数的多维数组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用函数"><span class="nav-number">6.</span> <span class="nav-text">常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort-排序函数"><span class="nav-number">6.1.</span> <span class="nav-text">sort()排序函数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
