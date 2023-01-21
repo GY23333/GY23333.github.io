@@ -3,7 +3,9 @@
   <entry>
     <title>栈的应用——表达式求值</title>
     <url>/2023/01/18/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>输入一个表达式（用字符串表示），求这个表达式的值。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>利用栈对表达式进行求解</p>
+<a id="more"></a>
+<h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>输入一个表达式（用字符串表示），求这个表达式的值。</p>
 <p>保证字符串中的有效字符包括【<code>0</code>-<code>9</code>】、<code>+</code>、<code>-</code>、 <code>*</code>、<code>/</code> 、<code>(</code>、 <code>)</code>、<code>[</code>、<code>]</code>、<code>{</code> 、<code>}</code>，且表达式一定合法。</p>
 <ul>
 <li><p>输入描述：</p>
@@ -15,11 +17,11 @@
 </ul>
 <p>示例一</p>
 <blockquote>
-<p>输入：<br>3+2<em>{1+2</em>[-4/(8-6)+7]}<br>输出：<br>25</p>
+<p>输入：<br>$3+2<em>{1+2</em>[-4/(8-6)+7]}$<br>输出：<br>25</p>
 </blockquote>
 <p>示例二</p>
 <blockquote>
-<p>输入：<br>5-3+9*6*(6-10-2)<br>输出：<br>-322</p>
+<p>输入：<br>$5-3+9<em>6</em>(6-10-2)$<br>输出：<br>-322</p>
 </blockquote>
 <h1 id="中缀表达式的计算"><a href="#中缀表达式的计算" class="headerlink" title="中缀表达式的计算"></a>中缀表达式的计算</h1><p>将中缀转后缀、后缀表达式的计算两个步骤合并。</p>
 <ul>

@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="描述输入一个表达式（用字符串表示），求这个表达式的值。 保证字符串中的有效字符包括【0-9】、+、-、 *、&#x2F; 、(、 )、[、]、{ 、}，且表达式一定合法。  输入描述：   输入一个算术表达式  输出描述：   得到计算结果   示例一  输入：3+2{1+2[-4&#x2F;(8-6)+7]}输出：25  示例二  输入：5-3+9*6*(6-10-2)输出：-322  中缀表达式的计算将中缀转后缀">
+  <meta name="description" content="利用栈对表达式进行求解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈的应用——表达式求值">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2023&#x2F;01&#x2F;18&#x2F;%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="描述输入一个表达式（用字符串表示），求这个表达式的值。 保证字符串中的有效字符包括【0-9】、+、-、 *、&#x2F; 、(、 )、[、]、{ 、}，且表达式一定合法。  输入描述：   输入一个算术表达式  输出描述：   得到计算结果   示例一  输入：3+2{1+2[-4&#x2F;(8-6)+7]}输出：25  示例二  输入：5-3+9*6*(6-10-2)输出：-322  中缀表达式的计算将中缀转后缀">
+<meta property="og:description" content="利用栈对表达式进行求解">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-17T18:06:05.000Z">
-<meta property="article:modified_time" content="2023-01-18T20:02:46.357Z">
+<meta property="article:modified_time" content="2023-01-21T14:09:27.482Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="表达式求值">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-19 04:02:46" itemprop="dateModified" datetime="2023-01-19T04:02:46+08:00">2023-01-19</time>
+                <time title="Modified: 2023-01-21 22:09:27" itemprop="dateModified" datetime="2023-01-21T22:09:27+08:00">2023-01-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>输入一个表达式（用字符串表示），求这个表达式的值。</p>
+        <p>利用栈对表达式进行求解</p>
+<a id="more"></a>
+<h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>输入一个表达式（用字符串表示），求这个表达式的值。</p>
 <p>保证字符串中的有效字符包括【<code>0</code>-<code>9</code>】、<code>+</code>、<code>-</code>、 <code>*</code>、<code>/</code> 、<code>(</code>、 <code>)</code>、<code>[</code>、<code>]</code>、<code>{</code> 、<code>}</code>，且表达式一定合法。</p>
 <ul>
 <li><p>输入描述：</p>
@@ -293,11 +295,11 @@
 </ul>
 <p>示例一</p>
 <blockquote>
-<p>输入：<br>3+2<em>{1+2</em>[-4/(8-6)+7]}<br>输出：<br>25</p>
+<p>输入：<br>$3+2<em>{1+2</em>[-4/(8-6)+7]}$<br>输出：<br>25</p>
 </blockquote>
 <p>示例二</p>
 <blockquote>
-<p>输入：<br>5-3+9*6*(6-10-2)<br>输出：<br>-322</p>
+<p>输入：<br>$5-3+9<em>6</em>(6-10-2)$<br>输出：<br>-322</p>
 </blockquote>
 <h1 id="中缀表达式的计算"><a href="#中缀表达式的计算" class="headerlink" title="中缀表达式的计算"></a>中缀表达式的计算</h1><p>将中缀转后缀、后缀表达式的计算两个步骤合并。</p>
 <ul>
