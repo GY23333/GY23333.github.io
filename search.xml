@@ -8590,9 +8590,49 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用vector容器需要引用vector头文件</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>vector初始化</p>
-<p>  | 方法                      | 描述                       |<br>  |—————————————-|——————————————|<br>  | vector<T> v               | 默认初始化一个空vector      |<br>  | vector<T> v2(v1)          | v2中包含有v1所有元素的副本 |<br>  | vector<T> v2 = v1         | 等价于 v2(v1)              |<br>  | vector<T> v(n, val)       | n个重复的元素val           |<br>  | vector<T> v(n)            | n个重复的默认              |<br>  | vector<T> v {a, b, c….}   | 赋值                       |<br>  | vector<T> v = {a, b, c….} | 等价于 v{a, b, c….}        |</p>
-</li>
+<li>vector初始化</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vector<T> v</td>
+<td>默认初始化一个空vector</td>
+</tr>
+<tr>
+<td>vector<T> v2(v1)</td>
+<td>v2中包含有v1所有元素的副本</td>
+</tr>
+<tr>
+<td>vector<T> v2 = v1</td>
+<td>等价于 v2(v1)</td>
+</tr>
+<tr>
+<td>vector<T> v(n, val)</td>
+<td>n个重复的元素val</td>
+</tr>
+<tr>
+<td>vector<T> v(n)</td>
+<td>n个重复的默认</td>
+</tr>
+<tr>
+<td>vector<T> v {a, b, c….}</td>
+<td>赋值</td>
+</tr>
+<tr>
+<td>vector<T> v = {a, b, c….}</td>
+<td>等价于 v{a, b, c….}</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
 <li><p>二维vector初始化</p>
   <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化10*5的二维vector，元素值都为1</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; v(<span class="number">10</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 </li>
