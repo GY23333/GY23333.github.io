@@ -684,6 +684,9 @@
 <li>遍历一个 非阻塞 &amp;&amp; 未关闭 的通道（nil）时，接收所有缓存数据，然后阻塞</li>
 <li>遍历一个 非阻塞 &amp;&amp; 已关闭 的通道（nil）时，接收所有缓存数据，然后返回</li>
 </ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://books.studygolang.com/gopl-zh/" target="_blank" rel="noopener">Go语言圣经（中文版）</a></li>
+</ul>
 ]]></content>
       <tags>
         <tag>go</tag>
@@ -7995,92 +7998,6 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Sales_data data1;</span><br></pre></td></tr></table></figure>
 <p>​    利用.来访问类中的对象</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_data.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Sales_data data1;</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0.0</span>; <span class="comment">// 书籍单价</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Input book_No, sold_num and price."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; data1.bookNo &gt;&gt; data1.units_sold &gt;&gt; price;</span><br><span class="line">    data1.revenue = price * data1.units_sold;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Book "</span> &lt;&lt; data1.bookNo &lt;&lt; <span class="string">"'s revenue is "</span> &lt;&lt; data1.revenue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="标准库类型-vector"><a href="#标准库类型-vector" class="headerlink" title="标准库类型 vector"></a>标准库类型 vector</h2><p>​    vector表示对象的集合，其中所有对象的类型都相同（可不定长）。</p>
-<p>​    vector定义在头文件<vector>中，命名空间std中。</p>
-<h3 id="定义和初始化vector对象"><a href="#定义和初始化vector对象" class="headerlink" title="定义和初始化vector对象"></a>定义和初始化vector对象</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>vector<T> v1</th>
-<th>v1是一个空vector，它潜在的元素是类型为T</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vector<T> v2(v1)</td>
-<td>v2中包含有v1所有元素的副本</td>
-</tr>
-<tr>
-<td>vector<T> v2 = v1</td>
-<td>等价于 v2(v1)</td>
-</tr>
-<tr>
-<td>vector<T> v3(n, val)</td>
-<td>v3包含了n个重复的元素val</td>
-</tr>
-<tr>
-<td>vector<T> v4(n)</td>
-<td>v4包含了n个重复的执行了值初始化的对象</td>
-</tr>
-<tr>
-<td>vector<T> v5 {a, b, c….}</td>
-<td>v5包含了初始值个数的元素，每个元素都赋予相应的初始值</td>
-</tr>
-<tr>
-<td>vector<T> v5 = {a, b, c….}</td>
-<td>等价于 v5{a, b, c….}</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h4 id="值初始化"><a href="#值初始化" class="headerlink" title="值初始化"></a>值初始化</h4><p>​    int类型的初始化为0，string类型的初始化为空字符。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都初始为0</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; svec(<span class="number">10</span>); <span class="comment">// 10个元素，每个都是空string对象</span></span><br></pre></td></tr></table></figure>
-<h3 id="向vector对象中添加元素"><a href="#向vector对象中添加元素" class="headerlink" title="向vector对象中添加元素"></a>向vector对象中添加元素</h3><p>​    利用 push_back把一个值压入vector对象的尾端。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    不断输入数字储存，直至输入字母停下</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; num) &#123;</span><br><span class="line">        v1.push_back(num); <span class="comment">// 向vector对象中添加元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; v1[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="其他vector操作"><a href="#其他vector操作" class="headerlink" title="其他vector操作"></a>其他vector操作</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>v.empty()</td>
-<td>如果v不含有任何元素，返回真；否则返回假</td>
-</tr>
-<tr>
-<td>v.size()</td>
-<td>返回v中元素的个数</td>
-</tr>
-<tr>
-<td>v.push_back(t)</td>
-<td>向v的尾端添加一个值为t的元素</td>
-</tr>
-<tr>
-<td>v[n]</td>
-<td>返回v中第n个位置上元素的引用（不能用此来添加元素）</td>
-</tr>
-<tr>
-<td>v1 = v2</td>
-<td>用v2中的元素拷贝替换v1中的元素</td>
-</tr>
-<tr>
-<td>v1 = {a, b, c….}</td>
-<td>用列表中的元素拷贝替换v1中的元素</td>
-</tr>
-<tr>
-<td>v1 == v2 / v1 != v2</td>
-<td>仅当v1和v2完全相同（不同）时返回为真</td>
-</tr>
-<tr>
-<td>&lt;，&lt;=，&gt;，&gt;=</td>
-<td>以字典顺序进行比较</td>
-</tr>
-</tbody>
-</table>
-</div>
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>​    迭代器是一种检查容器内元素并遍历元素的数据类型。可以替代下标访问vector对象的元素。可以理解为指向容器内元素的指针。</p>
 <h3 id="使用迭代器"><a href="#使用迭代器" class="headerlink" title="使用迭代器"></a>使用迭代器</h3><p>​    begin 返回指向第一个元素的迭代器，end 返回指向容器尾元素的下一个位置的迭代器（实际上是不存在的）。当begin和end返回的为同一迭代器，则该容器为空。</p>
 <p>​    不在意迭代器的类型，一般定义为auto。</p>
@@ -8607,10 +8524,95 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <li><p><strong>迭代器</strong>：检查容器内元素并遍历元素的数据类型</p>
 </li>
 </ul>
+<h2 id="vector（向量）"><a href="#vector（向量）" class="headerlink" title="vector（向量）"></a>vector（向量）</h2><blockquote>
+<p>向量（vector）是一个封装了动态大小数组的顺序容器</p>
+</blockquote>
+<h3 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v.front()</td>
+<td>返回第一个数据</td>
+</tr>
+<tr>
+<td>v.back()</td>
+<td>返回最后一个数据</td>
+</tr>
+<tr>
+<td>v.pop_back()</td>
+<td>删除最后一个数据</td>
+</tr>
+<tr>
+<td>v.push_back(element)</td>
+<td>在尾部加一个数据</td>
+</tr>
+<tr>
+<td>v.size()</td>
+<td>返回元素个数</td>
+</tr>
+<tr>
+<td>v.clear()</td>
+<td>清除所有元素</td>
+</tr>
+<tr>
+<td>v.resize(n,v)</td>
+<td>改变数组大小为n，n个空间数值赋为v，如果没有默认赋值为0</td>
+</tr>
+<tr>
+<td>v.insert(it,x)</td>
+<td>向任意迭代器it插入一个元素x</td>
+</tr>
+<tr>
+<td>v.erase(first,last)</td>
+<td>删除[first,last)的所有元素</td>
+</tr>
+<tr>
+<td>v.begin()</td>
+<td>返回首元素的迭代器</td>
+</tr>
+<tr>
+<td>v.end()</td>
+<td>返回最后一个元素后一个位置的迭代器</td>
+</tr>
+<tr>
+<td>v.empty()</td>
+<td>判断是否为空，为空返回真，反之返回假       </td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用vector容器需要引用vector头文件</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>vector初始化</p>
+<p>  | 方法                      | 描述                       |<br>  |—————————————-|——————————————|<br>  | vector<T> v               | 默认初始化一个空vector      |<br>  | vector<T> v2(v1)          | v2中包含有v1所有元素的副本 |<br>  | vector<T> v2 = v1         | 等价于 v2(v1)              |<br>  | vector<T> v(n, val)       | n个重复的元素val           |<br>  | vector<T> v(n)            | n个重复的默认              |<br>  | vector<T> v {a, b, c….}   | 赋值                       |<br>  | vector<T> v = {a, b, c….} | 等价于 v{a, b, c….}        |</p>
+</li>
+<li><p>二维vector初始化</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化10*5的二维vector，元素值都为1</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; v(<span class="number">10</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尾部插入元素</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">v.push_back(x);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>插入元素</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">v.insert(v.<span class="built_in">begin</span>() + <span class="number">2</span>, x); <span class="comment">//在第3个位置插入x</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除元素</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">v.erase(v.<span class="built_in">begin</span>() + <span class="number">2</span>); <span class="comment">//删除第3个位置的元素</span></span><br><span class="line">v.erase(v.<span class="built_in">begin</span>() + i, v.<span class="built_in">begin</span>() + j); <span class="comment">//删除第[i, j)位置的元素</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历vector集合</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//迭代器遍历访问</span></span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it = s.<span class="built_in">begin</span>(); it != s.<span class="built_in">end</span>(); it++)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//另一种遍历访问方式</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : s)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="set（集合）"><a href="#set（集合）" class="headerlink" title="set（集合）"></a>set（集合）</h2><blockquote>
 <p>set（集合）的每个元素只出现一次，且默认升序排列。</p>
 </blockquote>
-<h3 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<h3 id="函数方法-1"><a href="#函数方法-1" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -8678,7 +8680,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </tbody>
 </table>
 </div>
-<h3 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h3><p>运用set容器需要引用set头文件</p>
+<h3 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用set容器需要引用set头文件</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>set构造函数</p>
@@ -8691,7 +8693,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <h2 id="map（映射）"><a href="#map（映射）" class="headerlink" title="map（映射）"></a>map（映射）</h2><blockquote>
 <p>map（映射）的每个元素都是一个pair，包含 &lt;键值，实值&gt;，map不允许两个元素有相同的键值，所有元素根据键值自动排序。</p>
 </blockquote>
-<h3 id="函数方法-1"><a href="#函数方法-1" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<h3 id="函数方法-2"><a href="#函数方法-2" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -8763,7 +8765,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </tbody>
 </table>
 </div>
-<h3 id="常用API-1"><a href="#常用API-1" class="headerlink" title="常用API"></a>常用API</h3><p>运用map容器需要引用map头文件</p>
+<h3 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用map容器需要引用map头文件</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>map构造函数</p>
@@ -8809,7 +8811,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <h2 id="deque（双端队列）"><a href="#deque（双端队列）" class="headerlink" title="deque（双端队列）"></a>deque（双端队列）</h2><blockquote>
 <p>deque（双端队列）首尾都可以插入和删除的队列。</p>
 </blockquote>
-<h3 id="函数方法-2"><a href="#函数方法-2" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<h3 id="函数方法-3"><a href="#函数方法-3" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -8865,7 +8867,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </tbody>
 </table>
 </div>
-<h3 id="常用API-2"><a href="#常用API-2" class="headerlink" title="常用API"></a>常用API</h3><p>运用deque容器需要引用deque头文件</p>
+<h3 id="基本用法-3"><a href="#基本用法-3" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用deque容器需要引用deque头文件</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>deque构造函数</p>
@@ -8875,7 +8877,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <h2 id="stack（栈）"><a href="#stack（栈）" class="headerlink" title="stack（栈）"></a>stack（栈）</h2><blockquote>
 <p>stack（栈），先进后出的数据结构。</p>
 </blockquote>
-<h3 id="函数方法-3"><a href="#函数方法-3" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
+<h3 id="函数方法-4"><a href="#函数方法-4" class="headerlink" title="函数方法"></a>函数方法</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -8907,7 +8909,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </tbody>
 </table>
 </div>
-<h3 id="常用API-3"><a href="#常用API-3" class="headerlink" title="常用API"></a>常用API</h3><p>运用stack容器需要引用stack头文件</p>
+<h3 id="基本用法-4"><a href="#基本用法-4" class="headerlink" title="基本用法"></a>基本用法</h3><p>运用stack容器需要引用stack头文件</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>stack构造函数</p>
@@ -8916,7 +8918,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 </ul>
 <h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>string是C++中的一个类，专门实现字符串的相关操作。数据类型为string，字符串结尾没有<code>\0</code>字符。</p>
 <p>与之相比，C语言字符串（C-string），用char数组实现，字符串结尾以<code>\0</code>结尾。</p>
-<h3 id="常用API-4"><a href="#常用API-4" class="headerlink" title="常用API"></a>常用API</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="基本用法-5"><a href="#基本用法-5" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>初始化</p>
   <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> str1; <span class="comment">//生成空字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str2</span><span class="params">(<span class="string">"12345678"</span>)</span></span>; <span class="comment">//结果为"12345678"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str3</span><span class="params">(<span class="string">"12345678"</span>, <span class="number">1</span>, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"234"，从1号开始，长度为3的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(<span class="string">"12345678"</span>, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"123"，从0号开始，长度为3的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(<span class="number">5</span>, <span class="string">'2'</span>)</span></span>; <span class="comment">//结果为"22222"，5个'2'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(str2, <span class="number">3</span>)</span></span>; <span class="comment">//结果为"45678"，从3号开始的字符串</span></span><br></pre></td></tr></table></figure>
