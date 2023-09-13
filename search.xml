@@ -1,14 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>git</title>
+    <url>/2023/08/01/git/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+<h1 id="文件状态"><a href="#文件状态" class="headerlink" title="文件状态"></a>文件状态</h1><ol>
+<li><p>初始化新仓</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go init</span><br></pre></td></tr></table></figure>
+<p> 此时里面的所有文件都是“未跟踪”状态</p>
+<p> <img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-08-01%2004.24.26.png" alt=""></p>
+</li>
+<li><p>将文件添加到暂存区</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-08-01%2004.29.39.png" alt=""></p>
+</li>
+<li><p>提交</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;message&quot;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-08-01%2004.34.50.png" alt=""></p>
+</li>
+</ol>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><h2 id="查看-git-配置"><a href="#查看-git-配置" class="headerlink" title="查看 git 配置"></a>查看 git 配置</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+<h2 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h2><p>初始化新仓</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go init</span><br></pre></td></tr></table></figure>
+<p>此时会在目录下新增一个 <code>.git</code> 隐藏目录，用于跟踪管理版本库</p>
+<h2 id="克隆已有项目"><a href="#克隆已有项目" class="headerlink" title="克隆已有项目"></a>克隆已有项目</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone &lt;HTTP or SSH&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="添加修改"><a href="#添加修改" class="headerlink" title="添加修改"></a>添加修改</h2><p>将修改过的文件修改为缓存状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="取消缓存状态"><a href="#取消缓存状态" class="headerlink" title="取消缓存状态"></a>取消缓存状态</h2><p>通过 <code>add</code> 设置的缓存状态，可以通过 <code>reset</code> 取消</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset HEAD &lt;name&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python</title>
+    <url>/2023/05/30/Python/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Python 学习记录</p>
+<a id="more"></a>
+<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h2 id="行与缩进"><a href="#行与缩进" class="headerlink" title="行与缩进"></a>行与缩进</h2><p>不使用 <code>{}</code>，而是使用缩进的方式来表示代码块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"True"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"False"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="多行语句"><a href="#多行语句" class="headerlink" title="多行语句"></a>多行语句</h2><p>过长的语句采用 <code>\</code> 换行</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">total = item_one + \</span><br><span class="line">        item_two + \</span><br><span class="line">        item_three</span><br></pre></td></tr></table></figure>
+<p>在 <code>[]</code>, <code>{}</code>, 或 <code>()</code> 中的多行语句，不需要使用反斜杠 <code>\</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">total = [<span class="string">'item_one'</span>, <span class="string">'item_two'</span>, <span class="string">'item_three'</span>,</span><br><span class="line">        <span class="string">'item_four'</span>, <span class="string">'item_five'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="引入模块"><a href="#引入模块" class="headerlink" title="引入模块"></a>引入模块</h2><p>引入整个模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> somemodule</span><br></pre></td></tr></table></figure>
+<p>引入模块中的部分函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> somemodule <span class="keyword">import</span> somefunction</span><br></pre></td></tr></table></figure>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>Python 中的变量赋值不需要类型声明，所以每个变量在使用前都必须赋值。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>多个变量赋值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a, b = <span class="number">1</span>, <span class="string">'abc'</span></span><br></pre></td></tr></table></figure>
+<p>允许连等</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = b = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h2><p>支持 int、float、bool、complex</p>
+<p>可以用 <code>type()</code> 来查询变量所指的对象类型</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">a, b, c, d = <span class="number">1</span>, <span class="number">1.5</span>, <span class="literal">True</span>, <span class="number">4</span>+<span class="number">3j</span></span><br><span class="line">print(type(a), type(b), type(c), type(d))</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;class &#39;int&#39;&gt; &lt;class &#39;float&#39;&gt; &lt;class &#39;bool&#39;&gt; &lt;class &#39;complex&#39;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="数值运算"><a href="#数值运算" class="headerlink" title="数值运算"></a>数值运算</h3><p>与其他语言不同，python 中 <code>\</code> 和 <code>\\</code> 都是除法，但是 <code>\</code> 得一浮点数，<code>\\</code> 得一整数 </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; 1 / 2</span></span><br><span class="line">0.5</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; 1 // 2</span></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<p><code>**</code> 表示乘方，<code>x ** y</code> 即 $x^y$</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; 2 ** 5</span></span><br><span class="line">32</span><br></pre></td></tr></table></figure>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>转换成数字类型直接用 <code>int()</code>、<code>float()</code> 这样的强制类型转换</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; a, b, c = 1, 1.2, <span class="string">'123'</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">float</span>(a)</span></span><br><span class="line">1.0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; int(b)</span></span><br><span class="line">1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; int(c)</span></span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>可以用 <code>&#39;</code> 或 <code>&quot;</code> 来创建字符串</p>
+<p>Python 不支持单字符类型，单字符也当作字符串处理</p>
+<h3 id="索引与截取"><a href="#索引与截取" class="headerlink" title="索引与截取"></a>索引与截取</h3><p>字符串索引，前面从 0 开始，后面从 -1 开始</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-06-05%2002.04.31.png" alt=""></p>
+<p>字符串截取</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str[上标 : 下标]</span><br></pre></td></tr></table></figure>
+<p>范围是 [上标, 下标)，不包括下标</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; str = <span class="string">'python'</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; str[0:3]</span></span><br><span class="line">'pyt'</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; str[2:-1]</span></span><br><span class="line">'tho'</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; str[1:]</span></span><br><span class="line">'ython'</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; str[:-1]</span></span><br><span class="line">'pytho'</span><br></pre></td></tr></table></figure>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><p>列表 List 的数据项不需要是相同的类型，索引方式与 String 相同</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list = [1, 2, <span class="string">"Red"</span>]</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list[0]</span></span><br><span class="line">1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list[-1]</span></span><br><span class="line">'Red'</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list[1:]</span></span><br><span class="line">[2, 'Red']</span><br></pre></td></tr></table></figure>
+<p>使用 <code>append()</code> 方法来添加列表项</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list.append(<span class="string">"Green"</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list</span></span><br><span class="line">[1, 2, 'Red', 'Green']</span><br></pre></td></tr></table></figure>
+<p>也可用 <code>+</code> 或 <code>*</code> 来扩展 List</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; [1, 2, 3] + [4, 5, 6]</span></span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; [1] * 3</span></span><br><span class="line">[1, 1, 1]</span><br></pre></td></tr></table></figure>
+<p>使用 <code>del</code> 语句来删除列表的的元素</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; del list[2]</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; list</span></span><br><span class="line">[1, 2, 'Green']</span><br></pre></td></tr></table></figure>
+<p>求长度</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; len([1, 2, 3])</span></span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>判断元素是否在 List 中</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; 1 <span class="keyword">in</span> [1, 2, 3]</span></span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>遍历 List</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>判断两个 List 是否相同，需引入 <code>operator</code> 模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line">list1, list2, list3 = [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">print(operator.eq(list1, list2)) <span class="comment"># True</span></span><br><span class="line">print(operator.eq(list1, list3)) <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+<h2 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h2><p>元祖 Tuple 与 List 类似，但是 Tuple 不能修改</p>
+<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><h2 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h2><h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="部分运算符"><a href="#部分运算符" class="headerlink" title="部分运算符"></a>部分运算符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>**</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h1><h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><h2 id="while"><a href="#while" class="headerlink" title="while"></a>while</h2><h2 id="for"><a href="#for" class="headerlink" title="for"></a>for</h2><h2 id="break"><a href="#break" class="headerlink" title="break"></a>break</h2><h2 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h2><h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><h1 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h1><h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h1 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h1><h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1>]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GDB调试工具</title>
+    <url>/2023/04/17/GDB%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>GDB调试器的</p>
+<a id="more"></a>
+<p>GDB可以完成以下功能：</p>
+<ul>
+<li>开始并设置参数</li>
+<li>打断点</li>
+<li></li>
+</ul>
+<p>GDB支持多种语言，常见的比如 C、C++、Go</p>
+<h1 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h1><ul>
+<li><p>安装GDB</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install gdb</span><br></pre></td></tr></table></figure>
+<p>  如brew下载缓慢，也可以在官网下载</p>
+</li>
+</ul>
+<ul>
+<li>查看GDB版本</li>
+</ul>
+<h1 id="QuickStart"><a href="#QuickStart" class="headerlink" title="QuickStart"></a>QuickStart</h1>]]></content>
+      <tags>
+        <tag>GDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux学习</title>
     <url>/2023/03/19/Linux%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>基于Linux CentOS的学习</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>基于Linux Ubuntu的学习</p>
 <a id="more"></a>
 <h1 id="Linux虚拟机的安装"><a href="#Linux虚拟机的安装" class="headerlink" title="Linux虚拟机的安装"></a>Linux虚拟机的安装</h1><ul>
 <li>安装<a href="https://store-us.vmware.com" target="_blank" rel="noopener">VMware</a></li>
-<li>安装<a href="https://www.centos.org/download/" target="_blank" rel="noopener">Centos</a>版本的Linux，下载<code>iso</code>文件</li>
+<li>安装<a href="https://www.centos.org/download/" target="_blank" rel="noopener">Centos</a>版本的Linux，或 Ubuntu ，下载<code>iso</code>文件</li>
 <li>将<code>iso</code>文件拖拽到VMware中</li>
+</ul>
+<h1 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h1><h2 id="SSH连接虚拟机"><a href="#SSH连接虚拟机" class="headerlink" title="SSH连接虚拟机"></a>SSH连接虚拟机</h2><ol>
+<li><p>虚拟机安装 openssh-server</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt install openssh-server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启 sshd 服务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl start sshd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置虚拟机网卡，至少需要一张 NAT 模式网卡用于 ssh 连接，查看该网卡</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
+<p>网卡 IP 为 192.168.45.136</p>
+</li>
+<li><p>ssh 连接虚拟机</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh guoyi@192.168.45.136</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="设置-ssh-别名"><a href="#设置-ssh-别名" class="headerlink" title="设置 ssh 别名"></a>设置 ssh 别名</h2><p>将下面直接登入方式改为别名登录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh guoyi@192.168.45.136</span><br></pre></td></tr></table></figure>
+<p>在 <code>~/.ssh/config</code> 文件中添加远端服务器信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Host Ubuntu</span><br><span class="line">  HostName 192.168.45.136</span><br><span class="line">  User guoyi</span><br><span class="line">  Port 22</span><br></pre></td></tr></table></figure>
+<p>即可用别名 Ubuntu 进行登录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh Ubuntu</span><br></pre></td></tr></table></figure>
+<h2 id="设置免密登录"><a href="#设置免密登录" class="headerlink" title="设置免密登录"></a>设置免密登录</h2><ol>
+<li><p>查看本机的  <code>~/.ssh</code> 文件夹是否有公私钥对，没有则生成一对</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<p>默认命名为 id_rsa，也可输入自定义名字，如 mac_key，密码无需设置，自动生成私钥 mac_key 和公钥 mac_key.pub 两个文件</p>
+</li>
+<li><p>将公钥上传到服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-copy-id -i mac_key.pub Ubuntu</span><br></pre></td></tr></table></figure>
+<p>此命令自动将公钥传到 Ubuntu 所指服务器和用户的 .ssh/known_hosts 文件中</p>
+</li>
+<li><p>（Mac 额外步骤）本机添加私钥文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-add -K mac_key</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面三步设置完成后，即可免密登录服务器</p>
+<h2 id="开启-root-用户登录"><a href="#开启-root-用户登录" class="headerlink" title="开启 root 用户登录"></a>开启 root 用户登录</h2><p>Ubuntu默认不允许直接 ssh 到 root 用户，需在服务器上开启 root 用户登录开关</p>
+<p>在 Ubuntu 服务器的 <code>/etc/ssh/sshd_config</code> 中，取消 PermitRootLogin 参数的注释，并将由其 prohibit-password 改为 yes</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+<p>重启 sshd</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+<h1 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h1><ul>
+<li><p>更新 apt，有些包找不到，可能是因为 apt 没更新</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
 </ul>
 <h1 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a>Linux目录结构</h1><p>Linux的目录同样为树形结构，最顶级的根目录为<code>/</code></p>
 <ul>
@@ -36,7 +221,10 @@
 <li><code>ESC``:wq</code>保存并退出</li>
 </ul>
 <h1 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h1><p>yum 是 Shell 前端软件包管理器，提供了方便的安装、卸载、更新软件包的命令</p>
-<h2 id="yum的安装"><a href="#yum的安装" class="headerlink" title="yum的安装"></a>yum的安装</h2>]]></content>
+<h2 id="yum的安装"><a href="#yum的安装" class="headerlink" title="yum的安装"></a>yum的安装</h2><h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="su-root-时，报错-Authentication-failure"><a href="#su-root-时，报错-Authentication-failure" class="headerlink" title="su root 时，报错 Authentication failure"></a>su root 时，报错 Authentication failure</h2><p>首次 <code>su root</code> 时，需先录入密码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
+<p>否则会出现 Authentication failure 的报错</p>
+]]></content>
   </entry>
   <entry>
     <title>DNS与Bind</title>
@@ -684,7 +872,26 @@
 <li>遍历一个 非阻塞 &amp;&amp; 未关闭 的通道（nil）时，接收所有缓存数据，然后阻塞</li>
 <li>遍历一个 非阻塞 &amp;&amp; 已关闭 的通道（nil）时，接收所有缓存数据，然后返回</li>
 </ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="单引号、双引号、反引号"><a href="#单引号、双引号、反引号" class="headerlink" title="单引号、双引号、反引号"></a>单引号、双引号、反引号</h2><ul>
+<li>单引号 <code>&#39;&#39;</code>：包裹字符</li>
+<li>双引号 <code>&quot;&quot;</code>：包裹字符串，会解析其中的转义符</li>
+<li>反引号 ````：包裹字符串，不会解析其中的转义符</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fmt.Print(<span class="string">"Hello, World!\n"</span>) <span class="comment">//双引号，会解析其中的转义符</span></span><br><span class="line">fmt.Print(<span class="string">`Hello, World!\n`</span>) <span class="comment">//反引号，不会解析其中的转义符</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出：</p>
+<p>Hello, World!<br>Hello, World!\n% </p>
+</blockquote>
+<h1 id="Go-modules"><a href="#Go-modules" class="headerlink" title="Go modules"></a>Go modules</h1><p>go modules 是 go 的依赖包管理工具</p>
+<h2 id="go-的包管理发展"><a href="#go-的包管理发展" class="headerlink" title="go 的包管理发展"></a>go 的包管理发展</h2><p>在引入 go modules 之前，go 管理依赖包先是用 GOPATH，后来用 go vender</p>
+<h3 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h3><p>go path 理论上并不算是包管理工具，需要手动管理依赖包，写程序代码必须放在 <code>$GOPATH/src</code> 目录下，且依赖包没有版本可言</p>
+<h3 id="go-vendor"><a href="#go-vendor" class="headerlink" title="go vendor"></a>go vendor</h3><p>解决了包管理问题，所有依赖包下载到项目的 <code>vendor</code> 目录下</p>
+<h2 id="go-modules-的使用"><a href="#go-modules-的使用" class="headerlink" title="go modules 的使用"></a>go modules 的使用</h2><p>首先要确定 go 语言的版本，至少需是 v1.11 以上版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+<h3 id="环境设置"><a href="#环境设置" class="headerlink" title="环境设置"></a>环境设置</h3><p>查看 go 的环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go env</span><br></pre></td></tr></table></figure>
+<p>其中与 Go Modules 相关的环境设置如下</p>
+<h4 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a><code>GO111MODULE</code></h4><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://books.studygolang.com/gopl-zh/" target="_blank" rel="noopener">Go语言圣经（中文版）</a></li>
 </ul>
 ]]></content>
@@ -3059,9 +3266,9 @@ b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到�
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>Mac</tag>
+        <tag>Xcode</tag>
         <tag>摄像头权限</tag>
       </tags>
   </entry>
@@ -7386,9 +7593,9 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
         <category>Latex</category>
       </categories>
       <tags>
-        <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -7687,10 +7894,10 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Xcode</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
         <tag>环境配置</tag>
+        <tag>Xcode</tag>
       </tags>
   </entry>
   <entry>
@@ -7936,12 +8143,12 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <li>在”args”中添加C++标准<code>&quot;-std=c++2a&quot;</code></li>
 <li>在launch.json中的”configurations”中添加<code>&quot;preLaunchTask&quot;: &quot;C/C++: clang++ build active file&quot;</code>(与tasks.json中的label一致)</li>
 </ol>
-<h2 id="Xcode引入iostream库失败"><a href="#Xcode引入iostream库失败" class="headerlink" title="Xcode引入iostream库失败"></a>Xcode引入iostream库失败</h2><p>​提示 ‘iostream’ file not found的解决办法：</p>
+<h2 id="Xcode引入iostream库失败"><a href="#Xcode引入iostream库失败" class="headerlink" title="Xcode引入iostream库失败"></a>Xcode引入iostream库失败</h2><p>提示 ‘iostream’ file not found的解决办法：</p>
 <p>在Build Settings -&gt; Search paths -&gt;System Header Search Paths中添加路径</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;Applications&#x2F;Xcode.app&#x2F;Contents&#x2F;Developer&#x2F;Toolchains&#x2F;XcodeDefault.xctoolchain&#x2F;usr&#x2F;include&#x2F;c++&#x2F;v1&#x2F;</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2020/01/10/DT7fHNvbGzyVXIM.png" alt=""></p>
 <p>添加后，C++库引入成功。</p>
-<h1 id="从C到C"><a href="#从C到C" class="headerlink" title="从C到C++"></a>从C到C++</h1><h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>​C++输入输出需使用iostream库</p>
+<h1 id="从C到C"><a href="#从C到C" class="headerlink" title="从C到C++"></a>从C到C++</h1><h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><p>C++输入输出需使用iostream库</p>
 <h3 id="标准输出cout"><a href="#标准输出cout" class="headerlink" title="标准输出cout"></a>标准输出cout</h3><p>std :: cout 是输出内容，&lt;&lt; 是输出运算符，std :: endl 结束改行，相当于一个”\n”</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!\n"</span> ;</span><br></pre></td></tr></table></figure>
@@ -7957,7 +8164,10 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <h3 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h3><p>​    for(初始化语句; 循环条件; 表达式)</p>
 <h4 id="遍历数组中的元素"><a href="#遍历数组中的元素" class="headerlink" title="遍历数组中的元素"></a>遍历数组中的元素</h4><ol>
 <li><p>​    一维数组</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> scores[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">auto</span> i : scores) &#123; <span class="comment">//遍历数组scores中的元素</span></span><br><span class="line">           <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   ```  </span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 多维数组</span><br><span class="line"></span><br><span class="line">   ```c++</span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> ia[<span class="number">2</span>][<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;row : ia) &#123; <span class="comment">//遍历二维数组ia外层数组的每一个元素（这里相当于遍历每行）</span></span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;col : row) &#123; <span class="comment">//遍历二维数组ia内层数组的每一个元素</span></span><br><span class="line">               <span class="built_in">cout</span> &lt;&lt; col;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> scores[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : scores) &#123; <span class="comment">//遍历数组scores中的元素</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多维数组</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ia[<span class="number">2</span>][<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;row : ia) &#123; <span class="comment">//遍历二维数组ia外层数组的每一个元素（这里相当于遍历每行）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;col : row) &#123; <span class="comment">//遍历二维数组ia内层数组的每一个元素</span></span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; col;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h2><p>同一作用域内，可以有同名函数，给函数多个定义，但形参必须不同，加以区分。</p>
@@ -8157,7 +8367,12 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
   <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">/* data */</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    类名(<span class="comment">/* args */</span>); <span class="comment">//构造函数，可以有参数</span></span><br><span class="line">    ~类名(); <span class="comment">//析构函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">类名::类名(<span class="comment">/* args */</span>)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">类名::~类名()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>示例</p>
-  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Line</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> length;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        Line(); <span class="comment">//构造函数</span></span><br><span class="line">        ~Line(); <span class="comment">//析构函数</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    Line::Line() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"调用构造函数"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Line::~Line() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"调用析构函数"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        Line <span class="built_in">line</span>; <span class="comment">//创建对象，自动调用构造函数</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">//销毁对象时，自动调用析构函数</span></span><br><span class="line">    &#125;</span><br><span class="line">    ```  </span><br><span class="line"></span><br><span class="line">### 构造函数的分类和调用方式</span><br><span class="line"></span><br><span class="line">#### 无参构造</span><br><span class="line"></span><br><span class="line">- 函数结构</span><br><span class="line">    </span><br><span class="line">    ```c++</span><br><span class="line">    className() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Line(); <span class="comment">//构造函数</span></span><br><span class="line">    ~Line(); <span class="comment">//析构函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Line::Line() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"调用构造函数"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Line::~Line() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"调用析构函数"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Line <span class="built_in">line</span>; <span class="comment">//创建对象，自动调用构造函数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">//销毁对象时，自动调用析构函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="构造函数的分类和调用方式"><a href="#构造函数的分类和调用方式" class="headerlink" title="构造函数的分类和调用方式"></a>构造函数的分类和调用方式</h3><h4 id="无参构造"><a href="#无参构造" class="headerlink" title="无参构造"></a>无参构造</h4><ul>
+<li><p>函数结构</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">className() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>调用方法（定义对象）</p>
   <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">className c;</span><br></pre></td></tr></table></figure>
@@ -8817,7 +9032,7 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
   <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">mp[<span class="string">"a"</span>] = <span class="number">1</span>; <span class="comment">//mp[key]，如果不存在对应的key时，会自动创建一个键值对</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>方法二：通过pair的方式插入对象</p>
-  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">mp.insert(&#123;<span class="string">"a"</span>, <span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">mp.insert(make_pair(<span class="string">"a"</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">mp.insert(&#123;<span class="string">"a"</span>,<span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line">mp.insert(pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; (<span class="string">"a"</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">mp.insert(&#123;<span class="string">"a"</span>, <span class="number">1</span>&#125;);</span><br><span class="line">    </span><br><span class="line">mp.insert(make_pair(<span class="string">"a"</span>, <span class="number">1</span>));</span><br><span class="line">    </span><br><span class="line">mp.insert(&#123;<span class="string">"a"</span>,<span class="number">1</span>&#125;);</span><br><span class="line">    </span><br><span class="line">mp.insert(pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; (<span class="string">"a"</span>, <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -9164,7 +9379,52 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
 <li>排序</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"349725618"</span>;</span><br><span class="line">sort(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>()); <span class="comment">//结果：123456789，默认升序</span></span><br><span class="line">sort(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), greater&lt;<span class="keyword">char</span>&gt;()); <span class="comment">//结果：987654321</span></span><br></pre></td></tr></table></figure>
-<h1 id="常见问题记录"><a href="#常见问题记录" class="headerlink" title="常见问题记录"></a>常见问题记录</h1><h2 id="作为函数参数的多维数组"><a href="#作为函数参数的多维数组" class="headerlink" title="作为函数参数的多维数组"></a>作为函数参数的多维数组</h2><blockquote>
+<h1 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h1><p>C++ 内存分为以下几个部分：</p>
+<ul>
+<li><p>栈区（stack）</p>
+<ul>
+<li>存放函数的参数值、局部变量、返回值、返回地址等</li>
+<li>由编译器自动分配和释放</li>
+</ul>
+</li>
+<li><p>堆区（heap）</p>
+<ul>
+<li>存放动态分配的内存，如 <code>new</code> 、 <code>malloc</code> 分配的动态变量</li>
+<li>STL（除 <code>pair</code>）也都是存放在堆区</li>
+<li>堆区大小不固定，由程序手动分配和释放</li>
+</ul>
+</li>
+<li><p>全局区/静态区（static）</p>
+<ul>
+<li>存放全局变量、静态变量 <code>static</code></li>
+<li>分为 <code>data</code> 段和 <code>bss</code> 段，已初始化的全局变量和静态变量存放在 <code>data</code> 段，未初始化或者初始化为0的全局变量和静态变量存放在 <code>bss</code> 段</li>
+<li>程序启动时被分配，直到程序结束时自动释放</li>
+</ul>
+</li>
+<li><p>常量区</p>
+<ul>
+<li>存放常量，不允许修改</li>
+<li>程序启动时被分配，直到程序结束时自动释放</li>
+</ul>
+</li>
+<li><p>代码区</p>
+<ul>
+<li>存放指令代码</li>
+<li>程序启动时被分配，直到程序结束时自动释放</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a1; <span class="comment">//全局区的bss段</span></span><br><span class="line"><span class="keyword">int</span> a2 = <span class="number">0</span>; <span class="comment">//全局区的bss段</span></span><br><span class="line"><span class="keyword">int</span> a3 = <span class="number">1</span>; <span class="comment">//全局区的data段</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">1</span>; <span class="comment">//全局区的data段</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123; <span class="comment">//栈区</span></span><br><span class="line">    <span class="keyword">int</span> d1 = <span class="number">1</span>; <span class="comment">//栈区</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> d2 = <span class="number">1</span>; <span class="comment">//栈区</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> d3 = <span class="number">1</span>; <span class="comment">//全局区的data段</span></span><br><span class="line">    <span class="keyword">return</span> d1; <span class="comment">//栈区</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><p>隐式转换，即在类型不统一时，系统自动进行的类型转换</p>
+<p>何时发生隐式转换？</p>
+<ul>
+<li>算术运算中，低类型转换为高类型</li>
+<li>赋值表达式中，右边的表达式的值自动转化为左边变量的类型</li>
+<li>函数传参时，将实参转化为形参的类型</li>
+<li>函数返回时，将返回表达式转化为返回值的类型</li>
+</ul>
+<h3 id="算数转换"><a href="#算数转换" class="headerlink" title="算数转换"></a>算数转换</h3><p>算数转换是隐式转换的一种，会将低类型转换为高类型</p>
+<h2 id="显式转换"><a href="#显式转换" class="headerlink" title="显式转换"></a>显式转换</h2><h1 id="常见问题记录"><a href="#常见问题记录" class="headerlink" title="常见问题记录"></a>常见问题记录</h1><h2 id="作为函数参数的多维数组"><a href="#作为函数参数的多维数组" class="headerlink" title="作为函数参数的多维数组"></a>作为函数参数的多维数组</h2><blockquote>
 <p>详见《C和指针》P159</p>
 </blockquote>
 <p>传数组参数，即是要传递指向数组第一个元素的指针。</p>
@@ -9733,8 +9993,8 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
         <category>图像处理</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>Canny</tag>
+        <tag>C++</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
       </tags>
