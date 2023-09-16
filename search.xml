@@ -3,7 +3,8 @@
   <entry>
     <title>git</title>
     <url>/2023/08/01/git/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>无</p>
+<a id="more"></a>
 <h1 id="文件状态"><a href="#文件状态" class="headerlink" title="文件状态"></a>文件状态</h1><ol>
 <li><p>初始化新仓</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go init</span><br></pre></td></tr></table></figure>
