@@ -1,5 +1,5 @@
+https://gy23333.github.io/2023/09/20/go-gRPC/
 https://gy23333.github.io/2023/08/01/git/
 https://gy23333.github.io/2023/05/30/Python/
 https://gy23333.github.io/2023/04/17/GDB%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/
 https://gy23333.github.io/2023/03/19/Linux%E5%AD%A6%E4%B9%A0/
-https://gy23333.github.io/2023/03/19/DNS%E4%B8%8EBind/
