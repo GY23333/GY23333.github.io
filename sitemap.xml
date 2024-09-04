@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://gy23333.github.io/2023/09/20/go%E4%B8%8EgRPC/</loc>
+    <loc>https://gy23333.github.io/2023/09/20/gRPC%E4%B8%8EGo/</loc>
     
-    <lastmod>2024-09-04T15:27:03.043Z</lastmod>
+    <lastmod>2024-09-04T15:45:26.353Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gy23333.github.io/2023/03/15/Go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
+    
+    <lastmod>2024-09-04T15:44:33.213Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gy23333.github.io/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</loc>
+    
+    <lastmod>2024-09-04T15:43:59.977Z</lastmod>
     
   </url>
   
@@ -19,13 +33,6 @@
     <loc>https://gy23333.github.io/2024/08/23/TRex-%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2024-09-04T14:55:15.776Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://gy23333.github.io/2023/03/15/go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
-    
-    <lastmod>2024-09-04T14:53:26.605Z</lastmod>
     
   </url>
   

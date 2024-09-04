@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Go学习路线</title>
+    <url>/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Golang 学习路线梳理</p>
+<a id="more"></a>
+<p><img src="https://github.com/darius-khll/golang-developer-roadmap/blob/master/i18n/zh-CN/golang-developer-roadmap-zh-CN.png?raw=true" alt=""></p>
+<ol>
+<li><a href="">Go 基本语法</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Golang</tag>
+        <tag>学习路线</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TRex 教程</title>
     <url>/2024/08/23/TRex-%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>TRex 是基于 DPDK 的一个开源、低成本的流量生成器，支持生成 L3～7 流量，提供有状态、无状态两种模式。</p>
@@ -793,8 +808,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>go与gRPC</title>
-    <url>/2023/09/20/go%E4%B8%8EgRPC/</url>
+    <title>gRPC与Go</title>
+    <url>/2023/09/20/gRPC%E4%B8%8EGo/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>基于 go 的 gRPC 简介与实现</p>
 <a id="more"></a>
 <h1 id="gRPC-简介"><a href="#gRPC-简介" class="headerlink" title="gRPC 简介"></a>gRPC 简介</h1><p><img src="https://grpc.io/img/landing-2.svg" alt=""></p>
@@ -816,7 +831,7 @@
 </ul>
 ]]></content>
       <tags>
-        <tag>go</tag>
+        <tag>Golang</tag>
         <tag>gRPC</tag>
       </tags>
   </entry>
@@ -1302,8 +1317,8 @@
       </tags>
   </entry>
   <entry>
-    <title>go基本语法</title>
-    <url>/2023/03/15/go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
+    <title>Go基本语法</title>
+    <url>/2023/03/15/Go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>GoLang基本语法</p>
 <a id="more"></a>
 <h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
@@ -1793,7 +1808,8 @@
 </ul>
 ]]></content>
       <tags>
-        <tag>go</tag>
+        <tag>Golang</tag>
+        <tag>语言基本语法</tag>
       </tags>
   </entry>
   <entry>
