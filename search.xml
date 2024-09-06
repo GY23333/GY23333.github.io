@@ -3905,8 +3905,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -4027,8 +4027,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
