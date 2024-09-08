@@ -56,8 +56,10 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;1687344-20201204090611124-2143444161.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240907133300329.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908150407363.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908154512478.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908162116839.png">
 <meta property="article:published_time" content="2024-01-14T16:47:35.000Z">
-<meta property="article:modified_time" content="2024-09-08T07:05:00.616Z">
+<meta property="article:modified_time" content="2024-09-08T09:56:09.654Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="DPDK">
 <meta name="twitter:card" content="summary">
@@ -244,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-09-08 15:05:00" itemprop="dateModified" datetime="2024-09-08T15:05:00+08:00">2024-09-08</time>
+                <time title="Modified: 2024-09-08 17:56:09" itemprop="dateModified" datetime="2024-09-08T17:56:09+08:00">2024-09-08</time>
               </span>
 
           
@@ -378,7 +380,37 @@
 <p>多进程操作系统，进程不能直接访问物理内存，避免不安全行为，每个进程都维护了一套自己的虚拟地址，由 CPU 的内存管理单元（MMU）将虚拟地址转换到物理地址，再通过物理地址访问实际的物理内存，保证各个进程之间内存不互相干涉。</p>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240908150407363.png" style="zoom:50%;" /></p>
 <p>转换过程对进程是全透明的，进程可认为程序直接通过虚拟地址访问虚拟内存得到了数据，实际是通过虚拟地址映射到的物理地址在物理内存得到的数据。</p>
-<h2 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h2><h1 id="环境适配层-EAL"><a href="#环境适配层-EAL" class="headerlink" title="环境适配层 EAL"></a>环境适配层 EAL</h1><h1 id="DPDK-环境搭建"><a href="#DPDK-环境搭建" class="headerlink" title="DPDK 环境搭建"></a>DPDK 环境搭建</h1><p>以 Ubuntu 20.04.6 安装 DPDK 23.11 为例</p>
+<h2 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h2><p>分页是整个虚拟和物理内存空间切成一段段固定尺寸的大小的页（Page），在 Linux 的缺省配置，页大小为 4 KB。</p>
+<p>分页机制下，虚拟地址分为了页号和页内偏移量两个部分</p>
+<ol>
+<li>根据虚拟页号，在页表中找到对应的物理页号</li>
+<li>在物理页号对应的物理内存页上，加上页内偏移量，得到物理内存地址</li>
+</ol>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240908154512478.png" alt="内存分页机制"></p>
+<h2 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h2><p>但分页方式依旧有缺陷，假如每个进程的虚拟内存有 4GB，采用默认的页大小 4KB，也就是需要对应 1M 个物理页，即需要 1M 个页表项，每个页表项 4B，那么每个进程都需要 4MB 的大小空间用于存储页表。100 个进程就会需要 400 MB 空间。</p>
+<p>由此引出多级页表，将虚拟页号和物理页号的对应拆成多级，对于相同的物理页数量，映射使用的页表总大小减小。</p>
+<p>以二级页表为例，虚拟地址分为了一级页号、二级页号和页内偏移量三个部分</p>
+<ol>
+<li>在一级页表，根据一级页号找到对应的二级页表地址</li>
+<li>在二级页表地址对应的二级页表上，根据二级页号找到对应的物理页号</li>
+<li>在物理页号对应的物理内存页上，加上页内偏移量，得到物理内存地址</li>
+</ol>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240908162116839.png" alt="多级页表"></p>
+<h2 id="TLB"><a href="#TLB" class="headerlink" title="TLB"></a>TLB</h2><p>多级页表虽然解决了空间问题，但是多了几道地址转换的查表，时间成本增加。</p>
+<p>由此引入 TLB（Translation Lookaside Buffer）快表，程序有局部性，对于一个程序而言，往往访问的都是内存的某些区域，所以可以将进程经常访问的页表项存入 Cache 中，这个 Cache 即是 TLB 快表。</p>
+<p>在之前的步骤前加上查询 TLB 快表的流程，TLB 快表中存储了经常访问的虚拟页号到物理页号的映射。</p>
+<ol>
+<li>先查询 TLB，如果查到了，则直接快速拿到物理地址</li>
+<li>如果 TLB 未能查到，也就是 TLB miss，则按照正常地流程步骤获取物理地址，并将其加入 TLB 中</li>
+</ol>
+<h2 id="大页"><a href="#大页" class="headerlink" title="大页"></a>大页</h2><p>TLB 的大小有限，即可以存储的快速查找的虚拟页号到物理页号的映射有限。</p>
+<p>在 Linux 的缺省配置，页大小为 4 KB。但也支持更大的尺寸，如 2MB 或 1 GB 的大页，这样虽然 TLB 的页表项数量不变，但是每一项对应的物理页面的大小增加，可以由 TLB 直接命中的范围也就增加了。</p>
+<p>TLB 命中概率增加，TLB miss 发生概率减小，如此大大增加了访存效率。</p>
+<h2 id="激活大页"><a href="#激活大页" class="headerlink" title="激活大页"></a>激活大页</h2><p>设置大页，2MB 的大页设置 1024 个</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages<span class="literal">-2048kB</span>/nr_hugepages</span><br></pre></td></tr></table></figure>
+<p>查看大页设置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># cat /proc/meminfo |grep Hu</span></span><br><span class="line">AnonHugePages:         <span class="number">0</span> kB</span><br><span class="line">ShmemHugePages:        <span class="number">0</span> kB</span><br><span class="line">FileHugePages:         <span class="number">0</span> kB</span><br><span class="line">HugePages_Total:    <span class="number">1024</span></span><br><span class="line">HugePages_Free:     <span class="number">1024</span></span><br><span class="line">HugePages_Rsvd:        <span class="number">0</span></span><br><span class="line">HugePages_Surp:        <span class="number">0</span></span><br><span class="line">Hugepagesize:       <span class="number">2048</span> kB</span><br><span class="line">Hugetlb:         <span class="number">2097152</span> kB</span><br></pre></td></tr></table></figure>
+<h1 id="环境适配层-EAL"><a href="#环境适配层-EAL" class="headerlink" title="环境适配层 EAL"></a>环境适配层 EAL</h1><h1 id="DPDK-环境搭建"><a href="#DPDK-环境搭建" class="headerlink" title="DPDK 环境搭建"></a>DPDK 环境搭建</h1><p>以 Ubuntu 20.04.6 安装 DPDK 23.11 为例</p>
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><ul>
 <li><p>安装 C 编译器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install build-essential</span><br></pre></td></tr></table></figure>
@@ -393,7 +425,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install libnuma-dev</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="大页"><a href="#大页" class="headerlink" title="大页"></a>大页</h2><p>设置大页</p>
+<h2 id="大页-1"><a href="#大页-1" class="headerlink" title="大页"></a>大页</h2><p>设置大页</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages<span class="literal">-2048kB</span>/nr_hugepages</span><br></pre></td></tr></table></figure>
 <h2 id="DPDK-安装"><a href="#DPDK-安装" class="headerlink" title="DPDK 安装"></a>DPDK 安装</h2><ul>
 <li><p>下载解压</p>
@@ -506,7 +538,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-特性"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大页技术"><span class="nav-number">2.</span> <span class="nav-text">大页技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理内存和虚拟内存"><span class="nav-number">2.1.</span> <span class="nav-text">物理内存和虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分页"><span class="nav-number">2.2.</span> <span class="nav-text">内存分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境适配层-EAL"><span class="nav-number">3.</span> <span class="nav-text">环境适配层 EAL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">4.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">4.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">4.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">4.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方实例"><span class="nav-number">5.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">5.1.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行"><span class="nav-number">5.1.1.</span> <span class="nav-text">编译运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解析"><span class="nav-number">5.1.2.</span> <span class="nav-text">代码解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-特性"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大页技术"><span class="nav-number">2.</span> <span class="nav-text">大页技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理内存和虚拟内存"><span class="nav-number">2.1.</span> <span class="nav-text">物理内存和虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分页"><span class="nav-number">2.2.</span> <span class="nav-text">内存分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级页表"><span class="nav-number">2.3.</span> <span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLB"><span class="nav-number">2.4.</span> <span class="nav-text">TLB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">2.5.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活大页"><span class="nav-number">2.6.</span> <span class="nav-text">激活大页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境适配层-EAL"><span class="nav-number">3.</span> <span class="nav-text">环境适配层 EAL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">4.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">4.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页-1"><span class="nav-number">4.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">4.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方实例"><span class="nav-number">5.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">5.1.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行"><span class="nav-number">5.1.1.</span> <span class="nav-text">编译运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解析"><span class="nav-number">5.1.2.</span> <span class="nav-text">代码解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
