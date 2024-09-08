@@ -55,8 +55,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;1687344-20201204090611124-2143444161.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240907133300329.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908150407363.png">
 <meta property="article:published_time" content="2024-01-14T16:47:35.000Z">
-<meta property="article:modified_time" content="2024-09-07T05:33:23.716Z">
+<meta property="article:modified_time" content="2024-09-08T07:05:00.616Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="DPDK">
 <meta name="twitter:card" content="summary">
@@ -243,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-09-07 13:33:23" itemprop="dateModified" datetime="2024-09-07T13:33:23+08:00">2024-09-07</time>
+                <time title="Modified: 2024-09-08 15:05:00" itemprop="dateModified" datetime="2024-09-08T15:05:00+08:00">2024-09-08</time>
               </span>
 
           
@@ -307,7 +308,7 @@
 <li>能使用多核架构，具有高性能</li>
 <li>将一般的 Linux 系统调教为包处理环境</li>
 </ul>
-<h2 id="DPDK"><a href="#DPDK" class="headerlink" title="DPDK"></a>DPDK</h2><p>DPDK 就是回应上述期待的包处理技术，DPDK 拥有下面这些特性：</p>
+<h2 id="DPDK-特性"><a href="#DPDK-特性" class="headerlink" title="DPDK 特性"></a>DPDK 特性</h2><p>DPDK 就是回应上述期待的包处理技术，DPDK 拥有下面这些特性：</p>
 <ul>
 <li>轮询<ul>
 <li>为网卡的收发包分配独立的核，不需要与其他任务共享核，因此该类核可以无限循环地检查是否有包到达以及是否需要发送包</li>
@@ -340,8 +341,44 @@
 </ul>
 </li>
 </ul>
-<h2 id="DPDK-框架"><a href="#DPDK-框架" class="headerlink" title="DPDK 框架"></a>DPDK 框架</h2><p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240907133300329.png" alt="DPDK 框架"></p>
-<h2 id="大页"><a href="#大页" class="headerlink" title="大页"></a>大页</h2><h1 id="DPDK-环境搭建"><a href="#DPDK-环境搭建" class="headerlink" title="DPDK 环境搭建"></a>DPDK 环境搭建</h1><p>以 Ubuntu 20.04.6 安装 DPDK 23.为例</p>
+<h2 id="DPDK-框架"><a href="#DPDK-框架" class="headerlink" title="DPDK 框架"></a>DPDK 框架</h2><p>下面是 DPDK 的基本模块，作为开发包处理系统的基础层，可以用软件模拟大部分的网络功能。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240907133300329.png" alt="DPDK 框架"></p>
+<p>在最底部的内核态有三个模块 ：KNI、IGB_UIO、VFIO，其中</p>
+<ul>
+<li><strong>KNI</strong>，Kernel Network Interface，内核网络接口，提供 DPDK 和内核交换报文的解决方案。<ul>
+<li>KNI 模拟了一个虚拟网卡，提供 DPDK 与 Linux 内核之间通讯，允许报文被用户态接收后转发到 Linux 内核协议栈。</li>
+</ul>
+</li>
+<li><strong>IGB_UIO</strong>，通过 UIO 技术，在初始化过程中将网卡硬件寄存器映射到用户态。<ul>
+<li>UIO 技术是一种用户态 I/O 框架，支持将用户态驱动的很少一部分运行在内核空间，大部分则运行在用户空间</li>
+<li>IGB_UIO 则是 UIO 的，形态上是一种网卡驱动，网卡绑定 IGB_UIO 驱动后，相当于隔离了内核的网卡驱动，同时 IGB_UIO 还能够完成网卡中断内核态的初始化，并将中断信号映射到用户态</li>
+</ul>
+</li>
+<li><strong>VFIO</strong>，可以安全地把设备 I/O、中断、DMA 等暴露到用户空间，从而可以在用户空间完成设备驱动的架构</li>
+</ul>
+<p>在上层的用户态，DPDK由很多库组成，主要包括：核心部件库（Core Libs）、平台相关模块（platform）、网卡轮询模式驱动模块（PMD-natives &amp; virtual）、QoS 库、报文转发分类算法（classify 算法）等几大类。</p>
+<ul>
+<li><strong>核心部件库（Core Libs）</strong>：提供环境抽象层（EAL）、大页内存、缓存池、定时器以及无锁环等基础组件</li>
+<li><strong>PMD 库</strong>：提供所有用户态驱动，以便通过轮询和线程绑定得到高网络吞吐量。支持各种本地或者虚拟网卡</li>
+<li><strong>Classify 库</strong>：支持精确匹配（exact match）、最长后缀匹配（LPM，longest prefix match）、通配符匹配（ACL，access control list）和 cuckoo hash 算法，这些算法用来包处理中的查表操作</li>
+<li><strong>加速器 API</strong>：支持包安全（CryptoDev）、数据压缩（CompressionDev）和用于内核间通信的事件建模器（EventDev）</li>
+<li><strong>QoS 库</strong>：提供网络服务质量相关组件，如限速（Meter）和调度（Sched）</li>
+<li><strong>平台相关模块</strong>：<ul>
+<li>POWER：能耗管理，运行时调整 CPU 时钟频率，可以根据分组接收频率动态调整 CPU 频率，或进入 CPU 的不同休眠状态</li>
+<li>KNI：通过 kni.ko 模块将数据报文从用户态传递到内核态协议栈，以便用户进程使用传统的 Socket 接口对相关报文进行处理</li>
+<li>Packet Framework 和 DISTRIB 为搭建更复杂的多核流水线处理模型提供了基础的组件</li>
+</ul>
+</li>
+</ul>
+<h1 id="大页技术"><a href="#大页技术" class="headerlink" title="大页技术"></a>大页技术</h1><h2 id="物理内存和虚拟内存"><a href="#物理内存和虚拟内存" class="headerlink" title="物理内存和虚拟内存"></a>物理内存和虚拟内存</h2><p>CPU 的内存管理包含两个概念：</p>
+<ul>
+<li>物理内存：即安装在计算机的物理内存条</li>
+<li>虚拟内存：虚拟的内存地址</li>
+</ul>
+<p>多进程操作系统，进程不能直接访问物理内存，避免不安全行为，每个进程都维护了一套自己的虚拟地址，由 CPU 的内存管理单元（MMU）将虚拟地址转换到物理地址，再通过物理地址访问实际的物理内存，保证各个进程之间内存不互相干涉。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240908150407363.png" style="zoom:50%;" /></p>
+<p>转换过程对进程是全透明的，进程可认为程序直接通过虚拟地址访问虚拟内存得到了数据，实际是通过虚拟地址映射到的物理地址在物理内存得到的数据。</p>
+<h2 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h2><h1 id="环境适配层-EAL"><a href="#环境适配层-EAL" class="headerlink" title="环境适配层 EAL"></a>环境适配层 EAL</h1><h1 id="DPDK-环境搭建"><a href="#DPDK-环境搭建" class="headerlink" title="DPDK 环境搭建"></a>DPDK 环境搭建</h1><p>以 Ubuntu 20.04.6 安装 DPDK 23.11 为例</p>
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><ul>
 <li><p>安装 C 编译器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install build-essential</span><br></pre></td></tr></table></figure>
@@ -355,21 +392,34 @@
 <li><p>安装 NUMA Library</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install libnuma-dev</span><br></pre></td></tr></table></figure>
 </li>
-<li></li>
 </ul>
-<h2 id="大页-1"><a href="#大页-1" class="headerlink" title="大页"></a>大页</h2><h2 id="DPDK-安装"><a href="#DPDK-安装" class="headerlink" title="DPDK 安装"></a>DPDK 安装</h2><ul>
+<h2 id="大页"><a href="#大页" class="headerlink" title="大页"></a>大页</h2><p>设置大页</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages<span class="literal">-2048kB</span>/nr_hugepages</span><br></pre></td></tr></table></figure>
+<h2 id="DPDK-安装"><a href="#DPDK-安装" class="headerlink" title="DPDK 安装"></a>DPDK 安装</h2><ul>
 <li><p>下载解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;fast.dpdk.org&#x2F;rel&#x2F;dpdk-23.11.tar.xz</span><br><span class="line">tar xJf dpdk-23.11.tar.xz</span><br><span class="line">cd dpdk-23.11</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk<span class="literal">-23</span>.<span class="number">11</span>.tar.xz</span><br><span class="line">tar xJf dpdk<span class="literal">-23</span>.<span class="number">11</span>.tar.xz</span><br><span class="line">cd dpdk<span class="literal">-23</span>.<span class="number">11</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>设置编译选项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meson setup build</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meson setup build</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br><span class="line">ninja</span><br><span class="line">meson install</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br><span class="line">ninja</span><br><span class="line">meson install</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="官方实例"><a href="#官方实例" class="headerlink" title="官方实例"></a>官方实例</h1><h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><h3 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h3><ul>
+<li><p>编译</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br><span class="line">meson configure <span class="literal">-Dexamples</span>=helloworld</span><br><span class="line">ninja</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1024</span> &gt; /sys/kernel/mm/hugepages/hugepages<span class="literal">-2048kB</span>/nr_hugepages</span><br><span class="line">cd build</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/dpdk<span class="literal">-23</span>.<span class="number">11</span>/build<span class="comment"># ./examples/dpdk-helloworld</span></span><br><span class="line">EAL: Detected CPU lcores: <span class="number">3</span></span><br><span class="line">EAL: Detected NUMA nodes: <span class="number">1</span></span><br><span class="line">EAL: Detected <span class="keyword">static</span> linkage of DPDK</span><br><span class="line">EAL: Multi<span class="literal">-process</span> socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: Selected IOVA mode <span class="string">'PA'</span></span><br><span class="line">EAL: VFIO support initialized</span><br><span class="line">TELEMETRY: No legacy callbacks, legacy socket not created</span><br><span class="line">hello from core <span class="number">1</span></span><br><span class="line">hello from core <span class="number">2</span></span><br><span class="line">hello from core <span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><p>建立一个多核（线程）运行环境，每个线程打印<code>hello from core</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* SPDX-License-Identifier: BSD-3-Clause</span></span><br><span class="line"><span class="comment"> * Copyright(c) 2010-2014 Intel Corporation</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/queue.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_launch.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_eal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_per_lcore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_lcore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;rte_debug.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Launch a function on lcore. 8&lt; */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">lcore_hello(__rte_unused <span class="keyword">void</span> *arg)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> lcore_id;</span><br><span class="line">	lcore_id = rte_lcore_id();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"hello from core %u\n"</span>, lcore_id);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* &gt;8 End of launching function on lcore. */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Initialization of Environment Abstraction Layer (EAL). 8&lt; */</span></span><br><span class="line"><span class="keyword">int</span></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> ret;</span><br><span class="line">	<span class="keyword">unsigned</span> lcore_id;</span><br><span class="line"></span><br><span class="line">	ret = rte_eal_init(argc, argv);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		rte_panic(<span class="string">"Cannot init EAL\n"</span>);</span><br><span class="line">	<span class="comment">/* &gt;8 End of initialization of Environment Abstraction Layer */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Launches the function on each lcore. 8&lt; */</span></span><br><span class="line">	RTE_LCORE_FOREACH_WORKER(lcore_id) &#123;</span><br><span class="line">		<span class="comment">/* Simpler equivalent. 8&lt; */</span></span><br><span class="line">		rte_eal_remote_launch(lcore_hello, <span class="literal">NULL</span>, lcore_id);</span><br><span class="line">		<span class="comment">/* &gt;8 End of simpler equivalent. */</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* call it on main lcore too */</span></span><br><span class="line">	lcore_hello(<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">/* &gt;8 End of launching the function on each lcore. */</span></span><br><span class="line"></span><br><span class="line">	rte_eal_mp_wait_lcore();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* clean up the EAL */</span></span><br><span class="line">	rte_eal_cleanup();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="http://doc.dpdk.org" target="_blank" rel="noopener">DPDK 官方文档</a></li>
+<li>《深入浅出DPDK》</li>
 </ul>
 
     </div>
@@ -456,7 +506,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">1.5.</span> <span class="nav-text">大页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">2.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页-1"><span class="nav-number">2.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">2.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">3.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-特性"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大页技术"><span class="nav-number">2.</span> <span class="nav-text">大页技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理内存和虚拟内存"><span class="nav-number">2.1.</span> <span class="nav-text">物理内存和虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分页"><span class="nav-number">2.2.</span> <span class="nav-text">内存分页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境适配层-EAL"><span class="nav-number">3.</span> <span class="nav-text">环境适配层 EAL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">4.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">4.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">4.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">4.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方实例"><span class="nav-number">5.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">5.1.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行"><span class="nav-number">5.1.1.</span> <span class="nav-text">编译运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解析"><span class="nav-number">5.1.2.</span> <span class="nav-text">代码解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
