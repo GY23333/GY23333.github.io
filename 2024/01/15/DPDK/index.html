@@ -55,12 +55,13 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;1687344-20201204090611124-2143444161.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908210138213.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240909135406179.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908150407363.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908154512478.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908162116839.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240908213559764.png">
 <meta property="article:published_time" content="2024-01-14T16:47:35.000Z">
-<meta property="article:modified_time" content="2024-09-08T17:31:53.919Z">
+<meta property="article:modified_time" content="2024-09-10T05:43:05.325Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="DPDK">
 <meta name="twitter:card" content="summary">
@@ -247,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-09-09 01:31:53" itemprop="dateModified" datetime="2024-09-09T01:31:53+08:00">2024-09-09</time>
+                <time title="Modified: 2024-09-10 13:43:05" itemprop="dateModified" datetime="2024-09-10T13:43:05+08:00">2024-09-10</time>
               </span>
 
           
@@ -373,6 +374,8 @@
 </ul>
 </li>
 </ul>
+<h2 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h2><p>核心组件是用来做高性能包处理 app 的一系列库。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240909135406179.png" alt="核心组件" style="zoom: 67%;" /></p>
 <h1 id="大页技术"><a href="#大页技术" class="headerlink" title="大页技术"></a>大页技术</h1><h2 id="物理内存和虚拟内存"><a href="#物理内存和虚拟内存" class="headerlink" title="物理内存和虚拟内存"></a>物理内存和虚拟内存</h2><p>CPU 的内存管理包含两个概念：</p>
 <ul>
 <li>物理内存：即安装在计算机的物理内存条</li>
@@ -424,6 +427,7 @@
 <li>中断处理：提供接口用于向中断注册/解注册回掉函数。</li>
 <li>告警功能：提供接口用于设置/取消指定时间环境下运行的毁掉函数。</li>
 </ul>
+<h2 id="EAL-参数"><a href="#EAL-参数" class="headerlink" title="EAL 参数"></a>EAL 参数</h2><p><a href="https://doc.dpdk.org/guides/linux_gsg/linux_eal_parameters.html" target="_blank" rel="noopener">EAL parameters</a></p>
 <h2 id="内核初始化与启动"><a href="#内核初始化与启动" class="headerlink" title="内核初始化与启动"></a>内核初始化与启动</h2><p>内核的初始化由 <code>rte_eal_init()</code> 函数完成，待所有核完成初始化后，通过 <code>`rte_eal_remote_launch()</code> ` 函数启动各个核上的应用，具体过程如下</p>
 <ol>
 <li>MAIN lcore 启动 <code>main()</code> 函数</li>
@@ -452,6 +456,11 @@
 </li>
 </ol>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240908213559764.png" alt="内核初始化与启动"></p>
+<h2 id="关闭与清理环境"><a href="#关闭与清理环境" class="headerlink" title="关闭与清理环境"></a>关闭与清理环境</h2><p>在 MAIN lcore 程序的最后运行 <code>rte_eal_cleanup()</code> 函数，用于清理 EAL 环境。<code>rte_eal_cleanup()</code> 将会释放 <code>rte_eal_init()</code> 分配的内存，在清理之后，DPDK 函数就无法再被调用了。</p>
+<h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><h2 id="MEMPOOL-Library"><a href="#MEMPOOL-Library" class="headerlink" title="MEMPOOL Library"></a>MEMPOOL Library</h2><p>rte_pktmbuf_pool_create</p>
+<p>rte_pktmbuf_pool_create_by_ops</p>
+<p>rte_mempool_lookup</p>
+<p>rte_mempool_free</p>
 <h1 id="DPDK-环境搭建"><a href="#DPDK-环境搭建" class="headerlink" title="DPDK 环境搭建"></a>DPDK 环境搭建</h1><p>以 Ubuntu 20.04.6 安装 DPDK 23.11 为例</p>
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><ul>
 <li><p>安装 C 编译器</p>
@@ -494,6 +503,7 @@
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="http://doc.dpdk.org" target="_blank" rel="noopener">DPDK 官方文档</a></li>
 <li>《深入浅出DPDK》</li>
+<li><a href="https://zzqcn.github.io/opensource/dpdk/index.html" target="_blank" rel="noopener">https://zzqcn.github.io/opensource/dpdk/index.html</a></li>
 </ul>
 
     </div>
@@ -580,7 +590,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-特性"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大页技术"><span class="nav-number">2.</span> <span class="nav-text">大页技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理内存和虚拟内存"><span class="nav-number">2.1.</span> <span class="nav-text">物理内存和虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分页"><span class="nav-number">2.2.</span> <span class="nav-text">内存分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级页表"><span class="nav-number">2.3.</span> <span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLB"><span class="nav-number">2.4.</span> <span class="nav-text">TLB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">2.5.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活大页"><span class="nav-number">2.6.</span> <span class="nav-text">激活大页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境抽象层-EAL"><span class="nav-number">3.</span> <span class="nav-text">环境抽象层 EAL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内核初始化与启动"><span class="nav-number">3.1.</span> <span class="nav-text">内核初始化与启动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">4.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">4.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页-1"><span class="nav-number">4.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">4.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方实例"><span class="nav-number">5.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">5.1.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行"><span class="nav-number">5.1.1.</span> <span class="nav-text">编译运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解析"><span class="nav-number">5.1.2.</span> <span class="nav-text">代码解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-概述"><span class="nav-number">1.</span> <span class="nav-text">DPDK 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包处理"><span class="nav-number">1.1.</span> <span class="nav-text">包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统包处理"><span class="nav-number">1.2.</span> <span class="nav-text">传统包处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-特性"><span class="nav-number">1.3.</span> <span class="nav-text">DPDK 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-框架"><span class="nav-number">1.4.</span> <span class="nav-text">DPDK 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心组件"><span class="nav-number">1.5.</span> <span class="nav-text">核心组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大页技术"><span class="nav-number">2.</span> <span class="nav-text">大页技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理内存和虚拟内存"><span class="nav-number">2.1.</span> <span class="nav-text">物理内存和虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分页"><span class="nav-number">2.2.</span> <span class="nav-text">内存分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级页表"><span class="nav-number">2.3.</span> <span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLB"><span class="nav-number">2.4.</span> <span class="nav-text">TLB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页"><span class="nav-number">2.5.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活大页"><span class="nav-number">2.6.</span> <span class="nav-text">激活大页</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境抽象层-EAL"><span class="nav-number">3.</span> <span class="nav-text">环境抽象层 EAL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EAL-参数"><span class="nav-number">3.1.</span> <span class="nav-text">EAL 参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核初始化与启动"><span class="nav-number">3.2.</span> <span class="nav-text">内核初始化与启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭与清理环境"><span class="nav-number">3.3.</span> <span class="nav-text">关闭与清理环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存管理"><span class="nav-number">4.</span> <span class="nav-text">内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MEMPOOL-Library"><span class="nav-number">4.1.</span> <span class="nav-text">MEMPOOL Library</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-环境搭建"><span class="nav-number">5.</span> <span class="nav-text">DPDK 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">5.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大页-1"><span class="nav-number">5.2.</span> <span class="nav-text">大页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPDK-安装"><span class="nav-number">5.3.</span> <span class="nav-text">DPDK 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方实例"><span class="nav-number">6.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">6.1.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行"><span class="nav-number">6.1.1.</span> <span class="nav-text">编译运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解析"><span class="nav-number">6.1.2.</span> <span class="nav-text">代码解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
