@@ -56,8 +56,9 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240905132345930.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240905132404280.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240912012030653.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;view.png">
 <meta property="article:published_time" content="2024-09-04T16:58:16.000Z">
-<meta property="article:modified_time" content="2024-09-11T17:41:11.915Z">
+<meta property="article:modified_time" content="2024-09-11T17:54:53.606Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
@@ -244,7 +245,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-09-12 01:41:11" itemprop="dateModified" datetime="2024-09-12T01:41:11+08:00">2024-09-12</time>
+                <time title="Modified: 2024-09-12 01:54:53" itemprop="dateModified" datetime="2024-09-12T01:54:53+08:00">2024-09-12</time>
               </span>
 
           
@@ -349,20 +350,16 @@
 <p>如果 goroutine 没有执行完，但主线程已经结束，goroutine 也会跟着结束。</p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>每两秒输出一次 go routine，每秒输出一次 hello，输出 10 次 hello 后结束</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">runtime</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"go routine"</span>)</span><br><span class="line">		time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">go</span> runtime()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		fmt.Println(<span class="string">"hello"</span>)</span><br><span class="line">		time.Sleep(time.Second)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="goroutine-调度"><a href="#goroutine-调度" class="headerlink" title="goroutine 调度"></a>goroutine 调度</h2><p>goroutine 调度系统为 GPM 运行时（runtime）调度器，包括了 3 个部分——线程 M、goroutine G、处理器 P</p>
+<h2 id="goroutine-调度"><a href="#goroutine-调度" class="headerlink" title="goroutine 调度"></a>goroutine 调度</h2><p>goroutine 调度系统为 GPM 运行时（runtime）调度器，包括了 3 个部分—— goroutine G、处理器 P、线程 M</p>
 <ul>
 <li>G：goroutine<ul>
 <li>存放本 goroutine 的一些信息，以及与 P 绑定等信息</li>
 </ul>
 </li>
-<li>P：处理器<ul>
-<li>goroutine 与线程的中间层，管理着一组 goroutine 队列，储存当前 goroutine 运行的上下文</li>
-<li>P 可以对 goroutine 队列进行调度<ul>
-<li>把占用 CPU 时间过长的 goroutine 暂停，去运行后续的 goroutine</li>
-<li>当自己队列的消费光了，则去取全局队列中的 goroutine</li>
-<li>如全局队列也消费光了，则去抢其他 P 的 goroutine</li>
-</ul>
-</li>
+<li>P：Processor，处理器<ul>
+<li>P 对 goroutine 队列进行调度</li>
+<li>goroutine 与线程的中间层，管理着一组 goroutine 队列，储存所管 goroutine 运行的上下文</li>
+<li>P 的数量决定了最大可并行数量，个数由 <code>runtime.GOMAXPROCS</code> 设置，最大 256，默认为 CPU 数</li>
 </ul>
 </li>
 <li>M：Machine，线程<ul>
@@ -371,9 +368,15 @@
 </li>
 </ul>
 <p>P 管理着一群 G，调度在 M 上运行。一般比例为 G : P : M = n : 1 : 1</p>
-<p>P 的个数由 <code>runtime.GOMAXPROCS</code> 设置，最大 256，默认为物理线程数。并发最大时会增加一些 P 和 M，但不会太多，切换太频繁的话得不偿失。</p>
-<p>如果一个 G 长时间占据着 M，runtime 就会新建一个 M，管理阻塞 G 的 P 会将其他的 G 都挂到新建的 M 上。当旧的 M 上的 G 运行完或者被判定为死掉时，就会回收旧有的 M。</p>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240912012030653.png" alt="GPM调度" style="zoom:50%;" /></p>
+<p>调度机制：</p>
+<ul>
+<li>把占用 CPU 时间过长的 goroutine 暂停，去运行后续的 goroutine</li>
+<li>当自己队列的消费光了，则去取全局队列中的 goroutine</li>
+<li>如全局队列也消费光了，则去抢其他 P 的 goroutine</li>
+<li>如果一个 G 长时间占据着 M，runtime 就会新建一个 M，管理阻塞 G 的 P 会将其他的 G 都挂到新建的 M 上。当旧的 M 上的 G 运行完或者被判定为死掉时，就会回收旧有的 M。</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/view.png" alt="GPM调度机制"></p>
 <p>由此可以看出，从调度角度看，goroutine 相较于线程的优势：</p>
 <ul>
 <li>goroutine 的调度由 runtime 调度器调度，全程在内核态</li>
