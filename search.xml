@@ -149,10 +149,11 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">runtime.GOOS</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h1><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>多个 goroutine 并发，如何实现数据的交换？</p>
+<h1 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h1><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>多个 goroutine 同时操作同一个资源（临界区）会导致竞态问题，需要通过对资源上锁，确保同一时刻只有一个 goroutine 访问该共享资源。</p>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>多个 goroutine 并发，如何实现数据的交换？</p>
 <p>Go 可以通过共享内存来实现数据共享，使用锁来防止竞态，但这不可避免的加大了性能问题。由此引入了管道 Channel 的概念。</p>
 <p>Go 的并发模型是 CSP，Communicating Sequential Process，提倡使用通信共享内存，而不是通过共享内存方式进行通信</p>
-<h1 id="综合应用"><a href="#综合应用" class="headerlink" title="综合应用"></a>综合应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><p><a href="https://www.topgoer.com/并发编程/" target="_blank" rel="noopener">并发编程</a></p>
 </li>
 <li><p><a href="https://hedon954.github.io/noteSite/backend/golang/high/goroutine_channel.html" target="_blank" rel="noopener">Golang 并发编程</a></p>
@@ -4163,8 +4164,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SURF算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -4285,8 +4286,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SIFT算子</tag>
         <tag>特征描述</tag>
+        <tag>SIFT算子</tag>
       </tags>
   </entry>
   <entry>
