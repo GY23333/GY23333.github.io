@@ -149,8 +149,70 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">runtime.GOOS</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h1><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>多个 goroutine 同时操作同一个资源（临界区）会导致竞态问题，需要通过对资源上锁，确保同一时刻只有一个 goroutine 访问该共享资源。</p>
-<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>多个 goroutine 并发，如何实现数据的交换？</p>
+<h1 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h1><h2 id="临界资源"><a href="#临界资源" class="headerlink" title="临界资源"></a>临界资源</h2><p>临界资源：并发环境中多个进程/线程/协程共享的资源。</p>
+<p>多个 goroutine 访问同一资源时，多个写 goroutine，会造成临界资源安全问题。</p>
+<p>下面示例中，4 个售票员并发卖 10 张票，原本是希望卖到无票时所有售票员停止卖票，但同时读写就可能导致资源安全问题。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> numTicket = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">saleTicket</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> numTicket &gt; <span class="number">0</span> &#123;</span><br><span class="line">			time.Sleep(time.Duration(rand.Intn(<span class="number">1000</span>)) * time.Millisecond)</span><br><span class="line">			numTicket--</span><br><span class="line">			fmt.Printf(<span class="string">"Saler %d sales one ticket, left %d tickets.\n"</span>, i, numTicket)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"Saler %d detects no ticket.\n"</span>, i)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	numSaler := <span class="number">4</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; numSaler; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> saleTicket(i)</span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(<span class="number">5</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如这次跑的结果，最后三个售票员检查时还有余票，但卖时已经无票了，导致票成负数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Saler 3 sales one ticket, left 9 tickets.</span><br><span class="line">Saler 0 sales one ticket, left 8 tickets.</span><br><span class="line">Saler 0 sales one ticket, left 7 tickets.</span><br><span class="line">Saler 2 sales one ticket, left 6 tickets.</span><br><span class="line">Saler 1 sales one ticket, left 5 tickets.</span><br><span class="line">Saler 3 sales one ticket, left 4 tickets.</span><br><span class="line">Saler 1 sales one ticket, left 3 tickets.</span><br><span class="line">Saler 0 sales one ticket, left 2 tickets.</span><br><span class="line">Saler 2 sales one ticket, left 1 tickets.</span><br><span class="line">Saler 3 sales one ticket, left 0 tickets.</span><br><span class="line">Saler 3 detects no ticket.</span><br><span class="line">Saler 2 sales one ticket, left -1 tickets.</span><br><span class="line">Saler 2 detects no ticket.</span><br><span class="line">Saler 1 sales one ticket, left -2 tickets.</span><br><span class="line">Saler 1 detects no ticket.</span><br><span class="line">Saler 0 sales one ticket, left -3 tickets.</span><br><span class="line">Saler 0 detects no ticket.</span><br></pre></td></tr></table></figure>
+<h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><h3 id="互斥锁-sync-Mutex"><a href="#互斥锁-sync-Mutex" class="headerlink" title="互斥锁 sync.Mutex"></a>互斥锁 sync.Mutex</h3><p>多个 goroutine 同时操作同一个资源（临界区）会导致竞态问题，需要通过对资源上锁，确保同一时刻只有一个 goroutine 访问该共享资源。</p>
+<ul>
+<li><p>声明一个互斥锁</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mutex sync.Mutex</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在使用资源前加锁，防止其他 goroutine 同时使用该资源</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.Lock()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在使用完资源后解锁，释放该资源给其他 goroutine 使用</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.Unlock()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面的用例，在查看票数前加锁，再售票和退出前解锁，如此就不会出现多卖出票的情况。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mutex sync.Mutex</span><br><span class="line"><span class="keyword">var</span> numTicket = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">saleTicket</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">    <span class="comment">// 加锁</span></span><br><span class="line">		mutex.Lock()</span><br><span class="line">		<span class="keyword">if</span> numTicket &gt; <span class="number">0</span> &#123;</span><br><span class="line">			time.Sleep(time.Duration(rand.Intn(<span class="number">1000</span>)) * time.Millisecond)</span><br><span class="line">			numTicket--</span><br><span class="line">			fmt.Printf(<span class="string">"Saler %d sales one ticket, left %d tickets.\n"</span>, i, numTicket)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//解锁</span></span><br><span class="line">			mutex.Unlock()</span><br><span class="line">			fmt.Printf(<span class="string">"Saler %d detects no ticket.\n"</span>, i)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">    <span class="comment">//解锁</span></span><br><span class="line">		mutex.Unlock()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	numSaler := <span class="number">4</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; numSaler; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> saleTicket(i)</span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(<span class="number">5</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读写互斥锁"><a href="#读写互斥锁" class="headerlink" title="读写互斥锁"></a>读写互斥锁</h3><p>互斥锁是完全互斥的，无关是读还是写。但其实并发读并不会出现资源竞争的问题，所以引入读写锁，不限制并发读，但限制并发读写、写写。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>读</th>
+<th>写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>写</td>
+<td>N</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>声明一个读写互斥锁</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mutex sync.RWMutex</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在写资源前加写锁，</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.Lock()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在写完资源后解写锁，</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.Unlock()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在读资源前加读锁</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.RLock()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在读完资源后解读锁</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mutex.RUnlock()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>示例</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	x      <span class="keyword">int64</span></span><br><span class="line">	wg     sync.WaitGroup</span><br><span class="line">	lock   sync.Mutex</span><br><span class="line">	rwlock sync.RWMutex</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">write</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rwlock.Lock() <span class="comment">// 加写锁</span></span><br><span class="line">	x = x + <span class="number">1</span></span><br><span class="line">	time.Sleep(<span class="number">10</span> * time.Millisecond) <span class="comment">// 假设读操作耗时10毫秒</span></span><br><span class="line">	rwlock.Unlock()                   <span class="comment">// 解写锁</span></span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">read</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rwlock.RLock()               <span class="comment">// 加读锁</span></span><br><span class="line">	time.Sleep(time.Millisecond) <span class="comment">// 假设读操作耗时1毫秒</span></span><br><span class="line">	rwlock.RUnlock()             <span class="comment">// 解读锁</span></span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	start := time.Now()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> write()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> read()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">	end := time.Now()</span><br><span class="line">	fmt.Println(end.Sub(start))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="sync-包"><a href="#sync-包" class="headerlink" title="sync 包"></a>sync 包</h3><h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>多个 goroutine 并发，如何实现数据的交换？</p>
 <p>Go 可以通过共享内存来实现数据共享，使用锁来防止竞态，但这不可避免的加大了性能问题。由此引入了管道 Channel 的概念。</p>
 <p>Go 的并发模型是 CSP，Communicating Sequential Process，提倡使用通信共享内存，而不是通过共享内存方式进行通信</p>
 <h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
@@ -4166,8 +4228,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SURF算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -4288,8 +4350,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SIFT算子</tag>
         <tag>特征描述</tag>
+        <tag>SIFT算子</tag>
       </tags>
   </entry>
   <entry>
@@ -4590,8 +4652,8 @@ b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到�
       <tags>
         <tag>C++</tag>
         <tag>Xcode</tag>
-        <tag>OpenCV</tag>
         <tag>Mac</tag>
+        <tag>OpenCV</tag>
         <tag>摄像头权限</tag>
       </tags>
   </entry>
