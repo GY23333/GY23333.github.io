@@ -237,9 +237,20 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">atomic</span>.<span class="title">CompareAndSwapInt64</span><span class="params">(addr *<span class="keyword">int64</span>, old <span class="keyword">int64</span>, <span class="built_in">new</span> <span class="keyword">int64</span>)</span> <span class="params">(swapped <span class="keyword">bool</span>)</span></span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>多个 goroutine 并发，如何实现数据的交换？</p>
-<p>Go 可以通过共享内存来实现数据共享，使用锁来防止竞态，但这不可避免的加大了性能问题。由此引入了管道 Channel 的概念。</p>
-<p>Go 的并发模型是 CSP，Communicating Sequential Process，提倡使用通信共享内存，而不是通过共享内存方式进行通信</p>
+<h2 id="管道-Channel"><a href="#管道-Channel" class="headerlink" title="管道 Channel"></a>管道 Channel</h2><p>Go 的并发模型是 CSP，Communicating Sequential Process，提倡使用通信共享内存，而不是通过共享内存方式进行通信。</p>
+<p>Go 可以通过共享内存来实现数据共享，使用锁来防止竞态，但这不可避免的加大了性能问题。由此引入了管道 Channel 的概念，用于 goroutine 之间通信。</p>
+<h3 id="创建-Channel"><a href="#创建-Channel" class="headerlink" title="创建 Channel"></a>创建 Channel</h3><p>Channel 是引用类型，</p>
+<p>声明</p>
+<h3 id="Channel-操作"><a href="#Channel-操作" class="headerlink" title="Channel 操作"></a>Channel 操作</h3><p>在定义了 Channel 后，可对其进行下面操作，以 <code>int</code> 类型为例</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>发送</p>
+</li>
+<li><p>接收</p>
+</li>
+<li><p>关闭</p>
+</li>
+</ul>
 <h1 id="Sync-包"><a href="#Sync-包" class="headerlink" title="Sync 包"></a>Sync 包</h1><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><p><a href="https://www.topgoer.com/并发编程/" target="_blank" rel="noopener">并发编程</a></p>
 </li>
@@ -260,7 +271,7 @@
 <ol>
 <li>Go 基础<ul>
 <li><a href="https://gy23333.github.io/2023/03/15/Go基本语法/">Go 基本语法</a></li>
-<li>Go 并发编程</li>
+<li><a href="https://gy23333.github.io/2024/09/05/Go并发编程/">Go 并发编程</a></li>
 </ul>
 </li>
 <li>SQL</li>
@@ -509,8 +520,8 @@
 <p><a href="https://www.youtube.com/watch?v=ginboH5cCyA" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ginboH5cCyA</a></p>
 ]]></content>
       <tags>
-        <tag>TRex</tag>
         <tag>DPDK</tag>
+        <tag>TRex</tag>
       </tags>
   </entry>
   <entry>
@@ -3167,8 +3178,8 @@
       </categories>
       <tags>
         <tag>算法</tag>
-        <tag>栈</tag>
         <tag>表达式求值</tag>
+        <tag>栈</tag>
       </tags>
   </entry>
   <entry>
@@ -4253,8 +4264,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -4375,8 +4386,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
