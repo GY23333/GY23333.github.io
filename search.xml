@@ -258,6 +258,9 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
       <tags>
         <tag>Golang</tag>
       </tags>
@@ -316,6 +319,9 @@
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
       <tags>
         <tag>Golang</tag>
         <tag>学习路线</tag>
@@ -1338,6 +1344,9 @@
 <li><a href="http://www.topgoer.com/微服务/gRPC.html" target="_blank" rel="noopener">Go-gRPC 使用教程</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
       <tags>
         <tag>Golang</tag>
         <tag>gRPC</tag>
@@ -2315,6 +2324,9 @@
 <li><a href="https://books.studygolang.com/gopl-zh/" target="_blank" rel="noopener">Go语言圣经（中文版）</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
       <tags>
         <tag>Golang</tag>
         <tag>语言基本语法</tag>
@@ -3178,8 +3190,8 @@
       </categories>
       <tags>
         <tag>算法</tag>
-        <tag>表达式求值</tag>
         <tag>栈</tag>
+        <tag>表达式求值</tag>
       </tags>
   </entry>
   <entry>
