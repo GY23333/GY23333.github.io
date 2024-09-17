@@ -57,8 +57,10 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240905132404280.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20240912012030653.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;view.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;3.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;4.png">
 <meta property="article:published_time" content="2024-09-04T16:58:16.000Z">
-<meta property="article:modified_time" content="2024-09-16T17:57:43.470Z">
+<meta property="article:modified_time" content="2024-09-17T04:41:08.099Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
@@ -245,7 +247,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-09-17 01:57:43" itemprop="dateModified" datetime="2024-09-17T01:57:43+08:00">2024-09-17</time>
+                <time title="Modified: 2024-09-17 12:41:08" itemprop="dateModified" datetime="2024-09-17T12:41:08+08:00">2024-09-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -529,9 +531,19 @@
 <ul>
 <li><p><strong>发送</strong></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch &lt;- <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>当存在等待的接收者时，直接将数据发送给阻塞的接收者</li>
+<li>当不存在等待的接收者，但缓冲区存在空余空间时，将数据写入缓冲区</li>
+<li>当不存在等待的接收者，且不存在缓冲区或者缓冲区已满时，阻塞等待其他 goroutine 从 Channel 中接收数据</li>
+</ol>
 </li>
 <li><p><strong>接收</strong></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;-ch <span class="comment">//丢弃通道值</span></span><br><span class="line">data := &lt;-ch <span class="comment">//接收通道值到data</span></span><br><span class="line">data, ok := &lt;-ch <span class="comment">//接收通道值到data，ok接收通道是否关闭（false，则通道已关闭）</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>当存在等待的发送者时，从阻塞的发送者或者缓冲区中获取数据</li>
+<li>当不存在等待的发送者，但缓冲区存在数据时，从缓冲区接收数据</li>
+<li>当不存在等待的发送者，且不存在缓冲区或者缓冲区不存在数据时，阻塞等待其他 goroutine 向 Channel 中发送数据</li>
+</ol>
 </li>
 <li><p><strong>关闭</strong>，如果不再需要往通道发送值，则可以关闭通道，关闭通道不是必须的，可以自动通过垃圾回收机制回收</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">close</span>(ch)</span><br></pre></td></tr></table></figure>
@@ -544,7 +556,19 @@
 </ol>
 </li>
 </ul>
-<h3 id="无缓冲的通道"><a href="#无缓冲的通道" class="headerlink" title="无缓冲的通道"></a>无缓冲的通道</h3><h3 id="有缓冲的通道"><a href="#有缓冲的通道" class="headerlink" title="有缓冲的通道"></a>有缓冲的通道</h3><h1 id="Sync-包"><a href="#Sync-包" class="headerlink" title="Sync 包"></a>Sync 包</h1><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h3 id="无缓冲的通道"><a href="#无缓冲的通道" class="headerlink" title="无缓冲的通道"></a>无缓冲的通道</h3><p>无缓冲通道，又称阻塞通道、同步通道，定义 Channel 时不设置缓冲区大小即为无缓冲通道。</p>
+<p>此类 Channel 发送和接收都无缓冲，所以无接收时发送会被阻塞，直到其他 goroutine 从该通道读取数据；同理，无发送时接收会被阻塞，直到其他 goroutine 发送到该通道。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/3.png" alt="无缓冲Channel"></p>
+<p>下面错误用例，发送数据到 Channel，无接收，阻塞，无法运行到接收步骤，于是发生死锁报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal error: all goroutines are asleep - deadlock!</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	ch &lt;- <span class="number">10</span> <span class="comment">//无接收发送，死锁</span></span><br><span class="line">	data := &lt;-ch</span><br><span class="line">	fmt.Println(data)</span><br><span class="line">	<span class="built_in">close</span>(ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要启动另一个 goroutine 接收，解开死锁</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recvFromChannel</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	data := &lt;-ch</span><br><span class="line">	fmt.Println(data)</span><br><span class="line">	wg.Done()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	wg.Add(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">go</span> recvFromChannel(ch)</span><br><span class="line">	ch &lt;- <span class="number">10</span></span><br><span class="line">	<span class="built_in">close</span>(ch)</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="有缓冲的通道"><a href="#有缓冲的通道" class="headerlink" title="有缓冲的通道"></a>有缓冲的通道</h3><p>定义 Channel 时设置缓冲区大小即可设置为有缓冲通道，在缓冲区有剩余时，即使无接收者，也不阻塞发送。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/4.png" alt="有缓冲Channel"></p>
+<p>上述死锁用例，加上缓冲区，即可正常运行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">1</span>) <span class="comment">//创建容量为1的缓冲区的通道</span></span><br><span class="line">	ch &lt;- <span class="number">10</span></span><br><span class="line">	data := &lt;-ch</span><br><span class="line">	fmt.Println(data)</span><br><span class="line">	<span class="built_in">close</span>(ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Sync-包"><a href="#Sync-包" class="headerlink" title="Sync 包"></a>Sync 包</h1><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><p><a href="https://www.topgoer.com/并发编程/" target="_blank" rel="noopener">并发编程</a></p>
 </li>
 <li><p><a href="https://hedon954.github.io/noteSite/backend/golang/high/goroutine_channel.html" target="_blank" rel="noopener">Golang 并发编程</a></p>
