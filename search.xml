@@ -365,7 +365,65 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Init Configuration</span><br><span class="line">function B</span><br><span class="line">function A</span><br></pre></td></tr></table></figure>
 <h2 id="sync-Map"><a href="#sync-Map" class="headerlink" title="sync.Map"></a>sync.Map</h2><p>Go 原生的 map 并不是并发安全的，需要额外加锁。sync 包提供 <code>sync.Map</code> 则是一种并发安全的 map，无需加锁。内置了诸如Store、Load、LoadOrStore、Delete、Range等操作方法。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	wg   sync.WaitGroup</span><br><span class="line">	once sync.Once</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	m := sync.Map&#123;&#125; <span class="comment">//定义map</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">20</span>; i++ &#123;</span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(n <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			key := strconv.Itoa(n)</span><br><span class="line">			m.Store(key, n) <span class="comment">//存值</span></span><br><span class="line">			value, _ := m.Load(key) <span class="comment">//取值</span></span><br><span class="line">			fmt.Printf(<span class="string">"key: %v, value: %v\n"</span>, key, value)</span><br><span class="line">			wg.Done()</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><h2 id="ticker"><a href="#ticker" class="headerlink" title="ticker"></a>ticker</h2><h2 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h2><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><h2 id="周期性定时器-ticker"><a href="#周期性定时器-ticker" class="headerlink" title="周期性定时器 ticker"></a>周期性定时器 ticker</h2><p>ticker 是周期性定时器，除非主动停止，就会一直循环计时下去。如果希望每隔一段时间执行一次，推荐使用 <code>ticker</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func time.NewTicker(d time.Duration) *time.Ticker</code></td>
+<td>定义一个定时器 ticker，每隔一个间隔时间就会向 <code>.C</code> 通道发送当前时间</td>
+</tr>
+<tr>
+<td><code>func (t *time.Ticker) Stop()</code></td>
+<td>回收资源，否则会产生内存泄漏</td>
+</tr>
+<tr>
+<td><code>&lt;-t.C</code></td>
+<td>每隔一个设置的时间就会从通道接收到当前时间</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>以下示例，每隔 5s 输出当前时间</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ticker := time.NewTicker(<span class="number">5</span> * time.Second) <span class="comment">//定义5s一次的定时器</span></span><br><span class="line">	<span class="keyword">defer</span> ticker.Stop() <span class="comment">//回收资源</span></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(t *time.Ticker)</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">"Time: "</span>, time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>))</span><br><span class="line">			&lt;-t.C <span class="comment">//每隔5s触发一次</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;(ticker)</span><br><span class="line"></span><br><span class="line">	time.Sleep(<span class="number">15</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="一次性定时器-timer"><a href="#一次性定时器-timer" class="headerlink" title="一次性定时器 timer"></a>一次性定时器 timer</h2><p>timer 是一次性定时器，只计时一次，重新开始计时需要重置。如果希望只执行一次，或者需要重新设置间隔时间的，推荐使用 <code>timer</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func time.NewTimer(d time.Duration) *time.Timer</code></td>
+<td>定义一个定时器 timer，过一个间隔时间后会向 <code>.C</code> 通道发送当前时间</td>
+</tr>
+<tr>
+<td><code>&lt;-t.C</code></td>
+<td>过一个设置的时间从通道接收到当前时间</td>
+</tr>
+<tr>
+<td><code>func (t *time.Timer) Stop() bool</code></td>
+<td>停止当前计时，如果当前在计时，则返回 true，并不会再发送到通道；如果不在计时中，则返回 fasle</td>
+</tr>
+<tr>
+<td><code>func (t *time.Timer) Reset(d time.Duration) bool</code></td>
+<td>重置计时器，如果现在正在计时，则停止当前计时，重新计时（返回同 <code>Stop</code>）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>以下示例，使用一次性计时器 timer 模拟周期性计时器 ticker</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	timer := time.NewTimer(<span class="number">5</span> * time.Second) <span class="comment">//定义一次性计时器timer</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"Time: "</span>, time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>))</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(t *time.Timer)</span></span> &#123;</span><br><span class="line">		times := <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			&lt;-t.C <span class="comment">//计时</span></span><br><span class="line">			fmt.Println(<span class="string">"Time: "</span>, time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>))</span><br><span class="line"></span><br><span class="line">			times++</span><br><span class="line">			t.Reset(<span class="number">5</span> * time.Second) <span class="comment">//重新开始计时</span></span><br><span class="line">			<span class="keyword">if</span> times &gt; <span class="number">3</span> &#123;</span><br><span class="line">				t.Stop() <span class="comment">//停止计时</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;(timer)</span><br><span class="line"></span><br><span class="line">	time.Sleep(<span class="number">30</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><p><a href="https://www.topgoer.com/并发编程/" target="_blank" rel="noopener">并发编程</a></p>
 </li>
 <li><p><a href="https://hedon954.github.io/noteSite/backend/golang/high/goroutine_channel.html" target="_blank" rel="noopener">Golang 并发编程</a></p>
@@ -4390,8 +4448,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SURF算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -4512,8 +4570,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SIFT算子</tag>
         <tag>特征描述</tag>
+        <tag>SIFT算子</tag>
       </tags>
   </entry>
   <entry>
@@ -9141,8 +9199,8 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Latex</tag>
         <tag>Mac</tag>
+        <tag>Latex</tag>
       </tags>
   </entry>
   <entry>
