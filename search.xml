@@ -3362,8 +3362,8 @@
       </categories>
       <tags>
         <tag>算法</tag>
-        <tag>栈</tag>
         <tag>表达式求值</tag>
+        <tag>栈</tag>
       </tags>
   </entry>
   <entry>
@@ -4448,8 +4448,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SURF算子</tag>
         <tag>特征描述</tag>
+        <tag>SURF算子</tag>
       </tags>
   </entry>
   <entry>
@@ -4570,8 +4570,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SIFT算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -9199,8 +9199,8 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>Mac</tag>
         <tag>Latex</tag>
+        <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
