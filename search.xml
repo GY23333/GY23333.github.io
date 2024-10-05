@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>systemd</title>
+    <url>/2024/10/05/systemd/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>systemd 是 Linux 的系统和服务管理器。作为系统启动的第一个进程，初始化系统并且管理其他用户服务。</p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>systemd 提供了一套完整的系统启动和管理的解决方案，其中的 <code>d</code> 为守护进程（daemon）的缩写，即系统的守护进程。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/bg2016030703.png" alt="systemd架构图"></p>
+<p>查看 systemd 简介</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">man systemd</span><br></pre></td></tr></table></figure>
+<p>systemd 作为系统的第一个进程，PID = 1，其余所有进程都是 systemd 的子进程。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># pstree -p</span></span><br><span class="line">systemd(<span class="number">1</span>)─┬─ModemManager(<span class="number">855</span>)─┬─&#123;ModemManager&#125;(<span class="number">887</span>)</span><br><span class="line">           │                   └─&#123;ModemManager&#125;(<span class="number">894</span>)</span><br><span class="line">           ├─NetworkManager(<span class="number">777</span>)─┬─&#123;NetworkManager&#125;(<span class="number">854</span>)</span><br><span class="line">           │                     └─&#123;NetworkManager&#125;(<span class="number">859</span>)</span><br><span class="line">           ├─VGAuthService(<span class="number">747</span>)</span><br><span class="line">           ├─accounts<span class="literal">-daemon</span>(<span class="number">766</span>)─┬─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">778</span>)</span><br><span class="line">           │                      └─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">811</span>)</span><br><span class="line">           ├─acpid(<span class="number">767</span>)</span><br><span class="line">           ├─avahi<span class="literal">-daemon</span>(<span class="number">770</span>)───avahi<span class="literal">-daemon</span>(<span class="number">840</span>)</span><br><span class="line">           ├─bluetoothd(<span class="number">771</span>)</span><br><span class="line">           ├─colord(<span class="number">1484</span>)─┬─&#123;colord&#125;(<span class="number">1486</span>)</span><br><span class="line">           │              └─&#123;colord&#125;(<span class="number">1488</span>)</span><br><span class="line">           ├─cron(<span class="number">773</span>)</span><br><span class="line">        .....</span><br></pre></td></tr></table></figure>
+<h1 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h1><h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><p>systemd 由一组系统命令组成，用来控制系统的方方面面。</p>
+<h2 id="loginctl"><a href="#loginctl" class="headerlink" title="loginctl"></a>loginctl</h2><p>参考链接：<a href="https://manpages.ubuntu.com/manpages/focal/zh_CN/man1/loginctl.1.html" target="_blank" rel="noopener">manpages</a>、<code>man loginctl</code></p>
+<p><code>loginctl</code>命令用来控制 systemd 登录管理器（systemd-logind.service）。</p>
+<p>命令格式：<code>loginctl [OPTIONS...] {COMMAND} [NAME...]</code></p>
+<p>COMMAND 分为三种类型：用户、会话和席位</p>
+<blockquote>
+<h3 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h3><p>用户是操作系统中进行交互和操作的实体。在Linux中，每个用户都有一个唯一的用户名和用户ID（UID）。用户可以是普通用户、超级用户（root）等，拥有不同的权限。</p>
+<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><p>会话是用户与系统之间的交互过程。当用户登录到Linux系统时，会创建一个会话。会话包含用户的环境设置、运行的程序、打开的文件等。一个用户可以同时拥有多个会话，例如在不同的终端或远程登录时。</p>
+<h3 id="席位"><a href="#席位" class="headerlink" title="席位"></a>席位</h3><p>席位（TTY或终端）是用户与系统之间交互的接口。在Linux中，每个物理或虚拟终端都被称为一个席位。用户可以通过这些席位输入命令并接收输出。现代Linux系统通常支持多个席位，例如通过虚拟终端（tty）或图形界面（X Window System）。</p>
+</blockquote>
+<ul>
+<li><p><strong>用户命令</strong></p>
+<ul>
+<li><p>列出当前登录用户 <code>list-users</code></p>
+ <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-users</span></span><br><span class="line"> UID USER</span><br><span class="line">   <span class="number">0</span> root</span><br><span class="line"><span class="number">1000</span> guoyi</span><br><span class="line"></span><br><span class="line"><span class="number">2</span> users listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示用户状态<code>user-status [USER...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl user-status root</span></span><br><span class="line">root (<span class="number">0</span>)</span><br><span class="line">           Since: Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT; <span class="number">9</span>h ago</span><br><span class="line">           State: active</span><br><span class="line">        Sessions: <span class="number">321</span> *<span class="number">304</span></span><br><span class="line">          Linger: no</span><br><span class="line">            Unit: user<span class="literal">-0</span>.slice</span><br><span class="line">                  ├─session<span class="literal">-304</span>.scope</span><br><span class="line">                  │ ├─<span class="number">57001</span> sshd: root@pts/<span class="number">1</span></span><br><span class="line">                  │ ├─<span class="number">57094</span> <span class="literal">-bash</span></span><br><span class="line">                  │ ├─<span class="number">58718</span> loginctl user<span class="literal">-status</span> root</span><br><span class="line">                  │ └─<span class="number">58719</span> pager</span><br><span class="line">                  ├─session<span class="literal">-321</span>.scope</span><br><span class="line">                  │ ├─<span class="number">58486</span> sshd: root@pts/<span class="number">2</span></span><br><span class="line">                  │ └─<span class="number">58572</span> <span class="literal">-bash</span></span><br><span class="line">                  └─user@<span class="number">0</span>.service</span><br><span class="line">                    └─init.scope</span><br><span class="line">                      ├─<span class="number">57004</span> /lib/systemd/systemd -<span class="literal">-user</span></span><br><span class="line">                      └─<span class="number">57005</span> (sd<span class="literal">-pam</span>)</span><br><span class="line"></span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Condition check resulted <span class="keyword">in</span> Sound System being sk&gt;</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Listening on REST API socket <span class="keyword">for</span> snapd user sessi&gt;</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Listening on D<span class="literal">-Bus</span> User Message Bus Socket.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Reached target Sockets.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Reached target Basic System.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Condition check resulted <span class="keyword">in</span> Sound Service being s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示用户各属性<code>show-user [USER...]</code>，可以用 <code>--all</code> 选项查看缺省空置，使用 <code>--property=</code> 查看特定属性</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl show-user root</span></span><br><span class="line">UID=<span class="number">0</span></span><br><span class="line">GID=<span class="number">0</span></span><br><span class="line">Name=root</span><br><span class="line">Timestamp=Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT</span><br><span class="line">TimestampMonotonic=<span class="number">574471117888</span></span><br><span class="line">RuntimePath=/run/user/<span class="number">0</span></span><br><span class="line">Service=user@<span class="number">0</span>.service</span><br><span class="line">Slice=user<span class="literal">-0</span>.slice</span><br><span class="line">Display=<span class="number">304</span></span><br><span class="line">State=active</span><br><span class="line">Sessions=<span class="number">321</span> <span class="number">304</span></span><br><span class="line">IdleHint=no</span><br><span class="line">IdleSinceHint=<span class="number">0</span></span><br><span class="line">IdleSinceHintMonotonic=<span class="number">0</span></span><br><span class="line">Linger=no</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+<li><p><strong>会话命令</strong></p>
+<ul>
+<li><p>列出当前所有会话 <code>list-sessions</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-sessions</span></span><br><span class="line">SESSION  UID USER  SEAT  TTY</span><br><span class="line">      <span class="number">2</span> <span class="number">1000</span> guoyi seat0 tty2</span><br><span class="line">    <span class="number">304</span>    <span class="number">0</span> root</span><br><span class="line">    <span class="number">321</span>    <span class="number">0</span> root</span><br><span class="line"></span><br><span class="line"><span class="number">3</span> sessions listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示简洁的会话状态信息<code>session-status [ID...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl session-status 304</span></span><br><span class="line"><span class="number">304</span> - root (<span class="number">0</span>)</span><br><span class="line">           Since: Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT; <span class="number">9</span>h ago</span><br><span class="line">          Leader: <span class="number">57001</span> (sshd)</span><br><span class="line">          Remote: <span class="number">192.168</span>.<span class="number">45.1</span></span><br><span class="line">         Service: sshd; type tty; <span class="class"><span class="keyword">class</span> <span class="title">user</span></span></span><br><span class="line"><span class="class">           <span class="title">State</span>: <span class="title">active</span></span></span><br><span class="line"><span class="class">            <span class="title">Unit</span>: <span class="title">session</span>-304.<span class="title">scope</span></span></span><br><span class="line"><span class="class">                  ├─57001 <span class="title">sshd</span>: <span class="title">root</span>@<span class="title">pts</span>/1</span></span><br><span class="line"><span class="class">                  ├─57094 -<span class="title">bash</span></span></span><br><span class="line"><span class="class">                  ├─58744 <span class="title">loginctl</span> <span class="title">session</span>-<span class="title">status</span> 304</span></span><br><span class="line"><span class="class">                  └─58745 <span class="title">pager</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">Oct</span> 05 01:40:48 <span class="title">ubuntu</span> <span class="title">systemd</span>[1]: <span class="title">Started</span> <span class="title">Session</span> 304 <span class="title">of</span> <span class="title">user</span> <span class="title">root</span>.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示会话的各项属性值<code>show-session [ID...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl show-session 321</span></span><br><span class="line">Id=<span class="number">321</span></span><br><span class="line">User=<span class="number">0</span></span><br><span class="line">Name=root</span><br><span class="line">Timestamp=Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">10</span>:<span class="number">31</span>:<span class="number">06</span> PDT</span><br><span class="line">TimestampMonotonic=<span class="number">606290337700</span></span><br><span class="line">VTNr=<span class="number">0</span></span><br><span class="line">Remote=yes</span><br><span class="line">RemoteHost=<span class="number">192.168</span>.<span class="number">45.1</span></span><br><span class="line">Service=sshd</span><br><span class="line">Scope=session<span class="literal">-321</span>.scope</span><br><span class="line">Leader=<span class="number">58486</span></span><br><span class="line">Audit=<span class="number">321</span></span><br><span class="line">Type=tty</span><br><span class="line"><span class="class"><span class="keyword">Class</span>=<span class="title">user</span></span></span><br><span class="line"><span class="class"><span class="title">Active</span>=<span class="title">yes</span></span></span><br><span class="line"><span class="class"><span class="title">State</span>=<span class="title">active</span></span></span><br><span class="line"><span class="class"><span class="title">IdleHint</span>=<span class="title">no</span></span></span><br><span class="line"><span class="class"><span class="title">IdleSinceHint</span>=0</span></span><br><span class="line"><span class="class"><span class="title">IdleSinceHintMonotonic</span>=0</span></span><br><span class="line"><span class="class"><span class="title">LockedHint</span>=<span class="title">no</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+<li><p><strong>席位命令</strong></p>
+<ul>
+<li><p>显示所有可用席位<code>list-seats</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-seats</span></span><br><span class="line">SEAT</span><br><span class="line">seat0</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> seats listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://systemd.io" target="_blank" rel="noopener">官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>systemd</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker</title>
+    <url>/2024/09/19/Docker/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+<h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<ol>
+<li><p>卸载老版本</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> pkg <span class="keyword">in</span> docker.io docker<span class="literal">-doc</span> docker<span class="literal">-compose</span> docker<span class="literal">-compose</span><span class="literal">-v2</span> podman<span class="literal">-docker</span> containerd runc; <span class="keyword">do</span> sudo apt<span class="literal">-get</span> remove <span class="variable">$pkg</span>; done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置 Docker <code>apt</code> 仓库</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Add Docker's official GPG key:</span></span><br><span class="line">sudo apt<span class="literal">-get</span> update</span><br><span class="line">sudo apt<span class="literal">-get</span> install ca<span class="literal">-certificates</span> curl</span><br><span class="line">sudo install <span class="literal">-m</span> <span class="number">0755</span> <span class="literal">-d</span> /etc/apt/keyrings</span><br><span class="line">sudo curl <span class="literal">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg <span class="literal">-o</span> /etc/apt/keyrings/docker.asc</span><br><span class="line">sudo chmod a+r /etc/apt/keyrings/docker.asc</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add the repository to Apt sources:</span></span><br><span class="line">echo \</span><br><span class="line">  <span class="string">"deb [arch=<span class="variable">$</span>(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="variable">$</span>(. /etc/os-release &amp;&amp; echo "</span><span class="variable">$VERSION_CODENAME</span><span class="string">") stable"</span> | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1></li>
+</ol>
+<ul>
+<li><a href="https://www.docker.com" target="_blank" rel="noopener">docker 官网</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>FRRouting</title>
+    <url>/2024/09/19/FRRouting/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>FRRouting（FRR）是一款开源的 IP 路由套件，支持 BGP、OSPF、RIP、IS-IS 等等。</p>
+<a id="more"></a>
+<h1 id="OSPF-组网"><a href="#OSPF-组网" class="headerlink" title="OSPF 组网"></a>OSPF 组网</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://frrouting.org" target="_blank" rel="noopener">FRRouting 官网</a></li>
+<li><a href="https://blog.csdn.net/puhaiyang/article/details/140189690" target="_blank" rel="noopener">Frrouting快速入门——OSPF组网（一）</a></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>路由协议：OSPF vs BGP</title>
+    <url>/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>路由协议：OSPF vs BGP</p>
+<a id="more"></a>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+        <tag>路由协议</tag>
+        <tag>OSPF</tag>
+        <tag>BGP</tag>
+        <tag>frr</tag>
+        <tag>gobgp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go并发编程</title>
     <url>/2024/09/05/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 并发编程</p>
@@ -1083,7 +1213,7 @@
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">cd build</span><br><span class="line">ninja</span><br><span class="line">meson install</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="官方实例"><a href="#官方实例" class="headerlink" title="官方实例"></a>官方实例</h1><h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><h3 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h3><ul>
+<h1 id="DPDK-与网卡"><a href="#DPDK-与网卡" class="headerlink" title="DPDK 与网卡"></a>DPDK 与网卡</h1><h1 id="官方实例"><a href="#官方实例" class="headerlink" title="官方实例"></a>官方实例</h1><h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><h3 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h3><ul>
 <li><p>编译</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">cd build</span><br><span class="line">meson configure <span class="literal">-Dexamples</span>=helloworld</span><br><span class="line">ninja</span><br></pre></td></tr></table></figure>
 </li>
@@ -3362,8 +3492,8 @@
       </categories>
       <tags>
         <tag>算法</tag>
-        <tag>表达式求值</tag>
         <tag>栈</tag>
+        <tag>表达式求值</tag>
       </tags>
   </entry>
   <entry>
@@ -4872,9 +5002,9 @@ b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到�
       <tags>
         <tag>C++</tag>
         <tag>Xcode</tag>
-        <tag>OpenCV</tag>
         <tag>Mac</tag>
         <tag>摄像头权限</tag>
+        <tag>OpenCV</tag>
       </tags>
   </entry>
   <entry>
@@ -9501,8 +9631,8 @@ cond2(yes)->op7->op8->op9->e</textarea><textarea id="flowchart-0-options" style=
         <tag>C++</tag>
         <tag>Xcode</tag>
         <tag>OpenCV</tag>
-        <tag>图像处理</tag>
         <tag>环境配置</tag>
+        <tag>图像处理</tag>
       </tags>
   </entry>
   <entry>
@@ -11599,9 +11729,9 @@ y = sinx</script><p>先在界面放置好axes控件，这里命名为axes1；</p
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>Canny</tag>
         <tag>OpenCV</tag>
         <tag>图像处理</tag>
+        <tag>Canny</tag>
       </tags>
   </entry>
   <entry>

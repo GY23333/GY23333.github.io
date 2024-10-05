@@ -1,5 +1,5 @@
+https://gy23333.github.io/2024/10/05/systemd/
+https://gy23333.github.io/2024/09/19/Docker/
+https://gy23333.github.io/2024/09/19/FRRouting/
+https://gy23333.github.io/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/
 https://gy23333.github.io/2024/09/05/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/
-https://gy23333.github.io/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/
-https://gy23333.github.io/2024/08/23/TRex-%E6%95%99%E7%A8%8B/
-https://gy23333.github.io/2024/04/14/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95/
-https://gy23333.github.io/2024/01/15/DPDK/
