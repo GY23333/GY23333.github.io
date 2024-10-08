@@ -55,7 +55,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;bg2016030703.png">
 <meta property="article:published_time" content="2024-10-05T12:20:32.000Z">
-<meta property="article:modified_time" content="2024-10-06T16:04:33.653Z">
+<meta property="article:modified_time" content="2024-10-07T06:50:54.242Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="systemd">
 <meta property="article:tag" content="Linux">
@@ -243,7 +243,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-07 00:04:33" itemprop="dateModified" datetime="2024-10-07T00:04:33+08:00">2024-10-07</time>
+                <time title="Modified: 2024-10-07 14:50:54" itemprop="dateModified" datetime="2024-10-07T14:50:54+08:00">2024-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,9 +291,125 @@
 <p>systemd 作为系统的第一个进程，PID = 1，其余所有进程都是 systemd 的子进程。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># pstree -p</span></span><br><span class="line">systemd(<span class="number">1</span>)─┬─ModemManager(<span class="number">855</span>)─┬─&#123;ModemManager&#125;(<span class="number">887</span>)</span><br><span class="line">           │                   └─&#123;ModemManager&#125;(<span class="number">894</span>)</span><br><span class="line">           ├─NetworkManager(<span class="number">777</span>)─┬─&#123;NetworkManager&#125;(<span class="number">854</span>)</span><br><span class="line">           │                     └─&#123;NetworkManager&#125;(<span class="number">859</span>)</span><br><span class="line">           ├─VGAuthService(<span class="number">747</span>)</span><br><span class="line">           ├─accounts<span class="literal">-daemon</span>(<span class="number">766</span>)─┬─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">778</span>)</span><br><span class="line">           │                      └─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">811</span>)</span><br><span class="line">           ├─acpid(<span class="number">767</span>)</span><br><span class="line">           ├─avahi<span class="literal">-daemon</span>(<span class="number">770</span>)───avahi<span class="literal">-daemon</span>(<span class="number">840</span>)</span><br><span class="line">           ├─bluetoothd(<span class="number">771</span>)</span><br><span class="line">           ├─colord(<span class="number">1484</span>)─┬─&#123;colord&#125;(<span class="number">1486</span>)</span><br><span class="line">           │              └─&#123;colord&#125;(<span class="number">1488</span>)</span><br><span class="line">           ├─cron(<span class="number">773</span>)</span><br><span class="line">        .....</span><br></pre></td></tr></table></figure>
 <h1 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h1><p>systemd 可以管理所有系统资源，unit 为 systemd 的基本管理单元，用于描述系统服务、资源、设备和其他对象，根据不同资源分为了 12 种 Unit。</p>
-<h2 id="Unit-种类"><a href="#Unit-种类" class="headerlink" title="Unit 种类"></a>Unit 种类</h2><p>可通过 <code>man systemd.service</code> 查看各种 Unit 的简介。</p>
-<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p><code>systemd.service</code> 是用于定义和管理系统服务的单位类型。配置文件以 <code>.service</code> 结尾，主要用于描述如何启动、停止和管理服务。</p>
-<h3 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h3><h3 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h3><h3 id="Mount"><a href="#Mount" class="headerlink" title="Mount"></a>Mount</h3><h3 id="Automount"><a href="#Automount" class="headerlink" title="Automount"></a>Automount</h3><h3 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h3><h3 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h3><h3 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h3><h3 id="Snapshot"><a href="#Snapshot" class="headerlink" title="Snapshot"></a>Snapshot</h3><h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><p>systemd 由一组系统命令组成，用来控制系统的方方面面。</p>
+<ul>
+<li>Service unit：系统服务</li>
+<li>Target unit：多个 Unit 构成的一个组</li>
+<li>Device Unit：硬件设备</li>
+<li>Mount Unit：文件系统的挂载点</li>
+<li>Automount Unit：自动挂载点</li>
+<li>Path Unit：文件或路径</li>
+<li>Scope Unit：不是由 Systemd 启动的外部进程</li>
+<li>Slice Unit：进程组</li>
+<li>Snapshot Unit：Systemd 快照，可以切回某个快照</li>
+<li>Socket Unit：进程间通信的 socket</li>
+<li>Swap Unit：swap 文件</li>
+<li>Timer Unit：定时器</li>
+</ul>
+<p>可通过 <code>man systemd.service</code> 查看各种 Unit 的简介。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>每个 Unit 需设置对应类型的配置文件。Unit 配置分为三个区块：Unit、Service\Timer\Socket、Install</p>
+<h3 id="Unit-区块"><a href="#Unit-区块" class="headerlink" title="Unit 区块"></a>Unit 区块</h3><p>Unit 的元数据，定义了 unit 的基本信息、依赖关系和启动顺序。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=服务或单元的描述</span><br><span class="line"><span class="attr">Documentation</span>=man:your-man-page(<span class="number">1</span>)  <span class="comment"># 可选，文档链接</span></span><br><span class="line"><span class="attr">Requires</span>=其他-unit.service  <span class="comment"># 可选，定义强依赖</span></span><br><span class="line"><span class="attr">Wants</span>=其他-unit.service  <span class="comment"># 可选，定义弱依赖</span></span><br><span class="line"><span class="attr">After</span>=network.target  <span class="comment"># 可选，指定启动顺序</span></span><br><span class="line"><span class="attr">Before</span>=其他-unit.service  <span class="comment"># 可选，指定启动顺序</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Description</code>：简短描述</li>
+<li><code>Documentation</code>：文档地址，可以是手册页或 URL</li>
+</ul>
+<p><strong>依赖关系</strong></p>
+<p>例如：unit-A Requires/BindsTo/Wants=unit-B.service</p>
+<ul>
+<li><code>Requires</code>：<ul>
+<li>强依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，如果被依赖 unit-B 启动失败，则该 unit-A 也会启动失败</li>
+</ul>
+</li>
+<li><code>BindsTo</code>：<ul>
+<li>强依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，如果被依赖 unit-B 启动失败，则该 unit-A 也会启动失败</li>
+<li>unit-B 停止或者失败时，依赖 unit-B 的 unit-A 也会自动停止 </li>
+</ul>
+</li>
+<li><code>Wants</code>：<ul>
+<li>弱依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，但被依赖 unit-B 启动失败，也不会一些该 unit-A 启动</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>Requires</code></th>
+<th><code>BindsTo</code></th>
+<th><code>Wants</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动行为</td>
+<td>必须成功启动被依赖的 unit</td>
+<td>必须成功启动被依赖的 unit</td>
+<td>建议启动被依赖的 unit</td>
+</tr>
+<tr>
+<td>停止行为</td>
+<td>不会自动停止依赖它的 unit</td>
+<td>自动停止依赖它的 unit</td>
+<td>不会自动停止依赖它的 unit</td>
+</tr>
+<tr>
+<td>依赖关系类型</td>
+<td>单向强依赖</td>
+<td>双向强依赖</td>
+<td>弱依赖</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>功能密切相关但生命周期不必一致的服务</td>
+<td>需要同时运行并在同一生命周期内运行的服务</td>
+<td>可能相互关联但非必需的服务</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>启动顺序</strong></p>
+<p>例如：unit-A Before/After=unit-B.service</p>
+<ul>
+<li><code>Before</code>：当前 unit A 应该在指定的 unit B 之前启动（A -&gt; B）</li>
+<li><code>After</code>：当前 unit A 应该在指定的 unit B 之后启动（B -&gt; A）</li>
+</ul>
+<p>顺序配置<code>Before</code>、<code>After</code> 只是设置一起启动时的顺序，A 服务启动时并不会自动启动 B 服务，如需设置自启动，需搭配依赖关系使用。</p>
+<p><strong>其他关系</strong></p>
+<ul>
+<li><code>Conflicts</code>：这里指定的 Unit 不能与当前 Unit 同时运行</li>
+<li><code>PartOf</code>：</li>
+<li><code>Condition...</code>：当前 Unit 运行必须满足的条件，否则不会运行</li>
+<li><code>Assert...</code>：当前 Unit 运行必须满足的条件，否则会报启动失败</li>
+</ul>
+<h3 id="类型区块"><a href="#类型区块" class="headerlink" title="类型区块"></a>类型区块</h3><h4 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h4><p><code>systemd.service</code> 是用于定义和管理系统服务的单位类型。</p>
+<p>配置文件以 <code>.service</code> 结尾，主要用于描述如何启动、停止和管理服务。</p>
+<h4 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h4><h4 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h4><h4 id="Mount"><a href="#Mount" class="headerlink" title="Mount"></a>Mount</h4><h4 id="Automount"><a href="#Automount" class="headerlink" title="Automount"></a>Automount</h4><h4 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h4><h4 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h4><h4 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h4><h4 id="Snapshot"><a href="#Snapshot" class="headerlink" title="Snapshot"></a>Snapshot</h4><h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><h3 id="Install-区块"><a href="#Install-区块" class="headerlink" title="Install 区块"></a>Install 区块</h3><h2 id="配置路径"><a href="#配置路径" class="headerlink" title="配置路径"></a>配置路径</h2><p>配置文件存放在下面地址：</p>
+<ul>
+<li>系统级目录：<code>/lib/systemd/system/</code><ul>
+<li>Linux 系统提供的默认 unit 配置文件的存放位置</li>
+</ul>
+</li>
+<li>用户级目录：<code>~/.config/systemd/user/</code><ul>
+<li>用户级的 unit 配置文件，允许普通用户定义和管理自己的服务和任务。</li>
+</ul>
+</li>
+<li>本地配置目录：<code>/etc/systemd/system/</code><ul>
+<li>本地的 unit 配置文件，用户可以在这里创建或修改 unit 文件。</li>
+</ul>
+</li>
+</ul>
+<p>优先级顺序：</p>
+<ol>
+<li><code>/etc/systemd/system/</code>（本地配置目录，最高优先级）</li>
+<li><code>/run/systemd/system/</code>（临时配置，通常在运行时创建）</li>
+<li><code>/lib/systemd/system/</code>（默认系统提供的配置）</li>
+</ol>
+<p>优先级从高到低，如在高低优先级的目录下有同名 unit，则采用高优先级中的配置。</p>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><p>systemd 由一组系统命令组成，用来控制系统的方方面面。</p>
 <h2 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h2><p>参考链接：<a href="https://manpages.ubuntu.com/manpages/focal/zh_CN/man1/systemctl.1.html" target="_blank" rel="noopener">manpages</a>、<code>man systemctl</code></p>
 <p><code>systemctl</code> 是 systemd 的主命令，用于控制 systemd 系统与服务。</p>
 <ul>
@@ -447,7 +563,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unit"><span class="nav-number">2.</span> <span class="nav-text">Unit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unit-种类"><span class="nav-number">2.1.</span> <span class="nav-text">Unit 种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">2.1.1.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Target"><span class="nav-number">2.1.2.</span> <span class="nav-text">Target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Device"><span class="nav-number">2.1.3.</span> <span class="nav-text">Device</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mount"><span class="nav-number">2.1.4.</span> <span class="nav-text">Mount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automount"><span class="nav-number">2.1.5.</span> <span class="nav-text">Automount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path"><span class="nav-number">2.1.6.</span> <span class="nav-text">Path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scope"><span class="nav-number">2.1.7.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice"><span class="nav-number">2.1.8.</span> <span class="nav-text">Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Snapshot"><span class="nav-number">2.1.9.</span> <span class="nav-text">Snapshot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket"><span class="nav-number">2.1.10.</span> <span class="nav-text">Socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timer"><span class="nav-number">2.1.11.</span> <span class="nav-text">Timer</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令"><span class="nav-number">3.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemctl"><span class="nav-number">3.1.</span> <span class="nav-text">systemctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统命令"><span class="nav-number">3.1.1.</span> <span class="nav-text">系统命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单-Unit-命令"><span class="nav-number">3.1.2.</span> <span class="nav-text">单 Unit 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#journalctl"><span class="nav-number">3.2.</span> <span class="nav-text">journalctl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loginctl"><span class="nav-number">3.3.</span> <span class="nav-text">loginctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户"><span class="nav-number">3.3.1.</span> <span class="nav-text">用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">3.3.2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#席位"><span class="nav-number">3.3.3.</span> <span class="nav-text">席位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unit"><span class="nav-number">2.</span> <span class="nav-text">Unit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unit-区块"><span class="nav-number">2.1.1.</span> <span class="nav-text">Unit 区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型区块"><span class="nav-number">2.1.2.</span> <span class="nav-text">类型区块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Service"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Target"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Target</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Device"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">Device</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mount"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">Mount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Automount"><span class="nav-number">2.1.2.5.</span> <span class="nav-text">Automount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Path"><span class="nav-number">2.1.2.6.</span> <span class="nav-text">Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scope"><span class="nav-number">2.1.2.7.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Slice"><span class="nav-number">2.1.2.8.</span> <span class="nav-text">Slice</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Snapshot"><span class="nav-number">2.1.2.9.</span> <span class="nav-text">Snapshot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket"><span class="nav-number">2.1.2.10.</span> <span class="nav-text">Socket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Timer"><span class="nav-number">2.1.2.11.</span> <span class="nav-text">Timer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-区块"><span class="nav-number">2.1.3.</span> <span class="nav-text">Install 区块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置路径"><span class="nav-number">2.2.</span> <span class="nav-text">配置路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令"><span class="nav-number">3.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemctl"><span class="nav-number">3.1.</span> <span class="nav-text">systemctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统命令"><span class="nav-number">3.1.1.</span> <span class="nav-text">系统命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单-Unit-命令"><span class="nav-number">3.1.2.</span> <span class="nav-text">单 Unit 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#journalctl"><span class="nav-number">3.2.</span> <span class="nav-text">journalctl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loginctl"><span class="nav-number">3.3.</span> <span class="nav-text">loginctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户"><span class="nav-number">3.3.1.</span> <span class="nav-text">用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">3.3.2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#席位"><span class="nav-number">3.3.3.</span> <span class="nav-text">席位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
