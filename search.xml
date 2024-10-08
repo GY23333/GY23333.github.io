@@ -35,7 +35,7 @@
 <li><code>Documentation</code>：文档地址，可以是手册页或 URL</li>
 </ul>
 <p><strong>依赖关系</strong></p>
-<p>例如：unit-A Requires/BindsTo/Wants=unit-B.service</p>
+<p>例如：unit-A Requires/BindsTo/Wants/PartOf=unit-B.service</p>
 <ul>
 <li><code>Requires</code>：<ul>
 <li>强依赖</li>
@@ -92,6 +92,10 @@
 </tbody>
 </table>
 </div>
+<ul>
+<li><code>Conflicts</code>：互斥关系，unit-A 和 unit-B 不能同时运行，当 unit-A 启动时，会自动停止 unit-B，反之亦然</li>
+<li><code>PartOf</code>：unit-A 是目标服务 unit-B 的一部分，当目标服务 unit-B 停止或被重启时，作为其一部分的 unit-A 也会停止或重启</li>
+</ul>
 <p><strong>启动顺序</strong></p>
 <p>例如：unit-A Before/After=unit-B.service</p>
 <ul>
@@ -101,10 +105,24 @@
 <p>顺序配置<code>Before</code>、<code>After</code> 只是设置一起启动时的顺序，A 服务启动时并不会自动启动 B 服务，如需设置自启动，需搭配依赖关系使用。</p>
 <p><strong>其他关系</strong></p>
 <ul>
-<li><code>Conflicts</code>：这里指定的 Unit 不能与当前 Unit 同时运行</li>
-<li><code>PartOf</code>：</li>
-<li><code>Condition...</code>：当前 Unit 运行必须满足的条件，否则不会运行</li>
-<li><code>Assert...</code>：当前 Unit 运行必须满足的条件，否则会报启动失败</li>
+<li><code>Condition...</code>：检查服务启动时的条件，如果条件不满足，服务将不会被启动，但不会导致启动失败<ul>
+<li><code>ConditionPathExists=</code>：检查指定的文件或路径是否存在。如果路径存在，服务将启动</li>
+<li><code>ConditionPathExistsGlob=</code>：使用通配符检查路径是否匹配</li>
+<li><code>ConditionPathIsDirectory=</code>：检查指定路径是否是一个目录</li>
+<li><code>ConditionPathIsSymbolicLink=</code>：检查指定路径是否是一个符号链接</li>
+<li><code>ConditionKernelCommandLine=</code>：检查内核命令行参数是否包含指定的字符串</li>
+<li><code>ConditionVirtualization=</code>：检查当前系统是否运行在虚拟化环境中（如 KVM、LXC 等）</li>
+<li><code>ConditionHost=</code>：检查主机名是否与指定值匹配</li>
+</ul>
+</li>
+<li><code>Assert...</code>：对服务启动的条件进行强制检查。与 <code>Condition</code> 不同，如果指定的条件未满足，服务将不会启动，且系统会报告错误<ul>
+<li><code>AssertPathExists=</code>：检查指定路径是否存在</li>
+<li><code>AssertPathIsDirectory=</code>：检查指定路径是否是目录</li>
+<li><code>AssertPathIsSymbolicLink=</code>：检查指定路径是否是符号链接</li>
+<li><code>AssertKernelCommandLine=</code>：检查内核命令行参数</li>
+<li><code>AssertVirtualization=</code>：检查当前系统是否在虚拟化环境中</li>
+</ul>
+</li>
 </ul>
 <h3 id="类型区块"><a href="#类型区块" class="headerlink" title="类型区块"></a>类型区块</h3><h4 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h4><p><code>systemd.service</code> 是用于定义和管理系统服务的单位类型。</p>
 <p>配置文件以 <code>.service</code> 结尾，主要用于描述如何启动、停止和管理服务。</p>
