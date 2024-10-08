@@ -55,7 +55,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;bg2016030703.png">
 <meta property="article:published_time" content="2024-10-05T12:20:32.000Z">
-<meta property="article:modified_time" content="2024-10-08T05:37:29.827Z">
+<meta property="article:modified_time" content="2024-10-08T05:50:28.937Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="systemd">
 <meta property="article:tag" content="Linux">
@@ -243,7 +243,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-08 13:37:29" itemprop="dateModified" datetime="2024-10-08T13:37:29+08:00">2024-10-08</time>
+                <time title="Modified: 2024-10-08 13:50:28" itemprop="dateModified" datetime="2024-10-08T13:50:28+08:00">2024-10-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -405,7 +405,17 @@
 </ul>
 <h3 id="类型区块"><a href="#类型区块" class="headerlink" title="类型区块"></a>类型区块</h3><h4 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h4><p><code>systemd.service</code> 是用于定义和管理系统服务的单位类型。</p>
 <p>配置文件以 <code>.service</code> 结尾，主要用于描述如何启动、停止和管理服务。</p>
-<h4 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h4><h4 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h4><h4 id="Mount"><a href="#Mount" class="headerlink" title="Mount"></a>Mount</h4><h4 id="Automount"><a href="#Automount" class="headerlink" title="Automount"></a>Automount</h4><h4 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h4><h4 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h4><h4 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h4><h4 id="Snapshot"><a href="#Snapshot" class="headerlink" title="Snapshot"></a>Snapshot</h4><h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><h3 id="Install-区块"><a href="#Install-区块" class="headerlink" title="Install 区块"></a>Install 区块</h3><h2 id="配置路径"><a href="#配置路径" class="headerlink" title="配置路径"></a>配置路径</h2><p>配置文件存放在下面地址：</p>
+<p><code>.service</code> 配置中，通过 [Service] 区块定义服务的启动和运行参数。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Description</span>=My Example Service</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/my_service</span><br><span class="line"><span class="attr">ExecStop</span>=/usr/bin/my_service_stop</span><br><span class="line"><span class="attr">Restart</span>=<span class="literal">on</span>-failure</span><br><span class="line"><span class="attr">User</span>=myuser</span><br><span class="line"><span class="attr">Environment</span>=MY_ENV_VAR=value</span><br><span class="line"><span class="attr">WorkingDirectory</span>=/var/lib/my_service</span><br><span class="line"><span class="attr">StandardOutput</span>=syslog</span><br><span class="line"><span class="attr">TimeoutSec</span>=<span class="number">30</span></span><br><span class="line"><span class="attr">LimitNOFILE</span>=<span class="number">1024</span></span><br></pre></td></tr></table></figure>
+<h4 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h4><h4 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h4><h4 id="Mount"><a href="#Mount" class="headerlink" title="Mount"></a>Mount</h4><h4 id="Automount"><a href="#Automount" class="headerlink" title="Automount"></a>Automount</h4><h4 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h4><h4 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h4><h4 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h4><h4 id="Snapshot"><a href="#Snapshot" class="headerlink" title="Snapshot"></a>Snapshot</h4><h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><h3 id="Install-区块"><a href="#Install-区块" class="headerlink" title="Install 区块"></a>Install 区块</h3><p>定义服务单元的安装和启用选项，指定如何将服务单元与目标（如启动目标或其他服务）关联。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>WantedBy</code>：定义服务应该被哪些目标“需要”，这意味着在这些目标启动时，该服务也会被自动启动</li>
+<li><code>RequiredBy</code>：类似于 <code>WantedBy</code>，但表示更强的依赖关系，如果目标启动失败，相关服务也不会启动</li>
+<li><code>Alias</code>：当前 Unit 的别名</li>
+<li><code>Also</code>：当前 Unit 启用（enable）或禁用（disable）时，会被同时（enable）或禁用（disable）的其他 Unit</li>
+</ul>
+<h2 id="配置路径"><a href="#配置路径" class="headerlink" title="配置路径"></a>配置路径</h2><p>配置文件存放在下面地址：</p>
 <ul>
 <li>系统级目录：<code>/lib/systemd/system/</code><ul>
 <li>Linux 系统提供的默认 unit 配置文件的存放位置</li>
