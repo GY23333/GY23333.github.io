@@ -55,7 +55,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;bg2016030703.png">
 <meta property="article:published_time" content="2024-10-05T12:20:32.000Z">
-<meta property="article:modified_time" content="2024-10-08T18:43:09.033Z">
+<meta property="article:modified_time" content="2024-10-09T05:52:19.231Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="systemd">
 <meta property="article:tag" content="Linux">
@@ -243,7 +243,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-09 02:43:09" itemprop="dateModified" datetime="2024-10-09T02:43:09+08:00">2024-10-09</time>
+                <time title="Modified: 2024-10-09 13:52:19" itemprop="dateModified" datetime="2024-10-09T13:52:19+08:00">2024-10-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -442,14 +442,22 @@
 </ul>
 <p><strong>终止类型</strong></p>
 <ul>
-<li><code>KillMode</code><ul>
-<li><code>control-group</code>（默认值）：当前控制组里面的所有子进程，都会被杀掉</li>
-<li><code>process</code>：只杀主进程</li>
-<li><code>mixed</code>：主进程将收到 SIGTERM 信号，子进程收到 SIGKILL 信号</li>
-<li><code>none</code>：没有进程会被杀掉，只是执行服务的 stop 命令。</li>
+<li><code>KillMode</code>：停止服务时如何处理进程<ul>
+<li><code>control-group</code>（默认值）：停止服务时，所有属于该服务 cgroup 的所有进程都会被杀死</li>
+<li><code>process</code>：停止服务时，只杀主进程，主进程产生的子进程不会被杀死</li>
+<li><code>mixed</code>：停止服务时，向主进程发送 SIGTERM 信号，接着向子进程发送 SIGKILL 信号</li>
+<li><code>none</code>：没有进程会被杀掉，只是执行服务的 <code>ExecStop</code> 命令</li>
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>杀进程过程：</p>
+<ol>
+<li>向进程发送<code>KillSignal=</code> 信号（默认为 <code>SIGTERM</code>）</li>
+<li>等待进程被杀死</li>
+<li>若等候 <code>TimeoutStopSec=</code> 时间（默认 90s）后，进程仍然未被杀死，向进程发送 <code>FinalKillSignal=</code> 信号（默认为 <code>SIGKILL</code>）强制杀死进程</li>
+</ol>
+</blockquote>
 <p><strong>终止命令</strong></p>
 <ul>
 <li><code>ExecStop</code>字段：停止服务时执行的命令</li>
