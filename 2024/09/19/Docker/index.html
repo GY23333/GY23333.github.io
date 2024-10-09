@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="Ubuntu 中安装 Docker Enginehttps:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;install&#x2F;ubuntu&#x2F;  卸载老版本 1for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $">
+  <meta name="description" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2024&#x2F;09&#x2F;19&#x2F;Docker&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="Ubuntu 中安装 Docker Enginehttps:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;install&#x2F;ubuntu&#x2F;  卸载老版本 1for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $">
+<meta property="og:description" content="Docker">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-19T05:48:28.000Z">
-<meta property="article:modified_time" content="2024-10-05T12:20:38.422Z">
+<meta property="article:modified_time" content="2024-10-09T16:37:40.078Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-05 20:20:38" itemprop="dateModified" datetime="2024-10-05T20:20:38+08:00">2024-10-05</time>
+                <time title="Modified: 2024-10-10 00:37:40" itemprop="dateModified" datetime="2024-10-10T00:37:40+08:00">2024-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,20 +279,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
+        <p>Docker</p>
+<a id="more"></a>
 <h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
 <ol>
 <li><p>卸载老版本</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> pkg <span class="keyword">in</span> docker.io docker<span class="literal">-doc</span> docker<span class="literal">-compose</span> docker<span class="literal">-compose</span><span class="literal">-v2</span> podman<span class="literal">-docker</span> containerd runc; <span class="keyword">do</span> sudo apt<span class="literal">-get</span> remove <span class="variable">$pkg</span>; done</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>设置 Docker <code>apt</code> 仓库</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add Docker's official GPG key:</span></span><br><span class="line">sudo apt<span class="literal">-get</span> update</span><br><span class="line">sudo apt<span class="literal">-get</span> install ca<span class="literal">-certificates</span> curl</span><br><span class="line">sudo install <span class="literal">-m</span> <span class="number">0755</span> <span class="literal">-d</span> /etc/apt/keyrings</span><br><span class="line">sudo curl <span class="literal">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg <span class="literal">-o</span> /etc/apt/keyrings/docker.asc</span><br><span class="line">sudo chmod a+r /etc/apt/keyrings/docker.asc</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add the repository to Apt sources:</span></span><br><span class="line">echo \</span><br><span class="line">  <span class="string">"deb [arch=<span class="variable">$</span>(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="variable">$</span>(. /etc/os-release &amp;&amp; echo "</span><span class="variable">$VERSION_CODENAME</span><span class="string">") stable"</span> | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure>
+<li><p>更新 Ubuntu 源列表</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 docker 依赖包</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt<span class="literal">-get</span> install ca<span class="literal">-certificates</span> curl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加 docker 官方 GPG 密钥</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install <span class="literal">-m</span> <span class="number">0755</span> <span class="literal">-d</span> /etc/apt/keyrings</span><br><span class="line">curl <span class="literal">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg <span class="literal">-o</span> /etc/apt/keyrings/docker.asc</span><br><span class="line">chmod a+r /etc/apt/keyrings/docker.asc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加 docker 官方库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo \</span><br><span class="line">  <span class="string">"deb [arch=<span class="variable">$</span>(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="variable">$</span>(. /etc/os-release &amp;&amp; echo "</span><span class="variable">$VERSION_CODENAME</span><span class="string">") stable"</span> | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新 Ubuntu 源列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看 docker 服务运行状态</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<ol>
-<li><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1></li>
-</ol>
-<ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://www.docker.com" target="_blank" rel="noopener">docker 官网</a></li>
 </ul>
 
