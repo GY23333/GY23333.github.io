@@ -54,7 +54,7 @@
 <meta property="og:description" content="Docker">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-19T05:48:28.000Z">
-<meta property="article:modified_time" content="2024-10-11T17:24:05.101Z">
+<meta property="article:modified_time" content="2024-10-11T18:20:42.097Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-12 01:24:05" itemprop="dateModified" datetime="2024-10-12T01:24:05+08:00">2024-10-12</time>
+                <time title="Modified: 2024-10-12 02:20:42" itemprop="dateModified" datetime="2024-10-12T02:20:42+08:00">2024-10-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,8 +287,12 @@
 
 <ul>
 <li>Docker 是一款能将程序和环境一起打包并运行的工具软件。Docker 作为中间层，使得应用和机器基础架构分离，从而实现不同架构下的快速交付部署。</li>
-<li>程序和环境打包构建成一个镜像文件，由 Dockerfile 设置构建，包括指定环境的基础镜像（如 ubuntu/centos、python/go 等等）以及后续需执行的命令（比如安装依赖、运行服务等）</li>
-<li>Docker 在 Linux 上以一个进程的形式运行，利用操作系统的用户空间构建出应用所需的环境</li>
+<li>程序和环境打包构建成一个容器镜像文件，由 Dockerfile 设置构建，包括指定环境的基础镜像（如 ubuntu/centos、python/go 等等）以及后续需执行的命令（比如安装依赖、运行服务等）， <code>docker build</code> 根据 Dockerfile 构建出容器镜像</li>
+<li>部署环境部署容器镜像，就会在 Linux 上以一个进程的形式运行该 docker 容器，利用操作系统的用户空间构建出应用所需的环境，运行相应服务</li>
+<li>Docker Registy：相当于 docker 镜像的代码仓，也就是镜像仓，可以将 docker 镜像推到 Registy，部署环境再从 Registy 拉取镜像</li>
+<li>Docker Compose：一整套服务经常包含多个 docker 镜像部署到单节点，这时候就可以使用 Docker Compose 来部署，通过 yaml 文件呢规定各个 docker 镜像间的部署顺序与其他部署配置信息。</li>
+<li>Docker Swarm：解决一整套服务在多个节点间的部署问题，如迁移、扩缩容</li>
+<li>k8s：与 Docker Swarm 类似，也是解决一整套服务在多个节点间的部署问题，如迁移、扩缩容</li>
 </ul>
 <h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
 <ol>
