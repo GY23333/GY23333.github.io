@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="Docker">
+  <meta name="description" content="基于 Go 的开源应用容器引擎 Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2024&#x2F;09&#x2F;19&#x2F;Docker&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="Docker">
+<meta property="og:description" content="基于 Go 的开源应用容器引擎 Docker">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-19T05:48:28.000Z">
-<meta property="article:modified_time" content="2024-10-11T18:20:42.097Z">
+<meta property="article:modified_time" content="2024-10-11T18:38:34.939Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-12 02:20:42" itemprop="dateModified" datetime="2024-10-12T02:20:42+08:00">2024-10-12</time>
+                <time title="Modified: 2024-10-12 02:38:34" itemprop="dateModified" datetime="2024-10-12T02:38:34+08:00">2024-10-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Docker</p>
+        <p>基于 Go 的开源应用容器引擎 Docker</p>
 <a id="more"></a>
 <h1 id="快速了解-Docker"><a href="#快速了解-Docker" class="headerlink" title="快速了解 Docker"></a>快速了解 Docker</h1><p>快速了解 docker 的小视频</p>
 <p>【docker是什么？和kubernetes(k8s)是什么关系？-哔哩哔哩】 </p>
@@ -287,14 +287,14 @@
 
 <ul>
 <li>Docker 是一款能将程序和环境一起打包并运行的工具软件。Docker 作为中间层，使得应用和机器基础架构分离，从而实现不同架构下的快速交付部署。</li>
-<li>程序和环境打包构建成一个容器镜像文件，由 Dockerfile 设置构建，包括指定环境的基础镜像（如 ubuntu/centos、python/go 等等）以及后续需执行的命令（比如安装依赖、运行服务等）， <code>docker build</code> 根据 Dockerfile 构建出容器镜像</li>
-<li>部署环境部署容器镜像，就会在 Linux 上以一个进程的形式运行该 docker 容器，利用操作系统的用户空间构建出应用所需的环境，运行相应服务</li>
-<li>Docker Registy：相当于 docker 镜像的代码仓，也就是镜像仓，可以将 docker 镜像推到 Registy，部署环境再从 Registy 拉取镜像</li>
+<li>程序和环境打包构建成一个容器镜像文件，根据 Dockerfile 构建出容器镜像，Dockerfile 中设置包括指定环境的基础镜像（如 ubuntu/centos、python/go 等等）以及后续需执行的命令（比如安装依赖、运行服务等）。</li>
+<li>部署环境部署容器镜像，就会在 Linux 上以一个进程的形式运行该 docker 容器，利用操作系统的用户空间构建出应用所需的环境，运行相应服务。</li>
+<li>Docker Registy：相当于 docker 镜像的代码仓，也就是镜像仓，可以将 docker 镜像推到 Registy，部署环境再从 Registy 拉取镜像。</li>
 <li>Docker Compose：一整套服务经常包含多个 docker 镜像部署到单节点，这时候就可以使用 Docker Compose 来部署，通过 yaml 文件呢规定各个 docker 镜像间的部署顺序与其他部署配置信息。</li>
-<li>Docker Swarm：解决一整套服务在多个节点间的部署问题，如迁移、扩缩容</li>
-<li>k8s：与 Docker Swarm 类似，也是解决一整套服务在多个节点间的部署问题，如迁移、扩缩容</li>
+<li>Docker Swarm：解决一整套服务在多个节点间的部署问题，如迁移、扩缩容。</li>
+<li>k8s：与 Docker Swarm 类似，也是解决一整套服务在多个节点间的部署问题，如迁移、扩缩容。</li>
 </ul>
-<h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<h1 id="Docker-从构建到部署"><a href="#Docker-从构建到部署" class="headerlink" title="Docker 从构建到部署"></a>Docker 从构建到部署</h1><h2 id="Docker-镜像构建"><a href="#Docker-镜像构建" class="headerlink" title="Docker 镜像构建"></a>Docker 镜像构建</h2><h2 id="Docker-镜像仓"><a href="#Docker-镜像仓" class="headerlink" title="Docker 镜像仓"></a>Docker 镜像仓</h2><h2 id="Docker-容器部署"><a href="#Docker-容器部署" class="headerlink" title="Docker 容器部署"></a>Docker 容器部署</h2><h1 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h1><h1 id="Docker-Swarm-与-k8s"><a href="#Docker-Swarm-与-k8s" class="headerlink" title="Docker Swarm 与 k8s"></a>Docker Swarm 与 k8s</h1><h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
 <ol>
 <li><p>卸载老版本</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> pkg <span class="keyword">in</span> docker.io docker<span class="literal">-doc</span> docker<span class="literal">-compose</span> docker<span class="literal">-compose</span><span class="literal">-v2</span> podman<span class="literal">-docker</span> containerd runc; <span class="keyword">do</span> sudo apt<span class="literal">-get</span> remove <span class="variable">$pkg</span>; done</span><br></pre></td></tr></table></figure>
@@ -406,7 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速了解-Docker"><span class="nav-number">1.</span> <span class="nav-text">快速了解 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-中安装-Docker-Engine"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 中安装 Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速了解-Docker"><span class="nav-number">1.</span> <span class="nav-text">快速了解 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-从构建到部署"><span class="nav-number">2.</span> <span class="nav-text">Docker 从构建到部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像构建"><span class="nav-number">2.1.</span> <span class="nav-text">Docker 镜像构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像仓"><span class="nav-number">2.2.</span> <span class="nav-text">Docker 镜像仓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器部署"><span class="nav-number">2.3.</span> <span class="nav-text">Docker 容器部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">3.</span> <span class="nav-text">Docker Compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Swarm-与-k8s"><span class="nav-number">4.</span> <span class="nav-text">Docker Swarm 与 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-中安装-Docker-Engine"><span class="nav-number">5.</span> <span class="nav-text">Ubuntu 中安装 Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
