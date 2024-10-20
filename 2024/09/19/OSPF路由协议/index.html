@@ -46,25 +46,35 @@
   };
 </script>
 
-  <meta name="description" content="路由协议：OSPF vs BGP">
+  <meta name="description" content="OSPF 路由协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="路由协议：OSPF vs BGP">
-<meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2024&#x2F;09&#x2F;19&#x2F;%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP&#x2F;index.html">
+<meta property="og:title" content="OSPF路由协议">
+<meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2024&#x2F;09&#x2F;19&#x2F;OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="路由协议：OSPF vs BGP">
+<meta property="og:description" content="OSPF 路由协议">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018132129111.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018132904557.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018133241441.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018133454733.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018135312193.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020191232401.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020191829391.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020192600552.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020193001364.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020193546945.png">
 <meta property="article:published_time" content="2024-09-18T17:38:42.000Z">
-<meta property="article:modified_time" content="2024-09-19T05:17:42.588Z">
+<meta property="article:modified_time" content="2024-10-20T11:42:59.221Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="路由协议">
 <meta property="article:tag" content="OSPF">
 <meta property="article:tag" content="BGP">
-<meta property="article:tag" content="frr">
 <meta property="article:tag" content="gobgp">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241018132129111.png">
 
-<link rel="canonical" href="https://gy23333.github.io/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/">
+<link rel="canonical" href="https://gy23333.github.io/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/">
 
 
 <script id="page-configurations">
@@ -76,7 +86,7 @@
   };
 </script>
 
-  <title>路由协议：OSPF vs BGP | GuoYi的博客</title>
+  <title>OSPF路由协议 | GuoYi的博客</title>
   
 
 
@@ -215,7 +225,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
@@ -228,7 +238,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          路由协议：OSPF vs BGP
+          OSPF路由协议
         </h1>
 
         <div class="post-meta">
@@ -237,10 +247,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-09-19 01:38:42 / Modified: 13:17:42" itemprop="dateCreated datePublished" datetime="2024-09-19T01:38:42+08:00">2024-09-19</time>
+              <time title="Created: 2024-09-19 01:38:42" itemprop="dateCreated datePublished" datetime="2024-09-19T01:38:42+08:00">2024-09-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-20 19:42:59" itemprop="dateModified" datetime="2024-10-20T19:42:59+08:00">2024-10-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -262,8 +278,8 @@
       </span>
       <span class="post-meta-item-text">Valine: </span>
     
-    <a title="valine" href="/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -278,8 +294,99 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>路由协议：OSPF vs BGP</p>
+        <p>OSPF 路由协议</p>
 <a id="more"></a>
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=414959575&bvid=BV1YV41127U5&cid=245923181&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+<h1 id="RIP-协议缺陷"><a href="#RIP-协议缺陷" class="headerlink" title="RIP 协议缺陷"></a>RIP 协议缺陷</h1><h2 id="缺陷一：以跳数评估的路由并非最优路径"><a href="#缺陷一：以跳数评估的路由并非最优路径" class="headerlink" title="缺陷一：以跳数评估的路由并非最优路径"></a>缺陷一：以跳数评估的路由并非最优路径</h2><p>RIP 路由协议选择跳数最短的路由，在下图中会选择 RTA —&gt; RTB 的路径。</p>
+<p>但虽然 RTA —&gt; RTB 的路径跳数最短，但由于带宽的区别，对于大数据流走 RTA —&gt; RTC —&gt; RTD —&gt; RTB 反而快于跳数更短的 RTA —&gt; RTB 路径。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241018132129111.png" alt=""></p>
+<h2 id="缺陷二：最大跳数15限制网络规模"><a href="#缺陷二：最大跳数15限制网络规模" class="headerlink" title="缺陷二：最大跳数15限制网络规模"></a>缺陷二：最大跳数15限制网络规模</h2><p>RIP 允许的跳数最大只有15条，如果跳数大于等于16跳，则会被视为不可达，无法学习到16跳网段的路由，从而限制了网络规模的大小。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241018132904557.png" alt="image-20241018132904557"></p>
+<h2 id="缺陷三：更新路由发送全量路由信息，浪费网络资源"><a href="#缺陷三：更新路由发送全量路由信息，浪费网络资源" class="headerlink" title="缺陷三：更新路由发送全量路由信息，浪费网络资源"></a>缺陷三：更新路由发送全量路由信息，浪费网络资源</h2><p>RIP 每隔一段时间，都会向所有邻居发送全量的路由信息，十分消耗网络资源。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241018133241441.png" alt="image-20241018133241441"></p>
+<h2 id="缺陷四：收敛速度慢"><a href="#缺陷四：收敛速度慢" class="headerlink" title="缺陷四：收敛速度慢"></a>缺陷四：收敛速度慢</h2><p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241018133454733.png" alt="image-20241018133454733"></p>
+<h1 id="OSPF-链路状态路由协议"><a href="#OSPF-链路状态路由协议" class="headerlink" title="OSPF 链路状态路由协议"></a>OSPF 链路状态路由协议</h1><ul>
+<li>工作在 IP 层，IP 协议号 89</li>
+<li>以组播地址 224.0.0.5 发送协议包</li>
+<li>每个路由器将已知的链路状态信息发送给邻居，收敛后，每个路由器对全网链路状态的认识相同，并独立计算自己的路由</li>
+</ul>
+<h2 id="OSPF-工作过程"><a href="#OSPF-工作过程" class="headerlink" title="OSPF 工作过程"></a>OSPF 工作过程</h2><h3 id="1-发现邻居"><a href="#1-发现邻居" class="headerlink" title="1. 发现邻居"></a>1. 发现邻居</h3><p>在广播域中组播 hello 包，收到互相的 hello 包，确认是自己的邻居，则加入邻居表中</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241018135312193.png" alt="image-20241018135312193" style="zoom:50%;" /></p>
+<h3 id="2-建立邻接关系"><a href="#2-建立邻接关系" class="headerlink" title="2. 建立邻接关系"></a>2. 建立邻接关系</h3><ul>
+<li>并不是所有邻居都会建立邻接关系</li>
+<li>网段的广播域中会选取 DR 和 BDR（副 DR，用于容灾），剩下的节点都是 DR_Others，该广播域中的所有路由器都只与 DR 和 BDR 建立邻接关系</li>
+<li>只有和建立了邻接关系的邻居才会交换链路状态信息</li>
+<li>只有在广播型网络中才会使用 DR 和 BDR，点到点（PPP，即一对一）不使用  DR 和 BDR</li>
+</ul>
+<p>如此，可以减少交换信息的次数，路由更新更高效</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020191232401.png" alt="image-20241020191232401"></p>
+<h3 id="3-传递链路状态信息"><a href="#3-传递链路状态信息" class="headerlink" title="3. 传递链路状态信息"></a>3. 传递链路状态信息</h3><ul>
+<li>每个节点都有一个 LSDB（链路状态数据库），里面的每一条是一个 LSA（链路状态公告）</li>
+<li>每条 LSA 描述了网络中的一个路由器的编号、直连网段、cost 等信息</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020191829391.png" alt="image-20241020191829391" style="zoom:30%;" /></p>
+<p><strong>更新机制</strong></p>
+<ul>
+<li>触发更新或者每隔 30 分钟更新一次<ul>
+<li>触发更新：网络发生变化时，则无需等到 30 分钟周期，立即向邻接节点发送信息</li>
+</ul>
+</li>
+<li>增量更新，只发送邻居需要的 LSA</li>
+<li>收敛后，网段内的所有路由器都有相同的 LSDB</li>
+</ul>
+<p><strong>路由信息交换过程</strong></p>
+<p>下面是 RTA 触发更新后，向 RTB 交换路由信息的过程</p>
+<ol>
+<li>发送 RTA 所有 LSA 的摘要信息</li>
+<li>RTB 比较收到的 LSA 摘要与自己本地的 LSA，发送请求，希望获得自己没有的 LSA 的详细信息</li>
+<li>RTA 将要求的 LSA 发送给 RTB</li>
+<li>RTB 向 RTA 回复收到</li>
+</ol>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020192600552.png" alt="image-20241020192600552" style="zoom:50%;" /></p>
+<h3 id="4-路由计算"><a href="#4-路由计算" class="headerlink" title="4. 路由计算"></a>4. 路由计算</h3><p>每台路由器根据 LSDB 算出每台路由器到自己的最短路径</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020193001364.png" alt="image-20241020193001364" style="zoom:50%;" /></p>
+<h2 id="OSPF-分区域管理"><a href="#OSPF-分区域管理" class="headerlink" title="OSPF 分区域管理"></a>OSPF 分区域管理</h2><p>LSDB 记录网络所有路由器的 LSA，所以当网络规模变大时，会导致每台路由器上都要消耗大量资源储存 LSDB，且 LSDB 信息收敛也会变得很慢，因此需要分区域管理。</p>
+<ul>
+<li>每个区域内部的路由器的 LSDB 只需知道区域内的路由器的 LSA</li>
+<li>不同区域之间通过 ASR（区域边界路由器）相连，同时有两边的 LSDB</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020193546945.png" alt="image-20241020193546945"></p>
+<p>非骨干区域之间不能直接通信，需要通过骨干区域（区域 0）进行转发。</p>
+<p>如上图中有三个区域：区域 0、区域 1、区域 10.0.0.1，其中区域 1、区域 10.0.0.1 这样的非骨干区域不能直接通信，需要先发送给区域 0，再由区域 0 转发。</p>
+<h1 id="RIP-和-OSPF-比较"><a href="#RIP-和-OSPF-比较" class="headerlink" title="RIP 和 OSPF 比较"></a>RIP 和 OSPF 比较</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RIP（距离矢量路由协议）</th>
+<th>OSPF（链路状态路由协议）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最优路径选择</td>
+<td>跳数</td>
+<td>链路开销</td>
+</tr>
+<tr>
+<td>更新触发</td>
+<td>每 30s</td>
+<td>触发更新或每隔30分钟</td>
+</tr>
+<tr>
+<td>发送对象</td>
+<td>广播到所有邻居</td>
+<td>发到邻接路由器</td>
+</tr>
+<tr>
+<td>发送信息</td>
+<td>全量 RIP 路由表</td>
+<td>链路状态信息摘要</td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
 
@@ -293,7 +400,6 @@
               <a href="/tags/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" rel="tag"># 路由协议</a>
               <a href="/tags/OSPF/" rel="tag"># OSPF</a>
               <a href="/tags/BGP/" rel="tag"># BGP</a>
-              <a href="/tags/frr/" rel="tag"># frr</a>
               <a href="/tags/gobgp/" rel="tag"># gobgp</a>
           </div>
 
@@ -370,6 +476,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-协议缺陷"><span class="nav-number">1.</span> <span class="nav-text">RIP 协议缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷一：以跳数评估的路由并非最优路径"><span class="nav-number">1.1.</span> <span class="nav-text">缺陷一：以跳数评估的路由并非最优路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷二：最大跳数15限制网络规模"><span class="nav-number">1.2.</span> <span class="nav-text">缺陷二：最大跳数15限制网络规模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷三：更新路由发送全量路由信息，浪费网络资源"><span class="nav-number">1.3.</span> <span class="nav-text">缺陷三：更新路由发送全量路由信息，浪费网络资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷四：收敛速度慢"><span class="nav-number">1.4.</span> <span class="nav-text">缺陷四：收敛速度慢</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF-链路状态路由协议"><span class="nav-number">2.</span> <span class="nav-text">OSPF 链路状态路由协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-工作过程"><span class="nav-number">2.1.</span> <span class="nav-text">OSPF 工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-发现邻居"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 发现邻居</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-建立邻接关系"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 建立邻接关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-传递链路状态信息"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. 传递链路状态信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-路由计算"><span class="nav-number">2.1.4.</span> <span class="nav-text">4. 路由计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-分区域管理"><span class="nav-number">2.2.</span> <span class="nav-text">OSPF 分区域管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-和-OSPF-比较"><span class="nav-number">3.</span> <span class="nav-text">RIP 和 OSPF 比较</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,7 +505,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

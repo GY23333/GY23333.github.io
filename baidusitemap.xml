@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gy23333.github.io/2024/09/19/Docker/</loc>
-    <lastmod>2024-10-13</lastmod>
-  </url>  <url>
-    <loc>https://gy23333.github.io/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</loc>
-    <lastmod>2024-10-11</lastmod>
+    <loc>https://gy23333.github.io/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2024-10-20</lastmod>
   </url>  <url>
     <loc>https://gy23333.github.io/2024/09/19/FRRouting/</loc>
-    <lastmod>2024-10-11</lastmod>
+    <lastmod>2024-10-16</lastmod>
+  </url>  <url>
+    <loc>https://gy23333.github.io/2024/09/19/Docker/</loc>
+    <lastmod>2024-10-15</lastmod>
+  </url>  <url>
+    <loc>https://gy23333.github.io/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</loc>
+    <lastmod>2024-10-15</lastmod>
+  </url>  <url>
+    <loc>https://gy23333.github.io/2024/09/05/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2024-10-15</lastmod>
   </url>  <url>
     <loc>https://gy23333.github.io/2024/10/05/systemd/</loc>
     <lastmod>2024-10-09</lastmod>
   </url>  <url>
-    <loc>https://gy23333.github.io/2024/09/19/%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%EF%BC%9AOSPF-vs-BGP/</loc>
-    <lastmod>2024-09-19</lastmod>
-  </url>  <url>
     <loc>https://gy23333.github.io/2024/01/15/DPDK/</loc>
-    <lastmod>2024-09-18</lastmod>
-  </url>  <url>
-    <loc>https://gy23333.github.io/2024/09/05/Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2024-09-18</lastmod>
   </url>  <url>
     <loc>https://gy23333.github.io/2023/03/15/Go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
