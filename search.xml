@@ -533,6 +533,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">interface ens38</span><br></pre></td></tr></table></figure>
 <p>VIP是<code>192.168.1.1/24</code>，你要发布到OSPF区域0，且设置成本为10</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vtysh</span><br><span class="line">configure terminal</span><br><span class="line">interface eth0</span><br><span class="line"> ip address 192.168.1.1&#x2F;24</span><br><span class="line">!</span><br><span class="line">router ospf 1</span><br><span class="line"> network 192.168.1.0&#x2F;24 area 0</span><br><span class="line">!</span><br><span class="line">interface eth0</span><br><span class="line"> ip ospf cost 10</span><br><span class="line"> </span><br><span class="line">end</span><br><span class="line">write memory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vtysh</span><br><span class="line">configure terminal</span><br><span class="line">interface eth0</span><br><span class="line"> no ip address 192.168.1.1&#x2F;24</span><br><span class="line">!</span><br><span class="line">router ospf 1</span><br><span class="line"> no network 192.168.1.0&#x2F;24 area 0</span><br><span class="line">!</span><br><span class="line">interface eth0</span><br><span class="line"> ip ospf cost 10</span><br></pre></td></tr></table></figure>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>Ubuntu 20.04 LTS 安装 FRR，且以 root 权限运行</p>
 <h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">   git autoconf automake libtool make libreadline-dev texinfo \</span><br><span class="line">   pkg-config libpam0g-dev libjson-c-dev bison flex \</span><br><span class="line">   libc-ares-dev python3-dev python3-sphinx \</span><br><span class="line">   install-info build-essential libsnmp-dev perl \</span><br><span class="line">   protobuf-c-compiler libprotobuf-c-dev \</span><br><span class="line">   libcap-dev libelf-dev libunwind-dev</span><br><span class="line">apt-get install cmake libpcre2-dev</span><br></pre></td></tr></table></figure>
 <h2 id="安装-libyang"><a href="#安装-libyang" class="headerlink" title="安装 libyang"></a>安装 libyang</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;CESNET&#x2F;libyang.git</span><br><span class="line">cd libyang</span><br><span class="line">git checkout v2.1.128</span><br><span class="line">mkdir build; cd build</span><br><span class="line">cmake --install-prefix &#x2F;usr \</span><br><span class="line">      -D CMAKE_BUILD_TYPE:String&#x3D;&quot;Release&quot; ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
@@ -5114,8 +5115,8 @@ m_w=\sum\limits_w dx+\sum\limits_w dy\\
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>特征描述</tag>
         <tag>SURF算子</tag>
+        <tag>特征描述</tag>
       </tags>
   </entry>
   <entry>
@@ -5236,8 +5237,8 @@ y
         <category>Computer Vision</category>
       </categories>
       <tags>
-        <tag>SIFT算子</tag>
         <tag>特征描述</tag>
+        <tag>SIFT算子</tag>
       </tags>
   </entry>
   <entry>
