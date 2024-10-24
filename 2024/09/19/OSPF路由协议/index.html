@@ -48,7 +48,7 @@
 
   <meta name="description" content="OSPF 路由协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OSPF路由协议">
+<meta property="og:title" content="OSPF 路由协议">
 <meta property="og:url" content="https:&#x2F;&#x2F;gy23333.github.io&#x2F;2024&#x2F;09&#x2F;19&#x2F;OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE&#x2F;index.html">
 <meta property="og:site_name" content="GuoYi的博客">
 <meta property="og:description" content="OSPF 路由协议">
@@ -64,7 +64,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020193001364.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;gy-pic.oss-cn-hangzhou.aliyuncs.com&#x2F;image-20241020193546945.png">
 <meta property="article:published_time" content="2024-09-18T17:38:42.000Z">
-<meta property="article:modified_time" content="2024-10-20T16:30:17.064Z">
+<meta property="article:modified_time" content="2024-10-24T18:45:47.662Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="路由协议">
@@ -84,7 +84,7 @@
   };
 </script>
 
-  <title>OSPF路由协议 | GuoYi的博客</title>
+  <title>OSPF 路由协议 | GuoYi的博客</title>
   
 
 
@@ -236,7 +236,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          OSPF路由协议
+          OSPF 路由协议
         </h1>
 
         <div class="post-meta">
@@ -253,7 +253,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-21 00:30:17" itemprop="dateModified" datetime="2024-10-21T00:30:17+08:00">2024-10-21</time>
+                <time title="Modified: 2024-10-25 02:45:47" itemprop="dateModified" datetime="2024-10-25T02:45:47+08:00">2024-10-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -352,6 +352,34 @@
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241020193546945.png" alt="image-20241020193546945"></p>
 <p>非骨干区域之间不能直接通信，需要通过骨干区域（区域 0）进行转发。</p>
 <p>如上图中有三个区域：区域 0、区域 1、区域 10.0.0.1，其中区域 1、区域 10.0.0.1 这样的非骨干区域不能直接通信，需要先发送给区域 0，再由区域 0 转发。</p>
+<h2 id="Hello-包"><a href="#Hello-包" class="headerlink" title="Hello 包"></a>Hello 包</h2><h3 id="Hello-包组成"><a href="#Hello-包组成" class="headerlink" title="Hello 包组成"></a>Hello 包组成</h3><ul>
+<li>功能：Hello 包用于发现邻居路由器，交换 OSPF 配置信息，并确认邻接状态。</li>
+<li>内容：包括 Route ID、Priority、Hello 间隔、Dead 间隔等</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/etc/frr<span class="comment"># tcpdump -i vip0 proto ospf -vvv</span></span><br><span class="line">tcpdump: listening on vip0, link<span class="literal">-type</span> EN10MB (Ethernet), capture size <span class="number">262144</span> bytes</span><br><span class="line"><span class="number">11</span>:<span class="number">15</span>:<span class="number">29.874116</span> IP (tos <span class="number">0</span>xc0, ttl <span class="number">1</span>, id <span class="number">22009</span>, offset <span class="number">0</span>, flags [<span class="type">none</span>], proto OSPF (<span class="number">89</span>), length <span class="number">64</span>)</span><br><span class="line">    ubuntu &gt; ospf<span class="literal">-all</span>.mcast.net: OSPFv2, Hello, length <span class="number">44</span></span><br><span class="line">	Router<span class="literal">-ID</span> ubuntu, Backbone Area, Authentication Type: none (<span class="number">0</span>)</span><br><span class="line">	Options [<span class="type">External</span>]</span><br><span class="line">	  Hello Timer <span class="number">10</span>s, Dead Timer <span class="number">40</span>s, Mask <span class="number">255.255</span>.<span class="number">255.255</span>, Priority <span class="number">1</span></span><br><span class="line">	  Designated Router ubuntu</span><br></pre></td></tr></table></figure>
+<h3 id="组播地址-ospf-all-mcast-net"><a href="#组播地址-ospf-all-mcast-net" class="headerlink" title="组播地址 ospf-all.mcast.net"></a>组播地址 <code>ospf-all.mcast.net</code></h3><p>OSPF 以组播地址的方式发送 Hello 包，将 Hello 包发往组播地址 <code>ospf-all.mcast.net</code>（224.0.0.5），所有 OSPF 路由器都会监听该地址，如此即可确保域内所有 OSPF 路由器都收到。</p>
+<h3 id="Hello-包发送过程"><a href="#Hello-包发送过程" class="headerlink" title="Hello 包发送过程"></a>Hello 包发送过程</h3><ol>
+<li><strong>定时发送</strong>：每个 OSPF 路由器按照配置的 Hello 间隔定期发送 Hello 包</li>
+<li><strong>包的构造</strong>：路由器构造 Hello 包，将其发送到多播地址 <code>224.0.0.5</code></li>
+<li><strong>邻居发现</strong>：接收到 Hello 包的其他 OSPF 路由器会解析包中的信息，加入邻居表中</li>
+<li><strong>邻接关系维护</strong>：通过定期发送 Hello 包，OSPF 路由器可以维护与邻居的关系。如果在规定的 Dead 间隔内未收到某个邻居的 Hello 包，路由器将认为该邻居失效</li>
+</ol>
+<h2 id="DR-竞选"><a href="#DR-竞选" class="headerlink" title="DR 竞选"></a>DR 竞选</h2><p>广播型网络中需选出该广播域的 DR（指定路由） 和 BDR（备份指定路由，负责在 DR 失效时接管其功能）</p>
+<h3 id="DR-竞选规则"><a href="#DR-竞选规则" class="headerlink" title="DR 竞选规则"></a>DR 竞选规则</h3><ol>
+<li><strong>Priority 大者优先</strong>：优先选择 Priority 较大的路由为 DR，如果 Priority 设置为 0，则不参与 DR 竞选</li>
+<li><strong>Route ID 大者优先</strong>：如果有多个 Priority 最大且相同的路由器，则选择其中 Route ID 最大的（Route ID 为路由器的唯一标识，通常是 IP，不可能相同）</li>
+</ol>
+<p>示例：下面三个路由器中，A 的 Priority 最大，为 DR；B、C 的 Priority 相同，但 B 的 Route ID 大于 C，所以 B 为 BDR</p>
+<ul>
+<li>A 的优先级为 2，Router ID 为 1.1.1.1（DR）</li>
+<li>B 的优先级为 1，Router ID 为 2.2.2.2（BDR）</li>
+<li>C 的优先级为 1，Router ID 为 3.3.3.3</li>
+</ul>
+<h3 id="DR-竞选过程"><a href="#DR-竞选过程" class="headerlink" title="DR 竞选过程"></a>DR 竞选过程</h3><ol>
+<li>Hello 消息：所有路由器定期组播 Hello 消息，其中包含本路由的 Priority、Route ID 等信息</li>
+<li>优先级比较：根据竞选规则比较各个路由器，优先级最高的为 DR，次高的为 BDR</li>
+<li>选举后，DR 和 BDR 会向所有的路由器广播 LSA，其他所有路由器将与 DR 和 BDR 建立邻接关系</li>
+</ol>
 <h1 id="RIP-和-OSPF-比较"><a href="#RIP-和-OSPF-比较" class="headerlink" title="RIP 和 OSPF 比较"></a>RIP 和 OSPF 比较</h1><div class="table-container">
 <table>
 <thead>
@@ -472,7 +500,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-协议缺陷"><span class="nav-number">1.</span> <span class="nav-text">RIP 协议缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷一：以跳数评估的路由并非最优路径"><span class="nav-number">1.1.</span> <span class="nav-text">缺陷一：以跳数评估的路由并非最优路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷二：最大跳数15限制网络规模"><span class="nav-number">1.2.</span> <span class="nav-text">缺陷二：最大跳数15限制网络规模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷三：更新路由发送全量路由信息，浪费网络资源"><span class="nav-number">1.3.</span> <span class="nav-text">缺陷三：更新路由发送全量路由信息，浪费网络资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷四：收敛速度慢"><span class="nav-number">1.4.</span> <span class="nav-text">缺陷四：收敛速度慢</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF-链路状态路由协议"><span class="nav-number">2.</span> <span class="nav-text">OSPF 链路状态路由协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-工作过程"><span class="nav-number">2.1.</span> <span class="nav-text">OSPF 工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-发现邻居"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 发现邻居</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-建立邻接关系"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 建立邻接关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-传递链路状态信息"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. 传递链路状态信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-路由计算"><span class="nav-number">2.1.4.</span> <span class="nav-text">4. 路由计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-分区域管理"><span class="nav-number">2.2.</span> <span class="nav-text">OSPF 分区域管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-和-OSPF-比较"><span class="nav-number">3.</span> <span class="nav-text">RIP 和 OSPF 比较</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-协议缺陷"><span class="nav-number">1.</span> <span class="nav-text">RIP 协议缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷一：以跳数评估的路由并非最优路径"><span class="nav-number">1.1.</span> <span class="nav-text">缺陷一：以跳数评估的路由并非最优路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷二：最大跳数15限制网络规模"><span class="nav-number">1.2.</span> <span class="nav-text">缺陷二：最大跳数15限制网络规模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷三：更新路由发送全量路由信息，浪费网络资源"><span class="nav-number">1.3.</span> <span class="nav-text">缺陷三：更新路由发送全量路由信息，浪费网络资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺陷四：收敛速度慢"><span class="nav-number">1.4.</span> <span class="nav-text">缺陷四：收敛速度慢</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF-链路状态路由协议"><span class="nav-number">2.</span> <span class="nav-text">OSPF 链路状态路由协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-工作过程"><span class="nav-number">2.1.</span> <span class="nav-text">OSPF 工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-发现邻居"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 发现邻居</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-建立邻接关系"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 建立邻接关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-传递链路状态信息"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. 传递链路状态信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-路由计算"><span class="nav-number">2.1.4.</span> <span class="nav-text">4. 路由计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSPF-分区域管理"><span class="nav-number">2.2.</span> <span class="nav-text">OSPF 分区域管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-包"><span class="nav-number">2.3.</span> <span class="nav-text">Hello 包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hello-包组成"><span class="nav-number">2.3.1.</span> <span class="nav-text">Hello 包组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组播地址-ospf-all-mcast-net"><span class="nav-number">2.3.2.</span> <span class="nav-text">组播地址 ospf-all.mcast.net</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hello-包发送过程"><span class="nav-number">2.3.3.</span> <span class="nav-text">Hello 包发送过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DR-竞选"><span class="nav-number">2.4.</span> <span class="nav-text">DR 竞选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DR-竞选规则"><span class="nav-number">2.4.1.</span> <span class="nav-text">DR 竞选规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DR-竞选过程"><span class="nav-number">2.4.2.</span> <span class="nav-text">DR 竞选过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RIP-和-OSPF-比较"><span class="nav-number">3.</span> <span class="nav-text">RIP 和 OSPF 比较</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -488,7 +516,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -501,7 +529,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">75</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
