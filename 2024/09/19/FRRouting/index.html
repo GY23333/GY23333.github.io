@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="FRRouting（FRR）是一款提供 IP 路由服务的开源套件，支持 BGP、OSPF、RIP、IS-IS 等等路由协议。FRR 可以在网络栈中与其他路由器交换路由信息，做出路由策略决策，并将决策通知给其他层。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FRRouting">
+<meta property="og:url" content="https://gy23333.github.io/2024/09/19/FRRouting/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="FRRouting（FRR）是一款提供 IP 路由服务的开源套件，支持 BGP、OSPF、RIP、IS-IS 等等路由协议。FRR 可以在网络栈中与其他路由器交换路由信息，做出路由策略决策，并将决策通知给其他层。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241029023145100.png">
+<meta property="article:published_time" content="2024-09-19T05:48:11.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.128Z">
+<meta property="article:author" content="GuoYi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241029023145100.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2024/09/19/FRRouting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>FRRouting | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/09/19/FRRouting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FRRouting
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-09-19 13:48:11" itemprop="dateCreated datePublished" datetime="2024-09-19T13:48:11+08:00">2024-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/09/19/FRRouting/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/19/FRRouting/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>FRRouting（FRR）是一款提供 IP 路由服务的开源套件，支持 BGP、OSPF、RIP、IS-IS 等等路由协议。FRR 可以在网络栈中与其他路由器交换路由信息，做出路由策略决策，并将决策通知给其他层。</p>
+<a id="more"></a>
+<h1 id="FRR-安装"><a href="#FRR-安装" class="headerlink" title="FRR 安装"></a>FRR 安装</h1><p>Ubuntu 20.04 LTS 安装 FRR，且以 root 权限运行</p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">   git autoconf automake libtool make libreadline-dev texinfo \</span><br><span class="line">   pkg-config libpam0g-dev libjson-c-dev bison flex \</span><br><span class="line">   libc-ares-dev python3-dev python3-sphinx \</span><br><span class="line">   install-info build-essential libsnmp-dev perl \</span><br><span class="line">   protobuf-c-compiler libprotobuf-c-dev \</span><br><span class="line">   libcap-dev libelf-dev libunwind-dev</span><br><span class="line">apt-get install cmake libpcre2-dev</span><br></pre></td></tr></table></figure>
+<h2 id="安装-libyang"><a href="#安装-libyang" class="headerlink" title="安装 libyang"></a>安装 libyang</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;CESNET&#x2F;libyang.git</span><br><span class="line">cd libyang</span><br><span class="line">git checkout v2.1.128</span><br><span class="line">mkdir build; cd build</span><br><span class="line">cmake --install-prefix &#x2F;usr \</span><br><span class="line">      -D CMAKE_BUILD_TYPE:String&#x3D;&quot;Release&quot; ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h2 id="安装-FRR"><a href="#安装-FRR" class="headerlink" title="安装 FRR"></a>安装 FRR</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;frrouting&#x2F;frr.git frr</span><br><span class="line">cd frr</span><br><span class="line">.&#x2F;bootstrap.sh</span><br><span class="line">.&#x2F;configure \</span><br><span class="line">    --prefix&#x3D;&#x2F;usr \</span><br><span class="line">    --includedir&#x3D;\$&#123;prefix&#125;&#x2F;include \</span><br><span class="line">    --bindir&#x3D;\$&#123;prefix&#125;&#x2F;bin \</span><br><span class="line">    --sbindir&#x3D;\$&#123;prefix&#125;&#x2F;lib&#x2F;frr \</span><br><span class="line">    --libdir&#x3D;\$&#123;prefix&#125;&#x2F;lib&#x2F;frr \</span><br><span class="line">    --libexecdir&#x3D;\$&#123;prefix&#125;&#x2F;lib&#x2F;frr \</span><br><span class="line">    --sysconfdir&#x3D;&#x2F;etc \</span><br><span class="line">    --localstatedir&#x3D;&#x2F;var \</span><br><span class="line">    --with-moduledir&#x3D;\$&#123;prefix&#125;&#x2F;lib&#x2F;frr&#x2F;modules \</span><br><span class="line">    --enable-configfile-mask&#x3D;0640 \</span><br><span class="line">    --enable-logfile-mask&#x3D;0640 \</span><br><span class="line">    --enable-snmp&#x3D;agentx \</span><br><span class="line">    --enable-multipath&#x3D;64 \</span><br><span class="line">    --enable-user&#x3D;root \</span><br><span class="line">    --enable-group&#x3D;root \</span><br><span class="line">    --enable-vty-group&#x3D;root \</span><br><span class="line">    --with-pkg-git-version \</span><br><span class="line">    --with-pkg-extra-version&#x3D;-MyOwnFRRVersion</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h2 id="生成配置"><a href="#生成配置" class="headerlink" title="生成配置"></a>生成配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo install -m 775 -o root -g root -d &#x2F;var&#x2F;log&#x2F;frr</span><br><span class="line">sudo install -m 775 -o root -g root -d &#x2F;etc&#x2F;frr</span><br><span class="line">sudo install -m 640 -o root -g root tools&#x2F;etc&#x2F;frr&#x2F;vtysh.conf &#x2F;etc&#x2F;frr&#x2F;vtysh.conf</span><br><span class="line">sudo install -m 640 -o root -g root tools&#x2F;etc&#x2F;frr&#x2F;frr.conf &#x2F;etc&#x2F;frr&#x2F;frr.conf</span><br><span class="line">sudo install -m 640 -o root -g root tools&#x2F;etc&#x2F;frr&#x2F;daemons.conf &#x2F;etc&#x2F;frr&#x2F;daemons.conf</span><br><span class="line">sudo install -m 640 -o root -g root tools&#x2F;etc&#x2F;frr&#x2F;daemons &#x2F;etc&#x2F;frr&#x2F;daemons</span><br></pre></td></tr></table></figure>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo install -m 644 tools&#x2F;frr.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;frr.service</span><br><span class="line">sudo systemctl enable frr</span><br></pre></td></tr></table></figure>
+<p>查看安装完成的 FRR</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/home/guoyi/frr/frr<span class="comment"># systemctl status frr</span></span><br><span class="line">● frr.service - FRRouting</span><br><span class="line">     Loaded: loaded (/etc/systemd/system/frr.service; enabled; vendor preset: enabled)</span><br><span class="line">     Active: active (running) since Wed <span class="number">2024</span><span class="literal">-10</span><span class="literal">-16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> PDT; <span class="number">1</span>s ago</span><br><span class="line">       Docs: https://frrouting.readthedocs.io/en/latest/setup.html</span><br><span class="line">    <span class="keyword">Process</span>: <span class="number">55748</span> ExecStart=/usr/lib/frr/frrinit.sh start (code=exited, status=<span class="number">0</span>/SUCCESS)</span><br><span class="line">   Main PID: <span class="number">55760</span> (watchfrr)</span><br><span class="line">     Status: <span class="string">"FRR Operational"</span></span><br><span class="line">      Tasks: <span class="number">8</span> (limit: <span class="number">4540</span>)</span><br><span class="line">     Memory: <span class="number">14.5</span>M</span><br><span class="line">     CGroup: /system.slice/frr.service</span><br><span class="line">             ├─<span class="number">55760</span> /usr/lib/frr/watchfrr <span class="literal">-d</span> <span class="operator">-F</span> traditional zebra mgmtd staticd</span><br><span class="line">             ├─<span class="number">55771</span> /usr/lib/frr/zebra <span class="literal">-d</span> <span class="operator">-F</span> traditional <span class="literal">-A</span> <span class="number">127.0</span>.<span class="number">0.1</span> <span class="literal">-s</span> <span class="number">90000000</span></span><br><span class="line">             ├─<span class="number">55776</span> /usr/lib/frr/mgmtd <span class="literal">-d</span> <span class="operator">-F</span> traditional <span class="literal">-A</span> <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">             └─<span class="number">55778</span> /usr/lib/frr/staticd <span class="literal">-d</span> <span class="operator">-F</span> traditional <span class="literal">-A</span> <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu zebra[<span class="number">55771</span>]: [<span class="type">VTVCM</span>-<span class="type">Y2NW3</span>] Configuration Read <span class="keyword">in</span> Took: <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu mgmtd[<span class="number">55776</span>]: [<span class="type">VTVCM</span>-<span class="type">Y2NW3</span>] Configuration Read <span class="keyword">in</span> Took: <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu watchfrr[<span class="number">55760</span>]: [<span class="type">VTVCM</span>-<span class="type">Y2NW3</span>] Configuration Read <span class="keyword">in</span> Took: <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu staticd[<span class="number">55778</span>]: [<span class="type">VTVCM</span>-<span class="type">Y2NW3</span>] Configuration Read <span class="keyword">in</span> Took: <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu watchfrr[<span class="number">55760</span>]: [<span class="type">QDG3Y</span>-<span class="type">BY5TN</span>] zebra state -&gt; up : connect succeeded</span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu watchfrr[<span class="number">55760</span>]: [<span class="type">QDG3Y</span>-<span class="type">BY5TN</span>] mgmtd state -&gt; up : connect succeeded</span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu watchfrr[<span class="number">55760</span>]: [<span class="type">QDG3Y</span>-<span class="type">BY5TN</span>] staticd state -&gt; up : connect succeeded</span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu watchfrr[<span class="number">55760</span>]: [<span class="type">KWE5Q</span>-<span class="type">QNGFC</span>] all daemons up, doing startup<span class="literal">-complete</span> notify</span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu frrinit.sh[<span class="number">55748</span>]:  * Started watchfrr</span><br><span class="line">Oct <span class="number">16</span> <span class="number">05</span>:<span class="number">46</span>:<span class="number">16</span> ubuntu systemd[<span class="number">1</span>]: Started FRRouting.</span><br></pre></td></tr></table></figure>
+<h2 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h2><p>启动 frr 时报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Oct 15 09:02:45 ubuntu systemd[1]: Starting FRRouting...</span><br><span class="line">Oct 15 09:02:45 ubuntu frrinit.sh[28693]:  * Starting watchfrr with command: &#39;  &#x2F;usr&#x2F;lib&#x2F;frr&#x2F;watchfrr  -d  -F traditional   zebra mgmtd staticd&#39;</span><br><span class="line">Oct 15 09:02:45 ubuntu frrinit.sh[28703]: &#x2F;usr&#x2F;lib&#x2F;frr&#x2F;watchfrr: error while loading shared libraries: libyang.so.2: cannot open shared object file: No such file or directory</span><br><span class="line">Oct 15 09:02:45 ubuntu frrinit.sh[28693]:  * Failed to start watchfrr!</span><br></pre></td></tr></table></figure>
+<p>查到 libyang 已安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~&#x2F;frr&#x2F;libyang# ll &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libyang.so</span><br><span class="line">lrwxrwxrwx 1 root root 12 Oct 15 08:22 &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libyang.so -&gt; libyang.so.2</span><br></pre></td></tr></table></figure>
+<p>但 watchfrr 无法链接到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~&#x2F;frr&#x2F;libyang# ldd &#x2F;usr&#x2F;lib&#x2F;frr&#x2F;watchfrr</span><br><span class="line">	linux-vdso.so.1 (0x00007fff64d68000)</span><br><span class="line">	libfrr.so.0 &#x3D;&gt; &#x2F;usr&#x2F;lib&#x2F;frr&#x2F;libfrr.so.0 (0x00007f749a134000)</span><br><span class="line">	libpthread.so.0 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libpthread.so.0 (0x00007f749a0f8000)</span><br><span class="line">	libc.so.6 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6 (0x00007f7499f06000)</span><br><span class="line">	libcap.so.2 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcap.so.2 (0x00007f7499efd000)</span><br><span class="line">	libunwind.so.8 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libunwind.so.8 (0x00007f7499ee0000)</span><br><span class="line">	libcrypt.so.1 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcrypt.so.1 (0x00007f7499ea5000)</span><br><span class="line">	libdl.so.2 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libdl.so.2 (0x00007f7499e9d000)</span><br><span class="line">	libm.so.6 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libm.so.6 (0x00007f7499d4e000)</span><br><span class="line">	libprotobuf-c.so.1 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libprotobuf-c.so.1 (0x00007f7499d43000)</span><br><span class="line">	libyang.so.2 &#x3D;&gt; not found</span><br><span class="line">	libjson-c.so.4 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libjson-c.so.4 (0x00007f7499d31000)</span><br><span class="line">	&#x2F;lib64&#x2F;ld-linux-x86-64.so.2 (0x00007f749a387000)</span><br><span class="line">	liblzma.so.5 &#x3D;&gt; &#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;liblzma.so.5 (0x00007f7499d08000)</span><br></pre></td></tr></table></figure>
+<p>更新动态链接库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+<h1 id="FRR-基础"><a href="#FRR-基础" class="headerlink" title="FRR 基础"></a>FRR 基础</h1><h2 id="Daemons-配置文件"><a href="#Daemons-配置文件" class="headerlink" title="Daemons 配置文件"></a>Daemons 配置文件</h2><p>Daemons 配置文件用来设置 FRR 的哪些 daemon 需要在 FRR 启动时被激活，并且设置 daemon 启动时的参数。</p>
+<p>通常放在 <code>/etc/frr/daemons</code>，如果修改了里面的内容，需要重启 FRR 服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"># This file tells the frr package which daemons to start.</span><br><span class="line">#</span><br><span class="line"># Sample configurations for these daemons can be found in</span><br><span class="line"># &#x2F;usr&#x2F;share&#x2F;doc&#x2F;frr&#x2F;examples&#x2F;.</span><br><span class="line">#</span><br><span class="line"># ATTENTION:</span><br><span class="line">#</span><br><span class="line"># When activating a daemon for the first time, a config file, even if it is</span><br><span class="line"># empty, has to be present *and* be owned by the user and group &quot;frr&quot;, else</span><br><span class="line"># the daemon will not be started by &#x2F;etc&#x2F;init.d&#x2F;frr. The permissions should</span><br><span class="line"># be u&#x3D;rw,g&#x3D;r,o&#x3D;.</span><br><span class="line"># When using &quot;vtysh&quot; such a config file is also needed. It should be owned by</span><br><span class="line"># group &quot;frrvty&quot; and set to ug&#x3D;rw,o&#x3D; though. Check &#x2F;etc&#x2F;pam.d&#x2F;frr, too.</span><br><span class="line">#</span><br><span class="line"># The watchfrr, zebra and staticd daemons are always started.</span><br><span class="line">#</span><br><span class="line">bgpd&#x3D;no</span><br><span class="line">ospfd&#x3D;yes</span><br><span class="line">ospf6d&#x3D;no</span><br><span class="line">ripd&#x3D;no</span><br><span class="line">ripngd&#x3D;no</span><br><span class="line">isisd&#x3D;no</span><br><span class="line">pimd&#x3D;no</span><br><span class="line">pim6d&#x3D;no</span><br><span class="line">ldpd&#x3D;no</span><br><span class="line">nhrpd&#x3D;no</span><br><span class="line">eigrpd&#x3D;no</span><br><span class="line">babeld&#x3D;no</span><br><span class="line">sharpd&#x3D;no</span><br><span class="line">pbrd&#x3D;no</span><br><span class="line">bfdd&#x3D;no</span><br><span class="line">fabricd&#x3D;no</span><br><span class="line">vrrpd&#x3D;no</span><br><span class="line">pathd&#x3D;no</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># If this option is set the &#x2F;etc&#x2F;init.d&#x2F;frr script automatically loads</span><br><span class="line"># the config via &quot;vtysh -b&quot; when the servers are started.</span><br><span class="line"># Check &#x2F;etc&#x2F;pam.d&#x2F;frr if you intend to use &quot;vtysh&quot;!</span><br><span class="line">#</span><br><span class="line">vtysh_enable&#x3D;yes</span><br><span class="line">zebra_options&#x3D;&quot;  -A 127.0.0.1 -s 90000000&quot;</span><br><span class="line">mgmtd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line">bgpd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">ospfd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line">ospf6d_options&#x3D;&quot; -A ::1&quot;</span><br><span class="line">ripd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">ripngd_options&#x3D;&quot; -A ::1&quot;</span><br><span class="line">isisd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line">pimd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">pim6d_options&#x3D;&quot;  -A ::1&quot;</span><br><span class="line">ldpd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">nhrpd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line">eigrpd_options&#x3D;&quot; -A 127.0.0.1&quot;</span><br><span class="line">babeld_options&#x3D;&quot; -A 127.0.0.1&quot;</span><br><span class="line">sharpd_options&#x3D;&quot; -A 127.0.0.1&quot;</span><br><span class="line">pbrd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">staticd_options&#x3D;&quot;-A 127.0.0.1&quot;</span><br><span class="line">bfdd_options&#x3D;&quot;   -A 127.0.0.1&quot;</span><br><span class="line">fabricd_options&#x3D;&quot;-A 127.0.0.1&quot;</span><br><span class="line">vrrpd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line">pathd_options&#x3D;&quot;  -A 127.0.0.1&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># If you want to pass a common option to all daemons, you can use the</span><br><span class="line"># &quot;frr_global_options&quot; variable.</span><br><span class="line">#</span><br><span class="line">#frr_global_options&#x3D;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># The list of daemons to watch is automatically generated by the init script.</span><br><span class="line"># This variable can be used to pass options to watchfrr that will be passed</span><br><span class="line"># prior to the daemon list.</span><br><span class="line">#</span><br><span class="line"># To make watchfrr create&#x2F;join the specified netns, add the the &quot;--netns&quot;</span><br><span class="line"># option here. It will only have an effect in &#x2F;etc&#x2F;frr&#x2F;&lt;somename&gt;&#x2F;daemons, and</span><br><span class="line"># you need to start FRR with &quot;&#x2F;usr&#x2F;lib&#x2F;frr&#x2F;frrinit.sh start &lt;somename&gt;&quot;.</span><br><span class="line">#</span><br><span class="line">#watchfrr_options&#x3D;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># configuration profile</span><br><span class="line">#</span><br><span class="line">#frr_profile&#x3D;&quot;traditional&quot;</span><br><span class="line">#frr_profile&#x3D;&quot;datacenter&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># This is the maximum number of FD&#39;s that will be available.  Upon startup this</span><br><span class="line"># is read by the control files and ulimit is called.  Uncomment and use a</span><br><span class="line"># reasonable value for your setup if you are expecting a large number of peers</span><br><span class="line"># in say BGP.</span><br><span class="line">#</span><br><span class="line">#MAX_FDS&#x3D;1024</span><br><span class="line"></span><br><span class="line"># Uncomment this option if you want to run FRR as a non-root user. Note that</span><br><span class="line"># you should know what you are doing since most of the daemons need root</span><br><span class="line"># to work. This could be useful if you want to run FRR in a container</span><br><span class="line"># for instance.</span><br><span class="line"># FRR_NO_ROOT&#x3D;&quot;yes&quot;</span><br><span class="line"></span><br><span class="line"># For any daemon, you can specify a &quot;wrap&quot; command to start instead of starting</span><br><span class="line"># the daemon directly. This will simply be prepended to the daemon invocation.</span><br><span class="line"># These variables have the form daemon_wrap, where &#39;daemon&#39; is the name of the</span><br><span class="line"># daemon (the same pattern as the daemon_options variables).</span><br><span class="line">#</span><br><span class="line"># Note that when daemons are started, they are told to daemonize with the &#96;-d&#96;</span><br><span class="line"># option. This has several implications. For one, the init script expects that</span><br><span class="line"># when it invokes a daemon, the invocation returns immediately. If you add a</span><br><span class="line"># wrap command here, it must comply with this expectation and daemonize as</span><br><span class="line"># well, or the init script will never return. Furthermore, because daemons are</span><br><span class="line"># themselves daemonized with -d, you must ensure that your wrapper command is</span><br><span class="line"># capable of following child processes after a fork() if you need it to do so.</span><br><span class="line">#</span><br><span class="line"># If your desired wrapper does not support daemonization, you can wrap it with</span><br><span class="line"># a utility program that daemonizes programs, such as &#39;daemonize&#39;. An example</span><br><span class="line"># of this might look like:</span><br><span class="line">#</span><br><span class="line"># bgpd_wrap&#x3D;&quot;&#x2F;usr&#x2F;bin&#x2F;daemonize &#x2F;usr&#x2F;bin&#x2F;mywrapper&quot;</span><br><span class="line">#</span><br><span class="line"># This is particularly useful for programs which record processes but lack</span><br><span class="line"># daemonization options, such as perf and rr.</span><br><span class="line">#</span><br><span class="line"># If you wish to wrap all daemons in the same way, you may set the &quot;all_wrap&quot;</span><br><span class="line"># variable.</span><br><span class="line">#</span><br><span class="line">#all_wrap&#x3D;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="crash-日志"><a href="#crash-日志" class="headerlink" title="crash 日志"></a>crash 日志</h2><p>FRR 各个 daemon 的 crash 日志储存在固定位置，即 <code>/var/tmp/frr/&lt;daemon&gt;[-&lt;instance&gt;].&lt;pid&gt;/crashlog</code></p>
+<h2 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h2><p>在 frr.conf 中可以配置日志文件输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log file &#x2F;var&#x2F;log&#x2F;frr&#x2F;frr.log [logging_level]</span><br></pre></td></tr></table></figure>
+<h1 id="vtysh"><a href="#vtysh" class="headerlink" title="vtysh"></a>vtysh</h1><p>root 权限或者 frrvty 权限可以使用 <code>vtysh</code> 命令进入交互模式</p>
+<h2 id="show-命令"><a href="#show-命令" class="headerlink" title="show 命令"></a>show 命令</h2><ul>
+<li><code>show ip ospf neighbor</code> 查看 OSPF 邻居，其中<ul>
+<li>Neighbor ID：邻居的 Router ID</li>
+<li>Pri：邻居的 Priority</li>
+<li>State：邻居状态</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">568</span>ade633bf9<span class="comment"># show ip ospf neighbor</span></span><br><span class="line"></span><br><span class="line">Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL</span><br><span class="line"><span class="number">12.12</span>.<span class="number">0.2</span>         <span class="number">1</span> Full/Backup     <span class="number">22</span>h48m43s         <span class="number">37.418</span>s <span class="number">11.11</span>.<span class="number">0.3</span>       eth1:<span class="number">11.11</span>.<span class="number">0.2</span>                       <span class="number">0</span>     <span class="number">0</span>     <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>FRR 和其他路由器交换路由信息、</p>
+<p>支持北向grpc接口 或 vtysh 命令</p>
+<p>进入配置模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure terminal</span><br></pre></td></tr></table></figure>
+<p>配置网卡</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface ens38</span><br></pre></td></tr></table></figure>
+<p>VIP是<code>192.168.1.1/24</code>，你要发布到OSPF区域0，且设置成本为10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vtysh</span><br><span class="line">configure terminal</span><br><span class="line">interface eth0</span><br><span class="line"> ip address 192.168.1.1&#x2F;24</span><br><span class="line">!</span><br><span class="line">router ospf</span><br><span class="line"> </span><br><span class="line"> network 192.168.1.0&#x2F;24 area 0</span><br><span class="line">!</span><br><span class="line">interface eth0</span><br><span class="line"> ip ospf cost 10</span><br><span class="line"> </span><br><span class="line">end</span><br><span class="line">write memory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vtysh</span><br><span class="line">configure terminal</span><br><span class="line">interface eth0</span><br><span class="line"> no ip address 192.168.1.1&#x2F;24</span><br><span class="line">!</span><br><span class="line">router ospf 1</span><br><span class="line"> no network 192.168.1.0&#x2F;24 area 0</span><br><span class="line">!</span><br><span class="line">interface eth0</span><br><span class="line"> ip ospf cost 10</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show ip route ospf</span><br></pre></td></tr></table></figure>
+<p>查看 DR</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show ip ospf neighbor</span><br></pre></td></tr></table></figure>
+<p> 查看 ospf 路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show ip ospf route</span><br></pre></td></tr></table></figure>
+<h1 id="FRR-配置"><a href="#FRR-配置" class="headerlink" title="FRR 配置"></a>FRR 配置</h1><h2 id="配置命令"><a href="#配置命令" class="headerlink" title="配置命令"></a>配置命令</h2><ul>
+<li><p>查看当前配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show running-config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入配置模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure terminal</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="prefix-list-配置"><a href="#prefix-list-配置" class="headerlink" title="prefix-list 配置"></a>prefix-list 配置</h2><p>prefix-list（前缀列表）用于匹配和过滤 IP 地址</p>
+<h3 id="定义-prefix-list"><a href="#定义-prefix-list" class="headerlink" title="定义 prefix-list"></a>定义 prefix-list</h3><p>下面只是定义一条前缀列表规则，如未设置应用，不会起任何作用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip prefix-list NAME [seq NUMBER] (permit|deny) PREFIX [le LEN] [ge LEN]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>NAME</code>：定义的该前缀列表的名字，用于唯一标识该 prefix-list</li>
+<li><code>seq</code>：规则序号，匹配的优先级，序号越小越先匹配，可自动设置，自动设置以 5 为增量</li>
+<li><code>permit|deny</code>：匹配到的前缀将被允许通过/被过滤掉</li>
+<li><code>PREFIX</code>：匹配的网络地址和前缀长度</li>
+<li><code>le</code>：匹配的最长子网掩码长度</li>
+<li><code>ge</code>：匹配的最短子网掩码长度</li>
+</ul>
+<p>配置示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个命名为 PLIST-1 的 prefix-list，拒绝所有前缀</span><br><span class="line">ip prefix-list PLIST-1 seq 5 deny 0.0.0.0&#x2F;0 le 32</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定义一个命名为 PLIST-2 的 prefix-list，接受前缀 IP 为 1.1.1.1 和 2.2.2.2 的前缀</span><br><span class="line">ip prefix-list PLIST-2 seq 5 permit 1.1.1.1&#x2F;32</span><br><span class="line">ip prefix-list PLIST-2 seq 10 permit 2.2.2.2&#x2F;32</span><br></pre></td></tr></table></figure>
+<h3 id="前缀匹配规则"><a href="#前缀匹配规则" class="headerlink" title="前缀匹配规则"></a>前缀匹配规则</h3><ol>
+<li>优先匹配 seq 小的规则，逐条检查匹配，如果匹配上，则后续条目无需再检查</li>
+<li>如果未设置任何 prefix-list，则视为所有 prefix 都 permit</li>
+<li>默认拒绝：如果设置有 prefix-list，但未匹配到任何一条规则，则默认拒绝该 prefix</li>
+<li>匹配规则：<ol>
+<li>检查 prefix IP 是否匹配 <code>network/prefix-length</code></li>
+<li>如果有设置 <code>ge</code> 或 <code>le</code>，则检查 prefix 长度是否在 <code>&gt;=ge</code> 以及 <code>&lt;=le</code> 范围内</li>
+<li>比如 <code>192.168.1.0/24 ge 25 le 30</code><ul>
+<li>IP 匹配范围 <code>192.168.1.0</code> ~ <code>192.168.1.255</code></li>
+<li>前缀长度在 25 ~ 30</li>
+<li><code>192.168.1.0/24</code> 不匹配（前缀长度不匹配）、<code>192.168.1.0/25</code> 匹配、<code>192.168.1.30/28</code> 匹配</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="查看-prefix-list"><a href="#查看-prefix-list" class="headerlink" title="查看 prefix-list"></a>查看 prefix-list</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show ip prefix-list</span><br></pre></td></tr></table></figure>
+<h2 id="route-map-配置"><a href="#route-map-配置" class="headerlink" title="route-map 配置"></a>route-map 配置</h2><p>用于匹配和过滤路由</p>
+<h3 id="定义-route-map"><a href="#定义-route-map" class="headerlink" title="定义 route-map"></a>定义 route-map</h3><p>下面只是定义一条路由匹配规则，如未设置应用，不会起任何作用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">route-map ROUTE-MAP-NAME (permit|deny) ORDER</span><br><span class="line">  match &lt;conditions&gt;</span><br><span class="line">  set &lt;actions&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ROUTE-MAP-NAME</code>：定义的该 route-map 的名字，用于唯一标识该 route-map</li>
+<li><code>permit|deny</code> ：是否允许匹配的路由通过</li>
+<li><code>ORDER</code>：规则序号，匹配的优先级，序号越小越先匹配，可自动设置，自动设置以 10 为增量</li>
+<li><code>match</code>：匹配条件</li>
+<li><code>set</code>：设置动作，如果 <code>match</code> 匹配上了，则给该条路由执行设置动作</li>
+</ul>
+<p>配置示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">route-map EXAMPLE permit 10</span><br><span class="line">  match ip address prefix-list LIST-1</span><br><span class="line">  set local-preference 200</span><br><span class="line"></span><br><span class="line">route-map EXAMPLE permit 20</span><br><span class="line">  match ip address prefix-list LIST-2</span><br><span class="line">  set local-preference 100</span><br></pre></td></tr></table></figure>
+<h3 id="match-匹配条件"><a href="#match-匹配条件" class="headerlink" title="match 匹配条件"></a>match 匹配条件</h3><p>路由匹配条件，只有全部满足才算匹配</p>
+<ul>
+<li><code>match ip address prefix-list PREFIX_LIST</code><ul>
+<li>IP 地址被 prefix-list  PREFIX_LIST 匹配并允许通过的路由则匹配</li>
+</ul>
+</li>
+</ul>
+<h3 id="set-设置动作"><a href="#set-设置动作" class="headerlink" title="set 设置动作"></a>set 设置动作</h3><h3 id="路由匹配规则"><a href="#路由匹配规则" class="headerlink" title="路由匹配规则"></a>路由匹配规则</h3><ol>
+<li>优先匹配 order 小的 route map，逐条检查匹配，如果匹配上，则后续条目无需再检查</li>
+<li>默认拒绝：如果所有的 route map 都没匹配上，则默认拒绝该路由</li>
+<li>匹配规则：<ol>
+<li>检查是否匹配上 <code>match</code> 的匹配规则，如果是匹配 prefix-list，需要被 prefix-list permit 才算匹配上该 <code>match</code></li>
+<li></li>
+</ol>
+</li>
+</ol>
+<h2 id="route-map-应用"><a href="#route-map-应用" class="headerlink" title="route-map 应用"></a>route-map 应用</h2><h1 id="OSPF-组网"><a href="#OSPF-组网" class="headerlink" title="OSPF 组网"></a>OSPF 组网</h1><p>搭建下面一个网络，使用 Docker 模拟出三台 FRR 路由器，并给其配网，其中有两个网段：Router 1 的 eth1 和 Router 2 的 eth1、Router 3 的 eth1 和 Router 2 的 eth2，使用 FRR 让 Router 1 和 Router 3 学习到到对方的路由。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241029023145100.png" alt="OSPF实验拓扑" style="zoom:50%;" /></p>
+<h2 id="1-Docker-模拟-FRR-路由器"><a href="#1-Docker-模拟-FRR-路由器" class="headerlink" title="1. Docker 模拟 FRR 路由器"></a>1. Docker 模拟 FRR 路由器</h2><p>模拟 3 台 FRR 路由器 Docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --privileged --net&#x3D;none --name frr-01 quay.io&#x2F;frrouting&#x2F;frr:10.0.0</span><br><span class="line">docker run -d --privileged --net&#x3D;none --name frr-02 quay.io&#x2F;frrouting&#x2F;frr:10.0.0</span><br><span class="line">docker run -d --privileged --net&#x3D;none --name frr-03 quay.io&#x2F;frrouting&#x2F;frr:10.0.0</span><br></pre></td></tr></table></figure>
+<p>查看 docker 进程</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># docker ps</span></span><br><span class="line">CONTAINER ID   IMAGE                          COMMAND                  CREATED         STATUS         PORTS     NAMES</span><br><span class="line"><span class="number">6185</span>c04f06d1   quay.io/frrouting/frr:<span class="number">10.0</span>.<span class="number">0</span>   <span class="string">"/sbin/tini -- /usr/…"</span>   <span class="number">2</span> minutes ago   Up <span class="number">2</span> minutes             frr<span class="literal">-03</span></span><br><span class="line"><span class="number">1681</span>fd9bd374   quay.io/frrouting/frr:<span class="number">10.0</span>.<span class="number">0</span>   <span class="string">"/sbin/tini -- /usr/…"</span>   <span class="number">3</span> minutes ago   Up <span class="number">3</span> minutes             frr<span class="literal">-02</span></span><br><span class="line"><span class="number">568</span>ade633bf9   quay.io/frrouting/frr:<span class="number">10.0</span>.<span class="number">0</span>   <span class="string">"/sbin/tini -- /usr/…"</span>   <span class="number">24</span> hours ago    Up <span class="number">24</span> hours              frr<span class="literal">-01</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-OvS-配网"><a href="#2-OvS-配网" class="headerlink" title="2. OvS 配网"></a>2. OvS 配网</h2><p>由于安装 docker 容器时使用 <code>--net=none</code> 无网络，需根据拓扑对容器配网</p>
+<p>查看各个路由器的网卡，当前各 docker 容器无网卡</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-01 ifconfig</span></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line"></span><br><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-02 ifconfig</span></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line"></span><br><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-03 ifconfig</span></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br></pre></td></tr></table></figure>
+<p>安装 OvS 虚拟交换机用来搭建容器网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install openvswitch-switch</span><br></pre></td></tr></table></figure>
+<p>创建一个网桥交换机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl add-br brConn</span><br></pre></td></tr></table></figure>
+<p>如需删除，使用 <code>ovs-vsctl del-br brConn</code></p>
+<p>查看创建好的网桥</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># ovs-vsctl show</span></span><br><span class="line">cb63c817<span class="literal">-8d63</span><span class="literal">-4d1f</span><span class="literal">-b599</span><span class="literal">-9950b0aeb2eb</span></span><br><span class="line">    Bridge brConn</span><br><span class="line">        Port brConn</span><br><span class="line">            Interface brConn</span><br><span class="line">                type: internal</span><br><span class="line">    ovs_version: <span class="string">"2.13.8"</span></span><br></pre></td></tr></table></figure>
+<p>让三台 docker 路由器都连接到这个交换机，并配置 IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ovs-docker add-port brConn eth1 frr-01 --ipaddress&#x3D;11.11.0.2&#x2F;24</span><br><span class="line">ovs-docker add-port brConn eth1 frr-02 --ipaddress&#x3D;11.11.0.3&#x2F;24</span><br><span class="line">ovs-docker add-port brConn eth2 frr-02 --ipaddress&#x3D;12.12.0.2&#x2F;24</span><br><span class="line">ovs-docker add-port brConn eth1 frr-03 --ipaddress&#x3D;12.12.0.3&#x2F;24</span><br></pre></td></tr></table></figure>
+<p>再次查看网桥</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># ovs-vsctl show</span></span><br><span class="line">cb63c817<span class="literal">-8d63</span><span class="literal">-4d1f</span><span class="literal">-b599</span><span class="literal">-9950b0aeb2eb</span></span><br><span class="line">    Bridge brConn</span><br><span class="line">        Port brConn</span><br><span class="line">            Interface brConn</span><br><span class="line">                type: internal</span><br><span class="line">        Port <span class="string">"0021a5f25d344_l"</span></span><br><span class="line">            Interface <span class="string">"0021a5f25d344_l"</span></span><br><span class="line">        Port <span class="string">"1529171a9a294_l"</span></span><br><span class="line">            Interface <span class="string">"1529171a9a294_l"</span></span><br><span class="line">        Port df2bf7ec96bd4_l</span><br><span class="line">            Interface df2bf7ec96bd4_l</span><br><span class="line">        Port a67433ae00b04_l</span><br><span class="line">            Interface a67433ae00b04_l</span><br><span class="line">    ovs_version: <span class="string">"2.13.8"</span></span><br></pre></td></tr></table></figure>
+<p>此时上各个 Docker 可以看到已配好的网卡</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-01 ifconfig</span></span><br><span class="line">eth1      Link encap:Ethernet  HWaddr <span class="number">1</span>A:CF:B4:C0:<span class="number">93</span>:<span class="number">4</span>B</span><br><span class="line">          inet addr:<span class="number">11.11</span>.<span class="number">0.2</span>  Bcast:<span class="number">0.0</span>.<span class="number">0.0</span>  Mask:<span class="number">255.255</span>.<span class="number">255.0</span></span><br><span class="line">          inet6 addr: fe80::<span class="number">18</span>cf:b4ff:fec0:<span class="number">934</span>b/<span class="number">64</span> Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:<span class="number">1500</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">165</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">42</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">13826</span> (<span class="number">13.5</span> KiB)  TX bytes:<span class="number">3036</span> (<span class="number">2.9</span> KiB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line"></span><br><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-02 ifconfig</span></span><br><span class="line">eth1      Link encap:Ethernet  HWaddr DE:<span class="number">38</span>:AD:<span class="number">91</span>:D8:<span class="number">24</span></span><br><span class="line">          inet addr:<span class="number">11.11</span>.<span class="number">0.3</span>  Bcast:<span class="number">0.0</span>.<span class="number">0.0</span>  Mask:<span class="number">255.255</span>.<span class="number">255.0</span></span><br><span class="line">          inet6 addr: fe80::dc38:adff:fe91:d824/<span class="number">64</span> Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:<span class="number">1500</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">200</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">42</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">16592</span> (<span class="number">16.2</span> KiB)  TX bytes:<span class="number">3036</span> (<span class="number">2.9</span> KiB)</span><br><span class="line"></span><br><span class="line">eth2      Link encap:Ethernet  HWaddr E2:<span class="number">4</span>D:<span class="number">1</span>E:<span class="number">69</span>:<span class="number">47</span>:D2</span><br><span class="line">          inet addr:<span class="number">12.12</span>.<span class="number">0.2</span>  Bcast:<span class="number">0.0</span>.<span class="number">0.0</span>  Mask:<span class="number">255.255</span>.<span class="number">255.0</span></span><br><span class="line">          inet6 addr: fe80::e04d:<span class="number">1</span>eff:fe69:<span class="number">47</span>d2/<span class="number">64</span> Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:<span class="number">1500</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">190</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">39</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">15768</span> (<span class="number">15.3</span> KiB)  TX bytes:<span class="number">2798</span> (<span class="number">2.7</span> KiB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line"></span><br><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-03 ifconfig</span></span><br><span class="line">eth1      Link encap:Ethernet  HWaddr <span class="number">16</span>:<span class="number">47</span>:A2:B7:F5:<span class="number">4</span>F</span><br><span class="line">          inet addr:<span class="number">12.12</span>.<span class="number">0.3</span>  Bcast:<span class="number">0.0</span>.<span class="number">0.0</span>  Mask:<span class="number">255.255</span>.<span class="number">255.0</span></span><br><span class="line">          inet6 addr: fe80::<span class="number">1447</span>:a2ff:feb7:f54f/<span class="number">64</span> Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:<span class="number">1500</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">182</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">38</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">15112</span> (<span class="number">14.7</span> KiB)  TX bytes:<span class="number">2756</span> (<span class="number">2.6</span> KiB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:<span class="number">127.0</span>.<span class="number">0.1</span>  Mask:<span class="number">255.0</span>.<span class="number">0.0</span></span><br><span class="line">          inet6 addr: ::<span class="number">1</span>/<span class="number">128</span> Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:<span class="number">65536</span>  Metric:<span class="number">1</span></span><br><span class="line">          RX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> frame:<span class="number">0</span></span><br><span class="line">          TX packets:<span class="number">0</span> errors:<span class="number">0</span> dropped:<span class="number">0</span> overruns:<span class="number">0</span> carrier:<span class="number">0</span></span><br><span class="line">          collisions:<span class="number">0</span> txqueuelen:<span class="number">1000</span></span><br><span class="line">          RX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)  TX bytes:<span class="number">0</span> (<span class="number">0.0</span> B)</span><br></pre></td></tr></table></figure>
+<h2 id="3-FRR-组网"><a href="#3-FRR-组网" class="headerlink" title="3. FRR 组网"></a>3. FRR 组网</h2><p>由于 Router 1 eth1 和 Router 3 eth1 属于不同网段，在组网前两者间无路由，ping 不通</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-01 bash</span></span><br><span class="line"><span class="number">568</span>ade633bf9:/<span class="comment"># ping 12.12.0.3</span></span><br><span class="line">PING <span class="number">12.12</span>.<span class="number">0.3</span> (<span class="number">12.12</span>.<span class="number">0.3</span>): <span class="number">56</span> <span class="keyword">data</span> bytes</span><br><span class="line">ping: sendto: Network unreachable</span><br><span class="line"><span class="number">568</span>ade633bf9:/<span class="comment"># route -ne</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface</span><br><span class="line"><span class="number">11.11</span>.<span class="number">0.0</span>       <span class="number">0.0</span>.<span class="number">0.0</span>         <span class="number">255.255</span>.<span class="number">255.0</span>   U         <span class="number">0</span> <span class="number">0</span>          <span class="number">0</span> eth1</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># docker exec -it frr-03 bash</span></span><br><span class="line"><span class="number">6185</span>c04f06d1:/<span class="comment"># ping 11.11.0.2</span></span><br><span class="line">PING <span class="number">11.11</span>.<span class="number">0.2</span> (<span class="number">11.11</span>.<span class="number">0.2</span>): <span class="number">56</span> <span class="keyword">data</span> bytes</span><br><span class="line">ping: sendto: Network unreachable</span><br><span class="line"><span class="number">6185</span>c04f06d1:/<span class="comment"># route -ne</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface</span><br><span class="line"><span class="number">12.12</span>.<span class="number">0.0</span>       <span class="number">0.0</span>.<span class="number">0.0</span>         <span class="number">255.255</span>.<span class="number">255.0</span>   U         <span class="number">0</span> <span class="number">0</span>          <span class="number">0</span> eth1</span><br></pre></td></tr></table></figure>
+<p>通过配置 FRR 使得两个网段学习到对方的路由，实现 OSPF 组网</p>
+<p>FRR 开启 OSPF 进程</p>
+<ol>
+<li><p>编辑 <code>/etc/frr/daemons</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ospfd&#x3D;yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启 FRR 服务</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;frr restart</span><br></pre></td></tr></table></figure>
+<p>vtysh 配置 FRR OSPF</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-01</span> ---</span><br><span class="line"><span class="number">568</span>ade633bf9<span class="comment"># configure</span></span><br><span class="line"><span class="number">568</span>ade633bf9(config)<span class="comment"># router ospf</span></span><br><span class="line"><span class="number">568</span>ade633bf9(config<span class="literal">-router</span>)<span class="comment"># network 11.11.0.2/24 area 0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-02</span> ---</span><br><span class="line"><span class="number">1681</span>fd9bd374<span class="comment"># configure</span></span><br><span class="line"><span class="number">1681</span>fd9bd374(config)<span class="comment"># router ospf</span></span><br><span class="line"><span class="number">1681</span>fd9bd374(config<span class="literal">-router</span>)<span class="comment"># network 11.11.0.3/24 area 0</span></span><br><span class="line"><span class="number">1681</span>fd9bd374(config<span class="literal">-router</span>)<span class="comment"># network 12.12.0.2/24 area 0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-03</span> ---</span><br><span class="line"><span class="number">6185</span>c04f06d1<span class="comment"># configure</span></span><br><span class="line"><span class="number">6185</span>c04f06d1(config)<span class="comment"># router ospf</span></span><br><span class="line"><span class="number">6185</span>c04f06d1(config<span class="literal">-router</span>)<span class="comment"># network 12.12.0.3/24 area 0</span></span><br></pre></td></tr></table></figure>
+<p>配置完毕后，frr-01 和 frr-03 的 OSPF 便能学习到对方的路由，互相能 ping 通</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-01</span> ---</span><br><span class="line"><span class="number">568</span>ade633bf9<span class="comment"># show ip ospf route</span></span><br><span class="line">============ OSPF network routing table ============</span><br><span class="line">N    <span class="number">11.11</span>.<span class="number">0.0</span>/<span class="number">24</span>          [<span class="number">10</span>] area: <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">                           directly attached to eth1</span><br><span class="line">N    <span class="number">12.12</span>.<span class="number">0.0</span>/<span class="number">24</span>          [<span class="number">20</span>] area: <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">                           via <span class="number">11.11</span>.<span class="number">0.3</span>, eth1</span><br><span class="line"></span><br><span class="line">============ OSPF router routing table =============</span><br><span class="line"></span><br><span class="line">============ OSPF external routing table ===========</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-01</span> ---</span><br><span class="line"><span class="number">568</span>ade633bf9:/<span class="comment"># ping 12.12.0.3</span></span><br><span class="line">PING <span class="number">12.12</span>.<span class="number">0.3</span> (<span class="number">12.12</span>.<span class="number">0.3</span>): <span class="number">56</span> <span class="keyword">data</span> bytes</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">12.12</span>.<span class="number">0.3</span>: seq=<span class="number">0</span> ttl=<span class="number">63</span> time=<span class="number">0.725</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">12.12</span>.<span class="number">0.3</span>: seq=<span class="number">1</span> ttl=<span class="number">63</span> time=<span class="number">0.225</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">12.12</span>.<span class="number">0.3</span>: seq=<span class="number">2</span> ttl=<span class="number">63</span> time=<span class="number">0.128</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">12.12</span>.<span class="number">0.3</span>: seq=<span class="number">3</span> ttl=<span class="number">63</span> time=<span class="number">0.205</span> ms</span><br><span class="line">^C</span><br><span class="line">--- <span class="number">12.12</span>.<span class="number">0.3</span> ping statistics ---</span><br><span class="line"><span class="number">4</span> packets transmitted, <span class="number">4</span> packets received, <span class="number">0</span>% packet loss</span><br><span class="line">round<span class="literal">-trip</span> min/avg/max = <span class="number">0.128</span>/<span class="number">0.320</span>/<span class="number">0.725</span> ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-03</span> ---</span><br><span class="line"><span class="number">6185</span>c04f06d1<span class="comment"># show ip ospf route</span></span><br><span class="line">============ OSPF network routing table ============</span><br><span class="line">N    <span class="number">11.11</span>.<span class="number">0.0</span>/<span class="number">24</span>          [<span class="number">20</span>] area: <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">                           via <span class="number">12.12</span>.<span class="number">0.2</span>, eth1</span><br><span class="line">N    <span class="number">12.12</span>.<span class="number">0.0</span>/<span class="number">24</span>          [<span class="number">10</span>] area: <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">                           directly attached to eth1</span><br><span class="line"></span><br><span class="line">============ OSPF router routing table =============</span><br><span class="line"></span><br><span class="line">============ OSPF external routing table ===========</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--- frr<span class="literal">-03</span> ---</span><br><span class="line"><span class="number">6185</span>c04f06d1:/<span class="comment"># ping 11.11.0.2</span></span><br><span class="line">PING <span class="number">11.11</span>.<span class="number">0.2</span> (<span class="number">11.11</span>.<span class="number">0.2</span>): <span class="number">56</span> <span class="keyword">data</span> bytes</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">11.11</span>.<span class="number">0.2</span>: seq=<span class="number">0</span> ttl=<span class="number">63</span> time=<span class="number">1.871</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">11.11</span>.<span class="number">0.2</span>: seq=<span class="number">1</span> ttl=<span class="number">63</span> time=<span class="number">0.236</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">11.11</span>.<span class="number">0.2</span>: seq=<span class="number">2</span> ttl=<span class="number">63</span> time=<span class="number">0.161</span> ms</span><br><span class="line"><span class="number">64</span> bytes from <span class="number">11.11</span>.<span class="number">0.2</span>: seq=<span class="number">3</span> ttl=<span class="number">63</span> time=<span class="number">0.151</span> ms</span><br><span class="line">^C</span><br><span class="line">--- <span class="number">11.11</span>.<span class="number">0.2</span> ping statistics ---</span><br><span class="line"><span class="number">4</span> packets transmitted, <span class="number">4</span> packets received, <span class="number">0</span>% packet loss</span><br><span class="line">round<span class="literal">-trip</span> min/avg/max = <span class="number">0.151</span>/<span class="number">0.604</span>/<span class="number">1.871</span> ms</span><br></pre></td></tr></table></figure>
+<h1 id="DR-竞选"><a href="#DR-竞选" class="headerlink" title="DR 竞选"></a>DR 竞选</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://frrouting.org" target="_blank" rel="noopener">FRRouting 官网</a></li>
+<li><a href="https://blog.csdn.net/puhaiyang/article/details/140189690" target="_blank" rel="noopener">Frrouting快速入门——OSPF组网（一）</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" rel="prev" title="OSPF 路由协议">
+      <i class="fa fa-chevron-left"></i> OSPF 路由协议
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/19/Docker/" rel="next" title="Docker">
+      Docker <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FRR-安装"><span class="nav-number">1.</span> <span class="nav-text">FRR 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装依赖"><span class="nav-number">1.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-libyang"><span class="nav-number">1.2.</span> <span class="nav-text">安装 libyang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-FRR"><span class="nav-number">1.3.</span> <span class="nav-text">安装 FRR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成配置"><span class="nav-number">1.4.</span> <span class="nav-text">生成配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动服务"><span class="nav-number">1.5.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装问题"><span class="nav-number">1.6.</span> <span class="nav-text">安装问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FRR-基础"><span class="nav-number">2.</span> <span class="nav-text">FRR 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Daemons-配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">Daemons 配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crash-日志"><span class="nav-number">2.2.</span> <span class="nav-text">crash 日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志配置"><span class="nav-number">2.3.</span> <span class="nav-text">日志配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vtysh"><span class="nav-number">3.</span> <span class="nav-text">vtysh</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#show-命令"><span class="nav-number">3.1.</span> <span class="nav-text">show 命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FRR-配置"><span class="nav-number">4.</span> <span class="nav-text">FRR 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置命令"><span class="nav-number">4.1.</span> <span class="nav-text">配置命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prefix-list-配置"><span class="nav-number">4.2.</span> <span class="nav-text">prefix-list 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-prefix-list"><span class="nav-number">4.2.1.</span> <span class="nav-text">定义 prefix-list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前缀匹配规则"><span class="nav-number">4.2.2.</span> <span class="nav-text">前缀匹配规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-prefix-list"><span class="nav-number">4.2.3.</span> <span class="nav-text">查看 prefix-list</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#route-map-配置"><span class="nav-number">4.3.</span> <span class="nav-text">route-map 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-route-map"><span class="nav-number">4.3.1.</span> <span class="nav-text">定义 route-map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#match-匹配条件"><span class="nav-number">4.3.2.</span> <span class="nav-text">match 匹配条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-设置动作"><span class="nav-number">4.3.3.</span> <span class="nav-text">set 设置动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由匹配规则"><span class="nav-number">4.3.4.</span> <span class="nav-text">路由匹配规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#route-map-应用"><span class="nav-number">4.4.</span> <span class="nav-text">route-map 应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF-组网"><span class="nav-number">5.</span> <span class="nav-text">OSPF 组网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Docker-模拟-FRR-路由器"><span class="nav-number">5.1.</span> <span class="nav-text">1. Docker 模拟 FRR 路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-OvS-配网"><span class="nav-number">5.2.</span> <span class="nav-text">2. OvS 配网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FRR-组网"><span class="nav-number">5.3.</span> <span class="nav-text">3. FRR 组网</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DR-竞选"><span class="nav-number">6.</span> <span class="nav-text">DR 竞选</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

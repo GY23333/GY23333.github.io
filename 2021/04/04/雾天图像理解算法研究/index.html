@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="在自动驾驶的过程中，图像语义分割是其视觉系统中很重要的一环，现有的不少算法在晴天条件下对图像进行处理表现良好，但是一旦出现如雾天等恶劣天气，原有系统对图像的处理效果将大大降低。 本课题旨在通过算法途径，以图像复原为手段，提升图像理解算法在雾天条件下的感知能力，基于大气退化物理模型对雾天图像进行语义分割。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雾天图像理解算法研究">
+<meta property="og:url" content="https://gy23333.github.io/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="在自动驾驶的过程中，图像语义分割是其视觉系统中很重要的一环，现有的不少算法在晴天条件下对图像进行处理表现良好，但是一旦出现如雾天等恶劣天气，原有系统对图像的处理效果将大大降低。 本课题旨在通过算法途径，以图像复原为手段，提升图像理解算法在雾天条件下的感知能力，基于大气退化物理模型对雾天图像进行语义分割。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-04T13:47:00.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.121Z">
+<meta property="article:author" content="GuoYi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gy23333.github.io/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>雾天图像理解算法研究 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          雾天图像理解算法研究
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-04 21:47:00" itemprop="dateCreated datePublished" datetime="2021-04-04T21:47:00+08:00">2021-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/04/%E9%9B%BE%E5%A4%A9%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在自动驾驶的过程中，图像语义分割是其视觉系统中很重要的一环，现有的不少算法在晴天条件下对图像进行处理表现良好，但是一旦出现如雾天等恶劣天气，原有系统对图像的处理效果将大大降低。</p>
+<p>本课题旨在通过算法途径，以图像复原为手段，提升图像理解算法在雾天条件下的感知能力，基于大气退化物理模型对雾天图像进行语义分割。</p>
+<a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本毕业设计研究的主要内容是自动驾驶环境下雾天图像的语义分割。作为自动驾驶汽车视觉系统中的重要一环，语义分割的准确度直接影响了自动驾驶汽车的安全性能。现有的语义分割算法在晴朗天气下表现良好，但是在一旦遇到如大雾等不良天气，其分割效果就会大打折扣。为了解决雾天图像的语义分割问题，本次实验利用基于雾天成像物理模型的深度卷积神经网络对雾天图像进行复原，恢复出去雾图像，再在去雾图像上进行语义分割，提高雾天环境下语义分割的准确度。</p>
+<p>针对自然条件下难以获得同一场景的无雾/有雾图像对数据的问题，本文选择Cityscapes室外街景晴天图像来合成有雾图像。通过双目视差恢复出原始深度映射，再基于分割进行深度的补全，依照设定的大气散射系数，由深度图像得到相应的传输率图像，再根据雾天大气退化原理合成不同浓度下的有雾图像。该方法合成的有雾图像效果逼真，为后续神经网络的训练提供了大量的无雾/有雾图像对。</p>
+<p>针对语义分割受到雾天场景影响的问题，本文提出了一个先图像复原再语义分割的框架。基于雾天大气退化模型，先对传输率进行估计，再生成相应的去雾图像。本文构建了一个深度卷积网络以增大模型的表达能力，同时为了避免网络加深导致的梯度消失问题，引入了残差模块。对网络的去雾效果从视觉指标和定量化指标（PSNR、SSIM）两个维度进行评价，验证了该网络去雾的有效性。</p>
+<p>为了进一步验证图像复原工作对语义分割的促进作用，本文将AOD-Net和本文算法模型所得的去雾图像分别输入语义分割网络，与数据集标签进行比较，得到分割的准确度。实验证明，本文提出的去雾网络相比于AOD-Net不仅在图像质量评价指标上有着显著提升，还进一步提升了语义分割的准确度，验证了本文网络对雾天场景语义分割的巨大促进作用。</p>
+<p><strong>关键词：</strong>雾天图像的合成；深度卷积网络；单幅图像去雾；雾天图像的语义分割</p>
+<h1 id="合成雾图"><a href="#合成雾图" class="headerlink" title="合成雾图"></a>合成雾图</h1><p>参考Semantic Foggy Scene Understanding with Synthetic Data</p>
+<h2 id="雾天图像退化模型"><a href="#雾天图像退化模型" class="headerlink" title="雾天图像退化模型"></a>雾天图像退化模型</h2><p>光线在大气中传播的过程中会接触到空气中的颗粒，形成散射，使得原方向上的光线强度衰减，能量发散到其他方向。随着雾的浓度的增大，空气中的颗粒也就愈加密集，光的散射程度也随之增加。</p>
+<p>雾天图像退化模型中，光学传感器接收到的光分为两个部分：一是目标物体反射的光，反射光从目标物体传播到光学传感器，途中会受到空气颗粒的散射，导致光强减小；二是周围的环境光，也叫大气光，由大气中其他光源散射至光学传感器。</p>
+<p>根据能量守恒定律，目标物体反射光中散射掉的比例应等于大气光散射到光学传感器的比例，由此可以得到以下雾成像机理的线性模型</p>
+<script type="math/tex; mode=display">
+I(x)=J(x)t(x)+A(1-t(x))</script><p>其中，I(x)为有雾图像，J(x)为晴天图像，t(x)为中间介质透射率（即目标物体反射光中成功到达相机，没有被散射掉的光的比例），A为全局大气光强。有雾图像I(x)可分为衰减模型J(x)t(x)和环境光模型A(1-t(x))。</p>
+<h2 id="雾合成"><a href="#雾合成" class="headerlink" title="雾合成"></a>雾合成</h2><p>根据雾成像机制公式</p>
+<script type="math/tex; mode=display">
+I(x)=R(x)t(x)+L(1-t(x))</script><p>要从晴图R(x)得到雾图I(x)，还需要两个参数——中间透射率t(x)和大气光L。</p>
+<h3 id="求中间透射率t-x"><a href="#求中间透射率t-x" class="headerlink" title="求中间透射率t(x)"></a>求中间透射率t(x)</h3><p>数据集通过双目相机对街道进行拍摄，再通过双目匹配算法可以得到以下输入：</p>
+<ul>
+<li>晴图左通道R</li>
+<li>晴图右通道Q</li>
+<li>双目相机参数</li>
+<li>预估视差D</li>
+<li>无视差值D的所有像素点集合</li>
+</ul>
+<p>计算中间透射率t(x)的步骤：</p>
+<ol>
+<li>通过视差D计算出大致的深度图d</li>
+<li>去噪，完成一个以米为单位的深度图d’</li>
+<li>从深度图d’得场景距离图l</li>
+<li></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/06/Daily-English-Dictation/" rel="prev" title="Daily English Dictation">
+      <i class="fa fa-chevron-left"></i> Daily English Dictation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/13/Makefile%E6%95%99%E7%A8%8B/" rel="next" title="Makefile教程">
+      Makefile教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合成雾图"><span class="nav-number">2.</span> <span class="nav-text">合成雾图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#雾天图像退化模型"><span class="nav-number">2.1.</span> <span class="nav-text">雾天图像退化模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#雾合成"><span class="nav-number">2.2.</span> <span class="nav-text">雾合成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求中间透射率t-x"><span class="nav-number">2.2.1.</span> <span class="nav-text">求中间透射率t(x)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

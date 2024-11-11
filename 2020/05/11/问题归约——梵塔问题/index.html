@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="问题归约（problem reduction）是一种基于状态空间的问题描述与求解方法。已知问题的描述，通过一系列变换把此问题最终变为一个本原问题集合。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题归约——梵塔问题">
+<meta property="og:url" content="https://gy23333.github.io/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="问题归约（problem reduction）是一种基于状态空间的问题描述与求解方法。已知问题的描述，通过一系列变换把此问题最终变为一个本原问题集合。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/hanoi.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98%E4%B8%8E%E6%88%96%E5%9B%BE.png">
+<meta property="og:image" content="https://media2.giphy.com/media/W1eVeuKI0m0th68lCm/200w.gif">
+<meta property="article:published_time" content="2020-05-11T00:35:33.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.129Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="问题归约">
+<meta property="article:tag" content="梵塔问题">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/hanoi.jpg">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>问题归约——梵塔问题 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题归约——梵塔问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-11 08:35:33" itemprop="dateCreated datePublished" datetime="2020-05-11T08:35:33+08:00">2020-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">人工智能</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>问题归约（problem reduction）是一种基于状态空间的问题描述与求解方法。已知问题的描述，通过一系列变换把此问题最终变为一个本原问题集合。</p>
+<a id="more"></a>
+<h1 id="梵塔问题描述"><a href="#梵塔问题描述" class="headerlink" title="梵塔问题描述"></a>梵塔问题描述</h1><p>&emsp;&emsp;有3根柱子1、2、3柱和N个不同尺寸的圆盘，初始圆盘套在1柱上，盘的尺寸由下到上依次变小。要求将圆盘全部搬到3柱，搬运过程中要遵守下面规定：</p>
+<ol>
+<li>每次只能移动一个圆盘；</li>
+<li>大盘不能叠在小盘上面。</li>
+</ol>
+<h1 id="求解思路"><a href="#求解思路" class="headerlink" title="求解思路"></a>求解思路</h1><p>&emsp;&emsp;原问题可以拆分成下列子问题。（以4圆盘问题为例，圆盘从小到大分别是A、B、C、D）</p>
+<ol>
+<li>移动圆盘A、B和C至柱2（3圆盘问题）</li>
+<li>移动圆盘D到柱3（单圆盘问题）</li>
+<li>移动圆盘A、B和C至柱3（3圆盘问题）</li>
+</ol>
+<p>如此将4圆盘问题化为两个3圆盘问题和一个单圆盘问题，而3圆盘问题还可继续分解，直到化为单圆盘问题（本原问题）的集合。这便是问题归约。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/hanoi.jpg" style="zoom: 25%;" /></p>
+<h1 id="Matlab代码"><a href="#Matlab代码" class="headerlink" title="Matlab代码"></a>Matlab代码</h1><h2 id="调用代码"><a href="#调用代码" class="headerlink" title="调用代码"></a>调用代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">clear; <span class="comment">%清除变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 设置的圆盘个数n</span></span><br><span class="line">n = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> n &lt; <span class="number">1</span></span><br><span class="line">    fprintf(<span class="string">'圆盘个数需为正整数。\n'</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    HannoiStep = hannoi(n, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>); <span class="comment">% 解梵塔问题</span></span><br><span class="line">    HannoiStep</span><br><span class="line">    clear hannoi <span class="comment">% 清除hannoi文件的变量</span></span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">7</span></span><br><span class="line">       StepAnimation(HannoiStep); <span class="comment">% 动画演示步骤 </span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        fprintf(<span class="string">'圆盘太多了，没位置画，圆盘数1～7可以演示。\n'</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><figure class="highlight matlab"><figcaption><span>hannoi.m</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% n个圆盘，返回步骤矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HannoiStep</span> = <span class="title">hannoi</span><span class="params">(n, A, B, C)</span></span></span><br><span class="line"><span class="comment">% 创建步骤矩阵</span></span><br><span class="line"><span class="keyword">persistent</span> steps;</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(steps)</span><br><span class="line">    steps = <span class="built_in">ones</span>(<span class="number">1</span>,n);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 如果是一个圆盘，直接从A移动到C</span></span><br><span class="line"><span class="keyword">if</span> n == <span class="number">1</span></span><br><span class="line">    [r, ~] = <span class="built_in">size</span>(steps);</span><br><span class="line">    step = steps(r,:);</span><br><span class="line">    step(<span class="number">1</span>) = C-<span class="string">'A'</span>+<span class="number">1</span>;</span><br><span class="line">    steps = [steps; step];</span><br><span class="line"><span class="comment">%     fprintf('1 号碟 : %s  ---&gt; %s\n', A, C);</span></span><br><span class="line">    HannoiStep = steps;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment">% 否则，先将n-1个圆盘从A经过C移动到B</span></span><br><span class="line">    hannoi(n<span class="number">-1</span>, A, C, B);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 将第n个圆盘从A移动到C</span></span><br><span class="line">    [r, ~] = <span class="built_in">size</span>(steps);</span><br><span class="line">    step = steps(r,:);</span><br><span class="line">    step(n) = C-<span class="string">'A'</span>+<span class="number">1</span>;</span><br><span class="line">    steps = [steps; step];</span><br><span class="line"><span class="comment">%     fprintf('%d 号碟 : %s  ---&gt; %s\n', n, A, C);</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">% 将n-1个圆盘从B经过A移动到C</span></span><br><span class="line">    hannoi(n<span class="number">-1</span>, B, A, C);</span><br><span class="line">    HannoiStep = steps;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="动画代码"><a href="#动画代码" class="headerlink" title="动画代码"></a>动画代码</h2><figure class="highlight matlab"><figcaption><span>StepAnimation.m</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">StepAnimation</span><span class="params">(HannoiStep)</span></span></span><br><span class="line">[r,~] = <span class="built_in">size</span>(HannoiStep);</span><br><span class="line"><span class="keyword">for</span> index = <span class="number">1</span> : <span class="number">1</span> : r</span><br><span class="line">    step = HannoiStep(index,:);</span><br><span class="line">    pause_times = <span class="number">1</span>;</span><br><span class="line">    DrawFrame(step)</span><br><span class="line">    pause(pause_times);</span><br><span class="line">    <span class="keyword">if</span> index &lt; r</span><br><span class="line">        clf; <span class="comment">% 清除图形</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DrawFrame</span><span class="params">(step)</span></span></span><br><span class="line">[~,n] = <span class="built_in">size</span>(step); <span class="comment">% n为圆盘数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 初始颜色数组</span></span><br><span class="line">coArray = [</span><br><span class="line">    [<span class="number">0</span> <span class="number">0.4470</span> <span class="number">0.7410</span>];</span><br><span class="line">    [<span class="number">0.8500</span> <span class="number">0.3250</span> <span class="number">0.0980</span>];</span><br><span class="line">    [<span class="number">0.4660</span> <span class="number">0.6740</span> <span class="number">0.1880</span>];</span><br><span class="line">    [<span class="number">0.9290</span> <span class="number">0.6940</span> <span class="number">0.1250</span>];</span><br><span class="line">    [<span class="number">0.3010</span> <span class="number">0.7450</span> <span class="number">0.9330</span>];</span><br><span class="line">    [<span class="number">0.4940</span> <span class="number">0.1840</span> <span class="number">0.5560</span>];</span><br><span class="line">    [<span class="number">0.6350</span> <span class="number">0.0780</span> <span class="number">0.1840</span>];</span><br><span class="line">    ]; </span><br><span class="line"></span><br><span class="line"><span class="comment">% 初始x坐标数组</span></span><br><span class="line">xArray = <span class="built_in">linspace</span>(<span class="number">0.5</span>,<span class="number">1.5</span>,n);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">3</span></span><br><span class="line">    subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="built_in">i</span>);</span><br><span class="line">    axis([<span class="number">-1.5</span>,<span class="number">1.5</span>,<span class="number">0</span>,<span class="number">3</span>]);</span><br><span class="line">    <span class="comment">% 绘制柱  </span></span><br><span class="line">    line([<span class="number">0</span> <span class="number">0</span>],[<span class="number">0.5</span> <span class="number">3</span>],<span class="string">'LineWidth'</span>,<span class="number">10</span>,<span class="string">'Color'</span>,[<span class="number">0.3</span> <span class="number">0.3</span> <span class="number">0.3</span>]);</span><br><span class="line">    line([<span class="number">-1.5</span> <span class="number">1.5</span>],[<span class="number">0.5</span> <span class="number">0.5</span>],<span class="string">'LineWidth'</span>,<span class="number">10</span>,<span class="string">'Color'</span>,[<span class="number">0.3</span> <span class="number">0.3</span> <span class="number">0.3</span>]);</span><br><span class="line">    <span class="comment">% 绘制圆盘</span></span><br><span class="line">    <span class="keyword">for</span> index = n : <span class="number">-1</span> : <span class="number">1</span></span><br><span class="line">        <span class="comment">% 如果该圆盘在这根柱上       </span></span><br><span class="line">        <span class="keyword">if</span> step(index) == <span class="built_in">i</span></span><br><span class="line">            Ynum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">j</span> = n : <span class="number">-1</span> : index+<span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> step(<span class="built_in">j</span>) == <span class="built_in">i</span></span><br><span class="line">                    Ynum = Ynum+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="comment">% 画圆盘</span></span><br><span class="line">            line([-xArray(index) xArray(index)],[<span class="number">0.7</span>+<span class="number">0.3</span>*Ynum...</span><br><span class="line">                <span class="number">0.7</span>+<span class="number">0.3</span>*Ynum],<span class="string">'LineWidth'</span>,<span class="number">30</span>,<span class="string">'Color'</span>,coArray(index,:));</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    axis off;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h1><p>&emsp;&emsp;以4圆盘问题为例，运行上述代码，可求解。</p>
+<ul>
+<li><p>与或图</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/梵塔问题与或图.png" alt=""></p>
+</li>
+<li><p>步骤</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+HannoiStep =\begin{bmatrix}
+     1\quad     1\quad     1\quad     1\\
+     2\quad     1\quad     1\quad     1\\
+     2\quad     3\quad     1\quad     1\\
+     3\quad     3\quad     1\quad     1\\
+     3\quad     3\quad     2\quad     1\\
+     1\quad     3\quad     2\quad     1\\
+     1\quad     2\quad     2\quad     1\\
+     2\quad     2\quad     2\quad     1\\
+     2\quad     2\quad     2\quad     3\\
+     3\quad     2\quad     2\quad     3\\
+     3\quad     1\quad     2\quad     3\\
+     1\quad     1\quad     2\quad     3\\
+     1\quad     1\quad     3\quad     3\\
+     2\quad     1\quad     3\quad     3\\
+     2\quad     3\quad     3\quad     3\\
+     3\quad     3\quad     3\quad     3\\
+     \end{bmatrix}</script><p><img src="https://media2.giphy.com/media/W1eVeuKI0m0th68lCm/200w.gif" style="zoom:150%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6/" rel="tag"># 问题归约</a>
+              <a href="/tags/%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/" rel="tag"># 梵塔问题</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/24/SURF%E7%AE%97%E5%AD%90/" rel="prev" title="SURF算子">
+      <i class="fa fa-chevron-left"></i> SURF算子
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/13/%E6%9C%89%E5%BA%8F%E6%90%9C%E7%B4%A2%E2%80%94%E2%80%94%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98/" rel="next" title="有序搜索——八数码问题">
+      有序搜索——八数码问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#梵塔问题描述"><span class="nav-number">1.</span> <span class="nav-text">梵塔问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求解思路"><span class="nav-number">2.</span> <span class="nav-text">求解思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matlab代码"><span class="nav-number">3.</span> <span class="nav-text">Matlab代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调用代码"><span class="nav-number">3.1.</span> <span class="nav-text">调用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心代码"><span class="nav-number">3.2.</span> <span class="nav-text">核心代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画代码"><span class="nav-number">3.3.</span> <span class="nav-text">动画代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解答"><span class="nav-number">4.</span> <span class="nav-text">解答</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

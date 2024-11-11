@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;SURF (Speeded Up Robust Features, 加速稳健特征) 是一个稳健的图像识别和描述算法，首先于2006年发表在ECCV大会上。这个算法可被用于计算机视觉任务，如物件识别和3D重构。他部分的灵感来自于SIFT算法。SURF标准的版本比SIFT要快数倍，并且其作者声称在不同图像变换方面比SIFT更加稳健。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SURF算子">
+<meta property="og:url" content="https://gy23333.github.io/2020/04/24/SURF%E7%AE%97%E5%AD%90/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;SURF (Speeded Up Robust Features, 加速稳健特征) 是一个稳健的图像识别和描述算法，首先于2006年发表在ECCV大会上。这个算法可被用于计算机视觉任务，如物件识别和3D重构。他部分的灵感来自于SIFT算法。SURF标准的版本比SIFT要快数倍，并且其作者声称在不同图像变换方面比SIFT更加稳健。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF8.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/23/hVMXou7GcbmJE2j.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF12.png">
+<meta property="article:published_time" content="2020-04-24T08:44:51.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.115Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="特征描述">
+<meta property="article:tag" content="SURF算子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SURF1.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/04/24/SURF%E7%AE%97%E5%AD%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>SURF算子 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/04/24/SURF%E7%AE%97%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SURF算子
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-24 16:44:51" itemprop="dateCreated datePublished" datetime="2020-04-24T16:44:51+08:00">2020-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Vision/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer Vision</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/04/24/SURF%E7%AE%97%E5%AD%90/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/24/SURF%E7%AE%97%E5%AD%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;<strong>SURF (Speeded Up Robust Features, 加速稳健特征)</strong> 是一个稳健的图像识别和描述算法，首先于2006年发表在ECCV大会上。这个算法可被用于计算机视觉任务，如物件识别和3D重构。他部分的灵感来自于<a href="">SIFT算法</a>。SURF标准的版本比SIFT要快数倍，并且其作者声称在不同图像变换方面比SIFT更加稳健。</p>
+<a id="more"></a>
+<h1 id="SURF算子——原理"><a href="#SURF算子——原理" class="headerlink" title="SURF算子——原理"></a>SURF算子——原理</h1><h2 id="特征点检测"><a href="#特征点检测" class="headerlink" title="特征点检测"></a>特征点检测</h2><h3 id="基于Hessian矩阵的特征点检测"><a href="#基于Hessian矩阵的特征点检测" class="headerlink" title="基于Hessian矩阵的特征点检测"></a>基于Hessian矩阵的特征点检测</h3><p>&emsp;&emsp;对于输入图像中的一点$X=(x,y)$，其Hessian矩阵定义如下</p>
+<script type="math/tex; mode=display">
+H(X,\sigma)=
+\begin{bmatrix}
+L_{xx}(X,\sigma)&L_{xy}(X,\sigma)\\
+L_{xy}(X,\sigma)&L_{yy}(X,\sigma)
+\end{bmatrix}</script><p>其中$\sigma$为Hessian矩阵的尺度，$L_{xx}$是高斯二阶偏导数$\frac {\partial^2}{\partial x^2}g(\sigma)$与输入图像在点$X$处的卷积，其余类似。</p>
+<p>&emsp;&emsp;行列式的值$det(H)$即为点$X$处的响应</p>
+<script type="math/tex; mode=display">
+det(H)=L_{xx}L_{yy}-L_{xy}^2</script><h3 id="基于Box滤波器的Hessian矩阵近似计算"><a href="#基于Box滤波器的Hessian矩阵近似计算" class="headerlink" title="基于Box滤波器的Hessian矩阵近似计算"></a>基于Box滤波器的Hessian矩阵近似计算</h3><p>&emsp;&emsp;利用Box滤波器做Hessian矩阵近似计算，加快计算速度。</p>
+<p>在LoG算子中，</p>
+<script type="math/tex; mode=display">
+h(x,y)=e^{-\frac {x^2+y^2}{2\sigma^2}}</script><script type="math/tex; mode=display">
+\triangledown^2h(r)=(\frac{r^2-\sigma^2}{\sigma^4})e^{-\frac {r^2}{2\sigma^2}},\quad r^2=x^2+y^2</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF1.png" style="zoom: 33%;" /></p>
+<p>&emsp;&emsp;可以用Box滤波器近似计算$\triangledown^2h(r)$</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF2.png" style="zoom:36%;" /></p>
+<p>&emsp;&emsp;如此对高斯二阶微分模板进行简化，从而降低计算量，高斯二阶导数函数的离散化和截断会造成一定的误差。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF3.png" style="zoom:36%;" /></p>
+<p>&emsp;&emsp;利用简化后的Box滤波模版对图像进行卷积，得到Hessian矩阵的近似计算</p>
+<script type="math/tex; mode=display">
+H(X,N)=
+\begin{bmatrix}
+D_{xx}(X,N)&D_{xy}(X,N)\\
+D_{xy}(X,N)&D_{yy}(X,N)
+\end{bmatrix}</script><p>其中，N为Box滤波器的大小。</p>
+<p>&emsp;&emsp;行列式的值$det(H)$即为点$X$处的响应（但是要加上权重）</p>
+<script type="math/tex; mode=display">
+det(H_{approx})=D_{xx}D_{yy}-(wD_{xy})^2,\quad w \approx 0.9</script><p>其中，权重$w$为平衡因子</p>
+<script type="math/tex; mode=display">
+w=\frac {|L_{xy}(1.2)|_F|D_{yy}(9)|_F}{|L_{yy}(1.2)|_F|D_{xy}(9)|_F}=0.912...\approx 0.9</script><h3 id="基于积分图的Box滤波器快速计算"><a href="#基于积分图的Box滤波器快速计算" class="headerlink" title="基于积分图的Box滤波器快速计算"></a>基于积分图的Box滤波器快速计算</h3><p>&emsp;&emsp;利用积分图快速计算Box卷积滤波。</p>
+<p>&emsp;&emsp;积分图是输入图像经过像素间的累加运算得到的新图像。任意一点$(x,y)$的值是从输入图像的左上角到这个点所构成的矩形区域内所有点的灰度值之和。</p>
+<p>&emsp;&emsp;每个点的积分可以用迭代的方式获得</p>
+<script type="math/tex; mode=display">
+II(x,y)=II(x,y-1)+S(x-1,y)+I(x,y)</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF4.png" style="zoom:30%;" /></p>
+<p>&emsp;&emsp;计算矩阵ABCD中像素和只需要积分图中A、B、C、D四点的值和3次加法运算</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF5.png" style="zoom:30%;" /></p>
+<h3 id="尺度金字塔构建"><a href="#尺度金字塔构建" class="headerlink" title="尺度金字塔构建"></a>尺度金字塔构建</h3><p>&emsp;&emsp;一般尺度金字塔采用对图像的下采样，使用同一个滤波器滤波。</p>
+<p>&emsp;&emsp;在SURF算子中，由于积分图和Box滤波的计算便利性，<strong>固定图像尺度，上采样滤波器</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF6.png" alt=""></p>
+<p>&emsp;&emsp;与SIFT算子类似，</p>
+<ul>
+<li>将尺度空间划分为若干组(Octaves)，每组又由若干固定层（Interval）组成</li>
+<li>每组尺度金字塔的各层尺度成等差数列</li>
+<li>不同组的尺度金字塔的公差等比增长（$O,S$为组索引、层索引，从$0$开始）</li>
+</ul>
+<script type="math/tex; mode=display">
+Filter Size = 3\times[2^{o+1}\times (s+1)+1]</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF7.png" alt=""></p>
+<p>&emsp;&emsp;为了保持尺度空间的连续性，相邻组尺度金字塔有部分层重叠（SIFT中同样，$S+3$个图才能得到$S$个尺度的特征点检测结果）</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF8.png" alt=""></p>
+<h3 id="特征点定位"><a href="#特征点定位" class="headerlink" title="特征点定位"></a>特征点定位</h3><ul>
+<li><p>非极大抑制</p>
+<p>与SIFT中的做法相似，</p>
+<ul>
+<li><p>每组中选相邻3层Hessian行列式图像，对于中间层图像中的每个待比较点，选取同层的8个相邻点和上下层的9个相邻点进行比较</p>
+</li>
+<li><p>若该点值大于其他26点，则为特征点</p>
+<p><img src="https://i.loli.net/2020/04/23/hVMXou7GcbmJE2j.png" style="zoom:50%;" /></p>
+</li>
+</ul>
+</li>
+<li><p>尺度空间插值</p>
+<p>与SIFT中的做法相同，得到亚像素级的特征值，减小不同组第一层之间的差异。</p>
+</li>
+</ul>
+<h2 id="特征点描述"><a href="#特征点描述" class="headerlink" title="特征点描述"></a>特征点描述</h2><h3 id="特征点主方向"><a href="#特征点主方向" class="headerlink" title="特征点主方向"></a>特征点主方向</h3><p>&emsp;&emsp;为了保证特征描述子具有旋转不变性，与SIFT一样，需要对每个特征点分配一个主方向。</p>
+<ul>
+<li><p>选择以特征点为中心、半径为$6s$（$s$为特征点的尺度）的圆形邻域</p>
+</li>
+<li><p>计算该圆形邻域内各点的$x$、$y$方向Haar小波响应（Haar小波边长取$4s$）</p>
+<p>计算图像的Haar小波响应，实际上就是对图像进行梯度运算，只不过需要利用积分图，提高梯度计算效率。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF9.png" style="zoom: 33%;" /></p>
+</li>
+<li><p>用$\sigma = 2.5s$的高斯函数对响应加权</p>
+</li>
+<li><p>以特征点为中心，张角为$\pi /3$的扇形滑动窗口，计算窗口内的Haar小波响应值$dx$、$dy$的累加</p>
+<script type="math/tex; mode=display">
+m_w=\sum\limits_w dx+\sum\limits_w dy\\
+\theta_w=\arctan(\sum\limits_w dx/\sum\limits_w dy)</script></li>
+<li><p>特征点主方向为最大的Haar响应累加值所对应的方向</p>
+<script type="math/tex; mode=display">
+\theta = \theta_w|max\{m_w\}</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF10.png" style="zoom: 67%;" /></p>
+</li>
+</ul>
+<h3 id="Haar小波响应和描述符"><a href="#Haar小波响应和描述符" class="headerlink" title="Haar小波响应和描述符"></a>Haar小波响应和描述符</h3><ul>
+<li><p>构建以特征点为中心、方向为特征点主方向、边长为$20s$的正方形区域</p>
+</li>
+<li><p>将区域划分成$4\times 4$子块</p>
+</li>
+<li><p>每个子块均匀采样$5\times 5$个样本点</p>
+</li>
+<li><p>计算各采样点的Haar小波响应（Haar小波边长为$2s$）</p>
+</li>
+<li><p>用以特征点为中心点，$\sigma =3.3s$的高斯函数对响应加权</p>
+</li>
+<li><p>在各子块内统计$\sum dx$、$\sum |dx|$、$\sum dy$、$\sum |dy|$形成子块特征向量</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF11.png" alt=""></p>
+</li>
+<li><p>每个子块统计一个四维特征向量$\vec v$</p>
+<script type="math/tex; mode=display">
+\vec v = (\sum dx,\sum |dx|,\sum dy,\sum |dy|)</script></li>
+<li><p>将$4\times 4$个子块的特征向量$\vec v$相连，得长度为64的特征向量，具有亮度不变性</p>
+</li>
+<li><p>将特征向量归一化，具有对比度不变性</p>
+</li>
+</ul>
+<p>SURF描述子对于不同纹理的区分性</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SURF12.png" style="zoom:50%;" /></p>
+<h2 id="快速索引匹配"><a href="#快速索引匹配" class="headerlink" title="快速索引匹配"></a>快速索引匹配</h2><ul>
+<li>在检测阶段，记录拉普拉斯算子的符号（Hessian矩阵的迹的符号）</li>
+<li>在匹配阶段，匹配拉普拉斯算子符号相同的特征，从而降低运算量</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="http://www.vision.ee.ethz.ch/~surf/eccv06.pdf" target="_blank" rel="noopener">Paper: SURF: Speeded Up Robust Features</a></li>
+<li><a href="https://senitco.github.io/2017/06/27/image-feature-surf/" target="_blank" rel="noopener">SenitCo: 图像特征之SURF特征匹配</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%89%B9%E5%BE%81%E6%8F%8F%E8%BF%B0/" rel="tag"># 特征描述</a>
+              <a href="/tags/SURF%E7%AE%97%E5%AD%90/" rel="tag"># SURF算子</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/22/SIFT%E7%AE%97%E5%AD%90/" rel="prev" title="SIFT算子">
+      <i class="fa fa-chevron-left"></i> SIFT算子
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/11/%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E2%80%94%E2%80%94%E6%A2%B5%E5%A1%94%E9%97%AE%E9%A2%98/" rel="next" title="问题归约——梵塔问题">
+      问题归约——梵塔问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SURF算子——原理"><span class="nav-number">1.</span> <span class="nav-text">SURF算子——原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征点检测"><span class="nav-number">1.1.</span> <span class="nav-text">特征点检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Hessian矩阵的特征点检测"><span class="nav-number">1.1.1.</span> <span class="nav-text">基于Hessian矩阵的特征点检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Box滤波器的Hessian矩阵近似计算"><span class="nav-number">1.1.2.</span> <span class="nav-text">基于Box滤波器的Hessian矩阵近似计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于积分图的Box滤波器快速计算"><span class="nav-number">1.1.3.</span> <span class="nav-text">基于积分图的Box滤波器快速计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尺度金字塔构建"><span class="nav-number">1.1.4.</span> <span class="nav-text">尺度金字塔构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征点定位"><span class="nav-number">1.1.5.</span> <span class="nav-text">特征点定位</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征点描述"><span class="nav-number">1.2.</span> <span class="nav-text">特征点描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征点主方向"><span class="nav-number">1.2.1.</span> <span class="nav-text">特征点主方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Haar小波响应和描述符"><span class="nav-number">1.2.2.</span> <span class="nav-text">Haar小波响应和描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速索引匹配"><span class="nav-number">1.3.</span> <span class="nav-text">快速索引匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

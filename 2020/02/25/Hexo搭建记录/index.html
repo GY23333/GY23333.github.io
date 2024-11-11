@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo搭建记录">
+<meta property="og:url" content="https://gy23333.github.io/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/QjJ314LNwvZeOhg.gif">
+<meta property="og:image" content="https://i.loli.net/2020/03/16/KDVTNgcn7uxvmjS.gif">
+<meta property="article:published_time" content="2020-02-25T08:13:22.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.123Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Hexo搭建记录 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo搭建记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-25 16:13:22" itemprop="dateCreated datePublished" datetime="2020-02-25T16:13:22+08:00">2020-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记录Hexo博客的搭建过程。包括Hexo的书写技巧与主题优化。</p>
+<a id="more"></a>
+<h1 id="Hexo书写技巧"><a href="#Hexo书写技巧" class="headerlink" title="Hexo书写技巧"></a>Hexo书写技巧</h1><h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><h3 id="Hexo引入数学公式"><a href="#Hexo引入数学公式" class="headerlink" title="Hexo引入数学公式"></a>Hexo引入数学公式</h3><p>Hexo默认不支持数学公式，需要引入数学公式的响应环境。</p>
+<ol>
+<li><p>更换Hexo的markdown渲染引擎</p>
+<p> 卸载原有的渲染器 <code>hexo-renderer-marked</code>，安装渲染器<code>hexo-renderer-kramed</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在next主题中开启mathJax开关</p>
+<p>在 <code>next/_config.yml</code> 中将 <code>mathjax</code> 的 <code>enable</code> 打开。</p>
+<figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># per_page为true，则需要每页自己添加`mathjax: true`；</span></span><br><span class="line"><span class="comment"># per_page为false，则每页自动允许数学公式</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">engine:</span> <span class="string">mathjax</span></span><br><span class="line"><span class="attr">mathjax:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">mhchem:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如此即可在每片文章中自动允许数学公式。</p>
+<h3 id="数学公式书写规则"><a href="#数学公式书写规则" class="headerlink" title="数学公式书写规则"></a>数学公式书写规则</h3><p>Hexo的markdown数学公式书写规则与Latex相同，具体规则见 <a href="https://gy23333.github.io/2020/02/13/Latex入门/#数学公式">Latex入门/数学公式</a></p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="Hexo引入flowchart流程图"><a href="#Hexo引入flowchart流程图" class="headerlink" title="Hexo引入flowchart流程图"></a>Hexo引入flowchart流程图</h3><p>Hexo默认不支持markdown的流程图，需安装<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart插件</a>。</p>
+<ol>
+<li>安装hexo-filter-flowchart插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-filter-flowchart</span><br></pre></td></tr></table></figure></li>
+<li><p>在主题配置文件下添加flowchart配置</p>
+ <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">flowchart:</span></span><br><span class="line"><span class="comment"># raphael:   # optional, the source url of raphael.js</span></span><br><span class="line"><span class="comment"># flowchart: # optional, the source url of flowchart.js</span></span><br><span class="line"><span class="attr">options:</span> <span class="comment"># options used for `drawSVG`</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绘制流程图</p>
+<p>范例：下列代码包在flow之间</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"flowchart-0"</span> <span class="attr">class</span>=<span class="string">"flow-chart"</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<div id="flowchart-1" class="flow-chart"></div>
+
+<h3 id="流程图绘制规则"><a href="#流程图绘制规则" class="headerlink" title="流程图绘制规则"></a>流程图绘制规则</h3><p>流程图语法分为两个部分：</p>
+<ul>
+<li>前半部分：定义流程图元素</li>
+<li>后半部分：连接流程图元素</li>
+</ul>
+<p>前半部分定义元素的语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tag&#x3D;&gt;type: content:&gt;url</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>tag</code>：元素标签，连接元素时用来代表元素。名称可以任意，一般为流程的英文缩写和数字的组合。</li>
+<li><code>type</code>：元素类型，一共有6种类型，分别为<code>start</code>、<code>end</code>、<code>operation</code>、<code>subroutine</code>、<code>condition</code>、<code>inputoutput</code></li>
+<li><code>content</code>：文本框中的内容，注意<code>type:</code>和<code>content</code>间一定要有空格</li>
+<li><code>url</code>：文本绑定的链接，点击可跳转</li>
+</ul>
+<p>后半部分连接流程图元素</p>
+<ul>
+<li>用<code>-&gt;</code>来连接两个元素</li>
+<li><code>condition</code>类型有<code>yes</code>和<code>no</code>两个分支，如<code>cond(yes)</code>和<code>cond(no)</code></li>
+<li>每个元素可以制定分支走向，默认向下，也可以用right指向右边，如<code>sub1(right)</code></li>
+</ul>
+<p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;flowchart-2&quot; class&#x3D;&quot;flow-chart&quot;&gt;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<div id="flowchart-3" class="flow-chart"></div>
+
+<h3 id="Hexo引入Mermaid流程图"><a href="#Hexo引入Mermaid流程图" class="headerlink" title="Hexo引入Mermaid流程图"></a>Hexo引入Mermaid流程图</h3><ol>
+<li>安装hexo-filter-mermaid-diagrams插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-filter-mermaid-diagrams</span><br></pre></td></tr></table></figure></li>
+<li><p>在主题配置文件下添加mermaid配置</p>
+ <figure class="highlight yaml"><figcaption><span>/themes/next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mermaid tag</span></span><br><span class="line"><span class="attr">mermaid:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Available themes: default | dark | forest | neutral</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">forest</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a href="https://mermaid.js.org/intro/" target="_blank" rel="noopener">Mermaid官方文档</a></p>
+<p><a href="https://mermaid.live/" target="_blank" rel="noopener">Mermaid在线编辑器</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/440934038" target="_blank" rel="noopener">简单教程</a></p>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>markdown的代码块写法有两种——<code>```...``` </code>和<code>{ % ... % }</code>，这里主要使用<code>```...``` </code>来实现功能。</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><h4 id="写法一"><a href="#写法一" class="headerlink" title="写法一"></a>写法一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;[language] [title] [url] [link text]</span><br><span class="line">code snippet</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>language: 语言名称，引导渲染引擎正确解析并高亮显示关键字</li>
+<li>title: 代码块标题，将会显示在左上角</li>
+<li>url: 链接地址，如果没有指定 link text 则会在右上角显示 link</li>
+<li>link text: 链接名称，指定 url 后有效，将会显示在右上角</li>
+</ul>
+<p>url 必须为有效链接地址才会以链接的形式显示在右上角，否则将作为标题显示在左上角。以 url 为分界，左侧除了第一个单词会被解析为 language，其他所有单词都会被解析为 title，而右侧的所有单词都会被解析为 link text。</p>
+<p>如果不想填写 title，可以在 language 和 url 之间添加至少三个空格。</p>
+<ul>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;C HelloWorld https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo搭建记录&#x2F; 下载地址</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><figcaption><span>HelloWorld</span><a href="https://gy23333.github.io/2020/02/25/Hexo搭建记录/">下载地址</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="写法二"><a href="#写法二" class="headerlink" title="写法二"></a>写法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:language] [url] [link text] [additional options] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [lang:language] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:C %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="设置标题"><a href="#设置标题" class="headerlink" title="设置标题"></a>设置标题</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight plain"><figcaption><span>HelloWorld</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="设置链接"><a href="#设置链接" class="headerlink" title="设置链接"></a>设置链接</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [url] [link text] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock HelloWorld lang:C https:&#x2F;&#x2F;gy23333.github.io&#x2F;2020&#x2F;02&#x2F;25&#x2F;Hexo搭建记录&#x2F; 下载地址 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><figcaption><span>HelloWorld</span><a href="https://gy23333.github.io/2020/02/25/Hexo搭建记录/">下载地址</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="是否显示行号"><a href="#是否显示行号" class="headerlink" title="是否显示行号"></a>是否显示行号</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [line_number:(true|false)] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<p><code>line_number</code>的默认值为true。</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:C line_number:false %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="设置起始行号"><a href="#设置起始行号" class="headerlink" title="设置起始行号"></a>设置起始行号</h3><ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [first_line:number] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<p><code>first_line</code>的默认值为1。</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:C first_line:10 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<!-- ### 标记选定行
+
+在站点配置文件中设置`highlight.auto_detect: true`来开启自动语言检测高亮。
+
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line"><span class="bullet">-</span>  <span class="attr">auto_detect:</span> <span class="literal">false</span></span><br><span class="line"><span class="string">+</span>  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">''</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [mark:#,#-#] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<p><code>#</code>代表行号，<code>#-#</code>代表行号范围。</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:C mark:1,3-6 %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line marked"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line marked"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line marked">    <span class="built_in">printf</span>(<span class="string">"hello world\n"</span>);</span><br><span class="line marked">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line marked">&#125;</span><br></pre></td></tr></table></figure> -->
+</li>
+</ul>
+<h3 id="设置代码添加删除标记"><a href="#设置代码添加删除标记" class="headerlink" title="设置代码添加删除标记"></a>设置代码添加删除标记</h3><p>设置语言为 diff，可以在代码前添加 + 和 - 来使用如上所示的高亮增删行提示效果。</p>
+<ul>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:diff %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:diff %&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">-    printf(&quot;delete\n&quot;);</span><br><span class="line">+    printf(&quot;add\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效果</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"><span class="deletion">-    printf("delete\n");</span></span><br><span class="line"><span class="addition">+    printf("add\n");</span></span><br><span class="line">    return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Aplayer音乐播放器"><a href="#Aplayer音乐播放器" class="headerlink" title="Aplayer音乐播放器"></a>Aplayer音乐播放器</h2><p>&emsp;&emsp;在blog中添加一个音乐播放页面 <a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">Aplayer官方中文文档</a></p>
+<h3 id="新建音乐页面"><a href="#新建音乐页面" class="headerlink" title="新建音乐页面"></a>新建音乐页面</h3><ol>
+<li>新建一个页面</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page music</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>在新生成的  /source/music/index.md  中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: 歌单</span><br><span class="line">date: 2020-02-25 19:50:11</span><br><span class="line">type: &quot;music&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在主题的 _config.yml文件中，设置页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">home: &#x2F; || home</span><br><span class="line">archives: &#x2F;archives&#x2F; || archive</span><br><span class="line">categories: &#x2F;categories&#x2F; || th</span><br><span class="line">tags: &#x2F;tags&#x2F; || tags</span><br><span class="line">music: &#x2F;music&#x2F; || music</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>页面创建成功！</p>
+<h3 id="使用hexo-tag-aplayer插件"><a href="#使用hexo-tag-aplayer插件" class="headerlink" title="使用hexo-tag-aplayer插件"></a>使用hexo-tag-aplayer插件</h3><ol>
+<li>安装hexo-tag-aplayer</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>MeingJS支持</p>
+<p><a href="https://github.com/metowolf/MetingJS" target="_blank" rel="noopener">    MetingJS</a> 是基于<a href="https://github.com/metowolf/Meting" target="_blank" rel="noopener">Meting API</a> 的 APlayer 衍生播放器，引入 MetingJS 后，播放器将支持对于 QQ音乐、网易云音乐、虾米、酷狗、百度等平台的音乐播放。</p>
+<p>如果想在本插件中使用 MetingJS，请在 Hexo 配置文件 <code>_config.yml</code> 中设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 MetingJS 播放器</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!-- 简单示例 (id, server, type)  --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" %&#125;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- 进阶示例 --&gt;</span></span></span><br><span class="line">&#123;% meting "60198" "netease" "playlist" "autoplay" "mutex:false" "listmaxheight:340px" "preload:none" "theme:#ad7a86"%&#125;</span><br></pre></td></tr></table></figure>
+<p>有关选项列表如下:</p>
+</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><strong>必须值</strong></td>
+<td>歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
+</tr>
+<tr>
+<td>server</td>
+<td><strong>必须值</strong></td>
+<td>音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td><strong>必须值</strong></td>
+<td><code>song</code>（单首歌）, <code>playlist</code>（歌单）, <code>album</code>, <code>search</code>, <code>artist</code></td>
+</tr>
+<tr>
+<td>fixed</td>
+<td><code>false</code></td>
+<td>开启固定模式</td>
+</tr>
+<tr>
+<td>mini</td>
+<td><code>false</code></td>
+<td>开启迷你模式</td>
+</tr>
+<tr>
+<td>loop</td>
+<td><code>all</code></td>
+<td>列表循环模式：<code>all</code>, <code>one</code>,<code>none</code></td>
+</tr>
+<tr>
+<td>order</td>
+<td><code>list</code></td>
+<td>列表播放模式： <code>list</code>, <code>random</code></td>
+</tr>
+<tr>
+<td>volume</td>
+<td>0.7</td>
+<td>播放器音量</td>
+</tr>
+<tr>
+<td>lrctype</td>
+<td>0</td>
+<td>歌词格式类型</td>
+</tr>
+<tr>
+<td>listfolded</td>
+<td><code>false</code></td>
+<td>指定音乐播放列表是否折叠</td>
+</tr>
+<tr>
+<td>storagename</td>
+<td><code>metingjs</code></td>
+<td>LocalStorage 中存储播放器设定的键名</td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td><code>true</code></td>
+<td>自动播放，移动端浏览器暂时不支持此功能</td>
+</tr>
+<tr>
+<td>mutex</td>
+<td><code>true</code></td>
+<td>该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
+</tr>
+<tr>
+<td>listmaxheight</td>
+<td><code>340px</code></td>
+<td>播放列表的最大长度</td>
+</tr>
+<tr>
+<td>preload</td>
+<td><code>auto</code></td>
+<td>音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code></td>
+</tr>
+<tr>
+<td>theme</td>
+<td><code>#ad7a86</code></td>
+<td>播放器风格色彩设置</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   配置结束！</p>
+<p><img src="https://i.loli.net/2020/02/25/fuqwxW43kozZTVR.png" style="zoom: 20%;" /></p>
+<h3 id="手动建立歌单（不推荐）"><a href="#手动建立歌单（不推荐）" class="headerlink" title="手动建立歌单（不推荐）"></a>手动建立歌单（不推荐）</h3><p>强迫症可手动将各平台的歌单整合在一起，这里提供一个<a href="https://music.liuzhijin.cn/" target="_blank" rel="noopener">下载各平台音乐的神器</a>。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line"><span class="code">    "narrow": false,                          // （可选）播放器袖珍风格</span></span><br><span class="line"><span class="code">    "autoplay": true,                         // （可选) 自动播放，移动端浏览器暂时不支持此功能</span></span><br><span class="line"><span class="code">    "mode": "random",                         // （可选）曲目循环类型，有 'random'（随机播放）, 'single' (单曲播放), 'circulation' (循环播放), 'order' (列表播放)， 默认：'circulation' </span></span><br><span class="line"><span class="code">    "showlrc": 3,                             // （可选）歌词显示配置项，可选项有：1,2,3</span></span><br><span class="line"><span class="code">    "mutex": true,                            // （可选）该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</span></span><br><span class="line"><span class="code">    "theme": "#e6d0b2",	                      // （可选）播放器风格色彩设置，默认：#b7daff</span></span><br><span class="line"><span class="code">    "preload": "metadata",                    // （可选）音乐文件预载入模式，可选项： 'none' 'metadata' 'auto', 默认: 'auto'</span></span><br><span class="line"><span class="code">    "listmaxheight": "513px",                 // (可选) 该播放列表的最大长度</span></span><br><span class="line"><span class="code">    "music": [</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "CoCo",</span></span><br><span class="line"><span class="code">            "author": "Jeff Williams",</span></span><br><span class="line"><span class="code">            "url": "caffeine.mp3",</span></span><br><span class="line"><span class="code">            "pic": "caffeine.jpeg",</span></span><br><span class="line"><span class="code">            "lrc": "caffeine.txt"</span></span><br><span class="line"><span class="code">        &#125;,</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            "title": "アイロニ",</span></span><br><span class="line"><span class="code">            "author": "鹿乃",</span></span><br><span class="line"><span class="code">            "url": "irony.mp3",</span></span><br><span class="line"><span class="code">            "pic": "irony.jpg"</span></span><br><span class="line"><span class="code">        &#125;</span></span><br><span class="line"><span class="code">    ]</span></span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Hexo主题优化"><a href="#Hexo主题优化" class="headerlink" title="Hexo主题优化"></a>Hexo主题优化</h1><h2 id="个性化回到顶部"><a href="#个性化回到顶部" class="headerlink" title="个性化回到顶部"></a>个性化回到顶部</h2><p>​    猫耳FM同款回到顶部插件。</p>
+<ol>
+<li><a href="https://i.loli.net/2020/03/13/oCTlu4gV8GYNm2O.png" target="_blank" rel="noopener">下载图片</a>，将其添加到主题页面的 source\images\ 下；</li>
+<li>在 /themes/next/source/css/_common/components/back-to-top.styl 中添加</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义回到顶部样式</span></span><br><span class="line">@media screen and (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.back-to-top</span> &#123;</span><br><span class="line">      <span class="attribute">right</span>: <span class="number">60px</span>;</span><br><span class="line">      <span class="attribute">width</span>: <span class="number">70px</span>;  <span class="comment">//图片素材宽度</span></span><br><span class="line">      <span class="attribute">height</span>: <span class="number">900px</span>;  <span class="comment">//图片素材高度</span></span><br><span class="line">      <span class="attribute">top</span>: -<span class="number">900px</span>;</span><br><span class="line">      <span class="attribute">bottom</span>: unset;</span><br><span class="line">      transition: all .5s ease-in-out;</span><br><span class="line">      <span class="attribute">background</span>: url(<span class="string">"/images/scroll.png"</span>);</span><br><span class="line">      <span class="attribute">position</span>: fixed;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//隐藏箭头图标</span></span><br><span class="line">      &gt; <span class="selector-tag">i</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: none;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      &amp;<span class="selector-class">.back-to-top-on</span> &#123;</span><br><span class="line">        <span class="attribute">bottom</span>: unset;</span><br><span class="line">        <span class="attribute">top</span>: <span class="number">100vh</span> &lt; (<span class="number">900px</span> + <span class="number">200px</span>) ? calc( <span class="number">100vh</span> - <span class="number">900px</span> - <span class="number">200px</span> ) : <span class="number">0px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图</p>
+<p><img src="https://i.loli.net/2020/03/13/QjJ314LNwvZeOhg.gif" alt="scroll.gif"></p>
+<h2 id="鼠标点击效果"><a href="#鼠标点击效果" class="headerlink" title="鼠标点击效果"></a>鼠标点击效果</h2><p>​    参考<a href="http://yearito.cn/" target="_blank" rel="noopener">Yearito’s Blog</a>有下面四种鼠标点击效果。在 themes\next\source\js\cursor\ 中加入下列js文件</p>
+<div class="tabs" id="鼠标点击效果代码"><ul class="nav-tabs"><li class="tab active"><a href="#鼠标点击效果代码-1">explosion.min.js</a></li><li class="tab"><a href="#鼠标点击效果代码-2">love.min.js</a></li><li class="tab"><a href="#鼠标点击效果代码-3">fireworks.js</a></li><li class="tab"><a href="#鼠标点击效果代码-4">text.js</a></li></ul><div class="tab-content"><div class="tab-pane active" id="鼠标点击效果代码-1"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;<span class="function"><span class="keyword">function</span> <span class="title">updateCoords</span>(<span class="params">e</span>)</span>&#123;pointerX=(e.clientX||e.touches[<span class="number">0</span>].clientX)-canvasEl.getBoundingClientRect().left,pointerY=e.clientY||e.touches[<span class="number">0</span>].clientY-canvasEl.getBoundingClientRect().top&#125;<span class="function"><span class="keyword">function</span> <span class="title">setParticuleDirection</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> t=anime.random(<span class="number">0</span>,<span class="number">360</span>)*<span class="built_in">Math</span>.PI/<span class="number">180</span>,a=anime.random(<span class="number">50</span>,<span class="number">180</span>),n=[<span class="number">-1</span>,<span class="number">1</span>][anime.random(<span class="number">0</span>,<span class="number">1</span>)]*a;<span class="keyword">return</span>&#123;<span class="attr">x</span>:e.x+n*<span class="built_in">Math</span>.cos(t),<span class="attr">y</span>:e.y+n*<span class="built_in">Math</span>.sin(t)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">createParticule</span>(<span class="params">e,t</span>)</span>&#123;<span class="keyword">var</span> a=&#123;&#125;;<span class="keyword">return</span> a.x=e,a.y=t,a.color=colors[anime.random(<span class="number">0</span>,colors.length<span class="number">-1</span>)],a.radius=anime.random(<span class="number">16</span>,<span class="number">32</span>),a.endPos=setParticuleDirection(a),a.draw=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,<span class="number">0</span>,<span class="number">2</span>*<span class="built_in">Math</span>.PI,!<span class="number">0</span>),ctx.fillStyle=a.color,ctx.fill()&#125;,a&#125;<span class="function"><span class="keyword">function</span> <span class="title">createCircle</span>(<span class="params">e,t</span>)</span>&#123;<span class="keyword">var</span> a=&#123;&#125;;<span class="keyword">return</span> a.x=e,a.y=t,a.color=<span class="string">"#F00"</span>,a.radius=<span class="number">.1</span>,a.alpha=<span class="number">.5</span>,a.lineWidth=<span class="number">6</span>,a.draw=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;ctx.globalAlpha=a.alpha,ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,<span class="number">0</span>,<span class="number">2</span>*<span class="built_in">Math</span>.PI,!<span class="number">0</span>),ctx.lineWidth=a.lineWidth,ctx.strokeStyle=a.color,ctx.stroke(),ctx.globalAlpha=<span class="number">1</span>&#125;,a&#125;<span class="function"><span class="keyword">function</span> <span class="title">renderParticule</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> t=<span class="number">0</span>;t&lt;e.animatables.length;t++)e.animatables[t].target.draw()&#125;<span class="function"><span class="keyword">function</span> <span class="title">animateParticules</span>(<span class="params">e,t</span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> a=createCircle(e,t),n=[],i=<span class="number">0</span>;i&lt;numberOfParticules;i++)n.push(createParticule(e,t));anime.timeline().add(&#123;<span class="attr">targets</span>:n,<span class="attr">x</span>:<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">return</span> e.endPos.x&#125;,<span class="attr">y</span>:<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">return</span> e.endPos.y&#125;,<span class="attr">radius</span>:<span class="number">.1</span>,<span class="attr">duration</span>:anime.random(<span class="number">1200</span>,<span class="number">1800</span>),<span class="attr">easing</span>:<span class="string">"easeOutExpo"</span>,<span class="attr">update</span>:renderParticule&#125;).add(&#123;<span class="attr">targets</span>:a,<span class="attr">radius</span>:anime.random(<span class="number">80</span>,<span class="number">160</span>),<span class="attr">lineWidth</span>:<span class="number">0</span>,<span class="attr">alpha</span>:&#123;<span class="attr">value</span>:<span class="number">0</span>,<span class="attr">easing</span>:<span class="string">"linear"</span>,<span class="attr">duration</span>:anime.random(<span class="number">600</span>,<span class="number">800</span>)&#125;,<span class="attr">duration</span>:anime.random(<span class="number">1200</span>,<span class="number">1800</span>),<span class="attr">easing</span>:<span class="string">"easeOutExpo"</span>,<span class="attr">update</span>:renderParticule,<span class="attr">offset</span>:<span class="number">0</span>&#125;)&#125;<span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">e,t</span>)</span>&#123;<span class="keyword">var</span> a;<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> n=<span class="keyword">this</span>,i=<span class="built_in">arguments</span>;clearTimeout(a),a=setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;e.apply(n,i)&#125;,t)&#125;&#125;<span class="keyword">var</span> canvasEl=<span class="built_in">document</span>.querySelector(<span class="string">".fireworks"</span>);<span class="keyword">if</span>(canvasEl)&#123;<span class="keyword">var</span> ctx=canvasEl.getContext(<span class="string">"2d"</span>),numberOfParticules=<span class="number">30</span>,pointerX=<span class="number">0</span>,pointerY=<span class="number">0</span>,tap=<span class="string">"mousedown"</span>,colors=[<span class="string">"#FF1461"</span>,<span class="string">"#18FF92"</span>,<span class="string">"#5A87FF"</span>,<span class="string">"#FBF38C"</span>],setCanvasSize=debounce(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;canvasEl.width=<span class="number">2</span>*<span class="built_in">window</span>.innerWidth,canvasEl.height=<span class="number">2</span>*<span class="built_in">window</span>.innerHeight,canvasEl.style.width=<span class="built_in">window</span>.innerWidth+<span class="string">"px"</span>,canvasEl.style.height=<span class="built_in">window</span>.innerHeight+<span class="string">"px"</span>,canvasEl.getContext(<span class="string">"2d"</span>).scale(<span class="number">2</span>,<span class="number">2</span>)&#125;,<span class="number">500</span>),render=anime(&#123;<span class="attr">duration</span>:<span class="number">1</span>/<span class="number">0</span>,<span class="attr">update</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;ctx.clearRect(<span class="number">0</span>,<span class="number">0</span>,canvasEl.width,canvasEl.height)&#125;&#125;);<span class="built_in">document</span>.addEventListener(tap,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="string">"sidebar"</span>!==e.target.id&amp;&amp;<span class="string">"toggle-sidebar"</span>!==e.target.id&amp;&amp;<span class="string">"A"</span>!==e.target.nodeName&amp;&amp;<span class="string">"IMG"</span>!==e.target.nodeName&amp;&amp;(render.play(),updateCoords(e),animateParticules(pointerX,pointerY))&#125;,!<span class="number">1</span>),setCanvasSize(),<span class="built_in">window</span>.addEventListener(<span class="string">"resize"</span>,setCanvasSize,!<span class="number">1</span>)&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="鼠标点击效果代码-2"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e,t,a</span>)</span>&#123;<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>&#123;c(<span class="string">".heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;"</span>),o(),r()&#125;<span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=<span class="number">0</span>;e&lt;d.length;e++)d[e].alpha&lt;=<span class="number">0</span>?(t.body.removeChild(d[e].el),d.splice(e,<span class="number">1</span>)):(d[e].y--,d[e].scale+=<span class="number">.004</span>,d[e].alpha-=<span class="number">.013</span>,d[e].el.style.cssText=<span class="string">"left:"</span>+d[e].x+<span class="string">"px;top:"</span>+d[e].y+<span class="string">"px;opacity:"</span>+d[e].alpha+<span class="string">";transform:scale("</span>+d[e].scale+<span class="string">","</span>+d[e].scale+<span class="string">") rotate(45deg);background:"</span>+d[e].color+<span class="string">";z-index:99999"</span>);requestAnimationFrame(r)&#125;<span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> t=<span class="string">"function"</span>==<span class="keyword">typeof</span> e.onclick&amp;&amp;e.onclick;e.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;t&amp;&amp;t(),i(e)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">"div"</span>);a.className=<span class="string">"heart"</span>,d.push(&#123;<span class="attr">el</span>:a,<span class="attr">x</span>:e.clientX<span class="number">-5</span>,<span class="attr">y</span>:e.clientY<span class="number">-5</span>,<span class="attr">scale</span>:<span class="number">1</span>,<span class="attr">alpha</span>:<span class="number">1</span>,<span class="attr">color</span>:s()&#125;),t.body.appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">"style"</span>);a.type=<span class="string">"text/css"</span>;<span class="keyword">try</span>&#123;a.appendChild(t.createTextNode(e))&#125;<span class="keyword">catch</span>(t)&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>].appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">"rgb("</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">","</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">","</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">")"</span>&#125;<span class="keyword">var</span> d=[];e.requestAnimationFrame=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;setTimeout(e,<span class="number">1e3</span>/<span class="number">60</span>)&#125;&#125;(),n()&#125;(<span class="built_in">window</span>,<span class="built_in">document</span>);</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="鼠标点击效果代码-3"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(&#123; origin, speed, color, angle, context &#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.origin = origin</span><br><span class="line">    <span class="keyword">this</span>.position = &#123; ...this.origin &#125;</span><br><span class="line">    <span class="keyword">this</span>.color = color</span><br><span class="line">    <span class="keyword">this</span>.speed = speed</span><br><span class="line">    <span class="keyword">this</span>.angle = angle</span><br><span class="line">    <span class="keyword">this</span>.context = context</span><br><span class="line">    <span class="keyword">this</span>.renderCount = <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    <span class="keyword">this</span>.context.fillStyle = <span class="keyword">this</span>.color</span><br><span class="line">    <span class="keyword">this</span>.context.beginPath()</span><br><span class="line">    <span class="keyword">this</span>.context.arc(<span class="keyword">this</span>.position.x, <span class="keyword">this</span>.position.y, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">this</span>.context.fill()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    <span class="keyword">this</span>.position.x = (<span class="built_in">Math</span>.sin(<span class="keyword">this</span>.angle) * <span class="keyword">this</span>.speed) + <span class="keyword">this</span>.position.x</span><br><span class="line">    <span class="keyword">this</span>.position.y = (<span class="built_in">Math</span>.cos(<span class="keyword">this</span>.angle) * <span class="keyword">this</span>.speed) + <span class="keyword">this</span>.position.y + (<span class="keyword">this</span>.renderCount * <span class="number">0.3</span>)</span><br><span class="line">    <span class="keyword">this</span>.renderCount++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Boom</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (&#123; origin, context, circleCount = <span class="number">16</span>, area &#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.origin = origin</span><br><span class="line">    <span class="keyword">this</span>.context = context</span><br><span class="line">    <span class="keyword">this</span>.circleCount = circleCount</span><br><span class="line">    <span class="keyword">this</span>.area = area</span><br><span class="line">    <span class="keyword">this</span>.stop = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">this</span>.circles = []</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomArray(range) &#123;</span><br><span class="line">    <span class="keyword">const</span> length = range.length</span><br><span class="line">    <span class="keyword">const</span> randomIndex = <span class="built_in">Math</span>.floor(length * <span class="built_in">Math</span>.random())</span><br><span class="line">    <span class="keyword">return</span> range[randomIndex]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomColor() &#123;</span><br><span class="line">    <span class="keyword">const</span> range = [<span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>]</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'#'</span> + <span class="keyword">this</span>.randomArray(range) + <span class="keyword">this</span>.randomArray(range) + <span class="keyword">this</span>.randomArray(range) + <span class="keyword">this</span>.randomArray(range) + <span class="keyword">this</span>.randomArray(range) + <span class="keyword">this</span>.randomArray(range)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomRange(start, end) &#123;</span><br><span class="line">    <span class="keyword">return</span> (end - start) * <span class="built_in">Math</span>.random() + start</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.circleCount; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> circle = <span class="keyword">new</span> Circle(&#123;</span><br><span class="line">        context: <span class="keyword">this</span>.context,</span><br><span class="line">        origin: <span class="keyword">this</span>.origin,</span><br><span class="line">        color: <span class="keyword">this</span>.randomColor(),</span><br><span class="line">        angle: <span class="keyword">this</span>.randomRange(<span class="built_in">Math</span>.PI - <span class="number">1</span>, <span class="built_in">Math</span>.PI + <span class="number">1</span>),</span><br><span class="line">        speed: <span class="keyword">this</span>.randomRange(<span class="number">1</span>, <span class="number">6</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">this</span>.circles.push(circle)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    <span class="keyword">this</span>.circles.forEach(<span class="function">(<span class="params">circle, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (circle.position.x &gt; <span class="keyword">this</span>.area.width || circle.position.y &gt; <span class="keyword">this</span>.area.height) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.circles.splice(index, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      circle.move()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.circles.length == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.stop = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    <span class="keyword">this</span>.circles.forEach(<span class="function"><span class="params">circle</span> =&gt;</span> circle.draw())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CursorSpecialEffects</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.computerCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>)</span><br><span class="line">    <span class="keyword">this</span>.renderCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.computerContext = <span class="keyword">this</span>.computerCanvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">    <span class="keyword">this</span>.renderContext = <span class="keyword">this</span>.renderCanvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.globalWidth = <span class="built_in">window</span>.innerWidth</span><br><span class="line">    <span class="keyword">this</span>.globalHeight = <span class="built_in">window</span>.innerHeight</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.booms = []</span><br><span class="line">    <span class="keyword">this</span>.running = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleMouseDown(e) &#123;</span><br><span class="line">    <span class="keyword">const</span> boom = <span class="keyword">new</span> Boom(&#123;</span><br><span class="line">      origin: &#123; <span class="attr">x</span>: e.clientX, <span class="attr">y</span>: e.clientY &#125;,</span><br><span class="line">      context: <span class="keyword">this</span>.computerContext,</span><br><span class="line">      area: &#123;</span><br><span class="line">        width: <span class="keyword">this</span>.globalWidth,</span><br><span class="line">        height: <span class="keyword">this</span>.globalHeight</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    boom.init()</span><br><span class="line">    <span class="keyword">this</span>.booms.push(boom)</span><br><span class="line">    <span class="keyword">this</span>.running || <span class="keyword">this</span>.run()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handlePageHide() &#123;</span><br><span class="line">    <span class="keyword">this</span>.booms = []</span><br><span class="line">    <span class="keyword">this</span>.running = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">const</span> style = <span class="keyword">this</span>.renderCanvas.style</span><br><span class="line">    style.position = <span class="string">'fixed'</span></span><br><span class="line">    style.top = style.left = <span class="number">0</span></span><br><span class="line">    style.zIndex = <span class="string">'999999999999999999999999999999999999999999'</span></span><br><span class="line">    style.pointerEvents = <span class="string">'none'</span></span><br><span class="line"></span><br><span class="line">    style.width = <span class="keyword">this</span>.renderCanvas.width = <span class="keyword">this</span>.computerCanvas.width = <span class="keyword">this</span>.globalWidth</span><br><span class="line">    style.height = <span class="keyword">this</span>.renderCanvas.height = <span class="keyword">this</span>.computerCanvas.height = <span class="keyword">this</span>.globalHeight</span><br><span class="line"></span><br><span class="line">    <span class="built_in">document</span>.body.append(<span class="keyword">this</span>.renderCanvas)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'mousedown'</span>, <span class="keyword">this</span>.handleMouseDown.bind(<span class="keyword">this</span>))</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'pagehide'</span>, <span class="keyword">this</span>.handlePageHide.bind(<span class="keyword">this</span>))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  run() &#123;</span><br><span class="line">    <span class="keyword">this</span>.running = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.booms.length == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.running = <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    requestAnimationFrame(<span class="keyword">this</span>.run.bind(<span class="keyword">this</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.computerContext.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.globalWidth, <span class="keyword">this</span>.globalHeight)</span><br><span class="line">    <span class="keyword">this</span>.renderContext.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.globalWidth, <span class="keyword">this</span>.globalHeight)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.booms.forEach(<span class="function">(<span class="params">boom, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (boom.stop) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.booms.splice(index, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      boom.move()</span><br><span class="line">      boom.draw()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">this</span>.renderContext.drawImage(<span class="keyword">this</span>.computerCanvas, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.globalWidth, <span class="keyword">this</span>.globalHeight)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cursorSpecialEffects = <span class="keyword">new</span> CursorSpecialEffects()</span><br><span class="line">cursorSpecialEffects.init()</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="鼠标点击效果代码-4"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a_idx = <span class="number">0</span>;</span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>) </span>&#123;</span><br><span class="line">  $(<span class="string">"body"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">"喜欢我"</span>, <span class="string">"不喜欢我"</span>);</span><br><span class="line">    <span class="keyword">var</span> $i = $(<span class="string">"&lt;span/&gt;"</span>).text(a[a_idx]);</span><br><span class="line">    <span class="keyword">var</span> x = e.pageX,</span><br><span class="line">    y = e.pageY;</span><br><span class="line">    $i.css(&#123;</span><br><span class="line">      <span class="string">"z-index"</span>: <span class="number">99999</span>,</span><br><span class="line">      <span class="string">"top"</span>: y - <span class="number">28</span>,</span><br><span class="line">      <span class="string">"left"</span>: x - a[a_idx].length * <span class="number">8</span>,</span><br><span class="line">      <span class="string">"position"</span>: <span class="string">"absolute"</span>,</span><br><span class="line">      <span class="string">"color"</span>: <span class="string">"#ff7a45"</span></span><br><span class="line">    &#125;);</span><br><span class="line">    $(<span class="string">"body"</span>).append($i);</span><br><span class="line">    $i.animate(&#123;</span><br><span class="line">      <span class="string">"top"</span>: y - <span class="number">180</span>,</span><br><span class="line">      <span class="string">"opacity"</span>: <span class="number">0</span></span><br><span class="line">    &#125;, <span class="number">1500</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      $i.remove();</span><br><span class="line">    &#125;);</span><br><span class="line">    a_idx = (a_idx + <span class="number">1</span>) % a.length;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div></div></div>
+<p>​    在 themes\next\layout_custom\custom.swig 中加入</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;# 鼠标点击特效 #&#125;</span><br><span class="line">&#123;% if theme.cursor_effect == "fireworks" %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/cursor/fireworks.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% elseif theme.cursor_effect == "explosion" %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">class</span>=<span class="string">"fireworks"</span> <span class="attr">style</span>=<span class="string">"position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"</span> &gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"//cdn.bootcss.com/animejs/2.2.0/anime.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/cursor/explosion.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% elseif theme.cursor_effect == "love" %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/cursor/love.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% elseif theme.cursor_effect == "text" %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/cursor/text.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>​    如果 custom.swig 文件不存在，需要手动新建并在布局页面 themes\next\layout_layout.swig 中 body 末尾引入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include '_custom/custom.swig' %&#125;</span><br></pre></td></tr></table></figure>
+<p>​    在主题配置文件 themes\next_config.yml 中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mouse click effect: fireworks | explosion | love | text</span><br><span class="line">cursor_effect: fireworks</span><br></pre></td></tr></table></figure>
+<p>​    则可通过配置主题配置文件来设置鼠标点击效果。</p>
+<p>​    如explosion的效果</p>
+<p><img src="https://i.loli.net/2020/03/16/KDVTNgcn7uxvmjS.gif" alt="explosion.gif"></p>
+<h1 id="Hexo常见问题"><a href="#Hexo常见问题" class="headerlink" title="Hexo常见问题"></a>Hexo常见问题</h1><h2 id="hexo-d报错"><a href="#hexo-d报错" class="headerlink" title="hexo d报错"></a>hexo d报错</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: Authentication failed for ‘https:&#x2F;&#x2F;github.com&#x2F;gy23333&#x2F;gy23333.github.io.git&#x2F;‘</span><br></pre></td></tr></table></figure>
+<p>Github开启二次验证后导致博客提交错误，解决方法参考<a href="http://fezl.me/2017/05/20/GitHub二次验证带来的问题/" target="_blank" rel="noopener">GitHub二次验证带来的问题</a>。</p>
+<p>生成<strong>Personal access tokens</strong>令牌码，使用该码作为密码登录。</p>
+<ol>
+<li>登录Github</li>
+<li>Setttings -&gt; Developer Settings -&gt; Personal access tokens -&gt; Generate new token</li>
+<li>设定token的Expiration为no expiration（永久），全选scopes</li>
+<li>生成token，复制记录</li>
+<li>hexo d，输入Github用户名和密码（token）</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方文档</a></li>
+<li><a href="http://yearito.cn/posts/hexo-writing-skills.html" target="_blank" rel="noopener">Yearito’s Blog|Hexo 搭建个人博客系列：写作技巧篇</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md" target="_blank" rel="noopener">数学公式</a></li>
+<li><a href="https://www.ofind.cn/blog/HEXO/HEXO下的语法高亮拓展修改.html#设置代码添加删除标记" target="_blank" rel="noopener">猪猪侠 | Hexo 下的语法高亮拓展修改</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">   st=>start: Start|past:>http://www.google.com[blank]
+   e=>end: End:>http://www.google.com
+   op1=>operation: My Operation|past
+   op2=>operation: Stuff|current
+   sub1=>subroutine: My Subroutine|invalid
+   cond=>condition: Yes
+   or No?|approved:>http://www.google.com
+   c2=>condition: Good idea|rejected
+   io=>inputoutput: catch something...|request
+   
+   st->op1(right)->cond
+   cond(yes, right)->c2
+   cond(no)->sub1(left)->op1
+   c2(yes)->io->e
+   c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script><textarea id="flowchart-2-code" style="display: none">st=>start: 开始
+op1=>operation: 操作1
+cond1=>condition: Yes or No?
+sub=>subroutine: 子程序
+e=>end: 结束
+
+st->op1->cond1
+cond1(yes)->e
+cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script><textarea id="flowchart-3-code" style="display: none">st=>start: 开始
+op1=>operation: 操作1
+cond1=>condition: Yes or No?
+sub=>subroutine: 子程序
+e=>end: 结束
+
+st->op1->cond1
+cond1(yes)->e
+cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-3-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-3-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-3", options);</script></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/blog/" rel="tag"># blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/13/Latex%E5%85%A5%E9%97%A8/" rel="prev" title="Latex入门">
+      <i class="fa fa-chevron-left"></i> Latex入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/" rel="next" title="高斯滤波&均值滤波&中值滤波">
+      高斯滤波&均值滤波&中值滤波 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo书写技巧"><span class="nav-number">1.</span> <span class="nav-text">Hexo书写技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式"><span class="nav-number">1.1.</span> <span class="nav-text">数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo引入数学公式"><span class="nav-number">1.1.1.</span> <span class="nav-text">Hexo引入数学公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学公式书写规则"><span class="nav-number">1.1.2.</span> <span class="nav-text">数学公式书写规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程图"><span class="nav-number">1.2.</span> <span class="nav-text">流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo引入flowchart流程图"><span class="nav-number">1.2.1.</span> <span class="nav-text">Hexo引入flowchart流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程图绘制规则"><span class="nav-number">1.2.2.</span> <span class="nav-text">流程图绘制规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo引入Mermaid流程图"><span class="nav-number">1.2.3.</span> <span class="nav-text">Hexo引入Mermaid流程图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码块"><span class="nav-number">1.3.</span> <span class="nav-text">代码块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式"><span class="nav-number">1.3.1.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#写法一"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">写法一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写法二"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">写法二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置语言"><span class="nav-number">1.3.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置标题"><span class="nav-number">1.3.3.</span> <span class="nav-text">设置标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置链接"><span class="nav-number">1.3.4.</span> <span class="nav-text">设置链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否显示行号"><span class="nav-number">1.3.5.</span> <span class="nav-text">是否显示行号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置起始行号"><span class="nav-number">1.3.6.</span> <span class="nav-text">设置起始行号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置代码添加删除标记"><span class="nav-number">1.3.7.</span> <span class="nav-text">设置代码添加删除标记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aplayer音乐播放器"><span class="nav-number">1.4.</span> <span class="nav-text">Aplayer音乐播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建音乐页面"><span class="nav-number">1.4.1.</span> <span class="nav-text">新建音乐页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用hexo-tag-aplayer插件"><span class="nav-number">1.4.2.</span> <span class="nav-text">使用hexo-tag-aplayer插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动建立歌单（不推荐）"><span class="nav-number">1.4.3.</span> <span class="nav-text">手动建立歌单（不推荐）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo主题优化"><span class="nav-number">2.</span> <span class="nav-text">Hexo主题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化回到顶部"><span class="nav-number">2.1.</span> <span class="nav-text">个性化回到顶部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鼠标点击效果"><span class="nav-number">2.2.</span> <span class="nav-text">鼠标点击效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo常见问题"><span class="nav-number">3.</span> <span class="nav-text">Hexo常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-d报错"><span class="nav-number">3.1.</span> <span class="nav-text">hexo d报错</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

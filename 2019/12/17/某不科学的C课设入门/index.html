@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一些关于华科自动化C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某不科学的C课设入门（华科自动化C课设）">
+<meta property="og:url" content="https://gy23333.github.io/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="一些关于华科自动化C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576517/gy/cks1_ae9qus.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576585/gy/cks2_vtbuw9.png">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576622/gy/cks3_yqusyj.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576802/gy/cks4_mae1qb.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576839/gy/cks5_sezizh.png">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576872/gy/cks6_blyehy.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576916/gy/cks7_nhlxc2.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576954/gy/cks8_tydpvv.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576990/gy/cks9_qt7pz1.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577029/gy/cks10_kwiqgf.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577065/gy/cks11_cgpuko.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577092/gy/cks12_enrz0y.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577155/gy/cks13_dlvq8m.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577257/gy/cks14_hlp79y.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577276/gy/cks15_ezfwi0.jpg">
+<meta property="article:published_time" content="2019-12-17T04:10:28.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.126Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="入门">
+<meta property="article:tag" content="华科自动化">
+<meta property="article:tag" content="C语言课程设计">
+<meta property="article:tag" content="BorlandC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576517/gy/cks1_ae9qus.jpg">
+
+<link rel="canonical" href="https://gy23333.github.io/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>某不科学的C课设入门（华科自动化C课设） | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某不科学的C课设入门（华科自动化C课设）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-17 12:10:28" itemprop="dateCreated datePublished" datetime="2019-12-17T12:10:28+08:00">2019-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/12/17/%E6%9F%90%E4%B8%8D%E7%A7%91%E5%AD%A6%E7%9A%84C%E8%AF%BE%E8%AE%BE%E5%85%A5%E9%97%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一些关于华科自动化C课设的经验总结，之前在课设群里发过pdf版的，现整理到博客上，如有问题可在下面进行评论。</p>
+<a id="more"></a>
+<h2 id="入门建议"><a href="#入门建议" class="headerlink" title="入门建议"></a>入门建议</h2><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><p>C课设的大部分需要的知识都已经在自动化大一下学期的C语言课程上学习过了，这里主要就谈一些需要自学的知识，建议大家在暑假期间学习一下。</p>
+<ul>
+<li><p><strong>建立打开工程</strong></p>
+<p>跑一跑学长学姐的代码，看看大致是一个怎样的内容。学会如何在bc上建立一个工程。（详细过程请参考《Borland C++建立工程菜鸟教程》）</p>
+</li>
+<li><p><strong>选择画图的模式，学习基本的画图方法</strong></p>
+<p>两种模式可供选择——VGA和SVGA</p>
+<p>|          | <strong>优点</strong>                                                     | <strong>缺点</strong>                                                     |<br>| ———— | —————————————————————————————— | —————————————————————————————— |<br>| <strong>VGA</strong>  | 具有众多的画图函数（例如画圆、画方框等），画图显示速度快（基本一跳转画图就完成） | 分辨率低，可选择的颜色少，不能贴图                           |<br>| <strong>SVGA</strong> | 分辨率高，可选颜色多，可贴图                                 | 需要基于画点自己写画图函数，画图显示慢（页面显示时可以明显地看出画图的过程） |</p>
+<p><strong>建议</strong>：不要求较为复杂的页面的课题选择VGA模式，因为画图比较方便而且显示效果比较好；如果需要画较为复杂的页面和图形，或者必须得贴图的课题选择SVGA模式。</p>
+<p><strong>提醒</strong>：贴图须谨慎，非必要不贴图。每年的情况可能不同，打听一下今年的贴图的要求。</p>
+<p>VGA画图函数可以参考《C高级实用程序设计（王士元）》中的章节。</p>
+</li>
+<li><p><strong>鼠标的使用</strong></p>
+</li>
+<li><p>重点是找到一个好用的鼠标，然后学会如何使用。（当然如果愿意自己写一个也是可以的，这样会理解的更透彻一些）</p>
+<p><em>注意：不要用系统鼠标！！！</em></p>
+<p> 系统鼠标是DOS下面自带的一个鼠标，在我们的电脑的bc跑的时候可以很好地显示，但是在验收用XP系统跑的时候，系统鼠标是无法显示出来的。</p>
+<p>如何区分是否是系统鼠标？</p>
+<p>看有没有画鼠标的图形，如果该鼠标文件里面没有任何画图的过程直接调出鼠标的形状即为系统鼠标。</p>
+</li>
+<li><p><strong>汉字显示</strong></p>
+<p>与鼠标相同，只要找一个汉字库加入工程，然后学会使用就行。</p>
+<p>有些用Notepad++编写的同学会发现汉字乱码的情况，这是因为在编写的最初没有设置为简体汉字，Notepad++默认编码为UTF-8编码，在每次编写c文件前需要手动设为中文简体。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576517/gy/cks1_ae9qus.jpg" style="zoom: 15%;" /></p>
+</li>
+<li><p><strong>文件操作</strong></p>
+<p>需要自学文件的读取和写入的操作。由于不连网，所以课设中信息一般都是储存在文件中， 这时候的文件相当于课设系统的数据库。文件建议以二进制形式存储，这样读写的速度会更快。</p>
+</li>
+</ul>
+<h3 id="其他建议"><a href="#其他建议" class="headerlink" title="其他建议"></a>其他建议</h3><ol>
+<li>组内配合。C课设毕竟是个合作项目，很多人一开始忽视了搭档之间配合的重要性，最后一个人完成了大部分的工作，其实这样不仅会让你身心俱疲，而且也可能无法取得更高的分数（老师并不知道真正工作分配量，而且就算知道，不能和搭档较好的合作这个问题也会成为你的一个扣分项）。不建议组三人队，三人队对于课设来说人太多了些，但是已经组好了三人队也没关系，把功能多做一些，分摊到每个人的工作量不能小于二人队。</li>
+<li>多找老师。找老师主要是两个方面：一是和老师讨论一下项目的总体规划（最好找出这道题的老师），不要让你的项目功能和老师想的偏差太大，可能的话多给几个老师看一下你的程序。二是找老师帮助debug，如果有bug一直都该不好，尽早找老师或者学长学姐问，不要拖。</li>
+<li>仿照市面上已有的电脑版软件设计。课设最好的效果就是让人看起来像一个真实的软件。</li>
+<li>尽早开始做。C课设至少要一到两个月的工作量，一般中期验收在10月中旬，终期验收在11月初或者中旬，所以建议最晚在9月中旬要开始工作，当然越早开始肯定是越好的啦。</li>
+<li>验收前一周一定要去科技楼的电脑上跑一下程序，科技楼有一种银白色的主机是最后验收时跑的主机，（判断是否是最后验收时跑的方式的方法：工程在XP系统上直接运行，不需要打开BC），这种跑法可能会和你在自己电脑上或者科技楼非XP系统的电脑上跑得有很大的不同，所以一定要提前至少一周的时间去科技楼跑一下你的程序。最后有闲余的时间的话可以把程序里的warning全部消掉一下。</li>
+<li>中期和终期报告尽量多写一些。中期验收会看报告页数，页数不够的会被打回去重写。</li>
+<li>每个函数的行数不要过多。不要把一个页面所有的代码都堆在一个函数里，这样很可能让你带上重复代码来凑代码量的嫌疑，把带有功能的代码块提出成函数，这样也方便重复调用。</li>
+<li>多功能性和稳定性。不一定要追求十分复杂的算法，重要的是扩展功能，特别是较为简单的题就得放开思路，使你的系统功能更加的丰富。</li>
+</ol>
+<h2 id="跑往届代码"><a href="#跑往届代码" class="headerlink" title="跑往届代码"></a>跑往届代码</h2><p>《Borland C++建立工程菜鸟教程》中很详细地讲述了如何建立工程的问题，所以这里就只是简述一下怎么打开已有的工程（这里就用我们组的工程进行演示，文件夹名为stock）。</p>
+<p>第一步：把代码放到BC的DISK_C文件夹下。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576585/gy/cks2_vtbuw9.png" style="zoom:40%;" /></p>
+<p>第二步：打开BC，在 File &gt; Change Directory 里找到相应文件。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576622/gy/cks3_yqusyj.jpg" style="zoom:75%;" /></p>
+<p>第三步：在 Project &gt; Open Project File 中找到 .prj 文件，打开。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576802/gy/cks4_mae1qb.jpg" style="zoom:75%;" /></p>
+<p> 第四步：设置Directories</p>
+<p>在Options &gt; Directories中的第一行是头文件的地址，除了BC自带的头文件库外，还得添加自己程序的头文件所在地址。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576839/gy/cks5_sezizh.png" style="zoom: 40%;" /></p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576872/gy/cks6_blyehy.jpg" style="zoom:75%;" /></p>
+<p>第五步：上述几步都设置好了后就可以编译了</p>
+<p>​         Compile &gt; Build all</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576916/gy/cks7_nhlxc2.jpg" style="zoom:75%;" /></p>
+<p>编译没有error，就可以跑了（Run &gt; Run）</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576954/gy/cks8_tydpvv.jpg" style="zoom:75%;" /></p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576576990/gy/cks9_qt7pz1.jpg" style="zoom:75%;" /></p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577029/gy/cks10_kwiqgf.jpg" style="zoom:75%;" /></p>
+<p> 之后就自己去玩啦。。。。。</p>
+<h2 id="如何搭建项目框架"><a href="#如何搭建项目框架" class="headerlink" title="如何搭建项目框架"></a>如何搭建项目框架</h2><p>接下来我会演示我们组当时建立整个项目的框架，如何建工程《Borland C++建立工程菜鸟教程》中有讲，这里不在赘述。</p>
+<h3 id="Notepad-的使用"><a href="#Notepad-的使用" class="headerlink" title="Notepad++的使用"></a>Notepad++的使用</h3><p>建议使用第三方编译器来打代码（如Notepad++）</p>
+<p>Notepad++可在官网直接免费下载</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577065/gy/cks11_cgpuko.jpg" style="zoom:75%;" /></p>
+<p>用Notepad++新建一个文件后，一定要记得进行两个设置，一个是汉字（前面提过），一个是C语言。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577092/gy/cks12_enrz0y.jpg" alt="编码>编码字符集>中文>GB2312(Simplified)" style="zoom: 25%;" /></p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577155/gy/cks13_dlvq8m.jpg" alt="语言&gt;C&gt;C"></p>
+<h3 id="项目框架的搭建"><a href="#项目框架的搭建" class="headerlink" title="项目框架的搭建"></a>项目框架的搭建</h3><p>事例项目test 将放在文件夹中一起提供给大家。</p>
+<p>文件夹中需要编写的只有.c 和 .h文件，其余为自动生成和库。</p>
+<h4 id="主函数的编写"><a href="#主函数的编写" class="headerlink" title="主函数的编写"></a>主函数的编写</h4><p>主函数 main.c 主要由初始化部分和页面跳转部分组成。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">/***********各种初始化*****************/</span></span><br><span class="line">	<span class="comment">/*设定初始页面</span></span><br><span class="line"><span class="comment">	调试的时候可以改变page的初始设定，直接跳转到需要调试的页面</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//VGA画图的初始化</span></span><br><span class="line">    <span class="keyword">int</span> graphdriver = VGA;</span><br><span class="line">    <span class="keyword">int</span>	graphmode = VGAHI;</span><br><span class="line">    initgraph(&amp;graphdriver, &amp;graphmode, <span class="string">"BGI"</span>);</span><br><span class="line">	<span class="comment">//鼠标的初始化</span></span><br><span class="line">	mouseinit();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	*********页面跳转循环***********</span></span><br><span class="line"><span class="comment">	每一个页面对应一个page值，</span></span><br><span class="line"><span class="comment">	在各个页面的程序中，每一次有需要跳转页面的时候，就改变page值，且回到主程序</span></span><br><span class="line"><span class="comment">	在主程序的循环中，通过page值的改变，跳转到相应页面</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">switch</span>(page)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:<span class="comment">//页面1（初始页面）</span></span><br><span class="line">			    page = p1();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">				</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:<span class="comment">//页面2</span></span><br><span class="line">			    page = p2();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">				</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:<span class="comment">//退出程序</span></span><br><span class="line">				closegraph();<span class="comment">//关闭画图</span></span><br><span class="line">			    <span class="built_in">exit</span>(<span class="number">0</span>);<span class="comment">//退出程序</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>页面跳转依赖while循环和switch case的结合，之后新开页面直接增加case就可以。</p>
+<h4 id="页面函数的编写"><a href="#页面函数的编写" class="headerlink" title="页面函数的编写"></a>页面函数的编写</h4><p>页面函数主要是页面绘制和鼠标或者其他控制功能和页面跳转的两个部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page1.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//因为需要返回page值，所以页面的函数需是int型</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">p1</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//防止鼠标在跳转页面时留痕</span></span><br><span class="line">	clrmous(MouseX,MouseY);</span><br><span class="line">	<span class="built_in">delay</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">	page1_screen();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*循环，不停地监测异动，当异动导致page值改变，跳转页面*/</span></span><br><span class="line">	<span class="keyword">while</span>(page == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//获取鼠标的位置和状态</span></span><br><span class="line">		mou_pos(&amp;MouseX,&amp;MouseY,&amp;<span class="built_in">press</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击跳转页面框，跳转到页面2界面</span></span><br><span class="line">		<span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">170</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">1</span>;<span class="comment">//返回1到主函数的页面跳转循环</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击退出程序框</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">2</span>;<span class="comment">//返回2到主函数的页面跳转循环</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> page;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制页面1界面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">page1_screen</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cleardevice();<span class="comment">//把以前的页面清屏</span></span><br><span class="line">	</span><br><span class="line">	setbkcolor(BLACK);<span class="comment">//背景色设置</span></span><br><span class="line">	</span><br><span class="line">	setfillstyle(SOLID_FILL, BLUE);<span class="comment">//设定蓝色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">170</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>);<span class="comment">//跳转页面</span></span><br><span class="line">	setfillstyle(SOLID_FILL, RED);<span class="comment">//设定红色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">170</span>+<span class="number">60</span>+<span class="number">40</span>+<span class="number">60</span>);<span class="comment">//退出程序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>页面1有两个框，点击蓝框跳转到页面2，点击红框退出程序。</p>
+<p>页面2与页面1编写结构相同，只有一个红色的退出框。</p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577257/gy/cks14_hlp79y.jpg" alt="页面1" style="zoom:75%;" /></p>
+<p><img src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576577276/gy/cks15_ezfwi0.jpg" alt="页面2" style="zoom:75%;" /></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"common.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page2.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">////因为需要返回page值，所以页面的函数需是int型</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">p2</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> page = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//防止鼠标在跳转页面时留痕</span></span><br><span class="line">	clrmous(MouseX,MouseY);</span><br><span class="line">	<span class="built_in">delay</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">	page2_screen();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*循环，不停地监测异动，当异动导致page值改变，跳转页面*/</span></span><br><span class="line">	<span class="keyword">while</span>(page == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//获取鼠标的位置和状态</span></span><br><span class="line">		mou_pos(&amp;MouseX,&amp;MouseY,&amp;<span class="built_in">press</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击退出程序框</span></span><br><span class="line">		<span class="keyword">if</span>(mouse_press(<span class="number">180</span>, <span class="number">200</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">200</span>+<span class="number">60</span>) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			page = <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> page;<span class="comment">//返回2到主函数的页面跳转循环</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绘制页面2界面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">page2_screen</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cleardevice();<span class="comment">//把以前的页面清屏</span></span><br><span class="line">	</span><br><span class="line">	setbkcolor(BLACK);<span class="comment">//背景色设置</span></span><br><span class="line">	</span><br><span class="line">	setfillstyle(SOLID_FILL, RED);<span class="comment">//设定红色框</span></span><br><span class="line">	bar(<span class="number">180</span>, <span class="number">200</span>, <span class="number">180</span>+<span class="number">280</span>, <span class="number">200</span>+<span class="number">60</span>);<span class="comment">//退出程序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="头文件的编写"><a href="#头文件的编写" class="headerlink" title="头文件的编写"></a>头文件的编写</h4><p>头文件的编写有多种形式，这里写的只是我们当时用的那种，其他编写形式也是可以的。</p>
+<p>从上面的.c文件中可以看出，我们的每一个.c都调用了两个头文件。</p>
+<p>一个是同样的common.h，一个是与其文件名相同的 .h文件。</p>
+<p>test的common.h如下图所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _COMMON_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _COMMON_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;graphics.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bios.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dos.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"mouse.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>我们用common.h装了所有需要用到的库文件和鼠标头文件，每次有新调用的库文件就加进去，这样每个.c文件都只要调用common.h，不需要再重新写调用的库文件。</p>
+<p>另一种是与文件名相同的 .h文件，以main.h为例。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _MAIN_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _MAIN_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page1.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"page2.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>与文件名相同的 .h文件包含两个部分，第一部分是其调用的位于其他文件的函数的头文件，如main中调用了p1()和p2()分别位于page1.h和page2.h；第二部分是该.c文件中所有的函数。</p>
+<p>这样我们就搭建了一个有两个页面的简单工程。</p>
+<p>最后祝学弟学妹们“0 warning, 0 error.”，之后的路就要靠学弟学妹们自己去探索，老妈子学姐就不再废话啦。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%A5%E9%97%A8/" rel="tag"># 入门</a>
+              <a href="/tags/%E5%8D%8E%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag"># 华科自动化</a>
+              <a href="/tags/C%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" rel="tag"># C语言课程设计</a>
+              <a href="/tags/BorlandC/" rel="tag"># BorlandC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/16/Mac%E4%BD%BF%E7%94%A8Matlab%E5%8D%A1%E9%A1%BF%E4%B8%A5%E9%87%8D%E4%B8%94%E9%97%AA%E9%80%80%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="prev" title="Mac使用Matlab卡顿严重且闪退的解决办法">
+      <i class="fa fa-chevron-left"></i> Mac使用Matlab卡顿严重且闪退的解决办法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/20/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="汇编学习笔记">
+      汇编学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#入门建议"><span class="nav-number">1.</span> <span class="nav-text">入门建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预备知识"><span class="nav-number">1.1.</span> <span class="nav-text">预备知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他建议"><span class="nav-number">1.2.</span> <span class="nav-text">其他建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跑往届代码"><span class="nav-number">2.</span> <span class="nav-text">跑往届代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何搭建项目框架"><span class="nav-number">3.</span> <span class="nav-text">如何搭建项目框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Notepad-的使用"><span class="nav-number">3.1.</span> <span class="nav-text">Notepad++的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目框架的搭建"><span class="nav-number">3.2.</span> <span class="nav-text">项目框架的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数的编写"><span class="nav-number">3.2.1.</span> <span class="nav-text">主函数的编写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#页面函数的编写"><span class="nav-number">3.2.2.</span> <span class="nav-text">页面函数的编写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#头文件的编写"><span class="nav-number">3.2.3.</span> <span class="nav-text">头文件的编写</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

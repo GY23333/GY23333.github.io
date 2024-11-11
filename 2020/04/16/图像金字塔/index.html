@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;金字塔是一种图像多尺度信号表示法，其中信号或图像要经过反复的平滑和二次采样。通过对原始图像进行多尺度像素采样的方式，生成N个不同分辨率的图像。把具有最高级别分辨率的图像放在底部，以金字塔形状排列。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像金字塔">
+<meta property="og:url" content="https://gy23333.github.io/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;金字塔是一种图像多尺度信号表示法，其中信号或图像要经过反复的平滑和二次采样。通过对原始图像进行多尺度像素采样的方式，生成N个不同分辨率的图像。把具有最高级别分辨率的图像放在底部，以金字塔形状排列。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Image_pyramid.svg/600px-Image_pyramid.svg.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/DownSampling.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/f/f6/Aliasing-plot.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss3.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/22/nYSLKVvMImch715.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Lenna_guass_pyramid.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_edge.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Laplacian.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Laplacian2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Steerable1.png">
+<meta property="article:published_time" content="2020-04-16T13:26:43.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.110Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="高斯金字塔">
+<meta property="article:tag" content="拉普拉斯金字塔">
+<meta property="article:tag" content="小波金字塔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Image_pyramid.svg/600px-Image_pyramid.svg.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>图像金字塔 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图像金字塔
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-16 21:26:43" itemprop="dateCreated datePublished" datetime="2020-04-16T21:26:43+08:00">2020-04-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Vision/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer Vision</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/16/%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;金字塔是一种图像多尺度信号表示法，其中信号或图像要经过反复的平滑和二次采样。通过对原始图像进行多尺度像素采样的方式，生成N个不同分辨率的图像。把具有最高级别分辨率的图像放在底部，以金字塔形状排列。</p>
+<a id="more"></a>
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>问题：假设要进行人脸识别，但是人脸与摄像头之间距离忽远忽近，单一分辨率的识别算法无法识别所有距离下的人脸特征。</p>
+<p>&emsp;&emsp;图像金字塔是一种以多分辨率来解释图像的结构，通过对原始图像进行多尺度像素采样的方式，生成N个不同分辨率的图像。<br>&emsp;&emsp;把具有最高级别分辨率的图像放在底部，以金字塔形状排列，往上是一系列像素（尺寸）逐渐降低的图像，一直到金字塔的顶部只包含一个像素点的图像，这就构成了传统意义上的图像金字塔。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Image_pyramid.svg/600px-Image_pyramid.svg.png" style="zoom: 67%;" /></p>
+<p>两种采样方式：</p>
+<ul>
+<li>升采样：分辨率逐渐升高，图像变大</li>
+<li>降采样：分辨率逐渐下降，图像变小</li>
+</ul>
+<h1 id="降采样"><a href="#降采样" class="headerlink" title="降采样"></a>降采样</h1><p>&emsp;&emsp;降采样使图像分辨率逐渐下降的同时要保证不出现错误（失真）。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/DownSampling.png" style="zoom:30%;" /></p>
+<h2 id="奈奎斯特采样定理"><a href="#奈奎斯特采样定理" class="headerlink" title="奈奎斯特采样定理"></a>奈奎斯特采样定理</h2><p>&emsp;&emsp;为了不失真地恢复模拟信号，采样频率应该大于模拟信号频谱中最高频率的2倍。</p>
+<script type="math/tex; mode=display">
+F_s \geq 2F_{max}</script><p><strong>混叠</strong></p>
+<p>&emsp;&emsp;如果不能满足上述采样条件，采样后信号的频率就会重叠，即高于采样频率一半的频率成分将被重建成低于采样频率一半的信号。这种频谱的重叠导致的失真称为<strong>混叠</strong>，而重建出来的信号称为原信号的混叠替身，因为这两个信号有同样的样本值。</p>
+<p>&emsp;&emsp;下图对正弦信号的采样未符合奈奎斯特采样定理，恢复模拟信号时失真。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Aliasing-plot.png" alt=""></p>
+<p>&emsp;&emsp;如果原信号中包含的最高频率成分$F_{max} &gt; \frac{F_s}{2}$ ，则在离散信号谱中相应周期的谱会出现重叠，最终恢复的模拟信号失真。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing1.png" style="zoom: 42%;" /></p>
+<p>&emsp;&emsp;反之，如果$F_{max} &lt; \frac{F_s}{2}$ ，即采样频率大于分析信号中最高频谱成分的2倍，则采样后离散信号频谱中不会出现频率混叠。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing2.png" style="zoom: 50%;" /></p>
+<p>&emsp;&emsp;一个频率正好是采样频率一半的弦波信号，通常会混叠成另一相同频率的波弦信号，但它的相位和幅度改变了。以下两种措施可避免混叠的发生：</p>
+<ol>
+<li><strong>提高采样频率</strong>，使之达到最高信号频率的两倍以上；</li>
+<li>引入<strong>低通滤波器</strong></li>
+</ol>
+<p>&emsp;&emsp;高斯金字塔即是引入了<strong>高斯滤波器</strong>作为低通滤波器，从而抑制高频分量，避免混叠导致降采样后的图像失真。</p>
+<p>&emsp;&emsp;下图中，上行是未滤波的采样，可以看出后期出现了失真；下行是经过高斯滤波的下采样，后期虽然有数据损失，但是未发生失真。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Aliasing3.png" style="zoom: 40%;" /></p>
+<h1 id="高斯金字塔"><a href="#高斯金字塔" class="headerlink" title="高斯金字塔"></a>高斯金字塔</h1><p>&emsp;&emsp;高斯金字塔是通过高斯平滑和亚采样获得<strong>下采样</strong>图像。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss1.png" alt=""></p>
+<h2 id="降采样-1"><a href="#降采样-1" class="headerlink" title="降采样"></a>降采样</h2><p>&emsp;&emsp;为了获取层级为$G_{i+1}$的金字塔图像，采用如下方法:</p>
+<ol>
+<li>对图像$G_i$进行高斯内核卷积</li>
+<li>将所有偶数行和列去除</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss2.png" style="zoom: 25%;" /></p>
+<p>得到的图像即为$G_{i+1}$的图像，显而易见，结果图像只有原图像素点数的四分之一。通过对输入图像$G_i$(原始图像)不停迭代以上步骤就会得到整个金字塔。同时，向下取样会逐渐丢失图像的信息。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Gauss3.png" style="zoom:67%;" /></p>
+<h2 id="升采样"><a href="#升采样" class="headerlink" title="升采样"></a>升采样</h2><p>&emsp;&emsp;如果想放大图像，则需要通过向上取样操作得到，具体做法如下：</p>
+<ol>
+<li>将图像在每个方向扩大为原来的两倍，新增的行和列以0填充</li>
+<li>使用先前同样的内核(乘以4)与放大后的图像卷积，获得 “新增像素”的近似值</li>
+</ol>
+<p>（或者用双线性插值：先行求均值插入，再列求均值插入）</p>
+<p>得到的图像即为放大后的图像，但是与原来的图像相比比较模糊，因为在缩放的过程中已经丢失了一些信息，如果想在缩小和放大整个过程中减少信息的丢失，这些数据形成了拉普拉斯金字塔。</p>
+<p>&emsp;&emsp;下面两图分别是Lenna原图和经过高斯金字塔降采样再升采样后的图像，可以看出处理后的图像丢失了部分信息，所以升采样并不完全是降采样的逆。</p>
+<p><img src="https://i.loli.net/2020/04/22/nYSLKVvMImch715.jpg" alt="Lenna.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Lenna_guass_pyramid.png" style="zoom:62%;" /></p>
+<h2 id="高斯金字塔C-代码"><a href="#高斯金字塔C-代码" class="headerlink" title="高斯金字塔C++代码"></a>高斯金字塔C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"iostream"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgcodecs.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui.hpp"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\n Zoom In-Out demo \n "</span></span><br><span class="line">            <span class="string">"------------------  \n"</span></span><br><span class="line">            <span class="string">" * [i] -&gt; Zoom in   \n"</span></span><br><span class="line">            <span class="string">" * [o] -&gt; Zoom out  \n"</span></span><br><span class="line">            <span class="string">" * [ESC] -&gt; Close program \n"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* filename = argc &gt;=<span class="number">2</span> ? argv[<span class="number">1</span>] : <span class="string">"/Users/yogo/Downloads/CV/高斯金字塔/Gaussian pyramid/Gaussian pyramid/Lenna.png"</span>;</span><br><span class="line">    <span class="comment">// Loads an image</span></span><br><span class="line">    Mat src = imread( samples::findFile( filename ) );</span><br><span class="line">    <span class="comment">// Check if image is loaded fine</span></span><br><span class="line">    <span class="keyword">if</span>(src.empty())&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" Error opening image\n"</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" Program Arguments: [image_name -- default chicky_512.png] \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    &#123;</span><br><span class="line">        imwrite(<span class="string">"result3.png"</span>, src);</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span>( c == <span class="number">27</span> )</span><br><span class="line">        &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( c == <span class="string">'i'</span> )</span><br><span class="line">        &#123; pyrUp( src, src, Size( src.cols*<span class="number">2</span>, src.rows*<span class="number">2</span> ) );</span><br><span class="line">            <span class="built_in">printf</span>( <span class="string">"** Zoom In: Image x 2 \n"</span> );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( c == <span class="string">'o'</span> )</span><br><span class="line">        &#123; pyrDown( src, src, Size( src.cols/<span class="number">2</span>, src.rows/<span class="number">2</span> ) );</span><br><span class="line">            <span class="built_in">printf</span>( <span class="string">"** Zoom Out: Image / 2 \n"</span> );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="滤波模版大小问题"><a href="#滤波模版大小问题" class="headerlink" title="滤波模版大小问题"></a>滤波模版大小问题</h3><p>&emsp;&emsp;按高斯分布，理论上需要一个无限大的卷积核。但实际上，仅需要取均值周围3倍标准差内的值（高斯核单边大小为3σ），以外部分直接去掉即可。</p>
+<p>&emsp;&emsp;如果模版取得太小，边界后出现高频振荡。</p>
+<h3 id="图像边缘问题"><a href="#图像边缘问题" class="headerlink" title="图像边缘问题"></a>图像边缘问题</h3><p>&emsp;&emsp;图像的边缘做卷积时，需要在边缘点周围填充值。</p>
+<ul>
+<li>clip filter（black）：填0</li>
+<li>wrap around：图像周期出现，即把图像平移到边缘</li>
+<li>copy edge：边缘复制</li>
+<li>reflect across edge：镜像反转</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_edge.png" style="zoom:50%;" /></p>
+<h1 id="拉普拉斯金字塔"><a href="#拉普拉斯金字塔" class="headerlink" title="拉普拉斯金字塔"></a>拉普拉斯金字塔</h1><p>&emsp;&emsp;拉普拉斯金字塔每一层的图像为同一层高斯金字塔的图像减去上一层的图像进行上采样并高斯模糊的结果。</p>
+<script type="math/tex; mode=display">
+L_i = G_i-UP(G_{i+1})*g_{5\times 5}</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Laplacian.png" style="zoom:67%;" /></p>
+<p>&emsp;&emsp;拉普拉斯金字塔即是高斯金字塔每层丢掉的高频部分。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Laplacian2.png" style="zoom: 50%;" /></p>
+<h1 id="小波金字塔"><a href="#小波金字塔" class="headerlink" title="小波金字塔"></a>小波金字塔</h1><p>&emsp;&emsp;二维离散小波分解将二维图像分解为多尺度表达， 原图像可以由多尺度小波系数精确重建。</p>
+<p>&emsp;&emsp;频域告诉我们场景里有什么东西，空域告诉在什么位置。高频往往对应的是边缘，所以相对于图像的低频成分来说，图像的高频成分的空间定位需求很高，不应该损失空间表达能力。对于低频的部分则要求频域的分辨能力更强。即，<strong>高频要求空域上的高分辨率，低频要求频域上的高分辨率。</strong></p>
+<p>&emsp;&emsp;在傅立叶变换上无法做到对高低频不同的分辨能力，而小波分解可以做到。</p>
+<h2 id="小波变换"><a href="#小波变换" class="headerlink" title="小波变换"></a>小波变换</h2><p>&emsp;&emsp;小波变换是线性的。</p>
+<script type="math/tex; mode=display">
+\vec F = U \vec f</script><h3 id="哈尔变换"><a href="#哈尔变换" class="headerlink" title="哈尔变换"></a>哈尔变换</h3><p>&emsp;&emsp;哈尔变换是一种最简单又可以反应出时变频谱（time-variant spectrum）的表示方法。其观念与傅里叶变换相近。傅里叶变换的原理是利用正弦波与余弦波来对信号进行调变；而哈尔变换则是利用哈尔函数来对信号进行调变。哈尔函数也含有正弦函数系和余弦函数系所拥有的正交性，也就是说不同的哈尔函数是互相正交的，其内积为零。</p>
+<p>&emsp;&emsp;将信号分解成低频和高频。以$N=2$为例，第一行是做均值，分出低频；第二行是做差值，分出高频。低频部分可以继续分解。（N取决于信号的维数，加权需要归一化）</p>
+<script type="math/tex; mode=display">
+N=2\ ,\quad 
+U=
+\begin{bmatrix}
+1&1\\
+1&-1
+\end{bmatrix}
+\\
+N=4\ ,\quad 
+U=
+\begin{bmatrix}
+1&1&1&1\\
+1&1&-1&-1\\
+1&-1&0&0\\
+0&0&1&-1\\
+\end{bmatrix}
+\\
+.
+\\
+.
+\\
+.</script><p>&emsp;&emsp;下面$N=8$的小波，前2行为低频部分（第2行为低频的高频部分），第3、4行为次高频部分，后4行为高频部分。</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\frac18&\frac18&\frac18&\frac18&\frac18&\frac18&\frac18&\frac18\\
+\frac18&\frac18&\frac18&\frac18&-\frac18&-\frac18&-\frac18&-\frac18\\
+\frac14&\frac14&-\frac14&-\frac14&0&0&0&0\\
+0&0&0&0&\frac14&\frac14&-\frac14&-\frac14\\
+\frac12&-\frac12&0&0&0&0&0&0\\
+0&0&\frac12&-\frac12&0&0&0&0\\
+0&0&0&0&\frac12&-\frac12&0&0\\
+0&0&0&0&0&0&\frac12&-\frac12\\
+\end{bmatrix}</script><p>哈尔变换特点：</p>
+<ol>
+<li>不需要乘法（只有相加或加减），容易实现</li>
+<li>输入与输出个数相同</li>
+</ol>
+<div class="note warning">
+            <p>对$(64,2,3,61,60,6,7,57)$做Haar小波变换</p><script type="math/tex; mode=display">\begin{bmatrix}\frac18&\frac18&\frac18&\frac18&\frac18&\frac18&\frac18&\frac18\\\frac18&\frac18&\frac18&\frac18&-\frac18&-\frac18&-\frac18&-\frac18\\\frac14&\frac14&-\frac14&-\frac14&0&0&0&0\\0&0&0&0&\frac14&\frac14&-\frac14&-\frac14\\\frac12&-\frac12&0&0&0&0&0&0\\0&0&\frac12&-\frac12&0&0&0&0\\0&0&0&0&\frac12&-\frac12&0&0\\0&0&0&0&0&0&\frac12&-\frac12\\\end{bmatrix}\begin{bmatrix}64\\2\\3\\61\\60\\6\\7\\57\\\end{bmatrix}=\begin{bmatrix}32.5\\0\\0.5\\0.5\\31\\-29\\27\\-25\\\end{bmatrix}</script>
+          </div>
+<h2 id="哈尔变换-降采样"><a href="#哈尔变换-降采样" class="headerlink" title="哈尔变换+降采样"></a>哈尔变换+降采样</h2><p>例如：一个一维的图像$[2,4,6,8,10,12,14,16]$</p>
+<p>求均值（低频）：相邻两个取均值，得$[3,7,11,15]$。这个新的图像分辨率就成了原来的一半(8/2=4)。</p>
+<p>求差值（高频）：上面的均值我们存储了图像的整体信息。但是很多细节信息我们丢掉了，所以我们同时要记录图像的细节信息，这样在重构时能够恢复图像的全部信息。下面是求第m个差值的公式：</p>
+<script type="math/tex; mode=display">
+b_m=\frac {a_{2m}−a_{2m+1}}2</script><p>&emsp;&emsp;经过计算我们得到了结果$[-1,-1,-1,-1]$。这个新的分辨率也成了原来的一半(8/2=4)。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar1.png" style="zoom:33%;" /></p>
+<h2 id="哈尔小波金字塔"><a href="#哈尔小波金字塔" class="headerlink" title="哈尔小波金字塔"></a>哈尔小波金字塔</h2><p>&emsp;&emsp;小波金字塔，先将图像分为高频和低频，其中的低频成分继续分解。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar2.png" style="zoom:50%;" /></p>
+<p>每一步分解：先水平分解成高频、低频；</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar4.png" style="zoom:30%;" /></p>
+<p>在将水平方向的分解的结果继续分解，得到四幅图——水平高垂直高、水平高垂直低、水平低垂直高、水平低垂直低</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar5.png" style="zoom:30%;" /></p>
+<p>下一步分解：将水平低垂直低的图重复上述分解，即得到小波金字塔。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar3.png" style="zoom: 50%;" /></p>
+<p>每次分解都是降采样，并且可以用原始图像大小空间表达出全部小波分解结果。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar6.png" style="zoom: 50%;" /></p>
+<h2 id="小波的优缺点"><a href="#小波的优缺点" class="headerlink" title="小波的优缺点"></a>小波的优缺点</h2><ul>
+<li><p>小波的优点</p>
+<ul>
+<li>不是过完备的，即可以用原始图像大小空间表达出全部小波分解结果。</li>
+<li>适合图像压缩，系数比较稀疏</li>
+<li>可分层的运算，比较快速</li>
+</ul>
+</li>
+<li><p>小波的缺点</p>
+<ul>
+<li><p>子带</p>
+<p>只做了水平垂直方向，其他方向不理想</p>
+</li>
+<li><p>空间分配不合理</p>
+<p>空域上小的移动，会导致小波分解的系数产生大的差异</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Haar7.png" style="zoom: 50%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="可控方向的金字塔"><a href="#可控方向的金字塔" class="headerlink" title="可控方向的金字塔"></a>可控方向的金字塔</h1><p>&emsp;&emsp;设计不同方向的滤波器，将图像分解成不同的滤波结果，这些滤波结果又可以继续抽样划分。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Pyramid_Steerable1.png" style="zoom: 33%;" /></p>
+<ul>
+<li>可控方向的金字塔的优点<ul>
+<li>子带划分时可以做方向的细分</li>
+<li>子带的稳定性好，不会产生突变</li>
+<li>可以根据需要选择滤波器组</li>
+</ul>
+</li>
+<li>可控方向的金字塔的缺点<ul>
+<li>过完备</li>
+<li>需要各向同性的滤波器进行补充</li>
+</ul>
+</li>
+</ul>
+<h1 id="图像金字塔的作用"><a href="#图像金字塔的作用" class="headerlink" title="图像金字塔的作用"></a>图像金字塔的作用</h1><ul>
+<li><p>多尺度</p>
+<p>在有不同大小的图像分析时，算法不变，通过金字塔改变尺度</p>
+</li>
+<li><p>去噪</p>
+</li>
+<li><p>纹理分析</p>
+</li>
+<li><p>目标识别</p>
+</li>
+<li><p>图像拼接</p>
+</li>
+<li><p>图像融合</p>
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://shartoo.github.io/2019/02/24/image-pramid/" target="_blank" rel="noopener">图像中的各种金字塔</a></li>
+<li><a href="https://blog.csdn.net/xiamentingtao/article/details/78596240" target="_blank" rel="noopener">图像金字塔总结</a></li>
+<li><a href="https://www.uio.no/studier/emner/matnat/its/UNIK4690/v16/forelesninger/lecture_2_3_blending.pdf" target="_blank" rel="noopener">图像金字塔的算法构建图示</a></li>
+<li><a href="https://www.cnblogs.com/zhuifeng-mayi/p/9565656.html" target="_blank" rel="noopener">高斯金字塔、拉普拉斯金字塔</a></li>
+<li><a href="http://gr.xjtu.edu.cn/c/document_library/get_file?folderId=1826595&amp;name=DLFE-34601.pdf" target="_blank" rel="noopener">图像多分尺度处理技术</a></li>
+<li><a href="https://docs.opencv.org/3.4/d4/d1f/tutorial_pyramids.html" target="_blank" rel="noopener">opencv 官方文档</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pyramid_(image_processing" target="_blank" rel="noopener">WiKi百科：金字塔（图像处理）</a>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%99%8D%E9%87%87%E6%A0%B7" target="_blank" rel="noopener">WiKi百科：降采样</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%87%87%E6%A0%B7%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">WiKi百科：采样定理</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%93%88%E7%88%BE%E5%B0%8F%E6%B3%A2%E8%BD%89%E6%8F%9B" target="_blank" rel="noopener">WiKi百科：哈尔小波变换</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%AB%98%E6%96%AF%E9%87%91%E5%AD%97%E5%A1%94/" rel="tag"># 高斯金字塔</a>
+              <a href="/tags/%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E9%87%91%E5%AD%97%E5%A1%94/" rel="tag"># 拉普拉斯金字塔</a>
+              <a href="/tags/%E5%B0%8F%E6%B3%A2%E9%87%91%E5%AD%97%E5%A1%94/" rel="tag"># 小波金字塔</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/31/Xcode%E8%B0%83%E7%94%A8Mac%E6%91%84%E5%83%8F%E5%A4%B4/" rel="prev" title="Xcode调用Mac摄像头">
+      <i class="fa fa-chevron-left"></i> Xcode调用Mac摄像头
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/17/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2/" rel="next" title="图像的傅立叶变换">
+      图像的傅立叶变换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降采样"><span class="nav-number">2.</span> <span class="nav-text">降采样</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#奈奎斯特采样定理"><span class="nav-number">2.1.</span> <span class="nav-text">奈奎斯特采样定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高斯金字塔"><span class="nav-number">3.</span> <span class="nav-text">高斯金字塔</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#降采样-1"><span class="nav-number">3.1.</span> <span class="nav-text">降采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升采样"><span class="nav-number">3.2.</span> <span class="nav-text">升采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯金字塔C-代码"><span class="nav-number">3.3.</span> <span class="nav-text">高斯金字塔C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些问题"><span class="nav-number">3.4.</span> <span class="nav-text">一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#滤波模版大小问题"><span class="nav-number">3.4.1.</span> <span class="nav-text">滤波模版大小问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像边缘问题"><span class="nav-number">3.4.2.</span> <span class="nav-text">图像边缘问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拉普拉斯金字塔"><span class="nav-number">4.</span> <span class="nav-text">拉普拉斯金字塔</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小波金字塔"><span class="nav-number">5.</span> <span class="nav-text">小波金字塔</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小波变换"><span class="nav-number">5.1.</span> <span class="nav-text">小波变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#哈尔变换"><span class="nav-number">5.1.1.</span> <span class="nav-text">哈尔变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈尔变换-降采样"><span class="nav-number">5.2.</span> <span class="nav-text">哈尔变换+降采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈尔小波金字塔"><span class="nav-number">5.3.</span> <span class="nav-text">哈尔小波金字塔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小波的优缺点"><span class="nav-number">5.4.</span> <span class="nav-text">小波的优缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可控方向的金字塔"><span class="nav-number">6.</span> <span class="nav-text">可控方向的金字塔</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像金字塔的作用"><span class="nav-number">7.</span> <span class="nav-text">图像金字塔的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

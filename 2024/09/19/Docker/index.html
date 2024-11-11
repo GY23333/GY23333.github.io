@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="基于 Go 的开源应用容器引擎 Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker">
+<meta property="og:url" content="https://gy23333.github.io/2024/09/19/Docker/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="基于 Go 的开源应用容器引擎 Docker">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241013193557973.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241014005509938.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241014015955548.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241015021636441.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/docker-architecture.webp">
+<meta property="article:published_time" content="2024-09-19T05:48:28.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.129Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241013193557973.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2024/09/19/Docker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Docker | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/09/19/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-09-19 13:48:28" itemprop="dateCreated datePublished" datetime="2024-09-19T13:48:28+08:00">2024-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/09/19/Docker/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/19/Docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基于 Go 的开源应用容器引擎 Docker</p>
+<a id="more"></a>
+<h1 id="快速了解-Docker"><a href="#快速了解-Docker" class="headerlink" title="快速了解 Docker"></a>快速了解 Docker</h1><p>快速了解 docker 的小视频</p>
+<p>【docker是什么？和kubernetes(k8s)是什么关系？-哔哩哔哩】 </p>
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=1102796777&bvid=BV1aA4m1w7Ew&cid=1501859959&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+<ul>
+<li>Docker 是一款能将程序和环境一起打包并运行的工具软件。Docker 作为中间层，使得应用和机器基础架构分离，从而实现不同架构下的快速交付部署。</li>
+<li>程序和环境打包构建成一个容器镜像文件，根据 Dockerfile 构建出容器镜像，Dockerfile 中设置包括指定环境的基础镜像（如 ubuntu/centos、python/go 等等）以及后续需执行的命令（比如安装依赖、运行服务等）。</li>
+<li>部署环境部署容器镜像，就会在 Linux 上以一个进程的形式运行该 docker 容器，利用操作系统的用户空间构建出应用所需的环境，运行相应服务。</li>
+<li>Docker Registy：相当于 docker 镜像的代码仓，也就是镜像仓，可以将 docker 镜像推到 Registy，部署环境再从 Registy 拉取镜像。</li>
+<li>Docker Compose：一整套服务经常包含多个 docker 镜像部署到单节点，这时候就可以使用 Docker Compose 来部署，通过 yaml 文件呢规定各个 docker 镜像间的部署顺序与其他部署配置信息。</li>
+<li>Docker Swarm：解决一整套服务在多个节点间的部署问题，如迁移、扩缩容。</li>
+<li>k8s：与 Docker Swarm 类似，也是解决一整套服务在多个节点间的部署问题，如迁移、扩缩容。</li>
+</ul>
+<h1 id="虚拟化过程"><a href="#虚拟化过程" class="headerlink" title="虚拟化过程"></a>虚拟化过程</h1><h2 id="物理机"><a href="#物理机" class="headerlink" title="物理机"></a>物理机</h2><p>物理机存在的痛点：</p>
+<ul>
+<li>各个应用会共享依赖库，所以有可能存在不同应用依赖有冲突的问题，比如需要同一个依赖的不同版本</li>
+<li>低使用率，可能仅有几个应用在运行，却得占用一整台物理机</li>
+<li>爆炸半径大，比如改变一个应用的依赖，可以会导致另一应用变得不可用</li>
+<li>开关机慢</li>
+<li>创建和搭建物理机慢</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241013193557973.png" alt="image-20241013193557973" style="zoom:40%;" /></p>
+<h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><p>物理机上的 Hypervisor 会从物理机分离出独立的资源池，在这个资源池中生成虚拟化硬件以及与物理机相同的上方结构。</p>
+<p>Hypervisor 分为两类：</p>
+<ul>
+<li>Type 1：不依赖物理机上的 OS，比如 VMware、Hyper-V</li>
+<li>Type 2：依赖物理机上的 OS，比如 Virtual Box</li>
+</ul>
+<p>虚拟机一定程度上缓解了物理机的问题。</p>
+<ul>
+<li>应用运行在不同的虚拟机上，实现相互隔离，解决了依赖冲突问题</li>
+<li>可以根据需要分配相应的规格，提高使用率</li>
+<li>减小了爆炸半径</li>
+<li>开关机变为分钟级</li>
+<li>最大的好处：可以快速构建虚拟机</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241014005509938.png" alt="image-20241014005509938" style="zoom:40%;" /></p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>容器的载体可以是物理机也可以是虚拟机，和虚拟机的 Hypervisor 相对，容器通过 Container Runtime 控制。</p>
+<p>容器与虚拟机的最大不同点：</p>
+<ul>
+<li>虚拟机复制了一份 Linux 内核</li>
+<li>容器并不存在内核，而是与载体的 OS 共用一个内核</li>
+</ul>
+<p>容器的好处：</p>
+<ul>
+<li>无依赖冲突问题</li>
+<li>进一步提高了资源利用率。虚拟机还需要构造一套 OS，而容器可以直接依赖于宿主机的 OS</li>
+<li>进一步减小了爆炸半径。每个容器所占的资源相对更少了，爆炸半径也就相对减小。不过其实隔离性是不如虚拟机的</li>
+<li>开关容器时间短（秒级）</li>
+<li>极快速部署</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241014015955548.png" alt="image-20241014015955548" style="zoom:40%;" /></p>
+<h2 id="日常结构"><a href="#日常结构" class="headerlink" title="日常结构"></a>日常结构</h2><p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241015021636441.png" alt="image-20241015021636441" style="zoom:60%;" /></p>
+<h1 id="Docker-架构"><a href="#Docker-架构" class="headerlink" title="Docker 架构"></a>Docker 架构</h1><p>Docker 采用 client-server 架构，由 Docker Client 发出指令，命令 Docker daemon 构建、运行、分发 Docker containers。Docker Client 和 Docker daemon 可以运行在同一个节点，也可以用 Docker Client 控制远程的 Docker daemon。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/docker-architecture.webp" alt=""></p>
+<h2 id="镜像-Image"><a href="#镜像-Image" class="headerlink" title="镜像 Image"></a>镜像 Image</h2><p>容器镜像是一个由程序和环境构建出的标准包，包括了用来运行容器所需的文件、二进制文件、库以及配置。</p>
+<h2 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器 Container"></a>容器 Container</h2><h1 id="Docker-从构建到部署"><a href="#Docker-从构建到部署" class="headerlink" title="Docker 从构建到部署"></a>Docker 从构建到部署</h1><h2 id="Docker-镜像构建"><a href="#Docker-镜像构建" class="headerlink" title="Docker 镜像构建"></a>Docker 镜像构建</h2><h2 id="Docker-镜像仓"><a href="#Docker-镜像仓" class="headerlink" title="Docker 镜像仓"></a>Docker 镜像仓</h2><h2 id="Docker-容器部署"><a href="#Docker-容器部署" class="headerlink" title="Docker 容器部署"></a>Docker 容器部署</h2><h1 id="Docker-命令"><a href="#Docker-命令" class="headerlink" title="Docker 命令"></a>Docker 命令</h1><p>查看正在运行的容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p>查看所有容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+<p>开启容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start &lt;CONTAINER ID&gt;</span><br></pre></td></tr></table></figure>
+<p>停止容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop &lt;CONTAINER ID&gt;</span><br></pre></td></tr></table></figure>
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it &lt;CONTAINER ID&gt; &lt;CLI&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h1><h1 id="Docker-Swarm-与-k8s"><a href="#Docker-Swarm-与-k8s" class="headerlink" title="Docker Swarm 与 k8s"></a>Docker Swarm 与 k8s</h1><h1 id="Ubuntu-中安装-Docker-Engine"><a href="#Ubuntu-中安装-Docker-Engine" class="headerlink" title="Ubuntu 中安装 Docker Engine"></a>Ubuntu 中安装 Docker Engine</h1><p><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<ol>
+<li><p>卸载老版本</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> pkg <span class="keyword">in</span> docker.io docker<span class="literal">-doc</span> docker<span class="literal">-compose</span> docker<span class="literal">-compose</span><span class="literal">-v2</span> podman<span class="literal">-docker</span> containerd runc; <span class="keyword">do</span> sudo apt<span class="literal">-get</span> remove <span class="variable">$pkg</span>; done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新 Ubuntu 源列表</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 docker 依赖包</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt<span class="literal">-get</span> install ca<span class="literal">-certificates</span> curl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加 docker 官方 GPG 密钥</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install <span class="literal">-m</span> <span class="number">0755</span> <span class="literal">-d</span> /etc/apt/keyrings</span><br><span class="line">curl <span class="literal">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg <span class="literal">-o</span> /etc/apt/keyrings/docker.asc</span><br><span class="line">chmod a+r /etc/apt/keyrings/docker.asc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加 docker 官方库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo \</span><br><span class="line">  <span class="string">"deb [arch=<span class="variable">$</span>(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="variable">$</span>(. /etc/os-release &amp;&amp; echo "</span><span class="variable">$VERSION_CODENAME</span><span class="string">") stable"</span> | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新 Ubuntu 源列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看 docker 服务运行状态</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://www.docker.com" target="_blank" rel="noopener">docker 官网</a></li>
+<li><a href="https://www.youtube.com/watch?v=RqTEHSBrYFw" target="_blank" rel="noopener">https://www.youtube.com/watch?v=RqTEHSBrYFw</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/19/FRRouting/" rel="prev" title="FRRouting">
+      <i class="fa fa-chevron-left"></i> FRRouting
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/05/systemd/" rel="next" title="systemd">
+      systemd <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速了解-Docker"><span class="nav-number">1.</span> <span class="nav-text">快速了解 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟化过程"><span class="nav-number">2.</span> <span class="nav-text">虚拟化过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理机"><span class="nav-number">2.1.</span> <span class="nav-text">物理机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number">2.3.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常结构"><span class="nav-number">2.4.</span> <span class="nav-text">日常结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-架构"><span class="nav-number">3.</span> <span class="nav-text">Docker 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像-Image"><span class="nav-number">3.1.</span> <span class="nav-text">镜像 Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器-Container"><span class="nav-number">3.2.</span> <span class="nav-text">容器 Container</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-从构建到部署"><span class="nav-number">4.</span> <span class="nav-text">Docker 从构建到部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像构建"><span class="nav-number">4.1.</span> <span class="nav-text">Docker 镜像构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像仓"><span class="nav-number">4.2.</span> <span class="nav-text">Docker 镜像仓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器部署"><span class="nav-number">4.3.</span> <span class="nav-text">Docker 容器部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-命令"><span class="nav-number">5.</span> <span class="nav-text">Docker 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">6.</span> <span class="nav-text">Docker Compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Swarm-与-k8s"><span class="nav-number">7.</span> <span class="nav-text">Docker Swarm 与 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-中安装-Docker-Engine"><span class="nav-number">8.</span> <span class="nav-text">Ubuntu 中安装 Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

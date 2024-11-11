@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="​    hough变换主要用于找线，当然也可以扩展为找圆或者其他形状。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hough变换">
+<meta property="og:url" content="https://gy23333.github.io/2019/12/20/hough%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="​    hough变换主要用于找线，当然也可以扩展为找圆或者其他形状。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/17/2YX7I6Od9UlGKcr.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/17/2YX7I6Od9UlGKcr.jpg">
+<meta property="article:published_time" content="2019-12-20T11:06:56.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.113Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="hough">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg">
+
+<link rel="canonical" href="https://gy23333.github.io/2019/12/20/hough%E5%8F%98%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>hough变换 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2019/12/20/hough%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hough变换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-20 19:06:56" itemprop="dateCreated datePublished" datetime="2019-12-20T19:06:56+08:00">2019-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/12/20/hough%E5%8F%98%E6%8D%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/12/20/hough%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​    hough变换主要用于找线，当然也可以扩展为找圆或者其他形状。</p>
+<p><img src="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg" alt="road.jpg" style="zoom:18%;" /></p>
+<p><img src="https://i.loli.net/2020/01/17/2YX7I6Od9UlGKcr.jpg" alt="result.jpg" style="zoom: 18%;" /></p>
+<a id="more"></a>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>在Canny算法提取出边缘的基础上，</p>
+<ol>
+<li><p>将原图像空间转到参数空间；</p>
+</li>
+<li><p>在参数空间 <em>(u,v)</em> 内建立两维数组 <em>A( u,v )</em> ;</p>
+</li>
+<li><p>在开始时将数组置零；</p>
+</li>
+<li><p>对图像空间的每一个待检测点 <em>(xi, yi)</em> ，令 <em>u</em> 取遍所有可能的取值，并计算对应的<em>v</em>；</p>
+<p>​                                        <strong>v = - xi * u + yi</strong></p>
+</li>
+<li><p>对计算得到的 <em>(u,v)</em> ，对 <em>A(u,v)</em> 中相应单元进行累加:</p>
+<p>​                                        <strong>A(u, v) = A(u, v) + 1</strong></p>
+</li>
+<li><p>根据 A(u,v)的值，确定有多少点是共线的， 同时可以知道线条的参数(u,v)。</p>
+<p>​                                        <strong>y = u x + v</strong></p>
+</li>
+</ol>
+<h1 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h1><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _USE_MATH_DEFINES</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM_LINES 8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MIN_LINEPOINTS 30</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> Hough变换(找到最长的NUM_LINES条直线)</span></span><br><span class="line"><span class="comment"> img为输入的二值边缘图像，lines为Hough变换提取出的直线</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">houghTrans_max</span><span class="params">(Mat img, <span class="built_in">vector</span>&lt;Vec2f&gt; &amp;lines)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numangle = <span class="number">360</span>;</span><br><span class="line">    <span class="keyword">int</span> numr = <span class="keyword">int</span>(<span class="built_in">sqrt</span>(<span class="built_in">pow</span>(img.rows, <span class="number">2</span>) + <span class="built_in">pow</span>(img.cols, <span class="number">2</span>)));</span><br><span class="line">    <span class="keyword">int</span> numpoint[numangle][numr];</span><br><span class="line">    <span class="keyword">int</span> numline = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// numpoint置0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numangle; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; numr; j++) &#123;</span><br><span class="line">            numpoint[i][j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 循环遍历每个点，如果为边缘点则进行处理（遍历每个角度ang，算出相应的r）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols; i++) &#123;</span><br><span class="line">            <span class="comment">// 只取边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="comment">// 遍历每个角度ang，算出相应的r</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; numangle/<span class="number">2</span>; n++) &#123;</span><br><span class="line">                    <span class="keyword">double</span> ang = <span class="keyword">double</span>(n*M_PI/<span class="number">180</span>);</span><br><span class="line">                    <span class="keyword">int</span> r = <span class="keyword">int</span>(i*<span class="built_in">cos</span>(ang) + j*<span class="built_in">sin</span>(ang));</span><br><span class="line">                    <span class="keyword">if</span>(r &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">int</span> n1 = n+<span class="number">180</span>;</span><br><span class="line">                        <span class="keyword">int</span> r1 = -r;</span><br><span class="line">                        numpoint[n1][r1] ++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       numpoint[n][r] ++; <span class="comment">//记录该角度半径下的点数</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> minmax = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> maxNum[NUM_LINES];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM_LINES; i++) &#123;</span><br><span class="line">        maxNum[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">float</span> lines_f[NUM_LINES][<span class="number">2</span>];</span><br><span class="line">    <span class="comment">// 遍历角度半径</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numangle; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; numr; j++) &#123;</span><br><span class="line">            <span class="comment">// 如该角度、半径下点数大于门限10，且进行非极大值抑制，则记录线</span></span><br><span class="line">            <span class="keyword">if</span> (numpoint[i][j] &gt; MIN_LINEPOINTS &amp;&amp; (numpoint[i][j] &gt; minmax || numline &lt; NUM_LINES)) &#123;</span><br><span class="line">                <span class="comment">// 未满四条线时</span></span><br><span class="line">                <span class="keyword">if</span> (numline &lt; NUM_LINES) &#123;</span><br><span class="line">                    maxNum[numline] = numpoint[i][j];</span><br><span class="line">                    lines_f[numline][<span class="number">0</span>] = <span class="keyword">float</span>(j);</span><br><span class="line">                    lines_f[numline][<span class="number">1</span>] = <span class="keyword">float</span>(i*M_PI/<span class="number">180</span>);</span><br><span class="line">                    minmax = maxNum[<span class="number">0</span>];</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; numline+<span class="number">1</span>; m++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (maxNum[m] &lt; minmax) &#123;</span><br><span class="line">                            minmax = maxNum[m];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 满四条线时</span></span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; NUM_LINES; m++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (maxNum[m] == minmax) &#123;</span><br><span class="line">                            lines_f[m][<span class="number">0</span>] = <span class="keyword">float</span>(j);</span><br><span class="line">                            lines_f[m][<span class="number">1</span>] = <span class="keyword">float</span>(i*M_PI/<span class="number">180</span>);</span><br><span class="line">                            maxNum[m] = numpoint[i][j];</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    minmax = maxNum[<span class="number">0</span>];</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; NUM_LINES; m++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (maxNum[m] &lt; minmax) &#123;</span><br><span class="line">                            minmax = maxNum[m];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                numline++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (numline &gt; NUM_LINES) &#123;</span><br><span class="line">        numline = NUM_LINES;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numline; i++) &#123;</span><br><span class="line">        Vec2f l;</span><br><span class="line">        l[<span class="number">0</span>] = lines_f[i][<span class="number">0</span>];</span><br><span class="line">        l[<span class="number">1</span>] = lines_f[i][<span class="number">1</span>];</span><br><span class="line">        lines.push_back(l);</span><br><span class="line">        n++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> numline;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> Hough变换</span></span><br><span class="line"><span class="comment"> img为输入的二值边缘图像，lines为Hough变换提取出的直线，threshold是共线的点数的阈值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">houghTrans</span><span class="params">(Mat img, <span class="built_in">vector</span>&lt;Vec2f&gt; &amp;lines, <span class="keyword">int</span> threshold)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numangle = <span class="number">360</span>;</span><br><span class="line">    <span class="keyword">int</span> numr = <span class="keyword">int</span>(<span class="built_in">sqrt</span>(<span class="built_in">pow</span>(img.rows, <span class="number">2</span>) + <span class="built_in">pow</span>(img.cols, <span class="number">2</span>)));</span><br><span class="line">    <span class="keyword">int</span> numpoint[numangle][numr];</span><br><span class="line">    <span class="keyword">int</span> numline = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// numpoint置0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numangle; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; numr; j++) &#123;</span><br><span class="line">            numpoint[i][j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 循环遍历每个点，如果为边缘点则进行处理（遍历每个角度ang，算出相应的r）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; img.rows; j++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; img.cols; i++) &#123;</span><br><span class="line">            <span class="comment">// 只取边缘点</span></span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(j)[i] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="comment">// 遍历每个角度ang，算出相应的r</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; numangle/<span class="number">2</span>; n++) &#123;</span><br><span class="line">                    <span class="keyword">double</span> ang = <span class="keyword">double</span>(n*M_PI/<span class="number">180</span>);</span><br><span class="line">                    <span class="keyword">int</span> r = <span class="keyword">int</span>(i*<span class="built_in">cos</span>(ang) + j*<span class="built_in">sin</span>(ang));</span><br><span class="line">                    <span class="keyword">if</span>(r &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">int</span> n1 = n+<span class="number">180</span>;</span><br><span class="line">                        <span class="keyword">int</span> r1 = -r;</span><br><span class="line">                        numpoint[n1][r1] ++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       numpoint[n][r] ++; <span class="comment">//记录该角度半径下的点数</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 遍历角度半径</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numangle; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; numr; j++) &#123;</span><br><span class="line">            <span class="comment">// 如该角度、半径下点数大于门限，且进行非极大值抑制，则记录线</span></span><br><span class="line">            <span class="keyword">if</span> (numpoint[i][j] &gt; threshold) &#123;</span><br><span class="line">                Vec2f l;</span><br><span class="line">                l[<span class="number">0</span>] = <span class="keyword">float</span>(j);</span><br><span class="line">                l[<span class="number">1</span>] = <span class="keyword">float</span>(i*M_PI/<span class="number">180</span>);</span><br><span class="line">                lines.push_back(l);</span><br><span class="line">                numline ++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> numline;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 在图像上画线</span></span><br><span class="line"><span class="comment"> img为输入图像，result为画完线的输出图像，lines为需要画的线</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawLines</span><span class="params">(Mat &amp;img, Mat &amp;result, <span class="built_in">vector</span>&lt;Vec2f&gt; &amp;lines)</span></span>&#123;</span><br><span class="line">    cvtColor(img, result, COLOR_GRAY2BGR); <span class="comment">//将IMREAD_GRAYSCALE转化为COLOR_GRAY2BGR格式，以便显示线</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; lines.<span class="built_in">size</span>(); i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">float</span> rho = lines[i][<span class="number">0</span>], theta = lines[i][<span class="number">1</span>];</span><br><span class="line">        Point pt1, pt2;</span><br><span class="line">        <span class="keyword">double</span> a = <span class="built_in">cos</span>(theta), b = <span class="built_in">sin</span>(theta);</span><br><span class="line">        <span class="keyword">if</span> (rho/b &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            pt1.y = <span class="number">0</span>;</span><br><span class="line">            pt1.x = cvRound(rho/a);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pt1.x = <span class="number">0</span>;</span><br><span class="line">            pt1.y = cvRound(rho/b);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((-(a/b)*<span class="keyword">float</span>(img.cols<span class="number">-1</span>)+rho/b) &gt;= img.rows) &#123;</span><br><span class="line">            pt2.y = img.rows<span class="number">-1</span>;</span><br><span class="line">            pt2.x = cvRound(-(b/a)*<span class="keyword">float</span>(img.rows<span class="number">-1</span>) + rho/a);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pt2.x = img.cols<span class="number">-1</span>;</span><br><span class="line">            pt2.y = cvRound(-(a/b)*<span class="keyword">float</span>(img.cols<span class="number">-1</span>) + rho/b);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">line</span>( result, pt1, pt2, Scalar(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>), <span class="number">1</span>, LINE_AA);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img, edge, result;</span><br><span class="line">    img = imread(<span class="string">"road.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Canny(img, edge, <span class="number">100</span>, <span class="number">400</span>); <span class="comment">// canny变换</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">vector</span>&lt;Vec2f&gt; lines;</span><br><span class="line"><span class="comment">//  int numline = houghTrans_max(edge, lines); // Hough变换(找到最长的NUM_LINES条直线)</span></span><br><span class="line"><span class="comment">//  HoughLines(edge, lines, 1, CV_PI/180, 150, 0, 0 ); // OpenCV的hough变换</span></span><br><span class="line">    houghTrans(edge, lines, <span class="number">400</span>);</span><br><span class="line">    </span><br><span class="line">    drawLines(img, result, lines);<span class="comment">// 画线</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 图像显示</span></span><br><span class="line">    imshow(<span class="string">"img"</span>, img);</span><br><span class="line">    imshow(<span class="string">"canny"</span>,edge);<span class="comment">// 图像显示</span></span><br><span class="line">    imshow(<span class="string">"hough"</span>, result);</span><br><span class="line">    waitKey();</span><br><span class="line">    imwrite(<span class="string">"result.jpg"</span>, result);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/17/3g8XPIn5KNO4dZT.jpg" alt="road.jpg"></p>
+<p>hough变化后的图像（找到直线用红线标出）：</p>
+<p><img src="https://i.loli.net/2020/01/17/2YX7I6Od9UlGKcr.jpg" alt="result.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+              <a href="/tags/hough/" rel="tag"># hough</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/20/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="汇编学习笔记">
+      <i class="fa fa-chevron-left"></i> 汇编学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/21/Mac-WiFi%E8%BF%9E%E6%8E%A5%E6%97%A0%E6%B3%95%E5%BC%B9%E5%87%BA%E9%AA%8C%E8%AF%81%E9%A1%B5%E9%9D%A2%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="next" title="Mac WiFi连接无法弹出验证页面问题解决办法">
+      Mac WiFi连接无法弹出验证页面问题解决办法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-number">1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-实现"><span class="nav-number">2.</span> <span class="nav-text">C++实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">2.2.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

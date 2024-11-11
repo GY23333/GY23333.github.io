@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Latex入门">
+<meta property="og:url" content="https://gy23333.github.io/2020/02/13/Latex%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/02/14/9sVQ2d3Mbhlkw7R.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/14/jBlypUZEQof3rPa.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/hkyaGXwelrmYAnc.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/y6KGMubvTBifnlm.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/12yNEJrgSjRtMYP.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/Tw8QglBP2iMde4r.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/Ch8rzKNc7Omg5Tp.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/qbpSzFWyQ1VOHBT.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/h9zcbTYlMIZHFNa.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/1i7YuFMclHEzfsN.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/LkzfSin341vI5E8.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/lJ5SONLVvAEBke8.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/C5s8Ed4cU1SPnWD.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/7lUf5wrPQDF6sCc.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/26/tV6QrHE5Ab8MGp7.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/i1cq6Go2mMXb9tR.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/n2ZDaWwO1YJUp58.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/C56dIB9rRGgbzyP.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/IZUC1yW7ourqjtM.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/Nvt3mWH1YU7oOqS.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/uPISn4x2JW6ztdy.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/yX5xlGALUkavV9o.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/mTsturYygJo9fhe.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/7aA5PZSlqDUWYmw.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/lpj4KDto8cHTCun.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/wut7MNIgUn3KPSi.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/VgM3E8PpruIJSXd.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/KvHNhkXzAMSOm3Z.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/j5J4sp9ci8ePxOf.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/TfFR9WA57zcv3EZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/Nr8g9EewFlmUaqY.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/O6CsmgiHYjMlVES.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/eMkWZHv8gFBos23.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/HEX1yk4QDsmoNf3.png">
+<meta property="og:image" content="https://i.loli.net/2020/02/29/oSAUxv9rjCP64FR.png">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTzlRZGZYSG53M0V6RFBlVmYvYWNlMm5nSVErZzNEekdRPT0.png">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTW9jZW5TMUFpdzZYQlZwemtqUlNwRGF1b3hLMWRvUE9nPT0.png">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTUhubkFCYWx6OVRLQVREQXdMcWhkeEpZeUFwc3ovU09BPT0.png">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaT3VhdzFyR24zYk1GU211cEVqVHJMRzRHRkdZbGdzUTFBPT0.png">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRlBhUC9IVlpxeU5UTlhOZEEvOG9GRGFpc1IvOGhMcmhRPT0.png">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFb2NyemVNL2Q5SHRWajcyK2trYVJrdVREU0dlVnlPUFB3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFaUtBWDNBQk9OaVc0S0tEZlQ1aDZGWUpxbFlqMkRvNkxBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRE52U3VFQTdsMXQyazJSV3dvUzU1aVZDeWtYdE5FYTRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaQjdsSVhKNjBFbFFjK2lubUk3cENYTTZWYy9uUmtieHZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaR1pHenBnQ0pjYmsrY0pXdTdtZnVHMUxtQTc1dXpuV3hRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaUC9QV3lCZmFmeHFIYkk3Q1ZpUXphTzRpR2JNdHZPL3lnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRUluMVpUaGNRU0dlRVI4ZFhmaVNtWGswUDI4SnlPV2xBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRDQzN2ViNisxSkdSM240S0pGbTc4dlhiT3BucU1wT3dRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaQ09XS2Rlb3BCdlVhc2dQNjRhd1lWU3hGUUd5R0cwK0xRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaR21NM2RyM1JsUVljMkExZWliMStKZkkxWW9uU0VIK0hnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlsS0UvUWQ3cFpLNzBGNmJNaitnRFFkTGFsVUgvTTVJTWxiQmZvOW5vdlJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBNW1VWmZ2Wm55cHU2aFFkSC9sYVU3Tm1rMUF6bjhRSEZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBdzdKalU2Z2Z5NEt6ZXQyL080b04wRzRvTFpTVGVRcENnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="article:published_time" content="2020-02-13T15:22:24.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.118Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="入门">
+<meta property="article:tag" content="Latex">
+<meta property="article:tag" content="Mac">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/02/14/9sVQ2d3Mbhlkw7R.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/02/13/Latex%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Latex入门 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/02/13/Latex%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Latex入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-13 23:22:24" itemprop="dateCreated datePublished" datetime="2020-02-13T23:22:24+08:00">2020-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Latex/" itemprop="url" rel="index">
+                    <span itemprop="name">Latex</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/02/13/Latex%E5%85%A5%E9%97%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/13/Latex%E5%85%A5%E9%97%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​    Latex是基于Tex的排版系统，可以方便的生成复杂公式，常常应用于论文的编写。本文介绍在Mac环境下利用Texpad编写Latex。</p>
+<a id="more"></a>
+<h1 id="在Mac环境下编写Latex"><a href="#在Mac环境下编写Latex" class="headerlink" title="在Mac环境下编写Latex"></a>在Mac环境下编写Latex</h1><h2 id="MacTeX"><a href="#MacTeX" class="headerlink" title="MacTeX"></a>MacTeX</h2><p>​    在Mac环境下必需下载相应的 <a href="http://www.tug.org/mactex/" target="_blank" rel="noopener">MacTeX</a></p>
+<p>​    下载完成后会得到下面四个app。</p>
+<p><img src="https://i.loli.net/2020/02/14/9sVQ2d3Mbhlkw7R.png" alt=""></p>
+<p>​    其中TeXShop是Latex的编辑器，但功能较为简单，建议使用Sublime+Skim 或 TeXpad</p>
+<p><img src="https://i.loli.net/2020/02/14/jBlypUZEQof3rPa.png" style="zoom:25%;" /></p>
+<h2 id="Texpad"><a href="#Texpad" class="headerlink" title="Texpad"></a>Texpad</h2><p>​    一款功能强大的Latex编辑器 <a href="https://www.texpad.com/mac" target="_blank" rel="noopener">Texpad for macOS</a></p>
+<h1 id="Latex"><a href="#Latex" class="headerlink" title="Latex"></a>Latex</h1><h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>​    每个tex文件都包含导言区和正文区，导言区用于设置全局设置，正文区用于编写显示的内容。</p>
+<h3 id="导言区"><a href="#导言区" class="headerlink" title="导言区"></a>导言区</h3><h4 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h4><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span> <span class="comment">%文件类型，会根据不同的文件类型有不同的排版，例如article, book, letter等等</span></span><br></pre></td></tr></table></figure>
+<h4 id="标题区"><a href="#标题区" class="headerlink" title="标题区"></a>标题区</h4><p>​    包括title、author、date等等，在正文中调用 </p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">maketitle</span></span></span><br></pre></td></tr></table></figure>
+<p>​    此时，会显示标题区内容。</p>
+<h3 id="正文区"><a href="#正文区" class="headerlink" title="正文区"></a>正文区</h3><h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>​    正文部分直接输入，但是要注意：</p>
+<ul>
+<li><strong>使用空行分段</strong>。单个换行不会引起分段，必须中间有空行，多个空行和一个空行效果一致。</li>
+<li><strong>段前不用空格</strong>。Latex会自动段前缩进，即使段前打了空格也会被省略。</li>
+<li><strong>汉字后的空格会被省略</strong>，但英文字母之间不会，<strong>多个空格和一个空格效果一致</strong>。</li>
+</ul>
+<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><p>​    在 $ $ 中插入公式——行内公式，公式处于行内；</p>
+<p>​    在 <script type="math/tex"> </script> 中插入公式——行间公式，公式前后自动换行，公式居中。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% exemple.tex</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%--------------------导言区-------------------</span></span><br><span class="line"><span class="comment">% 用于设置性质（全局设置），自定义一些命令</span></span><br><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span> <span class="comment">%文件类型，会根据不同的文件类型有不同的排版，例如article, book, letter等等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%----------标题区------------</span></span><br><span class="line"><span class="tag">\<span class="name">title</span><span class="string">&#123;Tex Introduction&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">author</span><span class="string">&#123;GuoYi&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">date</span><span class="string">&#123;\today&#125;</span></span> <span class="comment">%\today会自动同步到今天</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%--------------------正文区-------------------</span></span><br><span class="line"><span class="comment">% 一个tex有且只有一个document部分</span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">maketitle</span></span> <span class="comment">%实际输出标题区</span></span><br><span class="line">	</span><br><span class="line">	Hello world!</span><br><span class="line">	<span class="comment">% 正文中空行表换行</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">% $行内公式$    $$行间公式$$</span></span><br><span class="line">	Let <span class="formula">$f(x)$</span> be defined by the formula <span class="formula">$$f(x)=2sinx$$</span> which is a polynomial of degree 2.</span><br><span class="line">	</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/hkyaGXwelrmYAnc.png" style="zoom: 33%;" /></p>
+<h2 id="Latex使用中文"><a href="#Latex使用中文" class="headerlink" title="Latex使用中文"></a>Latex使用中文</h2><h3 id="CTEX文档（推荐）"><a href="#CTEX文档（推荐）" class="headerlink" title="CTEX文档（推荐）"></a>CTEX文档（推荐）</h3><p>​    在UTF-8编码情况下，使用CTEX文档。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">title</span><span class="string">&#123;标题&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">maketitle</span></span></span><br><span class="line">	中文输入。&#123;<span class="tag">\<span class="name">kaishu</span></span> 这里是楷体显示&#125;，&#123;<span class="tag">\<span class="name">songti</span></span> 这里是宋体显示&#125;，&#123;<span class="tag">\<span class="name">heiti</span></span> 这里是黑体显示&#125;，&#123;<span class="tag">\<span class="name">fangsong</span></span> 这里是仿宋显示&#125;。</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/y6KGMubvTBifnlm.png" style="zoom: 33%;" /></p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><h3 id="字体族"><a href="#字体族" class="headerlink" title="字体族"></a>字体族</h3><p>​    字体族共有3种：罗马字体族（Roman Family）、无衬线字体族（Sans Serif Family）、打字机字体族（Typewriter Family）。</p>
+<p>​    正文一般默认使用罗马字体族，可用下面两种字体族命令规定字体族。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">%字体族设置（罗马字体族、无衬线字体族、打字机字体族）</span></span><br><span class="line">	<span class="tag">\<span class="name">textrm</span><span class="string">&#123;Roman Family&#125;</span></span> <span class="tag">\<span class="name">textsf</span><span class="string">&#123;Sans Serif Family&#125;</span></span> <span class="tag">\<span class="name">texttt</span><span class="string">&#123;Typewriter Family&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">rmfamily</span></span> Roman Family <span class="tag">\<span class="name">sffamily</span></span> Sans Serif Family <span class="tag">\<span class="name">ttfamily</span></span> Typewriter Family</span><br><span class="line">	</span><br><span class="line">	&#123;<span class="tag">\<span class="name">rmfamily</span></span> Roman Family&#125; &#123;<span class="tag">\<span class="name">sffamily</span></span> Sans Serif Family&#125; &#123;<span class="tag">\<span class="name">ttfamily</span></span> Typewriter Family&#125;</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/12yNEJrgSjRtMYP.png" alt="截屏2020-02-26上午1.47.37.png" style="zoom:50%;" /></p>
+<h3 id="字体系列"><a href="#字体系列" class="headerlink" title="字体系列"></a>字体系列</h3><p>​    字体系列共有2种：中等（medium）、加宽加粗（bold extended）。</p>
+<p>​    正文默认使用中等字体系列。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">%字体系列设置(粗细、宽度)</span></span><br><span class="line">	<span class="tag">\<span class="name">textmd</span><span class="string">&#123;Medium Series&#125;</span></span> <span class="tag">\<span class="name">textbf</span><span class="string">&#123;Boldface Series&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	&#123;<span class="tag">\<span class="name">mdseries</span></span> Medium Series&#125; &#123;<span class="tag">\<span class="name">bfseries</span></span> Boldface Series&#125;	</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/Tw8QglBP2iMde4r.png" style="zoom: 50%;" /></p>
+<h3 id="字体形状"><a href="#字体形状" class="headerlink" title="字体形状"></a>字体形状</h3><p>​    字体形状共有4种：直立（Upright Shape）、意大利（Italic Shape）、倾斜（Slanted Shape）、小型大写（Small Caps Shape）。</p>
+<p>​    正文默认使用直立字体形状。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">%字体形状（直立、意大利、倾斜、小型大写）</span></span><br><span class="line">	<span class="tag">\<span class="name">textup</span><span class="string">&#123;Upright Shape&#125;</span></span> <span class="tag">\<span class="name">textit</span><span class="string">&#123;Italic Shape&#125;</span></span> <span class="tag">\<span class="name">textsl</span><span class="string">&#123;Slanted Shape&#125;</span></span> <span class="tag">\<span class="name">textsc</span><span class="string">&#123;Small Caps Shape&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	&#123;<span class="tag">\<span class="name">upshape</span></span> Upright Shape&#125; &#123;<span class="tag">\<span class="name">itshape</span></span> Italic Shape&#125; &#123;<span class="tag">\<span class="name">slshape</span></span> Slanted Shape&#125; &#123;<span class="tag">\<span class="name">scshape</span></span> Small Caps Shape&#125;</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/Ch8rzKNc7Omg5Tp.png" style="zoom:50%;" /></p>
+<h3 id="中文字体"><a href="#中文字体" class="headerlink" title="中文字体"></a>中文字体</h3><p>​    中文字体共有4种：宋体、黑体、仿宋、楷书。</p>
+<p>​    ctexart文体，正文中的中文默认为宋体。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">%中文字体（宋体、黑体、仿宋、楷书）</span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">songti</span></span> 宋体&#125; <span class="tag">\<span class="name">quad</span></span> &#123;<span class="tag">\<span class="name">heiti</span></span> 黑体&#125; <span class="tag">\<span class="name">quad</span></span> &#123;<span class="tag">\<span class="name">fangsong</span></span> 仿宋&#125; <span class="tag">\<span class="name">quad</span></span> &#123;<span class="tag">\<span class="name">kaishu</span></span> 楷书&#125;</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span> <span class="comment">%\quad为tap</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/qbpSzFWyQ1VOHBT.png" alt="截屏2020-02-26上午2.13.50.png" style="zoom:50%;" /></p>
+<p>​    中文字体同样包含粗体和斜体。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[UTF8]</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">%中文字体的粗体和斜体</span></span><br><span class="line">	中文字体的<span class="tag">\<span class="name">textbf</span><span class="string">&#123;粗体&#125;</span></span>和<span class="tag">\<span class="name">textit</span><span class="string">&#123;斜体&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/h9zcbTYlMIZHFNa.png" alt="截屏2020-02-26上午2.20.15.png" style="zoom:50%;" /></p>
+<h3 id="字体大小"><a href="#字体大小" class="headerlink" title="字体大小"></a>字体大小</h3><h4 id="英文字体大小"><a href="#英文字体大小" class="headerlink" title="英文字体大小"></a>英文字体大小</h4><p>​    以\normalsize的大小为基础，来设置字体大小。</p>
+<p>​    正文字体默认为\normalsize，\normalsize字体大小默认为10pt。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">[12pt]</span><span class="string">&#123;ctexart&#125;</span></span> <span class="comment">%[]中可设置normalsize字体大小</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 字体大小</span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">tiny</span></span>			tiny&#125;<span class="tag">\<span class="name">\</span></span> <span class="comment">% \\为换行</span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">scriptsize</span></span>		scriptsize&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">footnotesize</span></span>	footnotesize&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">small</span></span>			small&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">normalsize</span></span>		normalsize&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">large</span></span>			large&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">Large</span></span>			Large&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">LARGE</span></span>			LARGE&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">huge</span></span>			huge&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">	&#123;<span class="tag">\<span class="name">Huge</span></span>			Huge&#125;<span class="tag">\<span class="name">\</span></span></span><br><span class="line">		</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/1i7YuFMclHEzfsN.png" style="zoom:67%;" /></p>
+<h4 id="中文字体大小"><a href="#中文字体大小" class="headerlink" title="中文字体大小"></a>中文字体大小</h4><p>​    以五号字体的大小为基础，来设置字体大小。</p>
+<p>​    正文字体默认为 五号字体。</p>
+<p><img src="https://i.loli.net/2020/02/26/LkzfSin341vI5E8.png" alt="截屏2020-02-26上午2.46.40.png" style="zoom:50%;" /></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 中文字体大小</span></span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;2&#125;</span></span> 二号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;-2&#125;</span></span> 小二号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;5&#125;</span></span> 五号中文字体</span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">zihao</span><span class="string">&#123;-5&#125;</span></span> 小五号中文字体</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/lJ5SONLVvAEBke8.png" alt="截屏2020-02-26上午2.44.21.png" style="zoom:50%;" /></p>
+<h2 id="篇章结构"><a href="#篇章结构" class="headerlink" title="篇章结构"></a>篇章结构</h2><h3 id="提纲"><a href="#提纲" class="headerlink" title="提纲"></a>提纲</h3><p>​    \section可以在正文中构建小节，相当于一级标题，在section前加sub套娃形成二级、三级、四级等等标题。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section title&#125;</span></span> <span class="comment">%一级标题</span></span><br><span class="line">	<span class="tag">\<span class="name">subsection</span><span class="string">&#123;subsection title&#125;</span></span> <span class="comment">%二级标题</span></span><br><span class="line">	<span class="tag">\<span class="name">subsubsection</span><span class="string">&#123;subsubsection title&#125;</span></span> <span class="comment">%三级标题</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section title&#125;</span></span> <span class="comment">%三级标题</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/C5s8Ed4cU1SPnWD.png" alt="截屏2020-02-26下午7.11.30.png" style="zoom: 67%;" /></p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>​    \tableofcontents 可生成目录。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">tableofcontents</span></span> <span class="comment">%生成目录</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section title&#125;</span></span> <span class="comment">%一级标题</span></span><br><span class="line">	<span class="tag">\<span class="name">subsection</span><span class="string">&#123;subsection title&#125;</span></span> <span class="comment">%二级标题</span></span><br><span class="line">	<span class="tag">\<span class="name">section</span><span class="string">&#123;section title&#125;</span></span> <span class="comment">%三级标题</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/7lUf5wrPQDF6sCc.png" style="zoom: 80%;" /></p>
+<h3 id="正文-1"><a href="#正文-1" class="headerlink" title="正文"></a>正文</h3><ul>
+<li><strong>使用空行分段</strong>。单个换行不会引起分段，必须中间有空行，多个空行和一个空行效果一致。</li>
+<li><strong>段前不用空格</strong>。Latex会自动段前缩进，即使段前打了空格也会被省略。</li>
+<li><strong>汉字后的空格会被省略</strong>，但英文字母之间不会，<strong>多个空格和一个空格效果一致</strong>。</li>
+<li><strong>\ \  用来换行</strong>。换行不会新开一个段落。</li>
+<li><strong>\par 分段。</strong>一般不使用。</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	This is an article. This is an article. This is an article.</span><br><span class="line">	<span class="comment">%空行——新开一个段落</span></span><br><span class="line">	</span><br><span class="line">	This is an article. This is an article. This is an article.<span class="tag">\<span class="name">\</span></span>Change the line. Change the line. Change the line.  <span class="comment">% \\——换行</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/26/tV6QrHE5Ab8MGp7.png" alt=""></p>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><h3 id="空白符号"><a href="#空白符号" class="headerlink" title="空白符号"></a>空白符号</h3><ul>
+<li>英文字符之间多个空格当一个空格处理，中文字符之间的空格无效；</li>
+<li>中文之间插入英文，在英文片段前后自动添加空格；</li>
+<li>其他空格命令</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\quad</td>
+<td>1em的空白（推荐）</td>
+</tr>
+<tr>
+<td>\qquad</td>
+<td>2em的空白</td>
+</tr>
+<tr>
+<td>\,</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\thinspace</td>
+<td>1/6em的空白</td>
+</tr>
+<tr>
+<td>\enspace</td>
+<td>0.5em的空白</td>
+</tr>
+<tr>
+<td>\</td>
+<td>空格（推荐）</td>
+</tr>
+<tr>
+<td>～</td>
+<td>硬空格</td>
+</tr>
+<tr>
+<td>\kern 指定宽度</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hspace{指定宽度}</td>
+<td>产生指定宽度的空白（宽度可为副值）</td>
+</tr>
+<tr>
+<td>\hphantom{}</td>
+<td>占位宽度的空格（空格长度等于{}内的字符应有的长度）</td>
+</tr>
+<tr>
+<td>\hfill</td>
+<td>产生一行的空格（前后分别在行首和行尾）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 1em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> quad b --------------- a<span class="tag">\<span class="name">quad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 2em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> qquad b -------------- a<span class="tag">\<span class="name">qquad</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span>,b --------------------- a<span class="tag">\<span class="name">,</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 1/6em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> thinspace b --------- a<span class="tag">\<span class="name">thinspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 0.5em的空白</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> enspace b ------------ a<span class="tag">\<span class="name">enspace</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> b ----------------------- a<span class="tag">\<span class="name"> </span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 硬空格</span></span><br><span class="line">	a<span class="tag">\<span class="name">~</span></span>b ------------------------ a~b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> kern 1em b ----------- a<span class="tag">\<span class="name">kern</span></span> 1em b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生指定宽度的空白（宽度可为副值）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hspace<span class="tag">\<span class="name">&#123;</span></span>1em<span class="tag">\<span class="name">&#125;</span></span>b ------ a<span class="tag">\<span class="name">hspace</span><span class="string">&#123;1em&#125;</span></span> b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 占位宽度的空格（空格长度等于&#123;&#125;内的字符应有的长度）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hphantom<span class="tag">\<span class="name">&#123;</span></span>xyz<span class="tag">\<span class="name">&#125;</span></span>b --- a<span class="tag">\<span class="name">hphantom</span><span class="string">&#123;xyz&#125;</span></span>b</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 产生一行的空格（前后分别在行首和行尾）</span></span><br><span class="line">	a<span class="tag">\<span class="name">textbackslash</span></span> hfill b ------------------ a<span class="tag">\<span class="name">hfill</span></span> b</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/i1cq6Go2mMXb9tR.png" alt=""></p>
+<h3 id="控制符"><a href="#控制符" class="headerlink" title="控制符"></a>控制符</h3><p>​    对于有特殊含义的符号，要想其正常显示，需在符号前加 \ ，而 \ 本身由于\ \表示换行，所以用 \textbacklash 表示。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>控制符</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\</td>
+<td>\textbackslash</td>
+</tr>
+<tr>
+<td>#</td>
+<td>\#</td>
+</tr>
+<tr>
+<td>$</td>
+<td>\$</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>\{\}</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="排版符号"><a href="#排版符号" class="headerlink" title="排版符号"></a>排版符号</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>排版符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>§</td>
+<td>\S</td>
+</tr>
+<tr>
+<td>¶</td>
+<td>\P</td>
+</tr>
+<tr>
+<td>†</td>
+<td>\dag</td>
+</tr>
+<tr>
+<td>‡</td>
+<td>\ddag</td>
+</tr>
+<tr>
+<td>©</td>
+<td>\copyright</td>
+</tr>
+<tr>
+<td>£</td>
+<td>\pounds</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="标志符号"><a href="#标志符号" class="headerlink" title="标志符号"></a>标志符号</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">TeX</span></span> <span class="tag">\<span class="name">quad</span></span> <span class="tag">\<span class="name">LaTeX</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/n2ZDaWwO1YJUp58.png" alt=""></p>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号名称</th>
+<th>符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左单引号</td>
+<td><strong>‘</strong></td>
+<td><strong>`</strong></td>
+</tr>
+<tr>
+<td>右单引号</td>
+<td><strong>’</strong></td>
+<td><strong>‘</strong></td>
+</tr>
+<tr>
+<td>左双引号</td>
+<td><strong>“</strong></td>
+<td><strong>``</strong></td>
+</tr>
+<tr>
+<td>右双引号</td>
+<td><strong>”</strong></td>
+<td><strong>‘’</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="插图"><a href="#插图" class="headerlink" title="插图"></a>插图</h2><h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p>​    在LaTeX中，插图是由 graphics 或 graphicx 宏包所使用的 \includegraphics 命令完成的。graphics 和 graphicx 功能差别不大，但 graphicx 使用更方便一些。</p>
+<p>​    插图适用格式：EPS、PDF、PNG、JPEG、BMP</p>
+<p>​    搜索路径默认为tex文件所在文件夹，也可用\graphicspath 对搜索路径进行修改。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 调用graphicx宏包，使用插图功能</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;graphicx&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">graphicspath</span><span class="string">&#123;&#123;\figures&#125;</span></span>&#125; <span class="comment">%修改搜索路径</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 基于搜索路径插入图像</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">&#123;Sx2ec.png&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/C56dIB9rRGgbzyP.png" style="zoom:50%;" /></p>
+<h3 id="命令选项"><a href="#命令选项" class="headerlink" title="命令选项"></a>命令选项</h3><h4 id="大小缩放"><a href="#大小缩放" class="headerlink" title="大小缩放"></a>大小缩放</h4><p>​    width、height 和 scale 设置图形的宽度、高度或缩放比例。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 调用graphicx宏包，使用插图功能</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;graphicx&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 基于搜索路径插入图像</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">[width=10em]</span><span class="string">&#123;figures/Sx2ec&#125;</span></span> <span class="comment">%宽度为10em</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">[height=5cm]</span><span class="string">&#123;figures/Sx2ec&#125;</span></span> <span class="comment">%高度为10cm</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">[scale=0.5]</span><span class="string">&#123;figures/Sx2ec&#125;</span></span> <span class="comment">%缩放0.5倍</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/IZUC1yW7ourqjtM.png" alt=""></p>
+<h4 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h4><p>​    angle 选项可以让图形逆时针旋转一定的角度，旋转的中心可以用 origin 选项确定。origin的值可以用字符 l，r，c，t，b，B中的一个或者两个，分别表示左，右，中，上，下和基线，默认值为 lb。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 调用graphicx宏包，使用插图功能</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;graphicx&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 基于搜索路径插入图像</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">[angle=90]</span><span class="string">&#123;figures/Sx2ec&#125;</span></span> <span class="comment">%基于左下，逆时针旋转90度</span></span><br><span class="line">	<span class="tag">\<span class="name">includegraphics</span><span class="string">[angle=-45,origin=c]</span><span class="string">&#123;figures/Sx2ec&#125;</span></span> <span class="comment">%基于中心，顺时针旋转45度</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/Nvt3mWH1YU7oOqS.png" alt=""></p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>​    LaTeX表格使用环境录入：在文本或数学模式下都可以使用 tabular 环境，在数学模式下还可以使用 array 环境。tabular 和 array 的一般格式基本相同。</p>
+<h3 id="基本-1"><a href="#基本-1" class="headerlink" title="基本"></a>基本</h3><p>​    每行后用 \\ 表示换行，一行内的不同列之间用 &amp; 分开。</p>
+<p>​    列格式说明，用 l、c、r 分别表示 左对齐、居中、右对齐。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">% \begin&#123;tabular&#125;[(垂直对齐)]&#123;(列格式说明)&#125;</span></span><br><span class="line">	<span class="comment">% 	(表项)&amp;(表项)&amp;...&amp;(表项)\\</span></span><br><span class="line">	<span class="comment">%		....</span></span><br><span class="line">	<span class="comment">% \end&#123;tabular&#125;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;lcr&#125;</span></span> <span class="comment">%三列 分别为：左对齐、居中、右对齐</span></span><br><span class="line">		l &amp; c &amp; r <span class="tag">\<span class="name">\</span></span> <span class="comment">%一行</span></span><br><span class="line">		left &amp; center &amp; right <span class="tag">\<span class="name">\</span></span> <span class="comment">%一行</span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/uPISn4x2JW6ztdy.png" alt=""></p>
+<h3 id="表格线"><a href="#表格线" class="headerlink" title="表格线"></a>表格线</h3><p>​    列表格线：在列格式说明中加 |</p>
+<p>​    行表格线：\hline</p>
+<p>​    需要双线是重复 || 或 \hline\hline。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">% \begin&#123;tabular&#125;[(垂直对齐)]&#123;(列格式说明)&#125;</span></span><br><span class="line">	<span class="comment">% 	(表项)&amp;(表项)&amp;...&amp;(表项)\\</span></span><br><span class="line">	<span class="comment">%	....</span></span><br><span class="line">	<span class="comment">% \end&#123;tabular&#125;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|l|c|r|&#125;</span></span> <span class="comment">%三列 分别为：左对齐、居中、右对齐</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		l &amp; c &amp; r <span class="tag">\<span class="name">\</span></span> <span class="comment">%一行</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span> <span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		left &amp; center &amp; right <span class="tag">\<span class="name">\</span></span> <span class="comment">%一行</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/28/yX5xlGALUkavV9o.png" alt=""></p>
+<h3 id="垂直对齐"><a href="#垂直对齐" class="headerlink" title="垂直对齐"></a>垂直对齐</h3><p>​    确定表格的基线位置。</p>
+<ul>
+<li>t    按表格顶部对齐</li>
+<li>b   按表格底部对齐</li>
+<li>默认  垂直居中</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	---line1---</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|rr|&#125;</span></span> <span class="comment">%默认垂直居中</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		Input &amp; Output <span class="tag">\<span class="name">\</span></span> </span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		<span class="formula">$-2$</span> &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		0 &amp; 0 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		2 &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	---line2---</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">[t]</span><span class="string">&#123;|rr|&#125;</span></span> <span class="comment">%按表格顶部对齐</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		Input &amp; Output <span class="tag">\<span class="name">\</span></span> </span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		<span class="formula">$-2$</span> &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		0 &amp; 0 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		2 &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	---line3---</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">[b]</span><span class="string">&#123;|rr|&#125;</span></span> <span class="comment">%按表格底部对齐</span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		Input &amp; Output <span class="tag">\<span class="name">\</span></span> </span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		<span class="formula">$-2$</span> &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		0 &amp; 0 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		2 &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/mTsturYygJo9fhe.png" alt="截屏2020-02-29上午12.19.31.png" style="zoom: 60%;" /></p>
+<h3 id="列格式说明"><a href="#列格式说明" class="headerlink" title="列格式说明"></a>列格式说明</h3><ul>
+<li><strong>l</strong>    本列左对齐</li>
+<li><strong>c</strong>    本列居中</li>
+<li><strong>r</strong>    本列右对齐</li>
+<li><strong>p{(宽)}</strong>    本列具有固定宽度，且可以自动换行。</li>
+<li><strong>|</strong>    画一条竖线</li>
+<li><strong>@{(内容)}</strong>    添加任意内容，不占表项计数。</li>
+<li><strong>*{(计数)}{(列格式说明符)}</strong>    将给出的列格式说明符重复多次。</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|c|*&#123;3&#125;</span><span class="string">&#123;r@&#123;.&#125;</span></span>l|&#125;&#125;</span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		revenue &amp; 1234&amp;6 &amp; 2345&amp;23 &amp; 239&amp;0 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		cost &amp; 231&amp;24 &amp; 123&amp;0 &amp; 329&amp;18 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/7aA5PZSlqDUWYmw.png" style="zoom:50%;" /></p>
+<h3 id="表格单元的合并与分割"><a href="#表格单元的合并与分割" class="headerlink" title="表格单元的合并与分割"></a>表格单元的合并与分割</h3><h4 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h4><h5 id="行合并"><a href="#行合并" class="headerlink" title="行合并"></a>行合并</h5><p>​    <strong>\multicolumn{(项数)}{(新列格式)}{(内容)}</strong> 可用于将一行中的几个不同的表项合并为一项。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|r|r|&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">multicolumn</span><span class="string">&#123;2&#125;</span><span class="string">&#123;|c|&#125;</span><span class="string">&#123;score&#125;</span></span> <span class="tag">\<span class="name">\</span></span> <span class="comment">%居中合并两个单元格，内容为score</span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	Maths &amp; English <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	80 &amp; 85 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/lpj4KDto8cHTCun.png" alt="截屏2020-02-29上午2.01.15.png" style="zoom: 50%;" /></p>
+<h5 id="列合并"><a href="#列合并" class="headerlink" title="列合并"></a>列合并</h5><h6 id="cline（容易实现，但效果不佳）"><a href="#cline（容易实现，但效果不佳）" class="headerlink" title="\cline（容易实现，但效果不佳）"></a>\cline（容易实现，但效果不佳）</h6><p>​    <strong>\cline{(起始列号)-(终止列号)}</strong> 和 \hline 一样可以画水平的表格线，但是 \cline 可以规定表格线起始和终止的列号，即可相当于合并列单元。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|c|r|r|&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	&amp; Maths &amp; English <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">cline</span><span class="string">&#123;2-3&#125;</span></span> <span class="comment">%只画2到3列</span></span><br><span class="line">	score &amp; 80 &amp; 85 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/wut7MNIgUn3KPSi.png" style="zoom:50%;" /></p>
+<h6 id="multirow-（效果较好）"><a href="#multirow-（效果较好）" class="headerlink" title="\multirow （效果较好）"></a>\multirow （效果较好）</h6><p>​    \multirow{(行数)}{(宽度)}{(内容)}    或    \multirow{(行数)}*{(内容)}</p>
+<p>​    第一种形式可自动换行。</p>
+<p>​    使用\multirow得先引入宏包multirow。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用\multirow得先引入宏包multirow</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;multirow&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|c|r|r|&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">multirow</span><span class="string">&#123;2&#125;</span></span>*&#123;score&#125; &amp; Maths &amp; English <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">cline</span><span class="string">&#123;2-3&#125;</span></span></span><br><span class="line">	&amp; 80 &amp; 85 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/VgM3E8PpruIJSXd.png" style="zoom:50%;" /></p>
+<h4 id="拆分"><a href="#拆分" class="headerlink" title="拆分"></a>拆分</h4><p>​    \diagbox 自动判断是把表头分成两部分还是三部分。</p>
+<p>​    使用\diagbox得先引入宏包diagbox。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用\diagbox得先引入宏包diagbox</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;diagbox&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|c|c|c|&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">diagbox</span><span class="string">&#123;Letter&#125;</span><span class="string">&#123;Number&#125;</span></span>&amp; 1 &amp; 2 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	a &amp; 0.1 &amp; 0.3 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	b &amp; 0.3 &amp; 0.8 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">	<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/KvHNhkXzAMSOm3Z.png" style="zoom:50%;" /></p>
+<h2 id="浮动体"><a href="#浮动体" class="headerlink" title="浮动体"></a>浮动体</h2><p>​    浮动体用于实现灵活分页，给图表添加标题，交叉应用。</p>
+<p>​    图片使用 figure环境，表格使用 table环境。</p>
+<p>格式（以figure为例）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;figure&#125;[&lt;允许位置&gt;]</span><br><span class="line">&lt; 任意内容 &gt;</span><br><span class="line">\end&#123;figure&#125;</span><br></pre></td></tr></table></figure>
+<p>&lt;允许位置&gt;参数（默认tbp）：</p>
+<ul>
+<li>h —- 此处（here），代码所在的上下文位置</li>
+<li>t —- 页顶（top），代码所在页面或之后的页面的顶部</li>
+<li>b —- 页底（bottom），代码所在页面或之后的页面的底部</li>
+<li>p —- 独立一页（page），浮动页面</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 调用graphicx宏包，使用插图功能</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;graphicx&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	下面<span class="tag">\<span class="name">ref</span><span class="string">&#123;Latex&#125;</span></span> 是<span class="tag">\<span class="name">LaTeX</span><span class="string">&#123;&#125;</span></span>的标志。<span class="comment">% \ref为引用标签</span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;figure&#125;</span><span class="string">[htbp]</span></span> <span class="comment">%htbp可以让图表随文字运动</span></span><br><span class="line">		<span class="tag">\<span class="name">centering</span></span> <span class="comment">%浮动体居中</span></span><br><span class="line">		<span class="tag">\<span class="name">includegraphics</span><span class="string">&#123;figures/Sx2ec&#125;</span></span></span><br><span class="line">		<span class="tag">\<span class="name">caption</span><span class="string">&#123;\LaTeX 的标志&#125;</span></span> <span class="comment">%标题</span></span><br><span class="line">		<span class="tag">\<span class="name">label</span><span class="string">&#123;Latex&#125;</span></span> <span class="comment">%标签（用于引用）</span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;figure&#125;</span></span></span><br><span class="line">	</span><br><span class="line">	引用下面<span class="tag">\<span class="name">ref</span><span class="string">&#123;InAndOut&#125;</span></span> 中的数据。<span class="comment">% \ref为引用标签</span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;table&#125;</span><span class="string">[htbp]</span></span> <span class="comment">%htbp可以让图表随文字运动</span></span><br><span class="line">		<span class="tag">\<span class="name">centering</span></span> <span class="comment">%浮动体居中</span></span><br><span class="line">		<span class="tag">\<span class="name">begin</span><span class="string">&#123;tabular&#125;</span><span class="string">&#123;|rr|&#125;</span></span></span><br><span class="line">			<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">			Input &amp; Output <span class="tag">\<span class="name">\</span></span> </span><br><span class="line">			<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">			<span class="formula">$-2$</span> &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">			0 &amp; 0 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">			2 &amp; 4 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">			<span class="tag">\<span class="name">hline</span></span></span><br><span class="line">		<span class="tag">\<span class="name">end</span><span class="string">&#123;tabular&#125;</span></span></span><br><span class="line">		<span class="tag">\<span class="name">caption</span><span class="string">&#123;输入输出数据&#125;</span></span> <span class="comment">%标题</span></span><br><span class="line">		<span class="tag">\<span class="name">label</span><span class="string">&#123;InAndOut&#125;</span></span> <span class="comment">%标签（用于引用）</span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;table&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/j5J4sp9ci8ePxOf.png" style="zoom: 60%;" /></p>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>​    LaTeX 将排版内内容分为文本模式和数学模式。文本模式适用于普通文本排版，数学模式用于数学公式排版。</p>
+<h3 id="基本-2"><a href="#基本-2" class="headerlink" title="基本"></a>基本</h3><h4 id="行内公式"><a href="#行内公式" class="headerlink" title="行内公式"></a>行内公式</h4><p>​    不需换行的公式。下面三种方法均可生成行内公式。</p>
+<h5 id="美元符号"><a href="#美元符号" class="headerlink" title="$ 美元符号"></a>$ 美元符号</h5><p>​    格式：    <script type="math/tex"><数学公式></script></p>
+<h5 id="小括号"><a href="#小括号" class="headerlink" title="小括号"></a>小括号</h5><p>​    格式：    <code>\(&lt;数学公式&gt;\)</code></p>
+<h5 id="math环境"><a href="#math环境" class="headerlink" title="math环境"></a>math环境</h5><p>​    格式：    <code>\begin{math}&lt;数学公式&gt;\end{math}</code></p>
+<p>​    使用math环境需引入 amsmath宏包。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% $ 美元符号</span></span><br><span class="line">	交换律是 <span class="formula">$a+b=b+a$</span>，如 <span class="formula">$1+2=2+1=3$</span>。</span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 小括号</span></span><br><span class="line">	交换律是 <span class="tag">\<span class="name">(</span></span>a+b=b+a<span class="tag">\<span class="name">)</span></span>，如 <span class="tag">\<span class="name">(</span></span>1+2=2+1=3<span class="tag">\<span class="name">)</span></span>。</span><br><span class="line">	</span><br><span class="line">	<span class="comment">%math环境</span></span><br><span class="line">	交换律是 <span class="tag">\<span class="name">begin</span><span class="string">&#123;math&#125;</span></span> a+b=b+a<span class="tag">\<span class="name">end</span><span class="string">&#123;math&#125;</span></span>，如 <span class="tag">\<span class="name">begin</span><span class="string">&#123;math&#125;</span></span> 1+2=2+1=3<span class="tag">\<span class="name">end</span><span class="string">&#123;math&#125;</span></span>。</span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/TfFR9WA57zcv3EZ.png" style="zoom: 67%;" /></p>
+<h4 id="行间公式"><a href="#行间公式" class="headerlink" title="行间公式"></a>行间公式</h4><p>​    行间公式换行不分段。下面三种方法均可生成行间公式。</p>
+<h5 id="美元符号-1"><a href="#美元符号-1" class="headerlink" title="$ 美元符号"></a>$ 美元符号</h5><p>​    格式：    $$$&lt;数学公式&gt;$$$</p>
+<h5 id="中括号"><a href="#中括号" class="headerlink" title="中括号"></a>中括号</h5><p>​    格式：    <code>\[&lt;数学公式&gt;\]</code></p>
+<h5 id="displaymath环境"><a href="#displaymath环境" class="headerlink" title="displaymath环境"></a>displaymath环境</h5><p>​    格式：    <code>\begin{displaymath}&lt;数学公式&gt;\end{displaymath}</code></p>
+<p>​    使用displaymath环境需引入 amsmath宏包。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% $ 美元符号</span></span><br><span class="line">	交换律是</span><br><span class="line">	<span class="formula">$$a+b=b+a$$</span></span><br><span class="line">	如 </span><br><span class="line">	<span class="formula">$$1+2=2+1=3$$</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">% 中括号</span></span><br><span class="line">	交换律是</span><br><span class="line">	<span class="tag">\<span class="name">[</span></span>a+b=b+a<span class="tag">\<span class="name">]</span></span></span><br><span class="line">	如</span><br><span class="line">	<span class="tag">\<span class="name">[</span></span>1+2=2+1=3<span class="tag">\<span class="name">]</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">%displaymath环境</span></span><br><span class="line">	交换律是</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;displaymath&#125;</span></span> a+b=b+a<span class="tag">\<span class="name">end</span><span class="string">&#123;displaymath&#125;</span></span></span><br><span class="line">	如</span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;displaymath&#125;</span></span> 1+2=2+1=3<span class="tag">\<span class="name">end</span><span class="string">&#123;displaymath&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/Nr8g9EewFlmUaqY.png" style="zoom:40%;" /></p>
+<h4 id="自动编号公式——equation环境"><a href="#自动编号公式——equation环境" class="headerlink" title="自动编号公式——equation环境"></a>自动编号公式——equation环境</h4><p>​    equation环境可以对公式自动编号，此时添加 <code>\label</code> 标签方便引用。</p>
+<p>​    格式：<code>\begin{equation}&lt;数学公式&gt;\end{equation}</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	调用下面的公式<span class="tag">\<span class="name">ref</span><span class="string">&#123;eq:exchange&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;equation&#125;</span></span></span><br><span class="line">		a+b=b+a <span class="tag">\<span class="name">label</span><span class="string">&#123;eq:exchange&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;equation&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/O6CsmgiHYjMlVES.png" style="zoom:40%;" /></p>
+<h3 id="数学结构"><a href="#数学结构" class="headerlink" title="数学结构"></a>数学结构</h3><h4 id="上标与下标"><a href="#上标与下标" class="headerlink" title="上标与下标"></a>上标与下标</h4><h5 id="上标"><a href="#上标" class="headerlink" title="上标"></a>上标</h5><p>​    用 <code>^{}</code> 表示上标。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 上标^&#123;&#125;</span></span><br><span class="line">	<span class="formula">$ f(x)=x^2 + x^&#123;20&#125; + 2x^&#123;4x^2+1&#125; $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/eMkWZHv8gFBos23.png" style="zoom:40%;" /></p>
+<h5 id="下标"><a href="#下标" class="headerlink" title="下标"></a>下标</h5><p>​    用 <code>_{}</code> 表示下标。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="comment">% 下标_&#123;&#125;</span></span><br><span class="line">	<span class="formula">$a_0,a_1,a_2,...,a_&#123;100&#125;$</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/HEX1yk4QDsmoNf3.png" style="zoom:50%;" /></p>
+<h5 id="其他上下标"><a href="#其他上下标" class="headerlink" title="其他上下标"></a>其他上下标</h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘</td>
+<td>‘</td>
+</tr>
+<tr>
+<td>°</td>
+<td>^\circ</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h4><p>​    格式：    <code>\sum_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt;</code></p>
+<p>​                    或（上面的格式上下限在右边，下面的\limit格式上下限在正上下方 ）</p>
+<p>​                    <code>\sum\limits_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt;</code>                    </p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sum</span></span>_&#123;i=0&#125;^&#123;n&#125; a_i $</span> <span class="comment">%上下限在右边</span></span><br><span class="line">	<span class="tag">\<span class="name">quad</span></span> </span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sum</span></span><span class="tag">\<span class="name">limits</span></span>_&#123;i=0&#125;^&#123;n&#125; a_i $</span> <span class="comment">%上下限在正上下方</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/02/29/oSAUxv9rjCP64FR.png" style="zoom: 33%;" /></p>
+<h4 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h4><p>​    格式:    <code>\int_{&lt;下限&gt;}^{&lt;上限&gt;} &lt;函数&gt; d\! &lt;变量&gt;</code></p>
+<p>​    多重积分用 <code>\iint</code> <code>\iiint</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">int</span></span>_0^1 f(t) d<span class="tag">\<span class="name">!</span></span> t $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTzlRZGZYSG53M0V6RFBlVmYvYWNlMm5nSVErZzNEekdRPT0.png" style="zoom: 50%;" /></p>
+<h4 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h4><p>​    格式：    <code>\frac &lt;分子&gt;&lt;分母&gt;</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">frac</span></span> 12 + <span class="tag">\<span class="name">frac</span></span> 1a = <span class="tag">\<span class="name">frac</span><span class="string">&#123;2+a&#125;</span><span class="string">&#123;2a&#125;</span></span> $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTW9jZW5TMUFpdzZYQlZwemtqUlNwRGF1b3hLMWRvUE9nPT0.png" style="zoom: 50%;" /></p>
+<h4 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h4><p>​    格式：    <code>\sqrt[&lt;开方次数&gt;]{&lt;被开方数&gt;}</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ <span class="tag">\<span class="name">sqrt</span><span class="string">[n]</span><span class="string">&#123;\frac&#123;x^2+\sqrt&#123;2&#125;</span></span>&#125;&#123;x+y&#125;&#125; $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaTUhubkFCYWx6OVRLQVREQXdMcWhkeEpZeUFwc3ovU09BPT0.png" style="zoom:50%;" /></p>
+<h4 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h4><p>​    amsmath宏包提供一下矩阵形式。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaT3VhdzFyR24zYk1GU211cEVqVHJMRzRHRkdZbGdzUTFBPT0.png" style="zoom: 50%;" /></p>
+<p>​    编写格式与表格相似。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用矩阵，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$ A = <span class="tag">\<span class="name">begin</span><span class="string">&#123;pmatrix&#125;</span></span></span></span><br><span class="line"><span class="formula">		a_&#123;11&#125; &amp; a_&#123;12&#125; &amp; a_&#123;13&#125; <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">		0 &amp; a_&#123;22&#125; &amp; a_&#123;23&#125; <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">		0 &amp; 0 &amp; a_&#123;33&#125;</span></span><br><span class="line"><span class="formula">	<span class="tag">\<span class="name">end</span><span class="string">&#123;pmatrix&#125;</span></span> $</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRlBhUC9IVlpxeU5UTlhOZEEvOG9GRGFpc1IvOGhMcmhRPT0.png" style="zoom:50%;" /></p>
+<h5 id="省略号"><a href="#省略号" class="headerlink" title="省略号"></a>省略号</h5><ul>
+<li>行省略号    <code>\dots</code></li>
+<li>列省略号    <code>\vdots</code></li>
+<li>斜省略号    <code>\ddots</code></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用矩阵，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$A = <span class="tag">\<span class="name">begin</span><span class="string">&#123;bmatrix&#125;</span></span></span></span><br><span class="line"><span class="formula">		a_&#123;11&#125; &amp; <span class="tag">\<span class="name">dots</span></span> &amp; a_&#123;1n&#125; <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">		&amp; <span class="tag">\<span class="name">ddots</span></span> &amp; <span class="tag">\<span class="name">vdots</span></span> <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">		0 &amp; &amp; a_&#123;nn&#125;</span></span><br><span class="line"><span class="formula">	<span class="tag">\<span class="name">end</span><span class="string">&#123;bmatrix&#125;</span></span>_&#123;n<span class="tag">\<span class="name">times</span></span> n&#125;$</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFb2NyemVNL2Q5SHRWajcyK2trYVJrdVREU0dlVnlPUFB3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:35%;" /></p>
+<ul>
+<li>多列省略号    <code>\hdotsfor{&lt;列数&gt;}</code></li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用矩阵，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="formula">$A = <span class="tag">\<span class="name">begin</span><span class="string">&#123;bmatrix&#125;</span></span></span></span><br><span class="line"><span class="formula">		a_&#123;11&#125; &amp; <span class="tag">\<span class="name">dots</span></span> &amp; a_&#123;1n&#125; <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">		<span class="tag">\<span class="name">hdotsfor</span><span class="string">&#123;3&#125;</span></span> <span class="tag">\<span class="name">\</span></span> %跨3列的省略号</span></span><br><span class="line"><span class="formula">		0 &amp; &amp; a_&#123;nn&#125;</span></span><br><span class="line"><span class="formula">	<span class="tag">\<span class="name">end</span><span class="string">&#123;bmatrix&#125;</span></span>_&#123;n<span class="tag">\<span class="name">times</span></span> n&#125;$</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFaUtBWDNBQk9OaVc0S0tEZlQ1aDZGWUpxbFlqMkRvNkxBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:35%;" /></p>
+<h3 id="符号与类型"><a href="#符号与类型" class="headerlink" title="符号与类型"></a>符号与类型</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>LaTeX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\geq$</td>
+<td><code>\geq</code></td>
+</tr>
+<tr>
+<td>$\leq$</td>
+<td><code>\leq</code></td>
+</tr>
+<tr>
+<td>$\approx$</td>
+<td><code>\approx</code></td>
+</tr>
+<tr>
+<td>$\pm$</td>
+<td><code>\pm</code></td>
+</tr>
+<tr>
+<td>$\partial$</td>
+<td><code>\partial</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>LaTeX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\vec x$</td>
+<td><code>\vec x</code></td>
+</tr>
+<tr>
+<td>$\hat x$</td>
+<td><code>\hat x</code></td>
+</tr>
+<tr>
+<td>$\widehat x$</td>
+<td><code>\widehat x</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h4><p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRE52U3VFQTdsMXQyazJSV3dvUzU1aVZDeWtYdE5FYTRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaQjdsSVhKNjBFbFFjK2lubUk3cENYTTZWYy9uUmtieHZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<h4 id="数学普通符号"><a href="#数学普通符号" class="headerlink" title="数学普通符号"></a>数学普通符号</h4><p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaR1pHenBnQ0pjYmsrY0pXdTdtZnVHMUxtQTc1dXpuV3hRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaUC9QV3lCZmFmeHFIYkk3Q1ZpUXphTzRpR2JNdHZPL3lnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<h4 id="数学算子"><a href="#数学算子" class="headerlink" title="数学算子"></a>数学算子</h4><p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRUluMVpUaGNRU0dlRVI4ZFhmaVNtWGswUDI4SnlPV2xBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaRDQzN2ViNisxSkdSM240S0pGbTc4dlhiT3BucU1wT3dRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<h3 id="多行公式"><a href="#多行公式" class="headerlink" title="多行公式"></a>多行公式</h3><p>​    equation环境中，换行命令\\无效，所以多行公式需要使用其他环境，使其可用\\换行。</p>
+<p>​    使用多行公式的环境，均需引入 amsmath宏包。</p>
+<h4 id="gather环境"><a href="#gather环境" class="headerlink" title="gather环境"></a>gather环境</h4><p>​    gather环境中公式自带编号，如要阻止编号，需使用 <code>\notag</code> 命令。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用gather环境，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;gather&#125;</span></span></span><br><span class="line">		a+b = b+a <span class="tag">\<span class="name">\</span></span> <span class="comment">%带编号</span></span><br><span class="line">		ab = ba <span class="tag">\<span class="name">notag</span></span> <span class="comment">%不带编号</span></span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;gather&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaQ09XS2Rlb3BCdlVhc2dQNjRhd1lWU3hGUUd5R0cwK0xRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:150%;" /></p>
+<h4 id="gather-环境"><a href="#gather-环境" class="headerlink" title="gather*环境"></a>gather*环境</h4><p>​    与gather环境不同的是，公式不带编号。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用gather环境，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;gather*&#125;</span></span> <span class="comment">%不带编号	</span></span><br><span class="line">		a+b = b+a <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		ab = ba </span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;gather*&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGhpMnA2MzB4cVJaR21NM2RyM1JsUVljMkExZWliMStKZkkxWW9uU0VIK0hnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom: 33%;" /></p>
+<h4 id="align环境"><a href="#align环境" class="headerlink" title="align环境"></a>align环境</h4><p>​    align环境允许公式按等号或其他关系符对齐，在关系符前加 &amp; 表示对齐。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 使用gather环境，引入amsmath宏包</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;amsmath&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">begin</span><span class="string">&#123;align&#125;</span></span> <span class="comment">%关于&amp;对齐，带编号</span></span><br><span class="line">		x &amp;= t + <span class="tag">\<span class="name">cos</span></span> t + 1 <span class="tag">\<span class="name">\</span></span></span><br><span class="line">		y &amp;= 2<span class="tag">\<span class="name">sin</span></span> t</span><br><span class="line">	<span class="tag">\<span class="name">end</span><span class="string">&#123;align&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlsS0UvUWQ3cFpLNzBGNmJNaitnRFFkTGFsVUgvTTVJTWxiQmZvOW5vdlJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h4 id="align-环境"><a href="#align-环境" class="headerlink" title="align*环境"></a>align*环境</h4><p>​    与align环境不同的是，但公式不带编号。</p>
+<h2 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h2><h3 id="newcommand-定义新的命令"><a href="#newcommand-定义新的命令" class="headerlink" title="\newcommand 定义新的命令"></a>\newcommand 定义新的命令</h3><ul>
+<li>格式：<code>\newcommand&lt;命令&gt;[&lt;参数个数&gt;][&lt;首参数默认值&gt;]{&lt;具体定义&gt;}</code></li>
+<li>命令只能由字母组成，不能以 \end 开头</li>
+<li>参数可以从1到9，用 #1，#2，….，#9 表示</li>
+<li>默认值为非必填项，只能设定 #1 的参数</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 设置新命令</span></span><br><span class="line"><span class="tag">\<span class="name">newcommand</span><span class="string">&#123;\PRC&#125;</span><span class="string">&#123;People's Republic of China&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">newcommand</span><span class="string">&#123;\loves&#125;</span><span class="string">[2]</span><span class="string">&#123;#1 love #2&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">PRC</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">\<span class="name">loves</span><span class="string">&#123;I&#125;</span><span class="string">&#123;apple&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBNW1VWmZ2Wm55cHU2aFFkSC9sYVU3Tm1rMUF6bjhRSEZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:67%;" /></p>
+<h3 id="renewcommand-重新定义命令"><a href="#renewcommand-重新定义命令" class="headerlink" title="\renewcommand 重新定义命令"></a>\renewcommand 重新定义命令</h3><ul>
+<li>格式：<code>\renewcommand&lt;命令&gt;[&lt;参数个数&gt;][&lt;首参数默认值&gt;]{&lt;具体定义&gt;}</code></li>
+<li>只能定义已有命令</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;ctexart&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 重新定义已有命令</span></span><br><span class="line"><span class="tag">\<span class="name">renewcommand</span></span> <span class="tag">\<span class="name">abstractname</span><span class="string">&#123;简介&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line">	<span class="tag">\<span class="name">abstractname</span></span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpWYVJKVENiZ2tBdzdKalU2Z2Z5NEt6ZXQyL080b04wRzRvTFpTVGVRcENnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%A5%E9%97%A8/" rel="tag"># 入门</a>
+              <a href="/tags/Latex/" rel="tag"># Latex</a>
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/03/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BA%91%E5%BC%80%E5%8F%91%EF%BC%89/" rel="prev" title="微信小程序（云开发）">
+      <i class="fa fa-chevron-left"></i> 微信小程序（云开发）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="next" title="Hexo搭建记录">
+      Hexo搭建记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在Mac环境下编写Latex"><span class="nav-number">1.</span> <span class="nav-text">在Mac环境下编写Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MacTeX"><span class="nav-number">1.1.</span> <span class="nav-text">MacTeX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texpad"><span class="nav-number">1.2.</span> <span class="nav-text">Texpad</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Latex"><span class="nav-number">2.</span> <span class="nav-text">Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">2.1.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导言区"><span class="nav-number">2.1.1.</span> <span class="nav-text">导言区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件类型"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标题区"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">标题区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文区"><span class="nav-number">2.1.2.</span> <span class="nav-text">正文区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正文"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公式"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.1.3.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Latex使用中文"><span class="nav-number">2.2.</span> <span class="nav-text">Latex使用中文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CTEX文档（推荐）"><span class="nav-number">2.2.1.</span> <span class="nav-text">CTEX文档（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">2.3.</span> <span class="nav-text">字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体族"><span class="nav-number">2.3.1.</span> <span class="nav-text">字体族</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体系列"><span class="nav-number">2.3.2.</span> <span class="nav-text">字体系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体形状"><span class="nav-number">2.3.3.</span> <span class="nav-text">字体形状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体"><span class="nav-number">2.3.4.</span> <span class="nav-text">中文字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体大小"><span class="nav-number">2.3.5.</span> <span class="nav-text">字体大小</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#英文字体大小"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">英文字体大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中文字体大小"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">中文字体大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#篇章结构"><span class="nav-number">2.4.</span> <span class="nav-text">篇章结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提纲"><span class="nav-number">2.4.1.</span> <span class="nav-text">提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">2.4.2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">正文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符"><span class="nav-number">2.5.</span> <span class="nav-text">特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空白符号"><span class="nav-number">2.5.1.</span> <span class="nav-text">空白符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制符"><span class="nav-number">2.5.2.</span> <span class="nav-text">控制符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排版符号"><span class="nav-number">2.5.3.</span> <span class="nav-text">排版符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标志符号"><span class="nav-number">2.5.4.</span> <span class="nav-text">标志符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引号"><span class="nav-number">2.5.5.</span> <span class="nav-text">引号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插图"><span class="nav-number">2.6.</span> <span class="nav-text">插图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本"><span class="nav-number">2.6.1.</span> <span class="nav-text">基本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令选项"><span class="nav-number">2.6.2.</span> <span class="nav-text">命令选项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#大小缩放"><span class="nav-number">2.6.2.1.</span> <span class="nav-text">大小缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#旋转"><span class="nav-number">2.6.2.2.</span> <span class="nav-text">旋转</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">2.7.</span> <span class="nav-text">表格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本-1"><span class="nav-number">2.7.1.</span> <span class="nav-text">基本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格线"><span class="nav-number">2.7.2.</span> <span class="nav-text">表格线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直对齐"><span class="nav-number">2.7.3.</span> <span class="nav-text">垂直对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列格式说明"><span class="nav-number">2.7.4.</span> <span class="nav-text">列格式说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格单元的合并与分割"><span class="nav-number">2.7.5.</span> <span class="nav-text">表格单元的合并与分割</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#合并"><span class="nav-number">2.7.5.1.</span> <span class="nav-text">合并</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#行合并"><span class="nav-number">2.7.5.1.1.</span> <span class="nav-text">行合并</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#列合并"><span class="nav-number">2.7.5.1.2.</span> <span class="nav-text">列合并</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#cline（容易实现，但效果不佳）"><span class="nav-number">2.7.5.1.2.1.</span> <span class="nav-text">\cline（容易实现，但效果不佳）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#multirow-（效果较好）"><span class="nav-number">2.7.5.1.2.2.</span> <span class="nav-text">\multirow （效果较好）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拆分"><span class="nav-number">2.7.5.2.</span> <span class="nav-text">拆分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮动体"><span class="nav-number">2.8.</span> <span class="nav-text">浮动体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式"><span class="nav-number">2.9.</span> <span class="nav-text">数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本-2"><span class="nav-number">2.9.1.</span> <span class="nav-text">基本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行内公式"><span class="nav-number">2.9.1.1.</span> <span class="nav-text">行内公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#美元符号"><span class="nav-number">2.9.1.1.1.</span> <span class="nav-text">$ 美元符号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#小括号"><span class="nav-number">2.9.1.1.2.</span> <span class="nav-text">小括号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#math环境"><span class="nav-number">2.9.1.1.3.</span> <span class="nav-text">math环境</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行间公式"><span class="nav-number">2.9.1.2.</span> <span class="nav-text">行间公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#美元符号-1"><span class="nav-number">2.9.1.2.1.</span> <span class="nav-text">$ 美元符号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#中括号"><span class="nav-number">2.9.1.2.2.</span> <span class="nav-text">中括号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#displaymath环境"><span class="nav-number">2.9.1.2.3.</span> <span class="nav-text">displaymath环境</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动编号公式——equation环境"><span class="nav-number">2.9.1.3.</span> <span class="nav-text">自动编号公式——equation环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学结构"><span class="nav-number">2.9.2.</span> <span class="nav-text">数学结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上标与下标"><span class="nav-number">2.9.2.1.</span> <span class="nav-text">上标与下标</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#上标"><span class="nav-number">2.9.2.1.1.</span> <span class="nav-text">上标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#下标"><span class="nav-number">2.9.2.1.2.</span> <span class="nav-text">下标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他上下标"><span class="nav-number">2.9.2.1.3.</span> <span class="nav-text">其他上下标</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#求和"><span class="nav-number">2.9.2.2.</span> <span class="nav-text">求和</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#积分"><span class="nav-number">2.9.2.3.</span> <span class="nav-text">积分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分式"><span class="nav-number">2.9.2.4.</span> <span class="nav-text">分式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#根式"><span class="nav-number">2.9.2.5.</span> <span class="nav-text">根式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#矩阵"><span class="nav-number">2.9.2.6.</span> <span class="nav-text">矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#省略号"><span class="nav-number">2.9.2.6.1.</span> <span class="nav-text">省略号</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#符号与类型"><span class="nav-number">2.9.3.</span> <span class="nav-text">符号与类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#希腊字母"><span class="nav-number">2.9.3.1.</span> <span class="nav-text">希腊字母</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数学普通符号"><span class="nav-number">2.9.3.2.</span> <span class="nav-text">数学普通符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符"><span class="nav-number">2.9.3.3.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数学算子"><span class="nav-number">2.9.3.4.</span> <span class="nav-text">数学算子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多行公式"><span class="nav-number">2.9.4.</span> <span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gather环境"><span class="nav-number">2.9.4.1.</span> <span class="nav-text">gather环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gather-环境"><span class="nav-number">2.9.4.2.</span> <span class="nav-text">gather*环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#align环境"><span class="nav-number">2.9.4.3.</span> <span class="nav-text">align环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#align-环境"><span class="nav-number">2.9.4.4.</span> <span class="nav-text">align*环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义命令"><span class="nav-number">2.10.</span> <span class="nav-text">自定义命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#newcommand-定义新的命令"><span class="nav-number">2.10.1.</span> <span class="nav-text">\newcommand 定义新的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#renewcommand-重新定义命令"><span class="nav-number">2.10.2.</span> <span class="nav-text">\renewcommand 重新定义命令</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

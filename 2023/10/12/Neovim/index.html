@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neovim">
+<meta property="og:url" content="https://gy23333.github.io/2023/10/12/Neovim/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="vim">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-10-24%2000.47.43.png">
+<meta property="article:published_time" content="2023-10-12T15:53:52.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.127Z">
+<meta property="article:author" content="GuoYi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-10-24%2000.47.43.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2023/10/12/Neovim/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Neovim | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2023/10/12/Neovim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Neovim
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-12 23:53:52" itemprop="dateCreated datePublished" datetime="2023-10-12T23:53:52+08:00">2023-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2023/10/12/Neovim/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/12/Neovim/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>vim</p>
+<a id="more"></a>
+<h1 id="Neovim-安装"><a href="#Neovim-安装" class="headerlink" title="Neovim 安装"></a>Neovim 安装</h1><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>对于 Ubuntu，安装更新版本的 Neovim</p>
+<ol>
+<li><p>添加源</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:neovim-ppa&#x2F;unstable</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新源</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 Neovim</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install neovim</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装后输入 <code>nvim</code> 即可进入</p>
+<p>如果依旧想要输入 <code>vim</code> 进入，可使用链接替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias vim&#x3D;&#39;nvim&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h2><p>对于 mac，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install neovim</span><br></pre></td></tr></table></figure>
+<p>在 <code>~/.bash_profile</code> 中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias vim&#x3D;&#39;nvim&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~&#x2F;.bash_profile</span><br></pre></td></tr></table></figure>
+<h1 id="Vim-模式"><a href="#Vim-模式" class="headerlink" title="Vim 模式"></a>Vim 模式</h1><h2 id="普通模式"><a href="#普通模式" class="headerlink" title="普通模式"></a>普通模式</h2><p>打开 Vim 直接进入的就是普通模式，主要用于浏览文件、执行复制粘贴删除等的操作</p>
+<h2 id="输入模式"><a href="#输入模式" class="headerlink" title="输入模式"></a>输入模式</h2><p>普通模式下输入 <code>i</code> 进入输入模式，输入 <code>Esc</code> 退出输入模式回到普通模式</p>
+<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>普通模式下输入 <code>:</code> 进入命令模式</p>
+<h2 id="可视模式"><a href="#可视模式" class="headerlink" title="可视模式"></a>可视模式</h2><p>普通模式下输入 <code>v</code> 进入可视模式，用于选中</p>
+<h1 id="普通模式-1"><a href="#普通模式-1" class="headerlink" title="普通模式"></a>普通模式</h1><h2 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h2><p>可以使用方向键进行移动，但更多地使用 <code>hjkl</code> 移动光标</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>h</code></td>
+<td style="text-align:center">左移</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>j</code></td>
+<td style="text-align:center">下移</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>k</code></td>
+<td style="text-align:center">上移</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>l</code></td>
+<td style="text-align:center">右移</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>4h</code></td>
+<td style="text-align:center">左移4格</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>w</code> (word)</td>
+<td style="text-align:center">跳转到下一个单词的开头</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>b</code> (beginning)</td>
+<td style="text-align:center">跳转到前一个单词的开头</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>gg</code></td>
+<td style="text-align:center">跳转到文件开头</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>G</code></td>
+<td style="text-align:center">跳转到文件结尾</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>Ctrl</code>+<code>u</code> (PgUp)</td>
+<td style="text-align:center">向上翻页</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>Ctrl</code>+<code>d</code> (PgDown)</td>
+<td style="text-align:center">向下翻页</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>fr</code> (find r)</td>
+<td style="text-align:center">移动到下一个 <code>r</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h2><p>复制键 <code>y</code> (yank)，粘贴键 <code>p</code> (paste)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>yaw</code> (yank all word)</td>
+<td style="text-align:center">复制整个单词</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>y4j</code></td>
+<td style="text-align:center">复制本行以及下4行（一共5行）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>yfr</code></td>
+<td style="text-align:center">复制到 <code>r</code> 为止的内容（包括 <code>r</code>）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>p</code></td>
+<td style="text-align:center">粘贴</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>删除键 <code>d</code> (delete)，操作与复制同理</p>
+<h2 id="改变"><a href="#改变" class="headerlink" title="改变"></a>改变</h2><p>改变键 <code>c</code> (change)，操作与复制同理，删除选中内容并进入输入模式</p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>/</code></td>
+<td style="text-align:center">从上往下查找</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>?</code></td>
+<td style="text-align:center">从下往上查找</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>n</code></td>
+<td style="text-align:center">下一个</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>N</code></td>
+<td style="text-align:center">上一个</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="命令模式-1"><a href="#命令模式-1" class="headerlink" title="命令模式"></a>命令模式</h1><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>:h &lt;plugin name&gt;</code></td>
+<td style="text-align:center">查看插件说明书</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>窗口</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>:b&lt;N&gt;</code></td>
+<td style="text-align:center">跳到第 N 个 Tab</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>:b &lt;file name&gt;</code></td>
+<td style="text-align:center">跳到相应文件名的 Tab</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>:bn</code></td>
+<td style="text-align:center">跳到上一个的 Tab</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>:bp</code></td>
+<td style="text-align:center">跳到下一个的 Tab</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>&lt;Ctrl-w&gt; + h/j/k/l</code></td>
+<td style="text-align:center">切换聚焦窗口</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&lt;Ctrl-w&gt; + w</code></td>
+<td style="text-align:center">切换聚焦到下一个窗口</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>新建 nvim 的配置文件夹 <code>~/.config/nvim</code> ，结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">├── init.vim                              入口文件，这里负责加载所有lua文件夹里的文件</span><br><span class="line">└── lua                                   所有 lua 配置文件</span><br><span class="line">    ├── basic.lua                         Neovim 的基础配置</span><br><span class="line">    ├── keybindings.lua                   快捷键配置</span><br><span class="line">    ├── lsp                               内置 LSP  (Language Server Protocol) 配置</span><br><span class="line">    │   ├── diagnostic_signs.lua</span><br><span class="line">    │   ├── language_servers.lua</span><br><span class="line">    │   └── nvim-cmp-config.lua</span><br><span class="line">    ├── plugin-config                     各个插件配置在这个文件夹</span><br><span class="line">    │   ├── bufferline.lua</span><br><span class="line">    │   ├── comment.lua</span><br><span class="line">    │   ├── nvim-autopairs.lua</span><br><span class="line">    │   ├── nvim-colorizer.lua</span><br><span class="line">    │   ├── nvim-tree.lua</span><br><span class="line">    │   ├── nvim-treesitter.lua</span><br><span class="line">    │   ├── rust-tools.lua</span><br><span class="line">    │   ├── surround.lua</span><br><span class="line">    │   ├── telescope.lua</span><br><span class="line">    │   └── which-key.lua</span><br><span class="line">    └── plugins.lua                       插件安装管理</span><br></pre></td></tr></table></figure>
+<p>nvim 在下次启动时会自动查看其中的内容进行更新，当然也可以在编辑后直接使用 <code>:so</code> 命令当重新载入。</p>
+<p>以 <code>~/.config/nvim/init.lua</code> 作为入口，lua 文件夹放置不同的模块</p>
+<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><p>使用插件管理器 <a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener">lazy.vim</a> 进行插件管理</p>
+<h2 id="安装-lazyvim"><a href="#安装-lazyvim" class="headerlink" title="安装 lazyvim"></a>安装 lazyvim</h2><ul>
+<li><p>新建 <code>lua/lazynvim-init.lua</code></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">"data"</span>) .. <span class="string">"/lazy/lazy.nvim"</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> vim.loop.fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">"git"</span>,</span><br><span class="line">    <span class="string">"clone"</span>,</span><br><span class="line">    <span class="string">"--filter=blob:none"</span>,</span><br><span class="line">    <span class="string">"https://github.com/folke/lazy.nvim.git"</span>,</span><br><span class="line">    <span class="string">"--branch=stable"</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">vim.opt.rtp:prepend(lazypath)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"lazy"</span>).setup(&#123;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>init.lua</code> 中</p>
+ <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">"lazynvim-init"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如此后，便可输入 <code>:Lazy</code> 打开</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-10-24%2000.47.43.png" alt=""></p>
+</li>
+</ul>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p> 以安装 nvim-tree 为例</p>
+<ul>
+<li><p>在 <code>lua</code> 文件夹下新建 <code>plugins</code> 目录</p>
+</li>
+<li><p>在 <code>lazynvim-init.lua</code> 中的 <code>setup</code> 中将 <code>plugins</code> 目录添加为参数</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">"lazy"</span>).setup(<span class="string">"plugins"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>lua/plugins</code> 下添加文件 <code>plugin-nvim-tree.lua</code></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"nvim-tree/nvim-tree.lua"</span>,</span><br><span class="line">        version = <span class="string">"*"</span>,</span><br><span class="line">        dependencies = &#123;<span class="string">"nvim-tree/nvim-web-devicons"</span>&#125;,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">"nvim-tree"</span>).setup &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>&quot;nvim-tree/nvim-tree.lua&quot;</code>：插件在 github 上的短 url</p>
+</li>
+<li><p><code>version</code>：下载的版本，<code>*</code> 表示自动更新最新版本</p>
+</li>
+<li><p><code>dependencies = {&quot;nvim-tree/nvim-web-devicons&quot;}</code>：依赖插件</p>
+</li>
+<li><p><code>config = ... ...</code>：当插件启动加载以后，则会执行该 config 的代码</p>
+</li>
+</ul>
+</li>
+<li><p>重新打开 vim 即可自动加载插件</p>
+</li>
+</ul>
+<h2 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h2><h3 id="主题插件-TokyoNight"><a href="#主题插件-TokyoNight" class="headerlink" title="主题插件 TokyoNight"></a>主题插件 <a href="https://github.com/folke/tokyonight.nvim" target="_blank" rel="noopener">TokyoNight</a></h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"folke/tokyonight.nvim"</span>,</span><br><span class="line">        version = <span class="string">"*"</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">"tokyonight"</span>).setup &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件树插件-nvim-tree"><a href="#文件树插件-nvim-tree" class="headerlink" title="文件树插件 nvim-tree"></a>文件树插件 <a href="https://github.com/nvim-tree/nvim-tree.lua" target="_blank" rel="noopener">nvim-tree</a></h3><ul>
+<li><p>下载 nerd fornt 字体</p>
+<p><strong>Linux</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c https:&#x2F;&#x2F;github.com&#x2F;ryanoasis&#x2F;nerd-fonts&#x2F;releases&#x2F;download&#x2F;v3.0.2&#x2F;DejaVuSansMono.zip</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo unzip DejaVuSansMono.zip -d &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;DejaVuSansMono</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;SourceCodePro</span><br><span class="line">sudo mkfontscale # 生成核心字体信息</span><br><span class="line">sudo mkfontdir # 生成字体文件夹</span><br><span class="line">sudo fc-cache -fv # 刷新系统字体缓存</span><br></pre></td></tr></table></figure>
+<p><strong>Mac</strong></p>
+<p><a href="https://joit.info/essay/a5f51f2cbbb240d7a992d481fc09f7e0" target="_blank" rel="noopener">https://joit.info/essay/a5f51f2cbbb240d7a992d481fc09f7e0</a></p>
+<p>下载字体后在配置里配置 Terminal 字体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew&#x2F;cask-fonts</span><br><span class="line">brew install --cask font-hack-nerd-font</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"nvim-tree/nvim-tree.lua"</span>,</span><br><span class="line">        version = <span class="string">"*"</span>,</span><br><span class="line">        dependencies = &#123;<span class="string">"nvim-tree/nvim-web-devicons"</span>&#125;,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">"nvim-tree"</span>).setup &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相关命令：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>g?</code></td>
+<td style="text-align:center">查看帮助</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&lt;C-k&gt;</code></td>
+<td style="text-align:center">查看信息</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>r</code></td>
+<td style="text-align:center">重命名</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>o</code></td>
+<td style="text-align:center">开文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>a</code></td>
+<td style="text-align:center">创建新文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>d</code></td>
+<td style="text-align:center">删除文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>c</code></td>
+<td style="text-align:center">复制文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>p</code></td>
+<td style="text-align:center">粘贴文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>x</code></td>
+<td style="text-align:center">剪切文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>J</code></td>
+<td style="text-align:center">跳到顶部的文件/文件夹</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>K</code></td>
+<td style="text-align:center">跳到底部的文件/文件夹</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&lt;</code> / <code>&gt;</code></td>
+<td style="text-align:center">跳到上一个/下一个兄弟文件/文件夹</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>y</code></td>
+<td style="text-align:center">复制文件名</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>Y</code></td>
+<td style="text-align:center">复制相对地址</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>gy</code></td>
+<td style="text-align:center">复制绝对地址</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="状态栏插件-lualine-nvim"><a href="#状态栏插件-lualine-nvim" class="headerlink" title="状态栏插件 lualine.nvim"></a>状态栏插件 <a href="https://github.com/nvim-lualine/lualine.nvim" target="_blank" rel="noopener">lualine.nvim</a></h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"nvim-lualine/lualine.nvim"</span>,</span><br><span class="line">        version = <span class="string">"*"</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">"lualine"</span>).setup &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="页插件-bufferline-nvim"><a href="#页插件-bufferline-nvim" class="headerlink" title="页插件 bufferline.nvim"></a>页插件 <a href="https://github.com/akinsho/bufferline.nvim" target="_blank" rel="noopener">bufferline.nvim</a></h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"akinsho/bufferline.nvim"</span>,</span><br><span class="line">        version = <span class="string">"*"</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            vim.opt.termguicolors = <span class="literal">true</span></span><br><span class="line">						<span class="built_in">require</span>(<span class="string">"bufferline"</span>).setup&#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/571617696" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/571617696</a></li>
+<li><a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener">lazy.vim官网</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/638379995" target="_blank" rel="noopener">lazy-nvim插件管理器基础入门</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Td4y1578E/?spm_id_from=333.337.search-card.all.click&amp;vd_source=f5f8e6e01c0d525ef6934da8b95c76ce" target="_blank" rel="noopener">【全程讲解】Neovim从零配置成属于你的个人编辑器</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/11/Linux-%E7%BD%91%E7%BB%9C/" rel="prev" title="Linux 网络">
+      <i class="fa fa-chevron-left"></i> Linux 网络
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/15/DPDK/" rel="next" title="DPDK">
+      DPDK <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Neovim-安装"><span class="nav-number">1.</span> <span class="nav-text">Neovim 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac"><span class="nav-number">1.2.</span> <span class="nav-text">Mac</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim-模式"><span class="nav-number">2.</span> <span class="nav-text">Vim 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通模式"><span class="nav-number">2.1.</span> <span class="nav-text">普通模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可视模式"><span class="nav-number">2.4.</span> <span class="nav-text">可视模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#普通模式-1"><span class="nav-number">3.</span> <span class="nav-text">普通模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#光标移动"><span class="nav-number">3.1.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制粘贴"><span class="nav-number">3.2.</span> <span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">3.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变"><span class="nav-number">3.4.</span> <span class="nav-text">改变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">3.5.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令模式-1"><span class="nav-number">4.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">4.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷键"><span class="nav-number">4.2.</span> <span class="nav-text">快捷键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">5.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件"><span class="nav-number">6.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-lazyvim"><span class="nav-number">6.1.</span> <span class="nav-text">安装 lazyvim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装插件"><span class="nav-number">6.2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用插件"><span class="nav-number">6.3.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题插件-TokyoNight"><span class="nav-number">6.3.1.</span> <span class="nav-text">主题插件 TokyoNight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件树插件-nvim-tree"><span class="nav-number">6.3.2.</span> <span class="nav-text">文件树插件 nvim-tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态栏插件-lualine-nvim"><span class="nav-number">6.3.3.</span> <span class="nav-text">状态栏插件 lualine.nvim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页插件-bufferline-nvim"><span class="nav-number">6.3.4.</span> <span class="nav-text">页插件 bufferline.nvim</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

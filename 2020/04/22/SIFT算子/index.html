@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种机器视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变数，融特征点和描述于一体。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SIFT算子">
+<meta property="og:url" content="https://gy23333.github.io/2020/04/22/SIFT%E7%AE%97%E5%AD%90/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种机器视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变数，融特征点和描述于一体。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_Pyramid1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_Pyramid2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_DoG.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/23/hVMXou7GcbmJE2j.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_location.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_direction1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_direction.png">
+<meta property="article:published_time" content="2020-04-22T06:56:50.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.121Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="SIFT算子">
+<meta property="article:tag" content="特征描述">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_Pyramid1.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/04/22/SIFT%E7%AE%97%E5%AD%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>SIFT算子 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/04/22/SIFT%E7%AE%97%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SIFT算子
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-22 14:56:50" itemprop="dateCreated datePublished" datetime="2020-04-22T14:56:50+08:00">2020-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Vision/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer Vision</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/04/22/SIFT%E7%AE%97%E5%AD%90/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/22/SIFT%E7%AE%97%E5%AD%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;<strong>尺度不变特征转换</strong>(<strong>Scale-invariant feature transform</strong> 或 <strong>SIFT</strong>)是一种机器视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变数，融特征点和描述于一体。</p>
+<a id="more"></a>
+<h1 id="SIFT算子——算法"><a href="#SIFT算子——算法" class="headerlink" title="SIFT算子——算法"></a>SIFT算子——算法</h1><h2 id="尺度空间极值检测"><a href="#尺度空间极值检测" class="headerlink" title="尺度空间极值检测"></a>尺度空间极值检测</h2><p>&emsp;&emsp;图像在不同的尺度下用高斯滤波器进行卷积，然后利用连续高斯模糊化图像差异来找出关键点。</p>
+<h3 id="高斯金字塔构建"><a href="#高斯金字塔构建" class="headerlink" title="高斯金字塔构建"></a>高斯金字塔构建</h3><p>&emsp;&emsp;图像的尺度空间被定义为一个函数 $L(x,y,\sigma)$，它是由可变尺度高斯函数$G(x,y,\sigma)$与输入图像$I(x,y)$的卷积产生的。</p>
+<script type="math/tex; mode=display">
+L(x,y,\sigma)=G(x,y,\sigma)*I(x,y)</script><script type="math/tex; mode=display">
+G(x,y,\sigma)=\frac1{2\pi \sigma^2}e^{-\frac{x^2+y^2}{2\sigma ^2}}</script><p>$\sigma$是尺度坐标(尺度变化因子)，$\sigma$大小决定图像的平滑程度，$\sigma$值越大图像模糊得越严重。大尺度对应图像的概貌特征，小尺度对应图像的细节特征。一般根据$3\sigma$原则，高斯核矩阵的大小设为$(6\sigma +1)\times (6\sigma +1)$。</p>
+<p>&emsp;&emsp;SIFT算子中的高斯金字塔由多个组（Octave）组成，而每个组（Octave）由多层（Interval）组成。</p>
+<p>&emsp;&emsp;每组图像的第一层由上一组的第一层<strong>高斯金字塔降采样</strong>而得，每组的下一层由上一层<strong>高斯滤波</strong>而得。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_Pyramid1.png" style="zoom:33%;" /></p>
+<p>&emsp;&emsp;先按<a href="https://gy23333.github.io/2020/04/16/图像金字塔/">高斯金字塔</a>将原图像化为多组（Octave），后一组的尺寸是前一组的$\frac 12$。每组再由第一层进行高斯滤波，同组的图像尺寸相同。</p>
+<p>&emsp;&emsp;在降采样时，高斯金字塔中一组(Octive)的底层图像是由前一组图像的倒数第3张图像隔点采样得到。</p>
+<div class="note info">
+            <p>&emsp;&emsp;金字塔组数（Octave）可由原始图像和塔顶图像的大小之比算得。</p><script type="math/tex; mode=display">Octave = \log_2 \frac {min(width_0,height_0)}{min(width,height)}</script><p>式中，$width_0、height_0$分别为原始图像的宽高，$width、height$为塔顶图像的宽高。</p>
+          </div>
+<p>&emsp;&emsp;每组分为$S$个尺度间隔（做$S$次高斯滤波），相邻两个尺度的$\sigma$之比为：</p>
+<script type="math/tex; mode=display">
+k=2^{\frac 1S}</script><p>则每一组包含$1$，$2^{\frac 1S}$，$2^{\frac 2S}$，…，2，一共$(S+1)$幅图像（即$(S+1)$层）。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_Pyramid2.jpg" style="zoom: 65%;" /></p>
+<div class="note info">
+            <p>&emsp;&emsp;尺度参数$\sigma$的取值与金字塔的组数和层数相关。设第一组第一层的尺度参数取值为$\sigma (0,0) = \sigma _0$，则第$m$组第$n$层的$\sigma$取值为</p><script type="math/tex; mode=display">\sigma(0,0)=\sigma_0,\quad\sigma(o,s)=2^{o}\times k^{s}\times \sigma_0 = 2^{o}\times 2^{\frac sS}\times \sigma_0=2^{o+\frac sS}\times \sigma_0</script>
+          </div>
+<h3 id="高斯差分金字塔（DoG金字塔）"><a href="#高斯差分金字塔（DoG金字塔）" class="headerlink" title="高斯差分金字塔（DoG金字塔）"></a>高斯差分金字塔（DoG金字塔）</h3><p>&emsp;&emsp;DoG金字塔计算简单，提供了LoG算子良好的近似，LoG算子的极值相较于Hessian、Harris等算子，能提供更稳定的图像特征，且具有尺度不变性。</p>
+<p>&emsp;&emsp;高斯差分图像由高斯金字塔中同一组(Octave)内相邻层(Interval)的图像作差得到。</p>
+<script type="math/tex; mode=display">
+D(x,y,\sigma)=L(x,y,k\sigma)-L(x,y,\sigma)</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_DoG.png" style="zoom: 33%;" /></p>
+<p>&emsp;&emsp;高斯金字塔一级$S$个图像，将得到DoG金字塔一级$(S-1)$个图像。</p>
+<h3 id="空间极值点检测"><a href="#空间极值点检测" class="headerlink" title="空间极值点检测"></a>空间极值点检测</h3><p>&emsp;&emsp;对DoG金字塔中的每个像素，在<strong>三维领域</strong>内判断是否是<strong>极值点</strong>（最大值/最小值）。如果是极值点，则该点暂定为图像在该尺度下的一个特征点。</p>
+<p><strong>三维领域</strong>：中间检测点与其同尺度的8个邻域像素点以及上下相邻两层对应的$9\times 2$个像素点一共$3\times 9-1=26$个点作比较。</p>
+<p><img src="https://i.loli.net/2020/04/23/hVMXou7GcbmJE2j.png" alt="SIFT_DoG1.png" style="zoom: 50%;" /></p>
+<p>&emsp;&emsp;该步的极值点检测可以确定极值点的位置（像素级）和尺度，极值点的大小反映了极值处的对比度（反差）。</p>
+<p>&emsp;&emsp;为了每组（Octave）得到$S$个尺度的极值结果，需要DoG金字塔每组$S+2$个图像，需要高斯金字塔每组$S+3$个图像。</p>
+<h2 id="关键点定位"><a href="#关键点定位" class="headerlink" title="关键点定位"></a>关键点定位</h2><h3 id="亚像素（子像素）精确定位"><a href="#亚像素（子像素）精确定位" class="headerlink" title="亚像素（子像素）精确定位"></a>亚像素（子像素）精确定位</h3><p>&emsp;&emsp;在DoG尺度空间检测到的极值点是离散的，通过三元二次函数拟合来精确确定关键点的位置和尺度，达到亚像素精度。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_location.png" style="zoom: 33%;" /></p>
+<p>&emsp;&emsp;将原点移到极值点处，并将高斯差分在该极值点处展开，保留一阶项及二阶项，得到：</p>
+<script type="math/tex; mode=display">
+D(X)=D+\frac {\partial D^T}{\partial X}+\frac 12 X^T\frac {\partial ^2 D}{\partial X^2}X</script><p>其中，$X=(x,y,\sigma )^T$</p>
+<p>&emsp;&emsp;令$D’(X)=0$，得极值点的偏移量</p>
+<script type="math/tex; mode=display">
+\hat X = -(\frac {\partial^2 D}{\partial X^2})^{-1}\frac {\partial D}{\partial X}</script><p>如此得到亚像素精度的极值点$\hat X$。</p>
+<p>&emsp;&emsp;利用$\hat X$得到新的高斯差分值$D(\hat X)$</p>
+<script type="math/tex; mode=display">
+D(\hat X)=D+\frac 12 \frac {\partial D^T}{\partial X}\hat X</script><p>设置<strong>对比度阈值</strong>$T$，当$|D(\hat X)|&lt;T$时，去除该对比度低的不稳定极值点$\hat X$。</p>
+<h3 id="去除边缘点"><a href="#去除边缘点" class="headerlink" title="去除边缘点"></a>去除边缘点</h3><p>&emsp;&emsp;由于DoG算子对边缘点很敏感，在边缘处也有很大的响应值，需要剔除不稳定的边缘响应点。</p>
+<p>&emsp;&emsp;在极值点处，利用$D(X)$计算Hessian矩阵</p>
+<script type="math/tex; mode=display">
+H=
+\begin{bmatrix}
+D_{xx}&D_{xy}\\
+D_{yx}&D_{yy}
+\end{bmatrix}</script><p>&emsp;&emsp;$D(X)$的主曲率与$H$的特征值成正比，在边缘梯度方向比较大，对应一个大的特征值$\alpha$；在沿着边缘的方向上比较小，对应一个小的特征值$\beta$。（两个特征值的之比为$r = \alpha/\beta$）</p>
+<p>两特征值的和等于$H$的迹$Tr(H)$</p>
+<script type="math/tex; mode=display">
+Tr(H)=D_{xx}+D_{yy}=\alpha + \beta</script><p>两特征值的积等于$H$的行列式$det(H)$</p>
+<script type="math/tex; mode=display">
+det(H)=D_{xx}D_{yy}-D_{xy}D_{yx}</script><p>则有</p>
+<script type="math/tex; mode=display">
+\frac {Tr^2(H)}{det(H)}=\frac {(\alpha + \beta)^2}{\alpha \beta}=\frac {(r+1)^2}{r}</script><p>当两特征值相等，即$r=1$时，$\frac {(r+1)^2}{r}$最小。$r$越大，$\frac {(r+1)^2}{r}$越大。</p>
+<p>&emsp;&emsp;边缘点对应的特征值之比$r$比其他的点大，所以设置一个关于$r$的阈值$T_r$，当$\frac {Tr^2(H)}{det(H)} &gt; \frac {(T_r+1)^2}{T_r}$时，判断该极值点为边缘点，去除该点。</p>
+<h2 id="获取关键点主方向"><a href="#获取关键点主方向" class="headerlink" title="获取关键点主方向"></a>获取关键点主方向</h2><p>&emsp;&emsp;为了使特征描述子具有旋转不变性，需要利用关键点邻域像素的梯度方向分布特性为每个关键点指定方向参数。</p>
+<p>&emsp;&emsp;根据关键点的尺度，在高斯金字塔对应图像的关键点位置处的局部区域计算<strong>梯度方向直方图</strong>，计算每个点的梯度幅值和方向。（一般取大小为$3\sigma$的领域）</p>
+<p>梯度幅值$m$：</p>
+<script type="math/tex; mode=display">
+m(x,y)=\sqrt{[L(x+1,y)-L(x-1,y)]^2+[L(x,y+1)-L(x,y-1)]^2}</script><p>梯度方向$\theta$：</p>
+<script type="math/tex; mode=display">
+\theta (x,y)=\tan^{-1}\frac {L(x,y+1)-L(x,y-1)}{L(x+1,y)-L(x-1,y)}</script><p>&emsp;&emsp;将$[0\circ, 360\circ]$分为多个柱，梯度幅值加到对应的梯度方向的柱上，选出直方图的峰值为该关键点的主方向。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_direction1.png" style="zoom:45%;" /></p>
+<h2 id="关键点描述"><a href="#关键点描述" class="headerlink" title="关键点描述"></a>关键点描述</h2><p>&emsp;&emsp;到上述步骤已经获得了关键点的位置、尺度以及方向。关键点的描述利用关键点及其周围像素，计算块内梯度直方图，生成特征向量，用于描述每个关键点。</p>
+<h3 id="确定用于计算关键点描述的局部区域"><a href="#确定用于计算关键点描述的局部区域" class="headerlink" title="确定用于计算关键点描述的局部区域"></a>确定用于计算关键点描述的局部区域</h3><p>&emsp;&emsp;描述子梯度方向直方图由关键点所在尺度的模糊图像计算产生，局部区域的半径$radius$：（$\sigma_{oct}$为关键点所在组的组内尺度）</p>
+<script type="math/tex; mode=display">
+radius = \frac {3\sigma_{oct}\times \sqrt2 \times (d+1)}{2},\quad d = 4</script><p>&emsp;&emsp;除上面的方法以外，还可以直接使用直径$diameter$：（$\sigma 为关键点所在尺度$）</p>
+<script type="math/tex; mode=display">
+diameter = 6\sigma +1</script><h3 id="根据关键点主方向变换坐标系"><a href="#根据关键点主方向变换坐标系" class="headerlink" title="根据关键点主方向变换坐标系"></a>根据关键点主方向变换坐标系</h3><p>&emsp;&emsp;将坐标轴旋转至关键点主方向，以确保旋转不变性。旋转后采样点的新坐标为</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+x'\\
+y'
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos \theta&-\sin \theta\\
+\sin \theta&\cos \theta
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+,\quad
+ x,y \in [-radius,radius]</script><p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT1.png" style="zoom: 60%;" /></p>
+<h3 id="计算关键点描述"><a href="#计算关键点描述" class="headerlink" title="计算关键点描述"></a>计算关键点描述</h3><p>&emsp;&emsp;在局部区域内对每个像素点求其梯度幅值和方向，生成方向直方图。</p>
+<p>&emsp;&emsp;梯度幅值高斯（$\sigma$为局部区域大小的一半）加权：离关键点越近，对关键点描述的作用越大。</p>
+<p>&emsp;&emsp;基于像素位置和梯度方向的三线性插值：将梯度方向和位置分解再加权。避免梯度方向直方图在分块边界和梯度方向量化的边界处的突然变化。</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/SIFT_direction.png" style="zoom:45%;" /></p>
+<h3 id="归一化关键点描述"><a href="#归一化关键点描述" class="headerlink" title="归一化关键点描述"></a>归一化关键点描述</h3><p>&emsp;&emsp;向量归一化：克服光照的影响，主要是增益的影响。</p>
+<p>&emsp;&emsp;方向直方图每个方向上梯度幅值限制在一定门限值以下（门限一般取0.2，像素灰度值在0~1范围内）：克服相机饱和、光照对3D表面不同方位影响不同等非线性光照情形。</p>
+<h1 id="SIFT算子——应用"><a href="#SIFT算子——应用" class="headerlink" title="SIFT算子——应用"></a>SIFT算子——应用</h1><ul>
+<li>关键点匹配</li>
+<li>场景匹配</li>
+<li>全景拼接</li>
+<li>图像检索</li>
+<li>笔迹鉴定</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="http://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf" target="_blank" rel="noopener">Paper: Distinctive Image Features from Scale-Invariant Keypoints</a></li>
+<li><a href="https://senitco.github.io/2017/06/24/image-feature-sift/" target="_blank" rel="noopener">图像特征之SIFT特征匹配</a></li>
+<li><a href="https://blog.csdn.net/zddblog/article/details/7521424" target="_blank" rel="noopener">SIFT算法详解</a></li>
+<li><a href="https://blog.csdn.net/abcjennifer/article/details/7639681" target="_blank" rel="noopener">SIFT特征提取分析</a></li>
+<li><a href="https://www.jianshu.com/p/03449c6b42c4" target="_blank" rel="noopener">SIFT特征提取</a></li>
+<li><a href="https://blog.csdn.net/dcrmg/article/details/52561656" target="_blank" rel="noopener">Sift中尺度空间、高斯金字塔、差分金字塔（DOG金字塔）、图像金字塔</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SIFT%E7%AE%97%E5%AD%90/" rel="tag"># SIFT算子</a>
+              <a href="/tags/%E7%89%B9%E5%BE%81%E6%8F%8F%E8%BF%B0/" rel="tag"># 特征描述</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/17/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2/" rel="prev" title="图像的傅立叶变换">
+      <i class="fa fa-chevron-left"></i> 图像的傅立叶变换
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/24/SURF%E7%AE%97%E5%AD%90/" rel="next" title="SURF算子">
+      SURF算子 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SIFT算子——算法"><span class="nav-number">1.</span> <span class="nav-text">SIFT算子——算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#尺度空间极值检测"><span class="nav-number">1.1.</span> <span class="nav-text">尺度空间极值检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯金字塔构建"><span class="nav-number">1.1.1.</span> <span class="nav-text">高斯金字塔构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯差分金字塔（DoG金字塔）"><span class="nav-number">1.1.2.</span> <span class="nav-text">高斯差分金字塔（DoG金字塔）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间极值点检测"><span class="nav-number">1.1.3.</span> <span class="nav-text">空间极值点检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键点定位"><span class="nav-number">1.2.</span> <span class="nav-text">关键点定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#亚像素（子像素）精确定位"><span class="nav-number">1.2.1.</span> <span class="nav-text">亚像素（子像素）精确定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去除边缘点"><span class="nav-number">1.2.2.</span> <span class="nav-text">去除边缘点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取关键点主方向"><span class="nav-number">1.3.</span> <span class="nav-text">获取关键点主方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键点描述"><span class="nav-number">1.4.</span> <span class="nav-text">关键点描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#确定用于计算关键点描述的局部区域"><span class="nav-number">1.4.1.</span> <span class="nav-text">确定用于计算关键点描述的局部区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据关键点主方向变换坐标系"><span class="nav-number">1.4.2.</span> <span class="nav-text">根据关键点主方向变换坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算关键点描述"><span class="nav-number">1.4.3.</span> <span class="nav-text">计算关键点描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归一化关键点描述"><span class="nav-number">1.4.4.</span> <span class="nav-text">归一化关键点描述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SIFT算子——应用"><span class="nav-number">2.</span> <span class="nav-text">SIFT算子——应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

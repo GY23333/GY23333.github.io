@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="​    图像滤波，即在尽量保留图像细节特征的条件下对噪声进行抑制，通过抑制高频段来减少噪音，同时会照成图像一定程度上的模糊，这也叫做平滑或者低通滤波器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高斯滤波&amp;均值滤波&amp;中值滤波">
+<meta property="og:url" content="https://gy23333.github.io/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="​    图像滤波，即在尽量保留图像细节特征的条件下对噪声进行抑制，通过抑制高频段来减少噪音，同时会照成图像一定程度上的模糊，这也叫做平滑或者低通滤波器。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDVvMk1PbnpqZi9mUWNHRDBGSHRuODJyTGRzZEllWW53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84OENkOXp2dHhMNVZHbmpoR0htRlhndllRRmdUS3hjUTBnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUzdzakg3dCtab01xS1VNSmF0bWJDSDFKbDJodTdYc1lRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N3VWK1pBcG4wSmVzNFRDSTNqOEtjWEJFZ3R1SFNjazRBPT0.jpeg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N2pacFdiUEJBa3BzVWxkd0FaZHpRYllpMnlIdm91RUtBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Guass_Filter.jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFdDNPdDdmN3h4SExHcmtmYWxTbHhKdFlleUhkb1JiU2hnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWVBZT2RldFFuMitvYmIyMjFnMnV6WllXTG5UaUxRR3pnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWXo4ZXhLMVo0WEIwdFE0TkZBOVIxcU5YK2hDQW5iQUdRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N2pacFdiUEJBa3BzVWxkd0FaZHpRYllpMnlIdm91RUtBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFb1dnVnUyQjVoNUFpRSsvZTdzYTd0MmlSR1MxNW9IYUx3PT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXQ5a0dqR1dMTHNKQy9TbEY5UmRrbEozRE41ZVQ3SDR3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3UVVsY2Z4REQzbUdEbzhmbDZDaEkxL0IwTytJU0czNGFRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWVBZT2RldFFuMitvYmIyMjFnMnV6WllXTG5UaUxRR3pnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFY0RPVTFQOFlYeXV0Vy9VRmtUY0hqdHhGZWV6NWwrTFlRPT0.png">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFYVlrWVpqazZTNkJEK0lXTHBEOWl1OGJsc0twMlFIMDF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3WHorVkNDSHlFL3djRjFwdXQxcW5uNXdySkRaTG5meWtnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3ZFh4bVZ1bCtPM3RSOFk1WHEvbUJJaVNBNXRWQWRzdndRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3U0pteExaa2tENnN5cDd3TXNOOFFKVjhwalB3NW5hdWZBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUlRvWWx1cUJPQitEbk1BZzdscHR1dVRseWlOSVI1OTRRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFVUdXZTJsRHpiK3p6VTM3dTlSbzUrRG11aWgzSys1MnpnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUi9NK1B0dWFWZHd0d01PODhZZG1GTm5ZZnFnbmQ5YXdBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFYWZKU3hBMDJJS2tyRzQ5VW5QWndYQnM4aXJSZ2x2WnN3PT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDhSTjk2akF2bWYvZ0lwTkIwbEZ6OFdsMi9SM0xrZ0dBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUXJDSmt2TWVET08xZVZjb3ZDTXduV1lmR1pHWnlvNXFBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUXNlUDc3Q2xZUlAxVEdSRlR2MjJ6VWJCSUZscEFOdGFBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXZ4ZXpibEMwa1d5MXhtOGVDTmRpYmE1cFhDU0VMVGZBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg">
+<meta property="article:published_time" content="2020-03-01T09:13:02.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.118Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="高斯滤波">
+<meta property="article:tag" content="均值滤波">
+<meta property="article:tag" content="中值滤波">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDVvMk1PbnpqZi9mUWNHRDBGSHRuODJyTGRzZEllWW53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>高斯滤波&均值滤波&中值滤波 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高斯滤波&均值滤波&中值滤波
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-01 17:13:02" itemprop="dateCreated datePublished" datetime="2020-03-01T17:13:02+08:00">2020-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Vision/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer Vision</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/01/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2-%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2-%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​    图像滤波，即在尽量保留图像细节特征的条件下对噪声进行抑制，通过抑制高频段来减少噪音，同时会照成图像一定程度上的模糊，这也叫做平滑或者低通滤波器。</p>
+<a id="more"></a>
+<h1 id="滤波"><a href="#滤波" class="headerlink" title="滤波"></a>滤波</h1><p>&emsp;&emsp;滤波本来应该是在傅立叶变换的频谱上对图像进行处理，但由于傅立叶的卷积特性</p>
+<script type="math/tex; mode=display">
+F[g*h]=F[g]F[h]</script><p>滤波后的图像可以由原图像和滤波算子做卷积生成（频域的乘积 =&gt; 空域的卷积）</p>
+<script type="math/tex; mode=display">
+g*h=F^{-1}[F[g]F[h]]</script><h1 id="高斯滤波"><a href="#高斯滤波" class="headerlink" title="高斯滤波"></a>高斯滤波</h1><p>​    高斯滤波器是利用高斯核的一个2维的卷积算子（线性滤波器），对于抑制服从正态分布的噪声非常有效。</p>
+<h2 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h2><h3 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDVvMk1PbnpqZi9mUWNHRDBGSHRuODJyTGRzZEllWW53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom: 35%;" /></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84OENkOXp2dHhMNVZHbmpoR0htRlhndllRRmdUS3hjUTBnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:80%;" /></p>
+<p>&emsp;&emsp;其中，σ描述正态分布资料数据分布的离散程度，σ越大，数据分布越分散，σ越小，数据分布越集中。也称为是正态分布的形状参数，σ越大，曲线越扁平，反之，σ越小，曲线越瘦高。</p>
+<h3 id="二维高斯分布"><a href="#二维高斯分布" class="headerlink" title="二维高斯分布"></a>二维高斯分布</h3><p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUzdzakg3dCtab01xS1VNSmF0bWJDSDFKbDJodTdYc1lRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" /></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N3VWK1pBcG4wSmVzNFRDSTNqOEtjWEJFZ3R1SFNjazRBPT0.jpeg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:75%;" /></p>
+<h3 id="高斯核"><a href="#高斯核" class="headerlink" title="高斯核"></a>高斯核</h3><p>&emsp;&emsp;高斯核主要有两个参数：高斯核的大小、离散程度σ</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h = fspecial(<span class="string">'gaussian'</span>,hsize,sigma)</span><br></pre></td></tr></table></figure>
+<p><strong>高斯核的大小</strong>：按高斯分布，理论上需要一个无限大的卷积核。但实际上，仅需要取均值周围3倍标准差内的值（高斯核单边大小为3σ），以外部分直接去掉即可。（没必要用很大的高斯核）</p>
+<p><strong>离散程度σ</strong>：σ越大，数据分布越分散，平滑程度越强，对高频的抑制程度更大。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N2pacFdiUEJBa3BzVWxkd0FaZHpRYllpMnlIdm91RUtBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom: 60%;" /></p>
+<p>&emsp;&emsp;高斯滤波再高斯滤波还是高斯滤波，两个σ的高斯滤波相当于一次$\sqrt{2}\sigma$。</p>
+<h2 id="Matlab实现"><a href="#Matlab实现" class="headerlink" title="Matlab实现"></a>Matlab实现</h2><figure class="highlight matlab"><figcaption><span>Gauss</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">img = imread(<span class="string">'Lenna.jpg'</span>);</span><br><span class="line">img = rgb2gray(img);</span><br><span class="line">sigma = <span class="number">1</span>;</span><br><span class="line">gausFilter = fspecial(<span class="string">'gaussian'</span>, [<span class="number">5</span>,<span class="number">5</span>], sigma);</span><br><span class="line">gaus= imfilter(img, gausFilter, <span class="string">'replicate'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(img,[]),title(<span class="string">'原图'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(gausFilter,[]),title(<span class="string">'高斯核'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(gaus,[]),title(<span class="string">'高斯滤波后的图像'</span>);</span><br><span class="line"></span><br><span class="line">F1 = DFT(img);</span><br><span class="line">F2 = DFT(gausFilter);</span><br><span class="line">F3 = DFT(gaus);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>),imshow(F1,[]),title(<span class="string">'原图的频谱图'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>),imshow(F2,[]),title(<span class="string">'高斯核的频谱图'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>),imshow(F3,[]),title(<span class="string">'高斯滤波后的频谱图'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><figcaption><span>Gauss</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span> = <span class="title">DFT</span><span class="params">(img)</span></span></span><br><span class="line"><span class="comment">% 离散傅里叶变换频谱图</span></span><br><span class="line">img_Double = double(img);<span class="comment">% 将灰度图归一化处理</span></span><br><span class="line">F = fft2(img_Double); <span class="comment">% 二维快速傅里叶变换 </span></span><br><span class="line">F = fftshift(F); <span class="comment">% FFT频谱平移</span></span><br><span class="line">F = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(F)); <span class="comment">% 频谱对数变换（由于幅度值范围很大，所以要取对数处理）</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;可以看出图像的高频部分受到了抑制，但并不是完全截断了高频。空域中的高斯到频域中依旧是高斯。</p>
+<p>&emsp;&emsp;</p>
+<p><img src="https://raw.githubusercontent.com/GY23333/imgs/master/Guass_Filter.jpg" alt=""></p>
+<h2 id="openCV实现（openCV提供的函数）"><a href="#openCV实现（openCV提供的函数）" class="headerlink" title="openCV实现（openCV提供的函数）"></a>openCV实现（openCV提供的函数）</h2><h3 id="cv-GaussianBlur"><a href="#cv-GaussianBlur" class="headerlink" title="cv :: GaussianBlur"></a>cv :: GaussianBlur</h3><p>​    openCV自带的高斯滤波器：<a href="http://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1" target="_blank" rel="noopener">cv :: GaussianBlur</a></p>
+<ul>
+<li>库文件：<code>#include &lt;opencv2/imgproc.hpp&gt;</code></li>
+<li>作用：该函数将源图像与指定的高斯内核进行卷积。</li>
+<li>调用方法</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>void cv::GaussianBlur</th>
+<th>(</th>
+<th><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga353a9de602fe76c709e12074a6f362ba" target="_blank" rel="noopener">InputArray</a></th>
+<th><em>src</em>,</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#gaad17fda1d0f0d1ee069aebb1df2913c0" target="_blank" rel="noopener">OutputArray</a></td>
+<td><em>dst</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga346f563897249351a34549137c8532a0" target="_blank" rel="noopener">Size</a></td>
+<td><em>ksize</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>double</td>
+<td><em>sigmaX</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>double</td>
+<td><em>sigmaY</em> = <code>0</code>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>int</td>
+<td><em>borderType</em> = <a href="https://docs.opencv.org/master/d2/de8/group__core__array.html#gga209f2f4869e304c82d07739337eae7c5afe14c13a4ea8b8e3b3ef399013dbae01" target="_blank" rel="noopener">BORDER_DEFAULT</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>参量</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>src</th>
+<th>输入图像；图像可以具有任意数量的通道，这些通道可以独立处理，但深度应为CV_8U，CV_16U，CV_16S，CV_32F或CV_64F。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dst</strong></td>
+<td>输出与src大小和类型相同的图像。</td>
+</tr>
+<tr>
+<td><strong>size</strong></td>
+<td>高斯核大小。ksize.width和ksize.height可以不同，但它们都必须为正数和奇数。或者，它们可以为零，然后根据sigma计算得出。</td>
+</tr>
+<tr>
+<td><strong>sigmaX</strong></td>
+<td>X方向上的高斯核标准偏差。</td>
+</tr>
+<tr>
+<td><strong>sigmaY</strong></td>
+<td>Y方向的高斯核标准差；如果sigmaY为零，则将其设置为等于sigmaX；如果两个sigmas为零，则分别从ksize.width和ksize.height计算得出（有关详细信息，请参见<a href="https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#gac05a120c1ae92a6060dd0db190a61afa" target="_blank" rel="noopener">getGaussianKernel</a>）；为了完全控制结果，而不管将来可能对所有这些语义进行的修改，建议指定所有ksize，sigmaX和sigmaY。</td>
+</tr>
+<tr>
+<td><strong>borderType</strong></td>
+<td>像素外推方法，请参见<a href="https://docs.opencv.org/master/d2/de8/group__core__array.html#ga209f2f4869e304c82d07739337eae7c5" target="_blank" rel="noopener">BorderTypes</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst;</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 高斯滤波，高斯核大小为5*5</span></span><br><span class="line">    GaussianBlur(src, dst, Size(<span class="number">5</span>,<span class="number">5</span>), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"gas_openCV.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFdDNPdDdmN3h4SExHcmtmYWxTbHhKdFlleUhkb1JiU2hnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>原图像和经高斯滤波后图像的傅立叶变换频谱</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWVBZT2RldFFuMitvYmIyMjFnMnV6WllXTG5UaUxRR3pnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0" style="zoom: 50%;" /></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWXo4ZXhLMVo0WEIwdFE0TkZBOVIxcU5YK2hDQW5iQUdRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" /></p>
+<h2 id="C-实现（函数自己编写）"><a href="#C-实现（函数自己编写）" class="headerlink" title="C++实现（函数自己编写）"></a>C++实现（函数自己编写）</h2><p>​    如利用5*5的高斯核，对图像进行卷积。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGpDMnJtd2l3RG84N2pacFdiUEJBa3BzVWxkd0FaZHpRYllpMnlIdm91RUtBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom: 60%;" /></p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 利用5*5的高斯核进行高斯滤波</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst 高斯滤波后的输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Gaussian_Blur</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> Kernel[<span class="number">5</span>][<span class="number">5</span>] = &#123;</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">4</span>,<span class="number">16</span>,<span class="number">26</span>,<span class="number">16</span>, <span class="number">4</span>&#125;,</span><br><span class="line">        &#123;<span class="number">7</span>,<span class="number">26</span>,<span class="number">41</span>,<span class="number">26</span>, <span class="number">7</span>&#125;,</span><br><span class="line">        &#123;<span class="number">4</span>,<span class="number">16</span>,<span class="number">26</span>,<span class="number">16</span>, <span class="number">4</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">1</span>&#125;,</span><br><span class="line">    &#125;; <span class="comment">//5*5的高斯核</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 与5*5的高斯核做卷积</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">2</span>; nrow &lt; img.rows<span class="number">-2</span>; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">2</span>; ncol &lt; img.cols<span class="number">-2</span>; ncol++) &#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">point</span> = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">                    <span class="built_in">point</span> += Kernel[i][j] * img.ptr&lt;uchar&gt;(nrow+i<span class="number">-2</span>)[ncol+j<span class="number">-2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="built_in">point</span>/<span class="number">273</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst = src.clone();</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 高斯滤波，高斯核大小为5*5</span></span><br><span class="line">    GaussianBlur(src, dst, Size(<span class="number">5</span>,<span class="number">5</span>), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"gas.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFb1dnVnUyQjVoNUFpRSsvZTdzYTd0MmlSR1MxNW9IYUx3PT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>​    该高斯滤波结果与openCV滤波结果基本一致。</p>
+<h1 id="均值滤波"><a href="#均值滤波" class="headerlink" title="均值滤波"></a>均值滤波</h1><p>​    均值滤波是空间域线性滤波器，其中所得到的图像中的每个像素具有的值等于其邻近的像素的输入图像中的平均值。它是低通（“模糊”）滤波器的一种形式。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXQ5a0dqR1dMTHNKQy9TbEY5UmRrbEozRE41ZVQ3SDR3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:80%;" /></p>
+<h2 id="openCV实现（openCV提供的函数）-1"><a href="#openCV实现（openCV提供的函数）-1" class="headerlink" title="openCV实现（openCV提供的函数）"></a>openCV实现（openCV提供的函数）</h2><h3 id="cv-blur"><a href="#cv-blur" class="headerlink" title="cv::blur"></a>cv::blur</h3><p>​    openCV自带的均值滤波器：<a href="https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga8c45db9afe636703801b0b2e440fce37" target="_blank" rel="noopener">cv::blur</a></p>
+<ul>
+<li>库文件：<code>#include &lt;opencv2/imgproc.hpp&gt;</code></li>
+<li>作用：使用归一化框滤波模糊图像。</li>
+<li>调用方法</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>void cv::blur</th>
+<th>(</th>
+<th><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga353a9de602fe76c709e12074a6f362ba" target="_blank" rel="noopener">InputArray</a></th>
+<th><em>src</em>,</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#gaad17fda1d0f0d1ee069aebb1df2913c0" target="_blank" rel="noopener">OutputArray</a></td>
+<td><em>dst</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga346f563897249351a34549137c8532a0" target="_blank" rel="noopener">Size</a></td>
+<td><em>ksize</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga1e83eafb2d26b3c93f09e8338bcab192" target="_blank" rel="noopener">Point</a></td>
+<td><em>anchor</em> = <code>Point(-1,-1)</code>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>int</td>
+<td><em>borderType</em> = <code>BORDER_DEFAULT</code></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>参数</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>src</th>
+<th>输入图像；它可以具有任意数量的通道，这些通道可以独立处理，但深度应为CV_8U，CV_16U，CV_16S，CV_32F或CV_64F。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dst</td>
+<td>输出与src大小和类型相同的图像。</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>内核大小模糊。</td>
+</tr>
+<tr>
+<td>锚</td>
+<td>锚点 默认值Point（-1，-1）表示锚点位于内核中心。</td>
+</tr>
+<tr>
+<td>borderType</td>
+<td>用于推断图像外部像素的边框模式</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst;</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 均值滤波，核大小为5*5</span></span><br><span class="line">    blur(src, dst, Size(<span class="number">5</span>, <span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"box_openCV.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3UVVsY2Z4REQzbUdEbzhmbDZDaEkxL0IwTytJU0czNGFRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>原图像和经均值滤波后图像的傅立叶变换频谱</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWVBZT2RldFFuMitvYmIyMjFnMnV6WllXTG5UaUxRR3pnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0" style="zoom: 50%;" /></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFY0RPVTFQOFlYeXV0Vy9VRmtUY0hqdHhGZWV6NWwrTFlRPT0.png" style="zoom:40%;" /></p>
+<h2 id="C-实现（函数自己编写）-1"><a href="#C-实现（函数自己编写）-1" class="headerlink" title="C++实现（函数自己编写）"></a>C++实现（函数自己编写）</h2><p>​    利用5*5的均值滤波器</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFYVlrWVpqazZTNkJEK0lXTHBEOWl1OGJsc0twMlFIMDF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:50%;" /></p>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 利用5*5的均值滤波</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst 均值滤波后的输出图像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Blur</span><span class="params">(Mat &amp;img, Mat &amp;dst)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> Kernel[<span class="number">5</span>][<span class="number">5</span>] = &#123;</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</span><br><span class="line">    &#125;; <span class="comment">//5*5的核</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 与5*5的核做卷积</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">2</span>; nrow &lt; img.rows<span class="number">-2</span>; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">2</span>; ncol &lt; img.cols<span class="number">-2</span>; ncol++) &#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">point</span> = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">                    <span class="built_in">point</span> += Kernel[i][j] * img.ptr&lt;uchar&gt;(nrow+i<span class="number">-2</span>)[ncol+j<span class="number">-2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="built_in">point</span>/<span class="number">25</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst = src.clone();</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 均值滤波，核大小为5*5</span></span><br><span class="line">    Blur(src, dst);</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"box.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果-3"><a href="#结果-3" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3WHorVkNDSHlFL3djRjFwdXQxcW5uNXdySkRaTG5meWtnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<h1 id="中值滤波"><a href="#中值滤波" class="headerlink" title="中值滤波"></a>中值滤波</h1><p>​    中值滤波是一种非线性滤波器，利用采集领域的中值的方法，对噪声进行抑制。尤其对于椒盐噪声有用。</p>
+<h2 id="openCV实现（openCV提供的函数）-2"><a href="#openCV实现（openCV提供的函数）-2" class="headerlink" title="openCV实现（openCV提供的函数）"></a>openCV实现（openCV提供的函数）</h2><h3 id="cv-medianBlur"><a href="#cv-medianBlur" class="headerlink" title="cv::medianBlur"></a>cv::medianBlur</h3><p>​    openCV自带的均值滤波器：<a href="https://docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga564869aa33e58769b4469101aac458f9" target="_blank" rel="noopener">cv::medianBlur</a></p>
+<ul>
+<li>库文件：<code>#include &lt;opencv2/imgproc.hpp&gt;</code></li>
+<li>作用：使用中值滤波模糊图像。</li>
+<li>调用方法</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>void cv::medianBlur</th>
+<th>(</th>
+<th><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#ga353a9de602fe76c709e12074a6f362ba" target="_blank" rel="noopener">InputArray</a></th>
+<th><em>src</em>,</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://docs.opencv.org/master/dc/d84/group__core__basic.html#gaad17fda1d0f0d1ee069aebb1df2913c0" target="_blank" rel="noopener">OutputArray</a></td>
+<td><em>dst</em>,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>int</td>
+<td><em>ksize</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>参数</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>src</th>
+<th>输入1、3或4通道图像; 当ksize为3或5时，图像深度应为CV_8U，CV_16U或CV_32F，对于较大的光圈，只能为CV_8U。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dst</td>
+<td>与src具有相同大小和类型的目标数组。</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>孔径线性尺寸；它必须是奇数且大于1，例如：3、5、7 …</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst;</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 中值滤波，领域大小为5*5</span></span><br><span class="line">    medianBlur(src, dst, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"median_openCV.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果-4"><a href="#结果-4" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3ZFh4bVZ1bCtPM3RSOFk1WHEvbUJJaVNBNXRWQWRzdndRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<h2 id="C-实现（函数自己编写）-2"><a href="#C-实现（函数自己编写）-2" class="headerlink" title="C++实现（函数自己编写）"></a>C++实现（函数自己编写）</h2><h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 中值滤波</span></span><br><span class="line"><span class="comment"> img 输入原图像</span></span><br><span class="line"><span class="comment"> dst 中值滤波后的输出图像</span></span><br><span class="line"><span class="comment"> ksize 领域大小</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">median_blur</span><span class="params">(Mat &amp;img, Mat &amp;dst, <span class="keyword">int</span> ksize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">2</span>; nrow &lt; img.rows<span class="number">-2</span>; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">2</span>; ncol &lt; img.cols<span class="number">-2</span>; ncol++) &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; points;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ksize; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; ksize; j++) &#123;</span><br><span class="line">                    points.push_back(img.ptr&lt;uchar&gt;(nrow+i<span class="number">-2</span>)[ncol+j<span class="number">-2</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; points.<span class="built_in">size</span>()/<span class="number">2</span>+<span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> minIndex = i;</span><br><span class="line">                <span class="keyword">int</span> j;</span><br><span class="line">                <span class="keyword">for</span> (j = i+<span class="number">1</span>; j &lt; points.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (points[j] &lt; points[i]) &#123;</span><br><span class="line">                        minIndex = j;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> temp = points[i];</span><br><span class="line">                points[i] = points[minIndex];</span><br><span class="line">                points[minIndex] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">            dst.ptr&lt;uchar&gt;(nrow)[ncol] = points[points.<span class="built_in">size</span>()/<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat src = imread(<span class="string">"Lenna.jpg"</span>, IMREAD_GRAYSCALE); <span class="comment">//从文件中加载灰度图像</span></span><br><span class="line">    Mat dst = src.clone();</span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (src.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 中值滤波，领域大小为5*5</span></span><br><span class="line">    median_blur(src, dst, <span class="number">5</span>);</span><br><span class="line">    imshow(<span class="string">"dst"</span>,dst);</span><br><span class="line">    imwrite(<span class="string">"median.jpg"</span>, dst);</span><br><span class="line">    waitKey();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果-5"><a href="#结果-5" class="headerlink" title="结果"></a>结果</h3><p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGlkb3dEbkVzbEtFckxINERaV0NzZFd1T29Halp0QTQya3hzRGtPUTFCN2xRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGhWeFp6WVY1UXB3U0pteExaa2tENnN5cDd3TXNOOFFKVjhwalB3NW5hdWZBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​    从Lenna图无法看出上面三种滤波太大的区别，但可以明显看出在同样的领域大小下，高斯滤波的模糊化程度小于其余两种。</p>
+<p>​    高斯滤波和均值滤波均是线性滤波，而中值滤波为非线性滤波。</p>
+<p>​    这三种滤波适合处理的噪声不同，高斯滤波和均值滤波更适宜抑制高斯噪声，尤其是高斯滤波最适合高斯噪声，而中值滤波更适合抑制椒盐噪声。</p>
+<h2 id="高斯噪声的抑制程度对比"><a href="#高斯噪声的抑制程度对比" class="headerlink" title="高斯噪声的抑制程度对比"></a>高斯噪声的抑制程度对比</h2><p>​    这是一张加入高斯噪声的图像。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUlRvWWx1cUJPQitEbk1BZzdscHR1dVRseWlOSVI1OTRRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom: 50%;" /></p>
+<p>​    下面分别该高斯噪声图像是用5*5的高斯滤波、均值滤波、中值滤波处理后的图像。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFVUdXZTJsRHpiK3p6VTM3dTlSbzUrRG11aWgzSys1MnpnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:50%;" /></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUi9NK1B0dWFWZHd0d01PODhZZG1GTm5ZZnFnbmQ5YXdBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:50%;" /></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFYWZKU3hBMDJJS2tyRzQ5VW5QWndYQnM4aXJSZ2x2WnN3PT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:50%;" /></p>
+<h2 id="椒盐噪声的抑制程度对比"><a href="#椒盐噪声的抑制程度对比" class="headerlink" title="椒盐噪声的抑制程度对比"></a>椒盐噪声的抑制程度对比</h2><p>​    这是一张加入椒盐噪声的图像。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFWDhSTjk2akF2bWYvZ0lwTkIwbEZ6OFdsMi9SM0xrZ0dBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" style="zoom:80%;" /></p>
+<p>​    下面分别该椒盐噪声图像是用5*5的高斯滤波、均值滤波、中值滤波处理后的图像。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUXJDSmt2TWVET08xZVZjb3ZDTXduV1lmR1pHWnlvNXFBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:80%;" /></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFUXNlUDc3Q2xZUlAxVEdSRlR2MjJ6VWJCSUZscEFOdGFBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:80%;" /></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/d2tnT2w1QS9GOGo0emJzcWU4WGxFZXZ4ZXpibEMwa1d5MXhtOGVDTmRpYmE1cFhDU0VMVGZBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" style="zoom:80%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2/" rel="tag"># 高斯滤波</a>
+              <a href="/tags/%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2/" rel="tag"># 均值滤波</a>
+              <a href="/tags/%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2/" rel="tag"># 中值滤波</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="prev" title="Hexo搭建记录">
+      <i class="fa fa-chevron-left"></i> Hexo搭建记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/05/MATLAB%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C/" rel="next" title="MATLAB学习手册">
+      MATLAB学习手册 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#滤波"><span class="nav-number">1.</span> <span class="nav-text">滤波</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高斯滤波"><span class="nav-number">2.</span> <span class="nav-text">高斯滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯分布"><span class="nav-number">2.1.</span> <span class="nav-text">高斯分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一维高斯分布"><span class="nav-number">2.1.1.</span> <span class="nav-text">一维高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维高斯分布"><span class="nav-number">2.1.2.</span> <span class="nav-text">二维高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯核"><span class="nav-number">2.1.3.</span> <span class="nav-text">高斯核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matlab实现"><span class="nav-number">2.2.</span> <span class="nav-text">Matlab实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openCV实现（openCV提供的函数）"><span class="nav-number">2.3.</span> <span class="nav-text">openCV实现（openCV提供的函数）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cv-GaussianBlur"><span class="nav-number">2.3.1.</span> <span class="nav-text">cv :: GaussianBlur</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.3.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果"><span class="nav-number">2.3.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-实现（函数自己编写）"><span class="nav-number">2.4.</span> <span class="nav-text">C++实现（函数自己编写）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#均值滤波"><span class="nav-number">3.</span> <span class="nav-text">均值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#openCV实现（openCV提供的函数）-1"><span class="nav-number">3.1.</span> <span class="nav-text">openCV实现（openCV提供的函数）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cv-blur"><span class="nav-number">3.1.1.</span> <span class="nav-text">cv::blur</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-2"><span class="nav-number">3.1.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-实现（函数自己编写）-1"><span class="nav-number">3.2.</span> <span class="nav-text">C++实现（函数自己编写）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-3"><span class="nav-number">3.2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-3"><span class="nav-number">3.2.2.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中值滤波"><span class="nav-number">4.</span> <span class="nav-text">中值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#openCV实现（openCV提供的函数）-2"><span class="nav-number">4.1.</span> <span class="nav-text">openCV实现（openCV提供的函数）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cv-medianBlur"><span class="nav-number">4.1.1.</span> <span class="nav-text">cv::medianBlur</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-4"><span class="nav-number">4.1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-4"><span class="nav-number">4.1.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-实现（函数自己编写）-2"><span class="nav-number">4.2.</span> <span class="nav-text">C++实现（函数自己编写）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-5"><span class="nav-number">4.2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-5"><span class="nav-number">4.2.2.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对比"><span class="nav-number">5.</span> <span class="nav-text">对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">5.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯噪声的抑制程度对比"><span class="nav-number">5.2.</span> <span class="nav-text">高斯噪声的抑制程度对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#椒盐噪声的抑制程度对比"><span class="nav-number">5.3.</span> <span class="nav-text">椒盐噪声的抑制程度对比</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

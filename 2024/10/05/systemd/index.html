@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="systemd 是 Linux 的系统和服务管理器。作为系统启动的第一个进程，初始化系统并且管理其他用户服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="systemd">
+<meta property="og:url" content="https://gy23333.github.io/2024/10/05/systemd/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="systemd 是 Linux 的系统和服务管理器。作为系统启动的第一个进程，初始化系统并且管理其他用户服务。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/bg2016030703.png">
+<meta property="article:published_time" content="2024-10-05T12:20:32.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.130Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="systemd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/bg2016030703.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2024/10/05/systemd/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>systemd | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/10/05/systemd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          systemd
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-10-05 20:20:32" itemprop="dateCreated datePublished" datetime="2024-10-05T20:20:32+08:00">2024-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/10/05/systemd/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/05/systemd/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>systemd 是 Linux 的系统和服务管理器。作为系统启动的第一个进程，初始化系统并且管理其他用户服务。</p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>systemd 提供了一套完整的系统启动和管理的解决方案，其中的 <code>d</code> 为守护进程（daemon）的缩写，即系统的守护进程。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/bg2016030703.png" alt="systemd架构图"></p>
+<p>查看 systemd 简介</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man systemd</span><br></pre></td></tr></table></figure>
+<p>systemd 作为系统的第一个进程，PID = 1，其余所有进程都是 systemd 的子进程。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># pstree -p</span></span><br><span class="line">systemd(<span class="number">1</span>)─┬─ModemManager(<span class="number">855</span>)─┬─&#123;ModemManager&#125;(<span class="number">887</span>)</span><br><span class="line">           │                   └─&#123;ModemManager&#125;(<span class="number">894</span>)</span><br><span class="line">           ├─NetworkManager(<span class="number">777</span>)─┬─&#123;NetworkManager&#125;(<span class="number">854</span>)</span><br><span class="line">           │                     └─&#123;NetworkManager&#125;(<span class="number">859</span>)</span><br><span class="line">           ├─VGAuthService(<span class="number">747</span>)</span><br><span class="line">           ├─accounts<span class="literal">-daemon</span>(<span class="number">766</span>)─┬─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">778</span>)</span><br><span class="line">           │                      └─&#123;accounts<span class="literal">-daemon</span>&#125;(<span class="number">811</span>)</span><br><span class="line">           ├─acpid(<span class="number">767</span>)</span><br><span class="line">           ├─avahi<span class="literal">-daemon</span>(<span class="number">770</span>)───avahi<span class="literal">-daemon</span>(<span class="number">840</span>)</span><br><span class="line">           ├─bluetoothd(<span class="number">771</span>)</span><br><span class="line">           ├─colord(<span class="number">1484</span>)─┬─&#123;colord&#125;(<span class="number">1486</span>)</span><br><span class="line">           │              └─&#123;colord&#125;(<span class="number">1488</span>)</span><br><span class="line">           ├─cron(<span class="number">773</span>)</span><br><span class="line">        .....</span><br></pre></td></tr></table></figure>
+<h1 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h1><p>systemd 可以管理所有系统资源，unit 为 systemd 的基本管理单元，用于描述系统服务、资源、设备和其他对象，根据不同资源分为了 12 种 Unit。</p>
+<ul>
+<li>Service unit：系统服务</li>
+<li>Target unit：多个 Unit 构成的一个组</li>
+<li>Device Unit：硬件设备</li>
+<li>Mount Unit：文件系统的挂载点</li>
+<li>Automount Unit：自动挂载点</li>
+<li>Path Unit：文件或路径</li>
+<li>Scope Unit：不是由 Systemd 启动的外部进程</li>
+<li>Slice Unit：进程组</li>
+<li>Snapshot Unit：Systemd 快照，可以切回某个快照</li>
+<li>Socket Unit：进程间通信的 socket</li>
+<li>Swap Unit：swap 文件</li>
+<li>Timer Unit：定时器</li>
+</ul>
+<p>可通过 <code>man systemd.service</code> 查看各种 Unit 的简介。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>每个 Unit 需设置对应类型的配置文件。Unit 配置分为三个区块：Unit、Service\Timer\Socket、Install</p>
+<h3 id="Unit-区块"><a href="#Unit-区块" class="headerlink" title="Unit 区块"></a>Unit 区块</h3><p>Unit 的元数据，定义了 unit 的基本信息、依赖关系和启动顺序。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=服务或单元的描述</span><br><span class="line"><span class="attr">Documentation</span>=man:your-man-page(<span class="number">1</span>)  <span class="comment"># 可选，文档链接</span></span><br><span class="line"><span class="attr">Requires</span>=其他-unit.service  <span class="comment"># 可选，定义强依赖</span></span><br><span class="line"><span class="attr">Wants</span>=其他-unit.service  <span class="comment"># 可选，定义弱依赖</span></span><br><span class="line"><span class="attr">After</span>=network.target  <span class="comment"># 可选，指定启动顺序</span></span><br><span class="line"><span class="attr">Before</span>=其他-unit.service  <span class="comment"># 可选，指定启动顺序</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Description</code>：简短描述</li>
+<li><code>Documentation</code>：文档地址，可以是手册页或 URL</li>
+</ul>
+<p><strong>依赖关系</strong></p>
+<p>例如：unit-A Requires/BindsTo/Wants/PartOf=unit-B.service</p>
+<ul>
+<li><code>Requires</code>：<ul>
+<li>强依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，如果被依赖 unit-B 启动失败，则该 unit-A 也会启动失败</li>
+</ul>
+</li>
+<li><code>BindsTo</code>：<ul>
+<li>强依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，如果被依赖 unit-B 启动失败，则该 unit-A 也会启动失败</li>
+<li>unit-B 停止或者失败时，依赖 unit-B 的 unit-A 也会自动停止 </li>
+</ul>
+</li>
+<li><code>Wants</code>：<ul>
+<li>弱依赖</li>
+<li>unit-A 启动时，自动启动被依赖 unit-B，但被依赖 unit-B 启动失败，也不会一些该 unit-A 启动</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>Requires</code></th>
+<th><code>BindsTo</code></th>
+<th><code>Wants</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动行为</td>
+<td>必须成功启动被依赖的 unit</td>
+<td>必须成功启动被依赖的 unit</td>
+<td>建议启动被依赖的 unit</td>
+</tr>
+<tr>
+<td>停止行为</td>
+<td>不会自动停止依赖它的 unit</td>
+<td>自动停止依赖它的 unit</td>
+<td>不会自动停止依赖它的 unit</td>
+</tr>
+<tr>
+<td>依赖关系类型</td>
+<td>单向强依赖</td>
+<td>双向强依赖</td>
+<td>弱依赖</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>功能密切相关但生命周期不必一致的服务</td>
+<td>需要同时运行并在同一生命周期内运行的服务</td>
+<td>可能相互关联但非必需的服务</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>Conflicts</code>：互斥关系，unit-A 和 unit-B 不能同时运行，当 unit-A 启动时，会自动停止 unit-B，反之亦然</li>
+<li><code>PartOf</code>：unit-A 是目标服务 unit-B 的一部分，当目标服务 unit-B 停止或被重启时，作为其一部分的 unit-A 也会停止或重启</li>
+</ul>
+<p><strong>启动顺序</strong></p>
+<p>例如：unit-A Before/After=unit-B.service</p>
+<ul>
+<li><code>Before</code>：当前 unit A 应该在指定的 unit B 之前启动（A -&gt; B）</li>
+<li><code>After</code>：当前 unit A 应该在指定的 unit B 之后启动（B -&gt; A）</li>
+</ul>
+<p>顺序配置<code>Before</code>、<code>After</code> 只是设置一起启动时的顺序，A 服务启动时并不会自动启动 B 服务，如需设置自启动，需搭配依赖关系使用。</p>
+<p><strong>其他关系</strong></p>
+<ul>
+<li><code>Condition...</code>：检查服务启动时的条件，如果条件不满足，服务将不会被启动，但不会导致启动失败<ul>
+<li><code>ConditionPathExists=</code>：检查指定的文件或路径是否存在。如果路径存在，服务将启动</li>
+<li><code>ConditionPathExistsGlob=</code>：使用通配符检查路径是否匹配</li>
+<li><code>ConditionPathIsDirectory=</code>：检查指定路径是否是一个目录</li>
+<li><code>ConditionPathIsSymbolicLink=</code>：检查指定路径是否是一个符号链接</li>
+<li><code>ConditionKernelCommandLine=</code>：检查内核命令行参数是否包含指定的字符串</li>
+<li><code>ConditionVirtualization=</code>：检查当前系统是否运行在虚拟化环境中（如 KVM、LXC 等）</li>
+<li><code>ConditionHost=</code>：检查主机名是否与指定值匹配</li>
+</ul>
+</li>
+<li><code>Assert...</code>：对服务启动的条件进行强制检查。与 <code>Condition</code> 不同，如果指定的条件未满足，服务将不会启动，且系统会报告错误<ul>
+<li><code>AssertPathExists=</code>：检查指定路径是否存在</li>
+<li><code>AssertPathIsDirectory=</code>：检查指定路径是否是目录</li>
+<li><code>AssertPathIsSymbolicLink=</code>：检查指定路径是否是符号链接</li>
+<li><code>AssertKernelCommandLine=</code>：检查内核命令行参数</li>
+<li><code>AssertVirtualization=</code>：检查当前系统是否在虚拟化环境中</li>
+</ul>
+</li>
+</ul>
+<h3 id="类型区块"><a href="#类型区块" class="headerlink" title="类型区块"></a>类型区块</h3><h4 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h4><p><code>systemd.service</code> 是用于定义和管理系统服务的单位类型。</p>
+<p>配置文件以 <code>.service</code> 结尾，主要用于描述如何启动、停止和管理服务。</p>
+<p><code>.service</code> 配置中，通过 [Service] 区块定义服务的启动和运行参数。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=notify</span><br><span class="line"><span class="attr">EnvironmentFile</span>=-/etc/default/ssh</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/sbin/sshd -t</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/sbin/sshd -D <span class="variable">$SSHD_OPTS</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/sbin/sshd -t</span><br><span class="line"><span class="attr">ExecReload</span>=/bin/kill -HUP <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">KillMode</span>=process</span><br><span class="line"><span class="attr">Restart</span>=<span class="literal">on</span>-failure</span><br><span class="line"><span class="attr">RestartPreventExitStatus</span>=<span class="number">255</span></span><br><span class="line"><span class="attr">RuntimeDirectory</span>=sshd</span><br><span class="line"><span class="attr">RuntimeDirectoryMode</span>=<span class="number">0755</span></span><br></pre></td></tr></table></figure>
+<p><strong>启动类型</strong></p>
+<ul>
+<li><code>Type</code>：配置服务如何通知systemd服务启动完成<ul>
+<li><code>simple</code>（默认值）：systemd 调用完 <code>ExecStart</code> 后即认为服务启动成功，即使 <code>ExecStart</code> 运行失败，服务也启动成功</li>
+<li><code>notify</code>：启动时，服务通过 <code>sd_notify()</code> 发送一个 “READY=1” 信号，systemd 收到这个信号后才认为服务启动成功，再启动之后的 unit</li>
+<li><code>dbus</code>：需设置 <code>BusName=</code>（如设置，自动为 dbus 类型），当 systemd 确认 <code>BusName=</code> 的 dbus 存在后，则认为服务启动成功</li>
+<li>等等</li>
+</ul>
+</li>
+</ul>
+<p><strong>启动命令</strong></p>
+<ul>
+<li><p><code>EnvironmentFile</code>：启动时会加载这个配置的环境变量文件</p>
+</li>
+<li><p><code>ExecStartPre</code>：启动服务之前执行的命令</p>
+<ul>
+<li><p>如果 <code>ExecStartPre</code> 执行失败，则服务启动失败，不会执行 <code>ExecStart</code></p>
+</li>
+<li><p>如果希望 <code>ExecStartPre</code> 执行失败也能继续执行 <code>ExecStart</code>，需在 <code>ExecStartPre</code> 加前缀 <code>-</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ExecStartPre</span>=-/usr/bin/check_dependencies</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>支持多个 <code>ExecStartPre</code>，按顺序执行</p>
+</li>
+</ul>
+</li>
+<li><p><code>ExecStart</code>（必选）：启动服务执行的命令</p>
+</li>
+<li><p><code>ExecStartPost</code>：启动服务成功之后执行的命令</p>
+<ul>
+<li>如果 <code>Type</code> 规定的启动没成功，则不会执行 <code>ExecStartPost</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>终止类型</strong></p>
+<ul>
+<li><code>KillMode</code>：停止服务时如何处理进程<ul>
+<li><code>control-group</code>（默认值）：停止服务时，所有属于该服务 cgroup 的所有进程都会被杀死</li>
+<li><code>process</code>：停止服务时，只杀主进程，主进程产生的子进程不会被杀死</li>
+<li><code>mixed</code>：停止服务时，向主进程发送 SIGTERM 信号，接着向子进程发送 SIGKILL 信号</li>
+<li><code>none</code>：没有进程会被杀掉，只是执行服务的 <code>ExecStop</code> 命令</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>杀进程过程：</p>
+<ol>
+<li>向进程发送<code>KillSignal=</code> 信号（默认为 <code>SIGTERM</code>）</li>
+<li>等待进程被杀死</li>
+<li>若等候 <code>TimeoutStopSec=</code> 时间（默认 90s）后，进程仍然未被杀死，向进程发送 <code>FinalKillSignal=</code> 信号（默认为 <code>SIGKILL</code>）强制杀死进程</li>
+</ol>
+</blockquote>
+<p><strong>终止命令</strong></p>
+<ul>
+<li><code>ExecStop</code>字段：停止服务时执行的命令</li>
+<li><code>ExecStopPost</code>字段：停止服务之后执行的命令</li>
+</ul>
+<p><strong>重启类型</strong></p>
+<p>有时候，服务需要保持运行状态，如有意外奔溃，能自动拉起，可通过下面配置设置自拉起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Restart&#x3D;always</span><br><span class="line">RestartSec&#x3D;5</span><br><span class="line">StartLimitInterval&#x3D;0</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Restart</code>：重启机制，什么情况下会自动触发重启服务（systemctl stop/restart 触发的停止服务，不会被这里设置的重启机制拉起）<ul>
+<li>no（默认值）：退出后不会重启</li>
+<li>always：所有情况触发自动重启</li>
+<li>on-success：只有正常退出时触发自动重启</li>
+<li>on-failure：异常退出时触发自动重启</li>
+<li>on-abnormal：只有被信号终止和超时，才会重启</li>
+<li>on-abort：只有在收到没有捕捉到的信号终止时，才会重启</li>
+<li>on-watchdog：超时退出，才会重启</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>退出原因</th>
+<th>no</th>
+<th>always</th>
+<th>on-success</th>
+<th>on-failure</th>
+<th>on-abnormal</th>
+<th>on-abort</th>
+<th>on-watchdog</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>systemctl stop</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>正常退出</td>
+<td></td>
+<td>restart</td>
+<td>restart</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>退出码不为“0”</td>
+<td></td>
+<td>restart</td>
+<td></td>
+<td>restart</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>进程被强制杀死</td>
+<td></td>
+<td>restart</td>
+<td></td>
+<td>restart</td>
+<td>restart</td>
+<td>restart</td>
+<td></td>
+</tr>
+<tr>
+<td>systemd操作超时</td>
+<td></td>
+<td>restart</td>
+<td></td>
+<td>restart</td>
+<td>restart</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>看门狗超时</td>
+<td></td>
+<td>restart</td>
+<td></td>
+<td>restart</td>
+<td>restart</td>
+<td></td>
+<td>restart</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<ul>
+<li>正常退出：退出码为”0”， 或者进程收到 <code>SIGHUP</code>, <code>SIGINT</code>, <code>SIGTERM</code>, <code>SIGPIPE</code> 信号之一，并且退出码符合 <code>SuccessExitStatus=</code> 的设置</li>
+<li>异常退出：包括退出码不为“0”、进程被强制杀死、systemd操作超时、看门狗超时</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>RestartSec</code>：配合 <code>Restart</code> 使用，重新启动服务之前的睡眠时间，设置如异常退出后，等待多少秒再次启动，默认 100ms</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">                     |----RestartSec------|</span><br><span class="line">---------|-----------|--------------------|------------|----------</span><br><span class="line"> running    stopping    stopped             starting     running</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>StartLimitInterval</code>、<code>StartLimitBurst</code>：重启限制次数，在 <code>StartLimitBurst=</code> 时间内尝试重启超过 <code>StartLimitInterval=</code> 次则不再重启，默认为 10s 内 5 次，如需无限制，则设置 <code>StartLimitInterval=0</code></li>
+</ul>
+<p><strong>重启命令</strong></p>
+<ul>
+<li><code>ExecReload</code>字段：重启服务时执行的命令</li>
+</ul>
+<h3 id="Install-区块"><a href="#Install-区块" class="headerlink" title="Install 区块"></a>Install 区块</h3><p>定义服务单元的安装和启用选项，指定如何将服务单元与目标（如启动目标或其他服务）关联。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>WantedBy</code>：定义服务应该被哪些目标“需要”，这意味着在这些目标启动时，该服务也会被自动启动</p>
+<ul>
+<li><p>示例说明服务所在 target 是 multi-user.target，这个设置很通用且重要</p>
+</li>
+<li><p>在 enable 这个服务后，在 <code>/etc/systemd/system/multi-user.target.wants/</code> 的指定目录中创建了一个指向 <code>/usr/lib/systemd/system/XXX.service</code> 的符号链接</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># systemctl enable nginx</span></span><br><span class="line">Created symlink /etc/systemd/system/multi<span class="literal">-user</span>.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>相当于为 <code>multi-user.target</code> 添加了 <code>Wants=nginx</code> 配置</p>
+</li>
+<li><p>当系统启动时, <code>multi-user.target</code> 启动，<code>nginx.service</code> 单元也会被启动</p>
+</li>
+</ul>
+</li>
+<li><p><code>RequiredBy</code>：类似于 <code>WantedBy</code>，但表示更强的依赖关系，如果目标启动失败，相关服务也不会启动</p>
+</li>
+<li><p><code>Alias</code>：当前 Unit 的别名</p>
+</li>
+<li><p><code>Also</code>：当前 Unit 启用（enable）或禁用（disable）时，会被同时（enable）或禁用（disable）的其他 Unit</p>
+</li>
+</ul>
+<h2 id="配置路径"><a href="#配置路径" class="headerlink" title="配置路径"></a>配置路径</h2><p>配置文件存放在下面地址：</p>
+<ul>
+<li>系统级目录：<code>/lib/systemd/system/</code><ul>
+<li>Linux 系统提供的默认 unit 配置文件的存放位置</li>
+</ul>
+</li>
+<li>用户级目录：<code>~/.config/systemd/user/</code><ul>
+<li>用户级的 unit 配置文件，允许普通用户定义和管理自己的服务和任务。</li>
+</ul>
+</li>
+<li>本地配置目录：<code>/etc/systemd/system/</code><ul>
+<li>本地的 unit 配置文件，用户可以在这里创建或修改 unit 文件。</li>
+</ul>
+</li>
+</ul>
+<p>优先级顺序：</p>
+<ol>
+<li><code>/etc/systemd/system/</code>（本地配置目录，最高优先级）</li>
+<li><code>/run/systemd/system/</code>（临时配置，通常在运行时创建）</li>
+<li><code>/lib/systemd/system/</code>（默认系统提供的配置）</li>
+</ol>
+<p>优先级从高到低，如在高低优先级的目录下有同名 unit，则采用高优先级中的配置。</p>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><p>systemd 由一组系统命令组成，用来控制系统的方方面面。</p>
+<h2 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h2><p>参考链接：<a href="https://manpages.ubuntu.com/manpages/focal/zh_CN/man1/systemctl.1.html" target="_blank" rel="noopener">manpages</a>、<code>man systemctl</code></p>
+<p><code>systemctl</code> 是 systemd 的主命令，用于控制 systemd 系统与服务。</p>
+<ul>
+<li>命令格式：<code>systemctl [OPTIONS...] COMMAND [UNIT...]</code></li>
+</ul>
+<h3 id="系统命令"><a href="#系统命令" class="headerlink" title="系统命令"></a>系统命令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出 systemd 所有单位</span></span><br><span class="line">systemctl list<span class="literal">-units</span></span><br><span class="line"><span class="comment"># 通过 --type= 筛选出 unit 类型</span></span><br><span class="line">systemctl list<span class="literal">-units</span> -<span class="literal">-type</span>=service</span><br><span class="line"><span class="comment"># 通过 --state= 筛选出 unit 类型</span></span><br><span class="line">systemctl list<span class="literal">-units</span> -<span class="literal">-state</span>=running</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出 systemd 所有单元和状态</span></span><br><span class="line">systemctl list<span class="literal">-unit</span><span class="literal">-files</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出已加载的套接字(socket)单元</span></span><br><span class="line">systemctl list<span class="literal">-sockets</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出已加载的定时器(timer)单元</span></span><br><span class="line">systemctl list<span class="literal">-timers</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载服务配置</span></span><br><span class="line">systemctl daemon<span class="literal">-reload</span></span><br></pre></td></tr></table></figure>
+<h3 id="单-Unit-命令"><a href="#单-Unit-命令" class="headerlink" title="单 Unit 命令"></a>单 Unit 命令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看服务状态</span></span><br><span class="line">systemctl status [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">systemctl start [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">systemctl stop [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">systemctl restart [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开机自启动服务</span></span><br><span class="line">systemctl enable [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开机不自启动服务</span></span><br><span class="line">systemctl disable [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示服务信息</span></span><br><span class="line">systemctl show [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读服务配置文件，等同于 cat 配置文件地址</span></span><br><span class="line">systemctl cat [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑服务配置文件，相比直接 vim，编辑后可自动检查格式</span></span><br><span class="line">systemctl edit [<span class="type">SERVICE</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示指定 unit 的依赖关系</span></span><br><span class="line">systemctl list<span class="literal">-dependencies</span> [<span class="type">UNIT</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="journalctl"><a href="#journalctl" class="headerlink" title="journalctl"></a>journalctl</h2><p>参考链接：<a href="https://manpages.ubuntu.com/manpages/oracular/zh_CN/man1/journalctl.1.html" target="_blank" rel="noopener">manpages</a>、<code>man journalctl</code></p>
+<p><code>journalctl</code> 用来查看 systemd 日志，包括系统日志还有各 unit 日志。</p>
+<ul>
+<li>服务：systemd-journald.service</li>
+<li>命令格式：<code>journalctl [OPTIONS...] [MATCHES...]</code></li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有日志（默认情况下 ，只保存本次启动的日志）</span></span><br><span class="line">journalctl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示尾部指定行数的日志</span></span><br><span class="line">journalctl <span class="literal">-n</span> <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时滚动显示最新日志</span></span><br><span class="line">journalctl <span class="operator">-f</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看内核日志（不显示应用日志）</span></span><br><span class="line">journalctl <span class="literal">-k</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统本次启动的日志</span></span><br><span class="line">journalctl <span class="literal">-b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看上一次启动的日志</span></span><br><span class="line">journalctl <span class="literal">-b</span> <span class="literal">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定时间的日志</span></span><br><span class="line">journalctl -<span class="literal">-since</span>=<span class="string">"2012-10-30 18:17:16"</span></span><br><span class="line">journalctl -<span class="literal">-since</span> <span class="string">"20 min ago"</span></span><br><span class="line">journalctl -<span class="literal">-since</span> yesterday</span><br><span class="line">journalctl -<span class="literal">-since</span> <span class="string">"2015-01-10"</span> -<span class="literal">-until</span> <span class="string">"2015-01-11 03:00"</span></span><br><span class="line">journalctl -<span class="literal">-since</span> <span class="number">09</span>:<span class="number">00</span> -<span class="literal">-until</span> <span class="string">"1 hour ago"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务的日志</span></span><br><span class="line">journalctl /usr/lib/systemd/systemd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个 Unit 的日志</span></span><br><span class="line">journalctl <span class="literal">-u</span> nginx.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并显示多个 Unit 的日志</span></span><br><span class="line">journalctl <span class="literal">-u</span> nginx.service <span class="literal">-u</span> php<span class="literal">-fpm</span>.service -<span class="literal">-since</span> today</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定进程的日志</span></span><br><span class="line">journalctl _PID=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个路径的脚本的日志</span></span><br><span class="line">journalctl /usr/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定用户的日志</span></span><br><span class="line">journalctl _UID=<span class="number">33</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定优先级（及其以上级别）的日志，共有8级</span></span><br><span class="line"><span class="comment"># 0: emerg</span></span><br><span class="line"><span class="comment"># 1: alert</span></span><br><span class="line"><span class="comment"># 2: crit</span></span><br><span class="line"><span class="comment"># 3: err</span></span><br><span class="line"><span class="comment"># 4: warning</span></span><br><span class="line"><span class="comment"># 5: notice</span></span><br><span class="line"><span class="comment"># 6: info</span></span><br><span class="line"><span class="comment"># 7: debug</span></span><br><span class="line">journalctl <span class="literal">-p</span> err <span class="literal">-b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志默认分页输出，--no-pager 改为正常的标准输出</span></span><br><span class="line">journalctl -<span class="literal">-no</span><span class="literal">-pager</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 JSON 格式（单行）输出</span></span><br><span class="line">journalctl <span class="literal">-b</span> <span class="literal">-u</span> nginx.service <span class="literal">-o</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 JSON 格式（多行）输出，可读性更好</span></span><br><span class="line">journalctl <span class="literal">-b</span> <span class="literal">-u</span> nginx.service <span class="literal">-o</span> json<span class="literal">-pretty</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示日志占据的硬盘空间</span></span><br><span class="line">journalctl -<span class="literal">-disk</span><span class="literal">-usage</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件占据的最大空间</span></span><br><span class="line">journalctl -<span class="literal">-vacuum</span><span class="literal">-size</span>=<span class="number">1</span>G</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件保存多久</span></span><br><span class="line">journalctl -<span class="literal">-vacuum</span><span class="literal">-time</span>=<span class="number">1</span>years</span><br></pre></td></tr></table></figure>
+<h2 id="loginctl"><a href="#loginctl" class="headerlink" title="loginctl"></a>loginctl</h2><p>参考链接：<a href="https://manpages.ubuntu.com/manpages/focal/zh_CN/man1/loginctl.1.html" target="_blank" rel="noopener">manpages</a>、<code>man loginctl</code></p>
+<p><code>loginctl</code>命令用来控制 systemd 登录管理器（systemd-logind.service）。</p>
+<ul>
+<li>服务：systemd-logind.service</li>
+<li>命令格式：<code>loginctl [OPTIONS...] {COMMAND} [NAME...]</code></li>
+</ul>
+<p>COMMAND 分为三种类型：用户、会话和席位</p>
+<blockquote>
+<h3 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h3><p>用户是操作系统中进行交互和操作的实体。在Linux中，每个用户都有一个唯一的用户名和用户ID（UID）。用户可以是普通用户、超级用户（root）等，拥有不同的权限。</p>
+<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><p>会话是用户与系统之间的交互过程。当用户登录到Linux系统时，会创建一个会话。会话包含用户的环境设置、运行的程序、打开的文件等。一个用户可以同时拥有多个会话，例如在不同的终端或远程登录时。</p>
+<h3 id="席位"><a href="#席位" class="headerlink" title="席位"></a>席位</h3><p>席位（TTY或终端）是用户与系统之间交互的接口。在Linux中，每个物理或虚拟终端都被称为一个席位。用户可以通过这些席位输入命令并接收输出。现代Linux系统通常支持多个席位，例如通过虚拟终端（tty）或图形界面（X Window System）。</p>
+</blockquote>
+<ul>
+<li><p><strong>用户命令</strong></p>
+<ul>
+<li><p>列出当前登录用户 <code>list-users</code></p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-users</span></span><br><span class="line"> UID USER</span><br><span class="line">   <span class="number">0</span> root</span><br><span class="line"><span class="number">1000</span> guoyi</span><br><span class="line"></span><br><span class="line"><span class="number">2</span> users listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示用户状态<code>user-status [USER...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl user-status root</span></span><br><span class="line">root (<span class="number">0</span>)</span><br><span class="line">           Since: Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT; <span class="number">9</span>h ago</span><br><span class="line">           State: active</span><br><span class="line">        Sessions: <span class="number">321</span> *<span class="number">304</span></span><br><span class="line">          Linger: no</span><br><span class="line">            Unit: user<span class="literal">-0</span>.slice</span><br><span class="line">                  ├─session<span class="literal">-304</span>.scope</span><br><span class="line">                  │ ├─<span class="number">57001</span> sshd: root@pts/<span class="number">1</span></span><br><span class="line">                  │ ├─<span class="number">57094</span> <span class="literal">-bash</span></span><br><span class="line">                  │ ├─<span class="number">58718</span> loginctl user<span class="literal">-status</span> root</span><br><span class="line">                  │ └─<span class="number">58719</span> pager</span><br><span class="line">                  ├─session<span class="literal">-321</span>.scope</span><br><span class="line">                  │ ├─<span class="number">58486</span> sshd: root@pts/<span class="number">2</span></span><br><span class="line">                  │ └─<span class="number">58572</span> <span class="literal">-bash</span></span><br><span class="line">                  └─user@<span class="number">0</span>.service</span><br><span class="line">                    └─init.scope</span><br><span class="line">                      ├─<span class="number">57004</span> /lib/systemd/systemd -<span class="literal">-user</span></span><br><span class="line">                      └─<span class="number">57005</span> (sd<span class="literal">-pam</span>)</span><br><span class="line"></span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Condition check resulted <span class="keyword">in</span> Sound System being sk&gt;</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Listening on REST API socket <span class="keyword">for</span> snapd user sessi&gt;</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Listening on D<span class="literal">-Bus</span> User Message Bus Socket.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Reached target Sockets.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Reached target Basic System.</span><br><span class="line">Oct <span class="number">05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">48</span> ubuntu systemd[<span class="number">57004</span>]: Condition check resulted <span class="keyword">in</span> Sound Service being s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示用户各属性<code>show-user [USER...]</code>，可以用 <code>--all</code> 选项查看缺省空置，使用 <code>--property=</code> 查看特定属性</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl show-user root</span></span><br><span class="line">UID=<span class="number">0</span></span><br><span class="line">GID=<span class="number">0</span></span><br><span class="line">Name=root</span><br><span class="line">Timestamp=Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT</span><br><span class="line">TimestampMonotonic=<span class="number">574471117888</span></span><br><span class="line">RuntimePath=/run/user/<span class="number">0</span></span><br><span class="line">Service=user@<span class="number">0</span>.service</span><br><span class="line">Slice=user<span class="literal">-0</span>.slice</span><br><span class="line">Display=<span class="number">304</span></span><br><span class="line">State=active</span><br><span class="line">Sessions=<span class="number">321</span> <span class="number">304</span></span><br><span class="line">IdleHint=no</span><br><span class="line">IdleSinceHint=<span class="number">0</span></span><br><span class="line">IdleSinceHintMonotonic=<span class="number">0</span></span><br><span class="line">Linger=no</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+<li><p><strong>会话命令</strong></p>
+<ul>
+<li><p>列出当前所有会话 <code>list-sessions</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-sessions</span></span><br><span class="line">SESSION  UID USER  SEAT  TTY</span><br><span class="line">      <span class="number">2</span> <span class="number">1000</span> guoyi seat0 tty2</span><br><span class="line">    <span class="number">304</span>    <span class="number">0</span> root</span><br><span class="line">    <span class="number">321</span>    <span class="number">0</span> root</span><br><span class="line"></span><br><span class="line"><span class="number">3</span> sessions listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示简洁的会话状态信息<code>session-status [ID...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl session-status 304</span></span><br><span class="line"><span class="number">304</span> - root (<span class="number">0</span>)</span><br><span class="line">           Since: Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">01</span>:<span class="number">40</span>:<span class="number">47</span> PDT; <span class="number">9</span>h ago</span><br><span class="line">          Leader: <span class="number">57001</span> (sshd)</span><br><span class="line">          Remote: <span class="number">192.168</span>.<span class="number">45.1</span></span><br><span class="line">         Service: sshd; type tty; <span class="class"><span class="keyword">class</span> <span class="title">user</span></span></span><br><span class="line"><span class="class">           <span class="title">State</span>: <span class="title">active</span></span></span><br><span class="line"><span class="class">            <span class="title">Unit</span>: <span class="title">session</span>-304.<span class="title">scope</span></span></span><br><span class="line"><span class="class">                  ├─57001 <span class="title">sshd</span>: <span class="title">root</span>@<span class="title">pts</span>/1</span></span><br><span class="line"><span class="class">                  ├─57094 -<span class="title">bash</span></span></span><br><span class="line"><span class="class">                  ├─58744 <span class="title">loginctl</span> <span class="title">session</span>-<span class="title">status</span> 304</span></span><br><span class="line"><span class="class">                  └─58745 <span class="title">pager</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">Oct</span> 05 01:40:48 <span class="title">ubuntu</span> <span class="title">systemd</span>[1]: <span class="title">Started</span> <span class="title">Session</span> 304 <span class="title">of</span> <span class="title">user</span> <span class="title">root</span>.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示会话的各项属性值<code>show-session [ID...]</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl show-session 321</span></span><br><span class="line">Id=<span class="number">321</span></span><br><span class="line">User=<span class="number">0</span></span><br><span class="line">Name=root</span><br><span class="line">Timestamp=Sat <span class="number">2024</span><span class="literal">-10</span><span class="literal">-05</span> <span class="number">10</span>:<span class="number">31</span>:<span class="number">06</span> PDT</span><br><span class="line">TimestampMonotonic=<span class="number">606290337700</span></span><br><span class="line">VTNr=<span class="number">0</span></span><br><span class="line">Remote=yes</span><br><span class="line">RemoteHost=<span class="number">192.168</span>.<span class="number">45.1</span></span><br><span class="line">Service=sshd</span><br><span class="line">Scope=session<span class="literal">-321</span>.scope</span><br><span class="line">Leader=<span class="number">58486</span></span><br><span class="line">Audit=<span class="number">321</span></span><br><span class="line">Type=tty</span><br><span class="line"><span class="class"><span class="keyword">Class</span>=<span class="title">user</span></span></span><br><span class="line"><span class="class"><span class="title">Active</span>=<span class="title">yes</span></span></span><br><span class="line"><span class="class"><span class="title">State</span>=<span class="title">active</span></span></span><br><span class="line"><span class="class"><span class="title">IdleHint</span>=<span class="title">no</span></span></span><br><span class="line"><span class="class"><span class="title">IdleSinceHint</span>=0</span></span><br><span class="line"><span class="class"><span class="title">IdleSinceHintMonotonic</span>=0</span></span><br><span class="line"><span class="class"><span class="title">LockedHint</span>=<span class="title">no</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+<li><p><strong>席位命令</strong></p>
+<ul>
+<li><p>显示所有可用席位<code>list-seats</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># loginctl list-seats</span></span><br><span class="line">SEAT</span><br><span class="line">seat0</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> seats listed.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>等等</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://systemd.io" target="_blank" rel="noopener">官方文档</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/systemd/" rel="tag"># systemd</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/19/Docker/" rel="prev" title="Docker">
+      <i class="fa fa-chevron-left"></i> Docker
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/23/BGP-%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" rel="next" title="BGP 路由协议">
+      BGP 路由协议 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unit"><span class="nav-number">2.</span> <span class="nav-text">Unit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unit-区块"><span class="nav-number">2.1.1.</span> <span class="nav-text">Unit 区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型区块"><span class="nav-number">2.1.2.</span> <span class="nav-text">类型区块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Service"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Service</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-区块"><span class="nav-number">2.1.3.</span> <span class="nav-text">Install 区块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置路径"><span class="nav-number">2.2.</span> <span class="nav-text">配置路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令"><span class="nav-number">3.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemctl"><span class="nav-number">3.1.</span> <span class="nav-text">systemctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统命令"><span class="nav-number">3.1.1.</span> <span class="nav-text">系统命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单-Unit-命令"><span class="nav-number">3.1.2.</span> <span class="nav-text">单 Unit 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#journalctl"><span class="nav-number">3.2.</span> <span class="nav-text">journalctl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loginctl"><span class="nav-number">3.3.</span> <span class="nav-text">loginctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户"><span class="nav-number">3.3.1.</span> <span class="nav-text">用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">3.3.2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#席位"><span class="nav-number">3.3.3.</span> <span class="nav-text">席位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

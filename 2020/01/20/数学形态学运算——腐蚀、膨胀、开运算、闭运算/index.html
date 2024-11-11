@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学形态学运算——腐蚀、膨胀、开运算、闭运算">
+<meta property="og:url" content="https://gy23333.github.io/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/u8RTH9BgPibLvWp.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/21/ciN4WF8VDw3BJKb.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/21/uhGrcdfzSPBXTs3.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/21/FEkiKaGYtN3qbgD.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/21/U3l5SpXhkYsONeG.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/22/uebZfV6KS8El1DX.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/22/hvwD16kimTQWAjG.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/5kNeIaSqHERKzZ8.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/U9KjTLXRgrzNp1V.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/qTVWv5BQ17ubxps.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/wrcmlgnZFP4TbSM.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/uXEYVCIlwGofcj8.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/gZsrSIhiLYKJlQT.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/WMFdOPXijhNtcsQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/GQkz7RW6YjbOIlF.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/hrcJ4OzdtAiDmau.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/u8RTH9BgPibLvWp.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/xFwuLygDzo8enUP.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/pHGyOWlUz3wxedY.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/Hg5mL7JksCveB1Q.png">
+<meta property="og:image" content="https://i.loli.net/2020/01/23/p5zsLPN9o6uhrF7.jpg">
+<meta property="article:published_time" content="2020-01-20T15:02:14.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.112Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="数学形态学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg">
+
+<link rel="canonical" href="https://gy23333.github.io/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>数学形态学运算——腐蚀、膨胀、开运算、闭运算 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数学形态学运算——腐蚀、膨胀、开运算、闭运算
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-20 23:02:14" itemprop="dateCreated datePublished" datetime="2020-01-20T23:02:14+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/20/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E8%85%90%E8%9A%80%E3%80%81%E8%86%A8%E8%83%80%E3%80%81%E5%BC%80%E8%BF%90%E7%AE%97%E3%80%81%E9%97%AD%E8%BF%90%E7%AE%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​     数学形态学中的二值形态学最基本的两种运算——腐蚀、膨胀。由这两个算子又可以衍生出开运算和闭运算。开运算为先腐蚀再膨胀，闭运算为先膨胀再腐蚀。</p>
+<p><img src="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg" alt="erosion_dst.jpg" style="zoom:70%;" /></p>
+<p><img src="https://i.loli.net/2020/01/23/u8RTH9BgPibLvWp.jpg" alt="dilation_dst.jpg" style="zoom: 85%;" /></p>
+<a id="more"></a>
+<h1 id="腐蚀"><a href="#腐蚀" class="headerlink" title="腐蚀"></a>腐蚀</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>​    在目标图像中标出那些与结构元素相同的子图像的原点位置的像素。</p>
+<p><img src="https://i.loli.net/2020/01/21/ciN4WF8VDw3BJKb.png" alt="image.png"></p>
+<p>​    把结构元素B看作一个卷积模版，每当结构元素平移到其原点位置与目标图像A中那些像素值为“1”的位置重合时，就判断被结构元素覆盖的子图像的其它像素的值是否都与结构元素相应位置的像素值相同；只有当其都相同时，就将结果图像中的那个与原点位置对应的像素位置的值置为1，否则置为0。</p>
+<p>​    ⚠️注意：当结构元素在目标图像上平移时，结构元素中的任何元素不能超出目标图像的范围。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/21/uhGrcdfzSPBXTs3.png" alt="原图像" style="zoom: 67%;" /></p>
+<p>结构元素：</p>
+<p><img src="https://i.loli.net/2020/01/21/FEkiKaGYtN3qbgD.png" alt="结构元素.png" style="zoom:67%;" /></p>
+<p>腐蚀运算后的结果图像：</p>
+<p><img src="https://i.loli.net/2020/01/21/U3l5SpXhkYsONeG.png" alt="image.png" style="zoom:67%;" /></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Kernel</span>&#123;</span></span><br><span class="line">    Mat B;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>]; <span class="comment">//原点位置</span></span><br><span class="line">&#125;; <span class="comment">//结构元素</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 生成十字型结构元素</span></span><br><span class="line"><span class="comment"> size为结构元素的行列数，position为原点位置</span></span><br><span class="line"><span class="comment"> 返回生成的结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Kernel <span class="title">getCrossKernel</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">size</span>, <span class="keyword">int</span>* <span class="built_in">position</span>)</span></span>&#123;</span><br><span class="line">    Kernel kernel;</span><br><span class="line">    kernel.B = Mat::zeros(<span class="built_in">size</span>[<span class="number">0</span>], <span class="built_in">size</span>[<span class="number">1</span>], CV_8U);</span><br><span class="line">    </span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">0</span>] = <span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">1</span>] = <span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; <span class="built_in">size</span>[<span class="number">0</span>]; nrow++) &#123;</span><br><span class="line">        kernel.B.ptr&lt;uchar&gt;(nrow)[kernel.<span class="built_in">position</span>[<span class="number">0</span>]] = <span class="number">255</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; <span class="built_in">size</span>[<span class="number">1</span>]; ncol++) &#123;</span><br><span class="line">        kernel.B.ptr&lt;uchar&gt;(kernel.<span class="built_in">position</span>[<span class="number">1</span>])[ncol] = <span class="number">255</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> kernel;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 腐蚀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为腐蚀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getErosion</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span></span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 遍历查重</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = r_pos; nrow &lt; img.rows-r_pos; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = c_pos; ncol &lt; img.cols-c_pos; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(nrow)[ncol] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B.rows; i++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B.cols; j++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (B.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(i+nrow-r_pos)[j+ncol-c_pos] != <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">false</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!bingo) &#123; <span class="comment">//不符合</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img1,erosion_dst; <span class="comment">//图像一和其腐蚀结果</span></span><br><span class="line">    img1 = imread(<span class="string">"img1.png"</span>, IMREAD_GRAYSCALE); <span class="comment">//获取原图的灰度图像</span></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img1.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Otsu二值化</span></span><br><span class="line">    Mat img1_twoColor;</span><br><span class="line">    threshold(img1, img1_twoColor, <span class="number">0</span>, <span class="number">255</span>, THRESH_OTSU);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 建立结构元素(中心为原点位置)</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>[<span class="number">2</span>] = &#123;<span class="number">5</span>, <span class="number">5</span>&#125;; <span class="comment">//结构元素的大小</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>] = &#123;<span class="number">2</span>, <span class="number">2</span>&#125;; <span class="comment">//原点位置</span></span><br><span class="line">    Kernel kernel = getCrossKernel(<span class="built_in">size</span>, <span class="built_in">position</span>);</span><br><span class="line">    </span><br><span class="line">    getErosion(img1_twoColor, erosion_dst, kernel); <span class="comment">//腐蚀</span></span><br><span class="line">    </span><br><span class="line">    imshow(<span class="string">"img1"</span>,img1_twoColor);</span><br><span class="line">    imshow(<span class="string">"erosion_dst"</span>, erosion_dst);</span><br><span class="line">    imwrite(<span class="string">"erosion_dst.jpg"</span>, erosion_dst);</span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/22/uebZfV6KS8El1DX.png" alt="img1.png" style="zoom:150%;" /></p>
+<p>腐蚀后的图像（十字结构元素）：</p>
+<p><img src="https://i.loli.net/2020/01/22/TMfxzBCK534PhZt.jpg" alt="erosion_dst.jpg" style="zoom:150%;" /></p>
+<h1 id="膨胀"><a href="#膨胀" class="headerlink" title="膨胀"></a>膨胀</h1><h2 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h2><h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>​    位于某个点的探针(结构元素)是否<em>有</em>探测到物件？</p>
+<p><img src="https://i.loli.net/2020/01/22/hvwD16kimTQWAjG.png" alt="image.png"></p>
+<p>过程：</p>
+<ol>
+<li>求结构元素B关于原点的反射集合Bx；</li>
+<li>每当结构元素Bx在目标图像A上平移后，结构元素Bx与其覆盖的子图像中至少有一个元素相交时，就将目标图像中与结构元素Bx的原点对应的那个位置的像素为1，否则置为0。</li>
+</ol>
+<p>⚠️注意：</p>
+<ol>
+<li>当结构元素中原点位置的值是0时，仍把它看作是0；而不再把它看作是1。</li>
+<li>当结构元素在目标图像上平移时，允许结构中的非原点像素超出目标图像范围。</li>
+</ol>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><ul>
+<li>结构元素原点为1时，</li>
+</ul>
+<p>​    原图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/5kNeIaSqHERKzZ8.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    结构元素：</p>
+<p><img src="https://i.loli.net/2020/01/23/U9KjTLXRgrzNp1V.png" alt="image.png" style="zoom: 67%;" /></p>
+<p>​    结构元素的反射：</p>
+<p><img src="https://i.loli.net/2020/01/23/qTVWv5BQ17ubxps.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    膨胀运算后的结果图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/wrcmlgnZFP4TbSM.png" alt="image.png" style="zoom:67%;" /></p>
+<ul>
+<li>结构元素原点为0时，</li>
+</ul>
+<p>​    原图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/uXEYVCIlwGofcj8.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    结构元素：</p>
+<p><img src="https://i.loli.net/2020/01/23/gZsrSIhiLYKJlQT.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    结构元素的反射：</p>
+<p><img src="https://i.loli.net/2020/01/23/WMFdOPXijhNtcsQ.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    膨胀运算后的结果图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/GQkz7RW6YjbOIlF.png" alt="image.png" style="zoom:67%;" /></p>
+<p>​    </p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Kernel</span>&#123;</span></span><br><span class="line">    Mat B;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>]; <span class="comment">//原点位置</span></span><br><span class="line">&#125;; <span class="comment">//结构元素</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 生成矩形结构元素</span></span><br><span class="line"><span class="comment"> size为结构元素的大小，position为原点位置</span></span><br><span class="line"><span class="comment"> 返回生成的结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Kernel <span class="title">getRectKernel</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">size</span>, <span class="keyword">int</span>* <span class="built_in">position</span>)</span> </span>&#123;</span><br><span class="line">    Kernel kernel;</span><br><span class="line">    kernel.B = Mat::ones(<span class="built_in">size</span>[<span class="number">0</span>], <span class="built_in">size</span>[<span class="number">1</span>], CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; kernel.B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; kernel.B.cols; ncol++) &#123;</span><br><span class="line">            kernel.B.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">0</span>] = <span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">1</span>] = <span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> kernel;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 膨胀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为膨胀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getDilation</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span> </span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结构元素反射</span></span><br><span class="line">    Mat B_x = Mat::zeros(B.cols, B.rows, CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; B.cols; ncol++) &#123;</span><br><span class="line">            B_x.ptr&lt;uchar&gt;(ncol)[nrow] = B.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检验图像的每一个点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 检测结构元素中是否有符合的1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B_x.rows; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B_x.cols; j++) &#123;</span><br><span class="line">                    <span class="comment">// 图像中的位置（有可能越界）</span></span><br><span class="line">                    <span class="keyword">int</span> row = nrow - r_pos + i;</span><br><span class="line">                    <span class="keyword">int</span> col = ncol - c_pos + j;</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span> (B_x.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (row &gt;= <span class="number">0</span> &amp;&amp; row &lt; img.rows &amp;&amp; col &gt;= <span class="number">0</span> &amp;&amp; col &lt; img.cols) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(row)[col] == <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">true</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (bingo) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (bingo) &#123; <span class="comment">//如果符合，即存在重合的1，则置1</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//如果没有符合的，则置0</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img2,dilation_dst; <span class="comment">//图像二和其膨胀结果</span></span><br><span class="line">    img2 = imread(<span class="string">"img2.png"</span>, IMREAD_GRAYSCALE); <span class="comment">//获取原图的灰度图像</span></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img2.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Otsu二值化</span></span><br><span class="line">    Mat img2_twoColor;</span><br><span class="line">    threshold(img2, img2_twoColor, <span class="number">0</span>, <span class="number">255</span>, THRESH_OTSU);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 矩形结构元素</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>[<span class="number">2</span>] = &#123;<span class="number">7</span>, <span class="number">7</span>&#125;; <span class="comment">//结构元素的大小</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;; <span class="comment">//原点位置</span></span><br><span class="line">    Kernel kernel = getRectKernel(<span class="built_in">size</span>, <span class="built_in">position</span>);</span><br><span class="line">    </span><br><span class="line">    getDilation(img2_twoColor, dilation_dst, kernel); <span class="comment">//膨胀</span></span><br><span class="line">    </span><br><span class="line">    imshow(<span class="string">"img2"</span>,img2_twoColor);</span><br><span class="line">    imshow(<span class="string">"dilation_dst"</span>, dilation_dst);</span><br><span class="line">    imwrite(<span class="string">"dilation_dst.jpg"</span>, dilation_dst);</span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/hrcJ4OzdtAiDmau.png" alt="img2.png" style="zoom:150%;" /></p>
+<p>膨胀后的图像（矩形结构元素）：</p>
+<p><img src="https://i.loli.net/2020/01/23/u8RTH9BgPibLvWp.jpg" alt="dilation_dst.jpg" style="zoom:150%;" /></p>
+<h1 id="开运算"><a href="#开运算" class="headerlink" title="开运算"></a>开运算</h1><p>​    开运算为先腐蚀再膨胀。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Kernel</span>&#123;</span></span><br><span class="line">    Mat B;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>]; <span class="comment">//原点位置</span></span><br><span class="line">&#125;; <span class="comment">//结构元素</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 生成矩形结构元素</span></span><br><span class="line"><span class="comment"> size为结构元素的大小，position为原点位置</span></span><br><span class="line"><span class="comment"> 返回生成的结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Kernel <span class="title">getRectKernel</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">size</span>, <span class="keyword">int</span>* <span class="built_in">position</span>)</span> </span>&#123;</span><br><span class="line">    Kernel kernel;</span><br><span class="line">    kernel.B = Mat::ones(<span class="built_in">size</span>[<span class="number">0</span>], <span class="built_in">size</span>[<span class="number">1</span>], CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; kernel.B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; kernel.B.cols; ncol++) &#123;</span><br><span class="line">            kernel.B.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">0</span>] = <span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">1</span>] = <span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> kernel;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 腐蚀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为腐蚀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getErosion</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span></span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 遍历查重</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = r_pos; nrow &lt; img.rows-r_pos; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = c_pos; ncol &lt; img.cols-c_pos; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(nrow)[ncol] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B.rows; i++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B.cols; j++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (B.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(i+nrow-r_pos)[j+ncol-c_pos] != <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">false</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!bingo) &#123; <span class="comment">//不符合</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 膨胀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为膨胀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getDilation</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span> </span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结构元素反射</span></span><br><span class="line">    Mat B_x = Mat::zeros(B.cols, B.rows, CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; B.cols; ncol++) &#123;</span><br><span class="line">            B_x.ptr&lt;uchar&gt;(ncol)[nrow] = B.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检验图像的每一个点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 检测结构元素中是否有符合的1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B_x.rows; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B_x.cols; j++) &#123;</span><br><span class="line">                    <span class="comment">// 图像中的位置（有可能越界）</span></span><br><span class="line">                    <span class="keyword">int</span> row = nrow - r_pos + i;</span><br><span class="line">                    <span class="keyword">int</span> col = ncol - c_pos + j;</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span> (B_x.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (row &gt;= <span class="number">0</span> &amp;&amp; row &lt; img.rows &amp;&amp; col &gt;= <span class="number">0</span> &amp;&amp; col &lt; img.cols) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(row)[col] == <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">true</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (bingo) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (bingo) &#123; <span class="comment">//如果符合，即存在重合的1，则置1</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//如果没有符合的，则置0</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img3, erosion_dst, opening_dst; <span class="comment">//图像三和其开运算结果</span></span><br><span class="line">    img3 = imread(<span class="string">"img3.png"</span>, IMREAD_GRAYSCALE); <span class="comment">//获取原图的灰度图像</span></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img3.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Otsu二值化</span></span><br><span class="line">    Mat img3_twoColor;</span><br><span class="line">    threshold(img3, img3_twoColor, <span class="number">0</span>, <span class="number">255</span>, THRESH_OTSU);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 矩形结构元素</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>[<span class="number">2</span>] = &#123;<span class="number">4</span>, <span class="number">4</span>&#125;; <span class="comment">//结构元素的大小</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;; <span class="comment">//原点位置</span></span><br><span class="line">    Kernel kernel = getRectKernel(<span class="built_in">size</span>, <span class="built_in">position</span>);</span><br><span class="line">    </span><br><span class="line">    getErosion(img3_twoColor, erosion_dst, kernel); <span class="comment">//腐蚀</span></span><br><span class="line">    getDilation(erosion_dst, opening_dst, kernel); <span class="comment">//膨胀</span></span><br><span class="line">    </span><br><span class="line">    imshow(<span class="string">"img3"</span>,img3);</span><br><span class="line">    imshow(<span class="string">"erosion_dst"</span>, erosion_dst);</span><br><span class="line">    imshow(<span class="string">"opening_dst"</span>, opening_dst);</span><br><span class="line">    imwrite(<span class="string">"opening_dst.jpg"</span>, opening_dst);</span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/xFwuLygDzo8enUP.png" alt="image.png" style="zoom:150%;" /></p>
+<p>开运算结果：</p>
+<p><img src="https://i.loli.net/2020/01/23/pHGyOWlUz3wxedY.jpg" alt="opening_dst.jpg" style="zoom:150%;" /></p>
+<h1 id="闭运算"><a href="#闭运算" class="headerlink" title="闭运算"></a>闭运算</h1><p>​    闭运算为先膨胀再腐蚀。</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Kernel</span>&#123;</span></span><br><span class="line">    Mat B;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>]; <span class="comment">//原点位置</span></span><br><span class="line">&#125;; <span class="comment">//结构元素</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 生成矩形结构元素</span></span><br><span class="line"><span class="comment"> size为结构元素的大小，position为原点位置</span></span><br><span class="line"><span class="comment"> 返回生成的结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Kernel <span class="title">getRectKernel</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">size</span>, <span class="keyword">int</span>* <span class="built_in">position</span>)</span> </span>&#123;</span><br><span class="line">    Kernel kernel;</span><br><span class="line">    kernel.B = Mat::ones(<span class="built_in">size</span>[<span class="number">0</span>], <span class="built_in">size</span>[<span class="number">1</span>], CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; kernel.B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; kernel.B.cols; ncol++) &#123;</span><br><span class="line">            kernel.B.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">0</span>] = <span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    kernel.<span class="built_in">position</span>[<span class="number">1</span>] = <span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> kernel;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 腐蚀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为腐蚀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getErosion</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span></span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 遍历查重</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = r_pos; nrow &lt; img.rows-r_pos; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = c_pos; ncol &lt; img.cols-c_pos; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(nrow)[ncol] == <span class="number">255</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B.rows; i++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B.cols; j++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (B.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(i+nrow-r_pos)[j+ncol-c_pos] != <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">false</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!bingo) &#123; <span class="comment">//不符合</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 膨胀</span></span><br><span class="line"><span class="comment"> img为原图像，dst为膨胀后的图像，kernel为结构元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getDilation</span><span class="params">(Mat img, Mat &amp;dst, Kernel kernel)</span> </span>&#123;</span><br><span class="line">    dst = img.clone();</span><br><span class="line">    Mat B = kernel.B;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结构元素反射</span></span><br><span class="line">    Mat B_x = Mat::zeros(B.cols, B.rows, CV_8U);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; B.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; B.cols; ncol++) &#123;</span><br><span class="line">            B_x.ptr&lt;uchar&gt;(ncol)[nrow] = B.ptr&lt;uchar&gt;(nrow)[ncol];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> r_pos = kernel.<span class="built_in">position</span>[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> c_pos = kernel.<span class="built_in">position</span>[<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检验图像的每一个点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> nrow = <span class="number">0</span>; nrow &lt; img.rows; nrow++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ncol = <span class="number">0</span>; ncol &lt; img.cols; ncol++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> bingo = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 检测结构元素中是否有符合的1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; B_x.rows; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; B_x.cols; j++) &#123;</span><br><span class="line">                    <span class="comment">// 图像中的位置（有可能越界）</span></span><br><span class="line">                    <span class="keyword">int</span> row = nrow - r_pos + i;</span><br><span class="line">                    <span class="keyword">int</span> col = ncol - c_pos + j;</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span> (B_x.ptr&lt;uchar&gt;(i)[j] == <span class="number">255</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (row &gt;= <span class="number">0</span> &amp;&amp; row &lt; img.rows &amp;&amp; col &gt;= <span class="number">0</span> &amp;&amp; col &lt; img.cols) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (img.ptr&lt;uchar&gt;(row)[col] == <span class="number">255</span>) &#123;</span><br><span class="line">                                bingo = <span class="literal">true</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (bingo) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (bingo) &#123; <span class="comment">//如果符合，即存在重合的1，则置1</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">255</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//如果没有符合的，则置0</span></span><br><span class="line">                dst.ptr&lt;uchar&gt;(nrow)[ncol] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Mat img4, dilation_dst, closing_dst; <span class="comment">//图像四和其闭运算结果</span></span><br><span class="line">    img4 = imread(<span class="string">"img4.png"</span>, IMREAD_GRAYSCALE); <span class="comment">//获取原图的灰度图像</span></span><br><span class="line">    <span class="comment">// 读取图片失败，则停止</span></span><br><span class="line">    <span class="keyword">if</span> (img4.empty()) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"读取图像文件失败"</span>);</span><br><span class="line">        system(<span class="string">"pause"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Otsu二值化</span></span><br><span class="line">    Mat img4_twoColor;</span><br><span class="line">    threshold(img4, img4_twoColor, <span class="number">0</span>, <span class="number">255</span>, THRESH_OTSU);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 矩形结构元素</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>[<span class="number">2</span>] = &#123;<span class="number">4</span>, <span class="number">4</span>&#125;; <span class="comment">//结构元素的大小</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">position</span>[<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;; <span class="comment">//原点位置</span></span><br><span class="line">    Kernel kernel = getRectKernel(<span class="built_in">size</span>, <span class="built_in">position</span>);</span><br><span class="line">    </span><br><span class="line">    getDilation(img4_twoColor, dilation_dst, kernel); <span class="comment">//膨胀</span></span><br><span class="line">    getErosion(dilation_dst, closing_dst, kernel); <span class="comment">//腐蚀</span></span><br><span class="line">    </span><br><span class="line">    imshow(<span class="string">"img4"</span>,img4);</span><br><span class="line">    imshow(<span class="string">"dilation_dst"</span>, dilation_dst);</span><br><span class="line">    imshow(<span class="string">"closing_dst"</span>, closing_dst);</span><br><span class="line">    imwrite(<span class="string">"closing_dst.jpg"</span>, closing_dst);</span><br><span class="line">    waitKey(); <span class="comment">//等待键值输入</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果-3"><a href="#结果-3" class="headerlink" title="结果"></a>结果</h2><p>原图像：</p>
+<p><img src="https://i.loli.net/2020/01/23/Hg5mL7JksCveB1Q.png" alt="image.png" style="zoom:150%;" /></p>
+<p>闭运算结果：</p>
+<p><img src="https://i.loli.net/2020/01/23/p5zsLPN9o6uhrF7.jpg" alt="closing_dst.jpg" style="zoom:150%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BD%A2%E6%80%81%E5%AD%A6/" rel="tag"># 数学形态学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/19/%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E2%80%94%E2%80%94%E5%8C%BA%E5%9F%9F%E5%88%86%E8%A3%82%E4%B8%8E%E5%90%88%E5%B9%B6/" rel="prev" title="基于区域的图像分割——区域分裂与合并">
+      <i class="fa fa-chevron-left"></i> 基于区域的图像分割——区域分裂与合并
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/03/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BA%91%E5%BC%80%E5%8F%91%EF%BC%89/" rel="next" title="微信小程序（云开发）">
+      微信小程序（云开发） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#腐蚀"><span class="nav-number">1.</span> <span class="nav-text">腐蚀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">1.1.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.1.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">1.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#膨胀"><span class="nav-number">2.</span> <span class="nav-text">膨胀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法-1"><span class="nav-number">2.1.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-1"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果-1"><span class="nav-number">2.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开运算"><span class="nav-number">3.</span> <span class="nav-text">开运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-2"><span class="nav-number">3.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果-2"><span class="nav-number">3.2.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闭运算"><span class="nav-number">4.</span> <span class="nav-text">闭运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-3"><span class="nav-number">4.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果-3"><span class="nav-number">4.2.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

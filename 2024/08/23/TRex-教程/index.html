@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="TRex 是基于 DPDK 的一个开源、低成本的流量生成器，支持生成 L3～7 流量，提供有状态、无状态两种模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TRex 教程">
+<meta property="og:url" content="https://gy23333.github.io/2024/08/23/TRex-%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="TRex 是基于 DPDK 的一个开源、低成本的流量生成器，支持生成 L3～7 流量，提供有状态、无状态两种模式。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240831003920365.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240902003128411.png">
+<meta property="article:published_time" content="2024-08-23T14:18:42.000Z">
+<meta property="article:modified_time" content="2024-11-11T03:57:58.117Z">
+<meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="DPDK">
+<meta property="article:tag" content="TRex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240831003920365.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2024/08/23/TRex-%E6%95%99%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>TRex 教程 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/08/23/TRex-%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TRex 教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-23 22:18:42" itemprop="dateCreated datePublished" datetime="2024-08-23T22:18:42+08:00">2024-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/08/23/TRex-%E6%95%99%E7%A8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/08/23/TRex-%E6%95%99%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>TRex 是基于 DPDK 的一个开源、低成本的流量生成器，支持生成 L3～7 流量，提供有状态、无状态两种模式。</p>
+<a id="more"></a>
+<h1 id="TRex-架构"><a href="#TRex-架构" class="headerlink" title="TRex 架构"></a>TRex 架构</h1><p>TRex 之所以能够产生相比其他流量生成器更大的流量，原因是使用了 DPDK。</p>
+<p>传统的工具，比如 iperf，如果想要生成包，需要走 Linux 内核，经过绑定的 socket API、 TCP/IP 栈、设备驱动这样一套完整的流程，最终才能到达物理网卡。</p>
+<p>而 TRex 使用 DPDK，这意味着它可以绕过 Linux 内核态协议栈，直接控制物理网卡，应用单独实现包处理过程，不用经历内核/用户态切换、内存拷贝、冗余的 TCP/IP 协议栈等步骤。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240831003920365.png" alt="TRex架构"></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li><p>进入安装目录，比如 <code>/opt/trex</code> </p>
+</li>
+<li><p>下载 <a href="https://trex-tgn.cisco.com/trex/release/" target="_blank" rel="noopener">TRex 压缩包</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --no-cache --no-check-certificate https://trex-tgn.cisco.com/trex/release/latest</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压 TRex 压缩包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf latest</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="网卡配置"><a href="#网卡配置" class="headerlink" title="网卡配置"></a>网卡配置</h1><p>TRex 需要 DPDK 绑定网卡，通过 TRex 提供的脚本可以查看或修改网卡</p>
+<h2 id="查看网卡状态"><a href="#查看网卡状态" class="headerlink" title="查看网卡状态"></a>查看网卡状态</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># ./dpdk_setup_ports.py -s</span></span><br><span class="line"></span><br><span class="line">Network devices <span class="keyword">using</span> DPDK-compatible driver</span><br><span class="line">============================================</span><br><span class="line">&lt;none&gt;</span><br><span class="line"></span><br><span class="line">Network devices <span class="keyword">using</span> kernel driver</span><br><span class="line">===================================</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">01.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens33 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic *Active*</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">05.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens37 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">06.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens38 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic</span><br><span class="line"></span><br><span class="line">Other network devices</span><br><span class="line">=====================</span><br><span class="line">&lt;none&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当前三张网卡都绑定在 kernel 下，DPDK 未绑定网卡</li>
+<li><code>Active</code>的网卡为 ssh 使用的管理网卡，不可以设置在 TRex 配置文件中，分配给 DPDK</li>
+</ul>
+<p>在运行 TRex 时，会自动将 TRex 配置文件中<code>interfaces</code>网卡绑定 DPDK</p>
+<h1 id="TRex-配置"><a href="#TRex-配置" class="headerlink" title="TRex 配置"></a>TRex 配置</h1><p><a href="https://trex-tgn.cisco.com/trex/doc/trex_manual.html#_platform_yaml_cfg_argument" target="_blank" rel="noopener">官方文档</a></p>
+<p>Yaml 格式配置文件，用来配置 TRex 服务器，包括：</p>
+<ul>
+<li>每个网卡的源、目的 IP 和 MAC 地址</li>
+<li>屏蔽网卡，保证 TRex 不使用管理网卡作为流量网卡</li>
+</ul>
+<p>在运行 TRex 服务器时，通过 <code>--cfg</code>配置，如果未设置，则使用默认路径<code>/etc/trex_cfg.yaml</code>，TRex 提供了一些示例 TRex 配置文件在 <code>$TREX_ROOT/cfg</code></p>
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><ul>
+<li><code>port_limit</code>：（必选）网卡数量，绑定 DPDK 的网卡数量，必须和<code>interfaces</code>中的网卡数量对应</li>
+<li><code>version</code>：（必选）必须是 2</li>
+<li><code>interfaces</code>：（必选）TRex 使用的网卡 PCI，顺序有意义，对应<code>port_info</code>中的顺序<ul>
+<li>必须是偶数个，成对存在，按顺序分别为 clinet 和 server 网卡</li>
+<li>如是奇数个网卡，可以使用<code>dummy</code>填充，但每对网卡对必须有非<code>dummy</code> 的网卡</li>
+<li>通过 <code>./dpdk_setup_ports.py -s</code> 查看网卡 PCI</li>
+<li>不能填入 ssh 使用的网卡</li>
+</ul>
+</li>
+<li><code>c</code>：分配给每个网卡对的线程数，会被运行时的命令行参数<code>-c</code>覆盖</li>
+<li><code>services_core</code>：（非必选）用来跑 scapy、PyBird、Emu 这些 service 的核，如果未设置，则会采用以下逻辑<ul>
+<li><em>low_end</em> 开启，使用 <em>low_end_core</em></li>
+<li><em>low_end</em> 未开启，使用 <em>master_thread_id</em></li>
+<li><em>low_end</em> 未开启，使用 <em>master_thread_id</em>，使用 core 0</li>
+</ul>
+</li>
+<li><code>port_info</code>：（必选）<ul>
+<li>网卡信息，每项按顺序对应<code>interfaces</code>中的网卡</li>
+<li>（必选）对于每张网卡，都必须要设置目的 MAC 地址，有两种设置方式：<ul>
+<li>直接设置<code>dest_mac</code></li>
+<li>设置<code>default_gw</code>，在未设置<code>dest_mac</code>时，TRex 会对<code>default_gw</code>这个 IP 发送 ARP 请求，使用回复的结果作为目的 MAC 地址</li>
+</ul>
+</li>
+<li><code>dest_mac</code>：目的 MAC 地址，该网卡打流将打往这个 MAC 地址</li>
+<li><code>default_gw</code>：默认网关，用于生成目的 MAC 地址</li>
+<li><code>src_mac</code>：（非必选）该网卡生成流量的源 MAC 地址，如果未设置，将使用该网卡的 MAC 地址作为源 MAC 地址</li>
+</ul>
+</li>
+<li><code>platform</code>：（非必选）<ul>
+<li><code>master_thread_id</code>：控制线程使用的线程 id</li>
+<li><code>latency_thread_id</code>：RX 线程使用的线程 id，用来计算延迟</li>
+<li><code>dual_if</code>：<ul>
+<li>与<code>interfaces</code>中的网卡对一一对应</li>
+<li><code>socket</code>：该网卡对被分配的 NUMA 节点</li>
+<li><code>threads</code>：该网卡对用来发包的线程 id</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">port_limit      :</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">version         :</span> <span class="number">2</span></span><br><span class="line"><span class="comment">#List of interfaces. Change to suit your setup. Use ./dpdk_setup_ports.py -s to see available options</span></span><br><span class="line">  <span class="attr">interfaces    :</span> <span class="string">["03:00.0","03:00.1"]</span></span><br><span class="line">  <span class="attr">port_info       :</span>  <span class="comment"># Port IPs. Change to suit your needs. In case of loopback, you can leave as is.</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">ip         :</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">            <span class="attr">default_gw :</span> <span class="number">2.2</span><span class="number">.2</span><span class="number">.2</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">ip         :</span> <span class="number">2.2</span><span class="number">.2</span><span class="number">.2</span></span><br><span class="line">            <span class="attr">default_gw :</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">platform :</span></span><br><span class="line">      <span class="attr">master_thread_id  :</span> <span class="number">0</span></span><br><span class="line">      <span class="attr">latency_thread_id :</span> <span class="number">7</span></span><br><span class="line">      <span class="attr">dual_if   :</span></span><br><span class="line">           <span class="bullet">-</span> <span class="attr">socket   :</span> <span class="number">0</span></span><br><span class="line">             <span class="attr">threads  :</span> <span class="string">[1,2,3,4,5,6]</span></span><br></pre></td></tr></table></figure>
+<h1 id="Traffic-模版配置"><a href="#Traffic-模版配置" class="headerlink" title="Traffic 模版配置"></a>Traffic 模版配置</h1><p><a href="https://trex-tgn.cisco.com/trex/doc/trex_manual.html#_traffic_yaml_f_argument_of_stateful" target="_blank" rel="noopener">官方文档</a></p>
+<p>Stateful 模式时需配置 Traffic 模版，用以生成流量。</p>
+<p>运行 TRex 时，通过配置<code>-f &lt;file&gt;</code>参数来设置流量模版 yaml 文件。</p>
+<h2 id="配置项-1"><a href="#配置项-1" class="headerlink" title="配置项"></a>配置项</h2><ul>
+<li><p><code>duration</code>：测试持续时间，即打多久的流量，单位 s。会被运行时的命令行参数<code>-d</code>覆盖</p>
+</li>
+<li><p><code>generator</code>：</p>
+<ul>
+<li><p>生成流量的 IP 依据<code>clients_start</code>、<code>clients_end</code>、<code>servers_start</code>、<code>servers_end</code>、<code>dual_port_mask</code></p>
+<ul>
+<li><p><code>clients_start</code>、<code>clients_end</code>、<code>servers_start</code>、<code>servers_end</code> 分别设置了 client 和 server 的 IP 池，该范围即限定了 client 和 server 的总数</p>
+</li>
+<li><p><code>dual_port_mask</code> 设置网卡对的偏移量，使得可以为每个网卡对配置不同的静态路由，如需要发送同样的范围，则设置为<code>0.0.0.0</code></p>
+</li>
+<li><p>下面示例中，如果 TRex 配置设置了两个网卡对（4张网卡），则分配 IP 如下</p>
+<ul>
+<li>```powershell<br>port pair-0 (0,1) —&gt; C (16.0.0.1-16.0.0.128  ) &lt;-&gt; S( 48.0.0.1 - 48.0.0.128)<br>port pair-1 (2,3) —&gt; C (17.0.0.129-17.0.0.255  ) &lt;-&gt; S( 49.0.0.129 - 49.0.0.255) + mask  (“1.0.0.0”)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - client 和 server 数量即为设置范围的数量，都是 255，不会因为网卡数量而变化</span><br><span class="line"></span><br><span class="line">  - 网卡对偏移量为&#96;dual_port_mask&#96;，第二对网卡对比第一对偏移 &#96;1.0.0.0&#96;</span><br><span class="line"></span><br><span class="line">- 如果 &#96;dual_port_mask&#96; 设置为&#96;0.0.0.0&#96;，依旧设置 TRex 配置两个网卡对（4张网卡），则分配 IP 如下</span><br><span class="line"></span><br><span class="line">  - &#96;&#96;&#96;powershell</span><br><span class="line">    port pair-0 (0,1) --&gt; C (16.0.0.1-16.0.0.128  ) &lt;-&gt; S( 48.0.0.1 - 48.0.0.128)</span><br><span class="line">    port pair-1 (2,3) --&gt; C (16.0.0.129-16.0.0.255  ) &lt;-&gt; S( 48.0.0.129 - 48.0.0.255)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>生成流量的 IP 范围</p>
+<ul>
+<li>client IP 范围：网卡对中的 client 发送流量的源 IP、网卡对中的 server 发送流量的目的 IP</li>
+<li>server IP 范围：网卡对中的 client 发送流量的目的 IP、网卡对中的 server 发送流量的源 IP</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>clients_per_gb</code>：已废弃</p>
+</li>
+<li><p><code>min_clients</code>：已废弃</p>
+</li>
+<li><p><code>cap_info</code></p>
+<ul>
+<li><code>name</code>：pcap文件，流量模版文件<ul>
+<li>只允许单数据流</li>
+<li>生成流量时使用该流量模版，并将 IP 替换为 client 和 server 的 IP 池中的 IP</li>
+</ul>
+</li>
+<li><code>cps</code>：每秒连接数，实际连接数需乘以运行时设置的 <code>-m</code></li>
+<li><code>ipg</code>：报文间隙，单位 ms</li>
+<li><code>rtt</code>：设置与<code>ipg</code>相同的值</li>
+<li><code>w</code>：定义一个burst中该template生成几个flow，默认为 1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">duration :</span> <span class="number">10.0</span></span><br><span class="line">  <span class="attr">generator :</span></span><br><span class="line">          <span class="attr">distribution :</span> <span class="string">"seq"</span></span><br><span class="line">          <span class="attr">clients_start :</span> <span class="string">"16.0.0.1"</span></span><br><span class="line">          <span class="attr">clients_end   :</span> <span class="string">"16.0.0.255"</span></span><br><span class="line">          <span class="attr">servers_start :</span> <span class="string">"48.0.0.1"</span></span><br><span class="line">          <span class="attr">servers_end   :</span> <span class="string">"48.0.0.255"</span></span><br><span class="line">          <span class="attr">clients_per_gb :</span> <span class="number">201</span></span><br><span class="line">          <span class="attr">min_clients    :</span> <span class="number">101</span></span><br><span class="line">          <span class="attr">dual_port_mask :</span> <span class="string">"1.0.0.0"</span></span><br><span class="line">          <span class="attr">tcp_aging      :</span> <span class="number">1</span></span><br><span class="line">          <span class="attr">udp_aging      :</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">cap_info :</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cap2/dns.pcap</span></span><br><span class="line">       <span class="attr">cps :</span> <span class="number">1.0</span></span><br><span class="line">       <span class="attr">ipg :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">rtt :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">w   :</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="运行命令行参数"><a href="#运行命令行参数" class="headerlink" title="运行命令行参数"></a>运行命令行参数</h1><p>通过<code>./t-rex-64</code>运行 TRex 服务器，添加参数设置有状态/无状态以及其他选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./t-rex-64 [mode] &lt;options&gt;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>./t-rex-64 -h</code>查看细节</p>
+<p>设置 mode：</p>
+<ul>
+<li><code>-f &lt;file&gt;</code>：运行有状态模式，需设置流量模版 yaml 文件</li>
+<li><code>-i</code>：运行无状态模式</li>
+</ul>
+<p>可选参数：</p>
+<ul>
+<li><code>--cfg &lt;file&gt;</code>：TRex 配置文件，如果未设置，则使用默认路径<code>/etc/trex_cfg.yaml</code></li>
+<li><code>-c &lt;num&gt;</code>：给每个网卡对分配的线程数，会覆盖 TRex 配置中的<code>c</code></li>
+<li><code>-m &lt;num&gt;</code>：流量放大倍数，生成基础流量大小乘以这个倍数的流量</li>
+<li><code>-d</code>：持续时间，单位 s，默认3600s</li>
+</ul>
+<h1 id="Stateful-示例"><a href="#Stateful-示例" class="headerlink" title="Stateful 示例"></a>Stateful 示例</h1><p>使用下面测试交换机性能示例来理解 Stateful 运行模式。</p>
+<p>该示例配置有一台 TRex 机器和一台交换机。</p>
+<ul>
+<li>Trex 机器有两张网卡绑定 DPDK，port 1 作为模拟 client 的网卡，port 2 作为模拟 server 的网卡</li>
+<li>交换机配置有两条静态路由，如下图所示，可以将<code>16.0.0.0/8</code>的包传到 TRex 的 port 0，将<code>48.0.0.0/8</code>的包传到 TRex 的 port 1</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20240902003128411.png" alt="TRex-Stateful示例"></p>
+<p>根据下面配置，运行 TRex 有状态模式 <code>./t-rex-64 -f traffic.yaml</code>，打流流程如下</p>
+<ol>
+<li>Port 0 发包<ul>
+<li>TRex 配置中的<code>interfaces</code>网卡对中的前一张网卡 port 0 作为 client 发包</li>
+<li>发包使用 Traffic 模版配置中的 <code>cap_info</code> 中的第一个包，也就是其中的 DNS query 请求</li>
+<li>发送的包中的源目的 IP 会随机被替换为 Traffic 模版中的配置的范围，其中，源 IP 范围 <code>16.0.0.1</code>(clients_start) ~ <code>16.0.0.255</code>(clients_end)，目的 IP 范围 <code>48.0.0.1</code>(servers_start) ~ <code>48.0.255.255</code>(servers_end)</li>
+<li>包被发往 TRex 配置中设置的 port 0 网卡的目的 MAC 地址 <code>dest_mac</code>，本示例即通过默认网卡 <code>default_gw</code> 得到的目的 MAC 地址</li>
+</ul>
+</li>
+<li>Port 1 收包<ul>
+<li>交换机 port 2 收到 TRex 机器 port 1 发来的目的 IP 为<code>48.0.0.1</code>~ <code>48.0.255.255</code>的包，根据路由，将其通过 port 3 转发到 TRex 机器的 port 1</li>
+<li>TRex 配置中的<code>interfaces</code>网卡对中的后一张网卡 port 1 作为 server 收包</li>
+</ul>
+</li>
+<li>Port 1 发包<ul>
+<li>TRex 配置中的<code>interfaces</code>网卡对中的后一张网卡  port 1 作为 server 发包</li>
+<li>发包使用 Traffic 模版配置中的 <code>cap_info</code> 中的第二个包，也就是其中的 DNS response 回复</li>
+<li>发送的包中的源目的 IP 会随机被替换为 Traffic 模版中的配置的范围，其中，源 IP 范围<code>48.0.0.1</code>(servers_start) ~ <code>48.0.255.255</code>(servers_end)，目的 IP 范围 <code>16.0.0.1</code>(clients_start) ~ <code>16.0.0.255</code>(clients_end)</li>
+<li>包被发往 TRex 配置中设置的 port 1 网卡的目的 MAC 地址 <code>dest_mac</code>，本示例即通过默认网卡 <code>default_gw</code> 得到的目的 MAC 地址</li>
+</ul>
+</li>
+<li>Port 0 收包<ul>
+<li>交换机 port 3 收到 TRex 机器 port 2 发来的目的 IP 为<code>16.0.0.1</code> ~ <code>16.0.0.255</code>的包，根据路由，将其通过 port 2 转发到 TRex 机器的 port 0</li>
+<li>TRex 配置中的<code>interfaces</code>网卡对中的后一张网卡 port 0 作为 server 收包</li>
+</ul>
+</li>
+</ol>
+<p>TRex 配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">port_limit :</span> <span class="number">2</span>  <span class="comment">#对应下面的网卡数量</span></span><br><span class="line">  <span class="attr">version :</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">interfaces :</span> <span class="string">["06:00.0","06:00.1"]</span>  <span class="comment">#port0、port1的PCI，网卡对，前一个为模拟client的网卡，后一个为模拟server的网卡</span></span><br><span class="line">  <span class="attr">c :</span> <span class="number">6</span>  <span class="comment">#对应下面的每对网卡几个发包threads</span></span><br><span class="line">  <span class="attr">port_info :</span></span><br><span class="line">  	<span class="comment">#port0的配置</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">ip :</span> <span class="number">11.11</span><span class="number">.11</span><span class="number">.11</span>  <span class="comment">#port0的IP</span></span><br><span class="line">      <span class="attr">default_gw :</span> <span class="number">11.11</span><span class="number">.11</span><span class="number">.1</span>  <span class="comment">#port2（port0的网关）的IP，由此推出port0网卡发包时的目的MAC地址</span></span><br><span class="line">    <span class="comment">#port1的配置</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">ip :</span> <span class="number">12.12</span><span class="number">.12</span><span class="number">.12</span>  <span class="comment">#port1的IP</span></span><br><span class="line">      <span class="attr">default_gw :</span> <span class="number">12.12</span><span class="number">.12</span><span class="number">.1</span>  <span class="comment">#port3（port1的网关）的IP，由此推出port1网卡发包时的目的MAC地址</span></span><br><span class="line">  <span class="attr">platform :</span></span><br><span class="line">    <span class="attr">master_thread_id  :</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">latency_thread_id :</span> <span class="number">7</span></span><br><span class="line">    <span class="attr">dual_if :</span></span><br><span class="line">       <span class="bullet">-</span> <span class="attr">socket :</span> <span class="number">0</span></span><br><span class="line">         <span class="attr">threads :</span> <span class="string">[1,2,3,4,5,6]</span></span><br></pre></td></tr></table></figure>
+<p>Traffic 模版配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">duration :</span> <span class="number">10.0</span></span><br><span class="line">  <span class="attr">generator :</span></span><br><span class="line">          <span class="attr">distribution :</span> <span class="string">"seq"</span></span><br><span class="line">          <span class="attr">clients_start :</span> <span class="string">"16.0.0.1"</span></span><br><span class="line">          <span class="attr">clients_end   :</span> <span class="string">"16.0.0.255"</span></span><br><span class="line">          <span class="attr">servers_start :</span> <span class="string">"48.0.0.1"</span></span><br><span class="line">          <span class="attr">servers_end   :</span> <span class="string">"48.0.255.255"</span></span><br><span class="line">          <span class="attr">clients_per_gb :</span> <span class="number">201</span></span><br><span class="line">          <span class="attr">min_clients    :</span> <span class="number">101</span></span><br><span class="line">          <span class="attr">dual_port_mask :</span> <span class="string">"1.0.0.0"</span></span><br><span class="line">          <span class="attr">tcp_aging      :</span> <span class="number">1</span></span><br><span class="line">          <span class="attr">udp_aging      :</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">cap_info :</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cap2/dns.pcap</span></span><br><span class="line">       <span class="attr">cps :</span> <span class="number">1.0</span></span><br><span class="line">       <span class="attr">ipg :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">rtt :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">w   :</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>pcap 包模版</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># tcpdump -r cap2/dns.pcap</span></span><br><span class="line">reading from file cap2/dns.pcap, link<span class="literal">-type</span> EN10MB (Ethernet)</span><br><span class="line"><span class="literal">-7</span>:<span class="number">00</span>:<span class="number">00.000000</span> IP <span class="number">21.0</span>.<span class="number">0.2</span>.<span class="number">1030</span> &gt; <span class="number">22.0</span>.<span class="number">0.12</span>.domain: <span class="number">48</span> A? www.cisco.com. (<span class="number">31</span>)</span><br><span class="line"><span class="literal">-7</span>:<span class="number">00</span>:<span class="number">00.020944</span> IP <span class="number">22.0</span>.<span class="number">0.12</span>.domain &gt; <span class="number">21.0</span>.<span class="number">0.2</span>.<span class="number">1030</span>: <span class="number">48</span>* <span class="number">1</span>/<span class="number">0</span>/<span class="number">0</span> A <span class="number">100.100</span>.<span class="number">100.100</span> (<span class="number">47</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h1><h2 id="Stateful"><a href="#Stateful" class="headerlink" title="Stateful"></a>Stateful</h2><p>在 Linux 虚拟机上演示 Stateful 模式简单示例，直接将流量从 ens37 打到 ens38，再从 ens38 回复到 ens37，配置如下</p>
+<h3 id="初始网卡信息"><a href="#初始网卡信息" class="headerlink" title="初始网卡信息"></a>初始网卡信息</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># ./dpdk_setup_ports.py -s</span></span><br><span class="line"></span><br><span class="line">Network devices <span class="keyword">using</span> DPDK-compatible driver</span><br><span class="line">============================================</span><br><span class="line">&lt;none&gt;</span><br><span class="line"></span><br><span class="line">Network devices <span class="keyword">using</span> kernel driver</span><br><span class="line">===================================</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">01.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens33 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic *Active*</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">05.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens37 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic</span><br><span class="line"><span class="number">0000</span>:<span class="number">02</span>:<span class="number">06.0</span> <span class="string">'82545EM Gigabit Ethernet Controller (Copper)'</span> <span class="keyword">if</span>=ens38 drv=e1000 unused=igb_uio,vfio<span class="literal">-pci</span>,uio_pci_generic</span><br><span class="line"></span><br><span class="line">Other network devices</span><br><span class="line">=====================</span><br><span class="line">&lt;none&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># ip a</span></span><br><span class="line"><span class="number">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="number">1000</span></span><br><span class="line">    link/loopback <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> brd <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">    inet <span class="number">127.0</span>.<span class="number">0.1</span>/<span class="number">8</span> scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::<span class="number">1</span>/<span class="number">128</span> scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"><span class="number">2</span>: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc fq_codel state UP group default qlen <span class="number">1000</span></span><br><span class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:f6:<span class="number">9</span>c:<span class="number">9</span>a brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    altname enp2s1</span><br><span class="line">    inet <span class="number">192.168</span>.<span class="number">0.106</span>/<span class="number">24</span> brd <span class="number">192.168</span>.<span class="number">0.255</span> scope global dynamic noprefixroute ens33</span><br><span class="line">       valid_lft <span class="number">6304</span>sec preferred_lft <span class="number">6304</span>sec</span><br><span class="line">    inet6 fe80::dbd1:<span class="number">95</span>a:<span class="number">915</span>f:<span class="number">65</span>a7/<span class="number">64</span> scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"><span class="number">3</span>: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc fq_codel state UP group default qlen <span class="number">1000</span></span><br><span class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:f6:<span class="number">9</span>c:a4 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    altname enp2s5</span><br><span class="line">    inet <span class="number">192.168</span>.<span class="number">45.137</span>/<span class="number">24</span> brd <span class="number">192.168</span>.<span class="number">45.255</span> scope global dynamic noprefixroute ens37</span><br><span class="line">       valid_lft <span class="number">904</span>sec preferred_lft <span class="number">904</span>sec</span><br><span class="line">    inet6 fe80::<span class="number">205</span>c:eff4:<span class="number">8197</span>:d72f/<span class="number">64</span> scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"><span class="number">4</span>: ens38: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc fq_codel state UP group default qlen <span class="number">1000</span></span><br><span class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:f6:<span class="number">9</span>c:ae brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    altname enp2s6</span><br><span class="line">    inet <span class="number">192.168</span>.<span class="number">45.138</span>/<span class="number">24</span> brd <span class="number">192.168</span>.<span class="number">45.255</span> scope global dynamic noprefixroute ens38</span><br><span class="line">       valid_lft <span class="number">903</span>sec preferred_lft <span class="number">903</span>sec</span><br><span class="line">    inet6 fe80::<span class="number">99</span>b1:de77:f189:<span class="number">6869</span>/<span class="number">64</span> scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<h3 id="TRex-配置-1"><a href="#TRex-配置-1" class="headerlink" title="TRex 配置"></a>TRex 配置</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">port_limit      :</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">version         :</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">interfaces    :</span> <span class="string">["02:05.0","02:06.0"]</span></span><br><span class="line">  <span class="attr">port_info :</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">ip         :</span> <span class="number">192.168</span><span class="number">.45</span><span class="number">.137</span></span><br><span class="line">            <span class="attr">dest_mac :</span> <span class="number">00</span><span class="string">:0c:29:f6:9c:ae</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">ip         :</span> <span class="number">192.168</span><span class="number">.45</span><span class="number">.138</span></span><br><span class="line">            <span class="attr">dest_mac :</span> <span class="number">00</span><span class="string">:0c:29:f6:9c:a4</span></span><br><span class="line">  <span class="attr">platform :</span></span><br><span class="line">    <span class="attr">master_thread_id  :</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">latency_thread_id :</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">dual_if   :</span></span><br><span class="line">           <span class="bullet">-</span> <span class="attr">socket   :</span> <span class="number">0</span></span><br><span class="line">             <span class="attr">threads  :</span> <span class="string">[2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="Traffic-配置"><a href="#Traffic-配置" class="headerlink" title="Traffic 配置"></a>Traffic 配置</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">duration :</span> <span class="number">10.0</span></span><br><span class="line">  <span class="attr">generator :</span></span><br><span class="line">          <span class="attr">distribution :</span> <span class="string">"seq"</span></span><br><span class="line">          <span class="attr">clients_start :</span> <span class="string">"16.0.0.1"</span></span><br><span class="line">          <span class="attr">clients_end   :</span> <span class="string">"16.0.0.255"</span></span><br><span class="line">          <span class="attr">servers_start :</span> <span class="string">"48.0.0.1"</span></span><br><span class="line">          <span class="attr">servers_end   :</span> <span class="string">"48.0.0.255"</span></span><br><span class="line">          <span class="attr">clients_per_gb :</span> <span class="number">201</span></span><br><span class="line">          <span class="attr">min_clients    :</span> <span class="number">101</span></span><br><span class="line">          <span class="attr">dual_port_mask :</span> <span class="string">"1.0.0.0"</span></span><br><span class="line">          <span class="attr">tcp_aging      :</span> <span class="number">1</span></span><br><span class="line">          <span class="attr">udp_aging      :</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">cap_info :</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cap2/dns.pcap</span></span><br><span class="line">       <span class="attr">cps :</span> <span class="number">1.0</span></span><br><span class="line">       <span class="attr">ipg :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">rtt :</span> <span class="number">10000</span></span><br><span class="line">       <span class="attr">w   :</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./t<span class="literal">-rex</span><span class="literal">-64</span> <span class="operator">-f</span> /opt/trex/config/traffic.yaml <span class="literal">-d</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>运行过程中，实时状态显示如下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">-Per</span> port stats table  <span class="comment">#两张网卡当前的状态</span></span><br><span class="line">      ports |               <span class="number">0</span> |               <span class="number">1</span></span><br><span class="line"> -----------------------------------------------------------------------------------------</span><br><span class="line">   opackets |               <span class="number">2</span> |               <span class="number">2</span> <span class="comment">#当前总发包数</span></span><br><span class="line">     obytes |             <span class="number">154</span> |             <span class="number">186</span> <span class="comment">#当前总发包比特</span></span><br><span class="line">   ipackets |               <span class="number">2</span> |               <span class="number">2</span> <span class="comment">#当前总收包数</span></span><br><span class="line">     ibytes |             <span class="number">186</span> |             <span class="number">154</span> <span class="comment">#当前总收包比特</span></span><br><span class="line">    ierrors |               <span class="number">0</span> |               <span class="number">0</span></span><br><span class="line">    oerrors |               <span class="number">0</span> |               <span class="number">0</span></span><br><span class="line">      Tx Bw |     <span class="number">282.57</span>  bps |     <span class="number">341.28</span>  bps</span><br><span class="line"></span><br><span class="line"><span class="literal">-Global</span> stats enabled</span><br><span class="line"> Cpu Utilization : <span class="number">0.2</span>  %  <span class="number">0.0</span> Gb/core <span class="comment">#CPU占用率</span></span><br><span class="line"> Platform_factor : <span class="number">1.0</span></span><br><span class="line"> Total<span class="literal">-Tx</span>        :     <span class="number">623.85</span>  bps <span class="comment">#实际发包 byte per second</span></span><br><span class="line"> Total<span class="literal">-Rx</span>        :     <span class="number">623.85</span>  bps <span class="comment">#实际收包 byte per second</span></span><br><span class="line"> Total<span class="literal">-PPS</span>       :       <span class="number">0.92</span>  pps <span class="comment">#实际 packet per second</span></span><br><span class="line"> Total<span class="literal">-CPS</span>       :       <span class="number">0.46</span>  cps <span class="comment">#实际 connect per second</span></span><br><span class="line"></span><br><span class="line"> Expected<span class="literal">-PPS</span>    :       <span class="number">2.00</span>  pps <span class="comment">#期望 packet per second</span></span><br><span class="line"> Expected<span class="literal">-CPS</span>    :       <span class="number">1.00</span>  cps <span class="comment">#期望 connect per second</span></span><br><span class="line"> Expected<span class="literal">-BPS</span>    :       <span class="number">1.36</span> Kbps <span class="comment">#期望 byte per second</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#														 Client 数量</span></span><br><span class="line"> Active<span class="literal">-flows</span>    :        <span class="number">0</span>  Clients :      <span class="number">255</span>   Socket<span class="literal">-util</span> : <span class="number">0.0000</span> %</span><br><span class="line"><span class="comment">#														 Server 数量</span></span><br><span class="line"> <span class="built_in">Open-flows</span>      :        <span class="number">2</span>  Servers :      <span class="number">255</span>   Socket :        <span class="number">2</span> Socket/Clients :  <span class="number">0.0</span></span><br><span class="line"> drop<span class="literal">-rate</span>       :       <span class="number">0.00</span>  bps <span class="comment">#丢包率</span></span><br><span class="line"> current time    : <span class="number">3.9</span> sec <span class="comment">#已测试时间</span></span><br><span class="line"> test duration   : <span class="number">6.1</span> sec <span class="comment">#剩余测试时间</span></span><br></pre></td></tr></table></figure>
+<p>最终结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"> ==================</span><br><span class="line"> interface sum</span><br><span class="line"> ==================</span><br><span class="line">------------------------</span><br><span class="line"> per core stats core id : <span class="number">1</span></span><br><span class="line">------------------------</span><br><span class="line">------------------------</span><br><span class="line"> per core per <span class="keyword">if</span> stats id : <span class="number">1</span></span><br><span class="line">------------------------</span><br><span class="line"> port <span class="number">0</span>, queue id :<span class="number">0</span>  - client</span><br><span class="line"> ----------------------------</span><br><span class="line"> port <span class="number">1</span>, queue id :<span class="number">0</span>  - server</span><br><span class="line"> ----------------------------</span><br><span class="line"> ==================</span><br><span class="line"> generators</span><br><span class="line"> ==================</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">normal</span><br><span class="line">-------------</span><br><span class="line"> min_delta  : <span class="number">10</span> usec</span><br><span class="line"> cnt        : <span class="number">0</span></span><br><span class="line"> high_cnt   : <span class="number">0</span></span><br><span class="line"> max_d_time : <span class="number">0</span> usec</span><br><span class="line"> sliding_average    : <span class="number">0</span> usec</span><br><span class="line"> precent    : <span class="literal">-nan</span> %</span><br><span class="line"> histogram</span><br><span class="line"> -----------</span><br><span class="line"> m_total_bytes                           :       <span class="number">1.49</span> Kbytes</span><br><span class="line"> m_total_pkt                             :      <span class="number">18.00</span>  pkt</span><br><span class="line"> m_total_open_flows                      :       <span class="number">9.00</span>  flows</span><br><span class="line"> m_total_pkt                             : <span class="number">18</span></span><br><span class="line"> m_total_open_flows                      : <span class="number">9</span></span><br><span class="line"> m_total_close_flows                     : <span class="number">9</span></span><br><span class="line"> m_total_bytes                           : <span class="number">1530</span></span><br><span class="line"> ---------------</span><br><span class="line">port : <span class="number">0</span></span><br><span class="line">------------</span><br><span class="line"> opackets                                 : <span class="number">9</span></span><br><span class="line"> obytes                                   : <span class="number">693</span></span><br><span class="line"> ipackets                                 : <span class="number">9</span></span><br><span class="line"> ibytes                                   : <span class="number">837</span></span><br><span class="line"> Tx :     <span class="number">290.02</span>  bps</span><br><span class="line">port : <span class="number">1</span></span><br><span class="line">------------</span><br><span class="line"> opackets                                 : <span class="number">9</span></span><br><span class="line"> obytes                                   : <span class="number">837</span></span><br><span class="line"> ipackets                                 : <span class="number">9</span></span><br><span class="line"> ibytes                                   : <span class="number">693</span></span><br><span class="line"> Tx :     <span class="number">350.28</span>  bps</span><br><span class="line"> Cpu Utilization : <span class="number">0.4</span>  %  <span class="number">0.0</span> Gb/core</span><br><span class="line"> Platform_factor : <span class="number">1.0</span></span><br><span class="line"> Total<span class="literal">-Tx</span>        :     <span class="number">640.30</span>  bps</span><br><span class="line"> Total<span class="literal">-Rx</span>        :     <span class="number">640.30</span>  bps</span><br><span class="line"> Total<span class="literal">-PPS</span>       :       <span class="number">0.94</span>  pps</span><br><span class="line"> Total<span class="literal">-CPS</span>       :       <span class="number">0.47</span>  cps</span><br><span class="line"></span><br><span class="line"> Expected<span class="literal">-PPS</span>    :       <span class="number">2.00</span>  pps</span><br><span class="line"> Expected<span class="literal">-CPS</span>    :       <span class="number">1.00</span>  cps</span><br><span class="line"> Expected<span class="literal">-BPS</span>    :       <span class="number">1.36</span> Kbps</span><br><span class="line"></span><br><span class="line"> Active<span class="literal">-flows</span>    :        <span class="number">0</span>  Clients :      <span class="number">255</span>   Socket<span class="literal">-util</span> : <span class="number">0.0000</span> %</span><br><span class="line"> <span class="built_in">Open-flows</span>      :        <span class="number">9</span>  Servers :      <span class="number">255</span>   Socket :        <span class="number">0</span> Socket/Clients :  <span class="number">0.0</span></span><br><span class="line"> drop<span class="literal">-rate</span>       :       <span class="number">0.00</span>  bps</span><br><span class="line"> summary stats</span><br><span class="line"> --------------</span><br><span class="line"> Total<span class="literal">-pkt</span><span class="literal">-drop</span>       : <span class="number">0</span> pkts</span><br><span class="line"> Total<span class="literal">-tx</span><span class="literal">-bytes</span>       : <span class="number">1530</span> bytes</span><br><span class="line"> Total<span class="literal">-tx</span><span class="literal">-sw</span><span class="literal">-bytes</span>    : <span class="number">0</span> bytes</span><br><span class="line"> Total<span class="literal">-rx</span><span class="literal">-bytes</span>       : <span class="number">1530</span> byte</span><br><span class="line"></span><br><span class="line"> Total<span class="literal">-tx</span><span class="literal">-pkt</span>         : <span class="number">18</span> pkts</span><br><span class="line"> Total<span class="literal">-rx</span><span class="literal">-pkt</span>         : <span class="number">18</span> pkts</span><br><span class="line"> Total<span class="literal">-sw</span><span class="literal">-tx</span><span class="literal">-pkt</span>      : <span class="number">0</span> pkts</span><br><span class="line"> Total<span class="literal">-sw</span><span class="literal">-err</span>         : <span class="number">0</span> pkts</span><br><span class="line"> Total ARP sent       : <span class="number">2</span> pkts</span><br><span class="line"> Total ARP received   : <span class="number">1</span> pkts</span><br></pre></td></tr></table></figure>
+<h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="初始化-EAL-环境失败"><a href="#初始化-EAL-环境失败" class="headerlink" title="初始化 EAL 环境失败"></a>初始化 EAL 环境失败</h2><p>如运行 TRex 遇到下面 EAL 环境报错，则需设置大页</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># ./t-rex-64 -f /opt/trex/config/traffic.yaml</span></span><br><span class="line">WARNING: tried to configure <span class="number">2</span> hugepages <span class="keyword">for</span> socket <span class="number">0</span>, but result is: <span class="number">1</span></span><br><span class="line">The ports are bound/configured.</span><br><span class="line">Starting  TRex v3.<span class="number">04</span> please wait  ...</span><br><span class="line">EAL: FATAL: Cannot get hugepage information.</span><br><span class="line">EAL: Cannot get hugepage information.</span><br><span class="line"> You might need to run ./trex<span class="literal">-cfg</span>  once</span><br><span class="line">EAL: Error - exiting with code: <span class="number">1</span></span><br><span class="line">  Cause: Invalid EAL arguments</span><br></pre></td></tr></table></figure>
+<p>设置 1024 个 2048kB 大页，即写入 1024 到 hugepages-2048kB 下的 nr_hugepages 文件（初始为 0）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:/opt/trex/v3.<span class="number">05</span><span class="comment"># echo 1024 | tee /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</span></span><br><span class="line"><span class="number">1024</span></span><br></pre></td></tr></table></figure>
+<p>重新运行，即可正常</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://trex-tgn.cisco.com" target="_blank" rel="noopener">https://trex-tgn.cisco.com</a></p>
+<p><a href="https://blog.csdn.net/shaoyunzhe/article/details/132344878" target="_blank" rel="noopener">https://blog.csdn.net/shaoyunzhe/article/details/132344878</a></p>
+<p><a href="https://www.youtube.com/watch?v=ginboH5cCyA" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ginboH5cCyA</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DPDK/" rel="tag"># DPDK</a>
+              <a href="/tags/TRex/" rel="tag"># TRex</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/14/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95/" rel="prev" title="日语语法">
+      <i class="fa fa-chevron-left"></i> 日语语法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/04/Go%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="next" title="Go学习路线">
+      Go学习路线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TRex-架构"><span class="nav-number">1.</span> <span class="nav-text">TRex 架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网卡配置"><span class="nav-number">3.</span> <span class="nav-text">网卡配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看网卡状态"><span class="nav-number">3.1.</span> <span class="nav-text">查看网卡状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TRex-配置"><span class="nav-number">4.</span> <span class="nav-text">TRex 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置项"><span class="nav-number">4.1.</span> <span class="nav-text">配置项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">4.2.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Traffic-模版配置"><span class="nav-number">5.</span> <span class="nav-text">Traffic 模版配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置项-1"><span class="nav-number">5.1.</span> <span class="nav-text">配置项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例-1"><span class="nav-number">5.2.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行命令行参数"><span class="nav-number">6.</span> <span class="nav-text">运行命令行参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stateful-示例"><span class="nav-number">7.</span> <span class="nav-text">Stateful 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例-2"><span class="nav-number">8.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stateful"><span class="nav-number">8.1.</span> <span class="nav-text">Stateful</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始网卡信息"><span class="nav-number">8.1.1.</span> <span class="nav-text">初始网卡信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRex-配置-1"><span class="nav-number">8.1.2.</span> <span class="nav-text">TRex 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Traffic-配置"><span class="nav-number">8.1.3.</span> <span class="nav-text">Traffic 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">8.1.4.</span> <span class="nav-text">运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题记录"><span class="nav-number">9.</span> <span class="nav-text">问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化-EAL-环境失败"><span class="nav-number">9.1.</span> <span class="nav-text">初始化 EAL 环境失败</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">10.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>
