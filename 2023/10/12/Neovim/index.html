@@ -53,12 +53,14 @@
 <meta property="og:site_name" content="GuoYi的博客">
 <meta property="og:description" content="vim">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241115215614647-20241115215702924.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241115220223740.png">
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-10-24%2000.47.43.png">
 <meta property="article:published_time" content="2023-10-12T15:53:52.000Z">
-<meta property="article:modified_time" content="2024-11-11T03:57:58.127Z">
+<meta property="article:modified_time" content="2024-11-17T16:04:07.060Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/%E6%88%AA%E5%B1%8F2023-10-24%2000.47.43.png">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241115215614647-20241115215702924.png">
 
 <link rel="canonical" href="https://gy23333.github.io/2023/10/12/Neovim/">
 
@@ -242,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
+                <time title="Modified: 2024-11-18 00:04:07" itemprop="dateModified" datetime="2024-11-18T00:04:07+08:00">2024-11-18</time>
               </span>
 
           
@@ -507,11 +509,65 @@
 </tbody>
 </table>
 </div>
+<h1 id="LazyVim"><a href="#LazyVim" class="headerlink" title="LazyVim"></a>LazyVim</h1><p><a href="http://www.lazyvim.org" target="_blank" rel="noopener">http://www.lazyvim.org</a></p>
+<p>【【教完必会】别再说配置neovim麻烦了！给我1分钟就够！— Lazyvim教程】<a href="https://www.bilibili.com/video/BV1ds4y1P7Rs?vd_source=c44e01a0c037484413d7d1b782385f3e" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1ds4y1P7Rs?vd_source=c44e01a0c037484413d7d1b782385f3e</a></p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h1 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h1><h2 id="光标跳转"><a href="#光标跳转" class="headerlink" title="光标跳转"></a>光标跳转</h2><ul>
+<li>跳转到周围特定字母<ol>
+<li><code>s</code> 进入查找状态  </li>
+<li>输入待查找字母，标亮周围该字母，并附上标签</li>
+<li>输入标签，跳转到特定位置</li>
+</ol>
+</li>
+</ul>
+<h2 id="目录树"><a href="#目录树" class="headerlink" title="目录树"></a>目录树</h2><p>侧边栏的目录树由 NeoTree 插件驱动</p>
+<ul>
+<li>显示/隐藏侧边栏 <code>Space</code> -&gt; <code>e</code></li>
+<li>查看快捷键 <code>?</code></li>
+</ul>
+<h2 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h2><ul>
+<li>唤出/隐藏终端：<code>ctrl</code> + <code>\</code></li>
+</ul>
+<h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><ul>
+<li>切换下一个 Buffer：<code>SHIFT</code> + <code>l</code></li>
+<li>切换上一个 Buffer：<code>SHIFT</code> + <code>h</code></li>
+</ul>
+<h2 id="LSP"><a href="#LSP" class="headerlink" title="LSP"></a>LSP</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>输入<code>:Mason</code> 进入 Mason</li>
+<li></li>
+</ol>
+<h1 id="LSP-1"><a href="#LSP-1" class="headerlink" title="LSP"></a>LSP</h1><p>Lazyvim 默认配置 LSP</p>
+<h2 id="Mason"><a href="#Mason" class="headerlink" title="Mason"></a>Mason</h2><p>Mason 用来做 LSP 的包管理</p>
+<p><strong>进入 Mason 管理窗口</strong></p>
+<p>有两种方法：</p>
+<ul>
+<li><code>:Mason</code> </li>
+<li><code>leader</code> -&gt; <code>c</code> -&gt; <code>m</code></li>
+</ul>
+<p>在这个窗口适用文件的各种查找操作</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241115215614647-20241115215702924.png" alt="image-20241115215614647"></p>
+<p><strong>搜索包</strong></p>
+<p>可以通过 Language Filter 过滤出指定语言：<code>CTRL</code> + <code>f</code></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241115220223740.png" alt="image-20241115220223740"></p>
+<p>或者和文件一样，通过 <code>/</code> 或其他搜索</p>
+<p><strong>安装包</strong></p>
+<p>移动到相应包，按 <code>i</code></p>
+<p><strong>卸载包</strong></p>
+<p>移动到相应包，按 <code>X</code></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="跳转查看"><a href="#跳转查看" class="headerlink" title="跳转查看"></a>跳转查看</h3><ul>
+<li>查看定义：<code>g</code> —&gt; <code>d</code></li>
+<li>跳转到定义：<code>g</code> —&gt; <code>D</code></li>
+<li>查看引用：<code>g</code> —&gt; <code>r</code></li>
+<li>查看详情：<code>K</code></li>
+</ul>
+<h3 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h3><ul>
+<li>变量重命名：<code>Leader</code> —&gt; <code>c</code> —&gt; <code>r</code></li>
+<li></li>
+</ul>
 <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>新建 nvim 的配置文件夹 <code>~/.config/nvim</code> ，结构如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">├── init.vim                              入口文件，这里负责加载所有lua文件夹里的文件</span><br><span class="line">└── lua                                   所有 lua 配置文件</span><br><span class="line">    ├── basic.lua                         Neovim 的基础配置</span><br><span class="line">    ├── keybindings.lua                   快捷键配置</span><br><span class="line">    ├── lsp                               内置 LSP  (Language Server Protocol) 配置</span><br><span class="line">    │   ├── diagnostic_signs.lua</span><br><span class="line">    │   ├── language_servers.lua</span><br><span class="line">    │   └── nvim-cmp-config.lua</span><br><span class="line">    ├── plugin-config                     各个插件配置在这个文件夹</span><br><span class="line">    │   ├── bufferline.lua</span><br><span class="line">    │   ├── comment.lua</span><br><span class="line">    │   ├── nvim-autopairs.lua</span><br><span class="line">    │   ├── nvim-colorizer.lua</span><br><span class="line">    │   ├── nvim-tree.lua</span><br><span class="line">    │   ├── nvim-treesitter.lua</span><br><span class="line">    │   ├── rust-tools.lua</span><br><span class="line">    │   ├── surround.lua</span><br><span class="line">    │   ├── telescope.lua</span><br><span class="line">    │   └── which-key.lua</span><br><span class="line">    └── plugins.lua                       插件安装管理</span><br></pre></td></tr></table></figure>
 <p>nvim 在下次启动时会自动查看其中的内容进行更新，当然也可以在编辑后直接使用 <code>:so</code> 命令当重新载入。</p>
 <p>以 <code>~/.config/nvim/init.lua</code> 作为入口，lua 文件夹放置不同的模块</p>
-<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><p>使用插件管理器 <a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener">lazy.vim</a> 进行插件管理</p>
+<h1 id="插件-1"><a href="#插件-1" class="headerlink" title="插件"></a>插件</h1><p>使用插件管理器 <a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener">lazy.vim</a> 进行插件管理</p>
 <h2 id="安装-lazyvim"><a href="#安装-lazyvim" class="headerlink" title="安装 lazyvim"></a>安装 lazyvim</h2><ul>
 <li><p>新建 <code>lua/lazynvim-init.lua</code></p>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">"data"</span>) .. <span class="string">"/lazy/lazy.nvim"</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> vim.loop.fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">"git"</span>,</span><br><span class="line">    <span class="string">"clone"</span>,</span><br><span class="line">    <span class="string">"--filter=blob:none"</span>,</span><br><span class="line">    <span class="string">"https://github.com/folke/lazy.nvim.git"</span>,</span><br><span class="line">    <span class="string">"--branch=stable"</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">vim.opt.rtp:prepend(lazypath)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"lazy"</span>).setup(&#123;&#125;)</span><br></pre></td></tr></table></figure>
@@ -640,6 +696,7 @@
 <li><a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener">lazy.vim官网</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/638379995" target="_blank" rel="noopener">lazy-nvim插件管理器基础入门</a></li>
 <li><a href="https://www.bilibili.com/video/BV1Td4y1578E/?spm_id_from=333.337.search-card.all.click&amp;vd_source=f5f8e6e01c0d525ef6934da8b95c76ce" target="_blank" rel="noopener">【全程讲解】Neovim从零配置成属于你的个人编辑器</a></li>
+<li><a href="http://www.lazyvim.org" target="_blank" rel="noopener">Lazyvim官方文档</a></li>
 </ul>
 
     </div>
@@ -723,7 +780,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Neovim-安装"><span class="nav-number">1.</span> <span class="nav-text">Neovim 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac"><span class="nav-number">1.2.</span> <span class="nav-text">Mac</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim-模式"><span class="nav-number">2.</span> <span class="nav-text">Vim 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通模式"><span class="nav-number">2.1.</span> <span class="nav-text">普通模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可视模式"><span class="nav-number">2.4.</span> <span class="nav-text">可视模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#普通模式-1"><span class="nav-number">3.</span> <span class="nav-text">普通模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#光标移动"><span class="nav-number">3.1.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制粘贴"><span class="nav-number">3.2.</span> <span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">3.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变"><span class="nav-number">3.4.</span> <span class="nav-text">改变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">3.5.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令模式-1"><span class="nav-number">4.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">4.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷键"><span class="nav-number">4.2.</span> <span class="nav-text">快捷键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">5.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件"><span class="nav-number">6.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-lazyvim"><span class="nav-number">6.1.</span> <span class="nav-text">安装 lazyvim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装插件"><span class="nav-number">6.2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用插件"><span class="nav-number">6.3.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题插件-TokyoNight"><span class="nav-number">6.3.1.</span> <span class="nav-text">主题插件 TokyoNight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件树插件-nvim-tree"><span class="nav-number">6.3.2.</span> <span class="nav-text">文件树插件 nvim-tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态栏插件-lualine-nvim"><span class="nav-number">6.3.3.</span> <span class="nav-text">状态栏插件 lualine.nvim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页插件-bufferline-nvim"><span class="nav-number">6.3.4.</span> <span class="nav-text">页插件 bufferline.nvim</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Neovim-安装"><span class="nav-number">1.</span> <span class="nav-text">Neovim 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac"><span class="nav-number">1.2.</span> <span class="nav-text">Mac</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim-模式"><span class="nav-number">2.</span> <span class="nav-text">Vim 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通模式"><span class="nav-number">2.1.</span> <span class="nav-text">普通模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可视模式"><span class="nav-number">2.4.</span> <span class="nav-text">可视模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#普通模式-1"><span class="nav-number">3.</span> <span class="nav-text">普通模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#光标移动"><span class="nav-number">3.1.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制粘贴"><span class="nav-number">3.2.</span> <span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">3.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变"><span class="nav-number">3.4.</span> <span class="nav-text">改变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">3.5.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令模式-1"><span class="nav-number">4.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">4.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷键"><span class="nav-number">4.2.</span> <span class="nav-text">快捷键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LazyVim"><span class="nav-number">5.</span> <span class="nav-text">LazyVim</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-number">5.1.</span> <span class="nav-text">插件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用操作"><span class="nav-number">6.</span> <span class="nav-text">常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#光标跳转"><span class="nav-number">6.1.</span> <span class="nav-text">光标跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录树"><span class="nav-number">6.2.</span> <span class="nav-text">目录树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端"><span class="nav-number">6.3.</span> <span class="nav-text">终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer"><span class="nav-number">6.4.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSP"><span class="nav-number">6.5.</span> <span class="nav-text">LSP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">6.5.1.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSP-1"><span class="nav-number">7.</span> <span class="nav-text">LSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mason"><span class="nav-number">7.1.</span> <span class="nav-text">Mason</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">7.2.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转查看"><span class="nav-number">7.2.1.</span> <span class="nav-text">跳转查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找替换"><span class="nav-number">7.2.2.</span> <span class="nav-text">查找替换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">8.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件-1"><span class="nav-number">9.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-lazyvim"><span class="nav-number">9.1.</span> <span class="nav-text">安装 lazyvim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装插件"><span class="nav-number">9.2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用插件"><span class="nav-number">9.3.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题插件-TokyoNight"><span class="nav-number">9.3.1.</span> <span class="nav-text">主题插件 TokyoNight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件树插件-nvim-tree"><span class="nav-number">9.3.2.</span> <span class="nav-text">文件树插件 nvim-tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态栏插件-lualine-nvim"><span class="nav-number">9.3.3.</span> <span class="nav-text">状态栏插件 lualine.nvim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页插件-bufferline-nvim"><span class="nav-number">9.3.4.</span> <span class="nav-text">页插件 bufferline.nvim</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -739,7 +796,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

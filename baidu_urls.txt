@@ -1,5 +1,5 @@
+https://gy23333.github.io/2024/11/19/Go%E8%B0%83%E8%AF%95%E5%99%A8-Delve/
 https://gy23333.github.io/2024/11/07/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95/
 https://gy23333.github.io/2024/10/23/BGP-%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/
 https://gy23333.github.io/2024/10/05/systemd/
 https://gy23333.github.io/2024/09/19/Docker/
-https://gy23333.github.io/2024/09/19/FRRouting/
