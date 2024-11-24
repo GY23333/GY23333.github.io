@@ -9517,7 +9517,7 @@ maze[5][5] = \begin{pmatrix} 0, 1, 0, 0, 0,\\
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241125012534947.png" alt="image-20241125012534947" style="zoom:50%;" /></p>
 <p>tcpdump 运行在链路层的网络设备层，而 rp_filter 运行在协议栈的网络层，对于收包流程来说，tcpdump 先于 rp_filter 进行，所以即使数据包会被 rp_filter 过滤掉，依旧可以通过 tcpdump 抓到该数据包。</p>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241125013945101.png" alt="image-20241125013945101" style="zoom:50%;" /></p>
-<h1 id="rp-filter-日志"><a href="#rp-filter-日志" class="headerlink" title="rp_filter 日志"></a>rp_filter 日志</h1><p>默认情况下，内核并不会记录被 rp_filter 过滤掉的包，但可以通过 iptables 添加日志规则，记录被 rp_filter 丢弃的包。</p>
+<h1 id="rp-filter-日志"><a href="#rp-filter-日志" class="headerlink" title="rp_filter 日志"></a>rp_filter 日志</h1><p>默认情况下，内核并不会记录被 rp_filter 过滤掉的包，但可以通过 iptables 添加日志规则，模拟和预测哪些包会被 rp_filter 丢弃。</p>
 <p>添加 iptables 日志规则（如需删除，则把其中的 <code>-A</code> 改成 <code>-D</code>）</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iptables <span class="literal">-t</span> raw <span class="literal">-A</span> PREROUTING <span class="literal">-m</span> rpfilter -<span class="literal">-invert</span> <span class="literal">-j</span> LOG -<span class="literal">-log</span><span class="literal">-prefix</span> <span class="string">"RP_FILTER_DROP: "</span></span><br></pre></td></tr></table></figure>
 <p>查看添加的 iptables 日志规则</p>
