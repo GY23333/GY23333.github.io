@@ -9494,7 +9494,7 @@ maze[5][5] = \begin{pmatrix} 0, 1, 0, 0, 0,\\
 <li>如不一致，则认为该数据包可能是伪造的，丢弃该数据包</li>
 </ol>
 <p>如下图，eth1 网卡开启了严格的 rp_filter 检查，此时 eth1 网卡收到源 IP 为 <code>172.16.19.24</code> 的包，rp_filter 检查如果以 <code>172.16.19.24</code> 为目的 IP，根据路由表，匹配的网卡应该为 eth0，而不是收到包的 eth1，因此判断该数据包可能伪造源 IP，丢弃该包。</p>
-<p><img src="/Users/guoyi/Library/Application Support/typora-user-images/image-20241124140220970.png" alt="image-20241124140220970" style="zoom: 50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241124140220970.png" alt="image-20241124140220970" style="zoom: 50%;" /></p>
 <h1 id="Linux-内核参数"><a href="#Linux-内核参数" class="headerlink" title="Linux 内核参数"></a>Linux 内核参数</h1><p>rp_filter 为 Linux 用于设置反向路由校验机制的内核参数，</p>
 ]]></content>
       <categories>

@@ -6,7 +6,7 @@
   <link href="https://gy23333.github.io/atom.xml" rel="self"/>
   
   <link href="https://gy23333.github.io/"/>
-  <updated>2024-11-24T06:07:29.904Z</updated>
+  <updated>2024-11-24T16:39:20.340Z</updated>
   <id>https://gy23333.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://gy23333.github.io/2024/11/22/rp-filter%E5%8F%8D%E5%90%91%E8%B7%AF%E7%94%B1%E8%BF%87%E6%BB%A4/"/>
     <id>https://gy23333.github.io/2024/11/22/rp-filter%E5%8F%8D%E5%90%91%E8%B7%AF%E7%94%B1%E8%BF%87%E6%BB%A4/</id>
     <published>2024-11-22T15:54:54.000Z</published>
-    <updated>2024-11-24T06:07:29.904Z</updated>
+    <updated>2024-11-24T16:39:20.340Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Reverse Path Filtering，Linux 内核对接收到的数据包的反向路由校验过滤，主要用于防止 IP 地址欺骗攻击。本文主要介绍该校验机制、系统配置方式以及过滤包查看方法。</p><a id="more"></a><h1 id="反向路由校验机制"><a href="#反向路由校验机制" class="headerlink" title="反向路由校验机制"></a>反向路由校验机制</h1><p>反向路由校验，即在网卡收到数据包后，校验该数据包的反向路由是否匹配，如不匹配，则丢弃该包。具体流程如下：</p><ol><li>对于网卡收到的数据包，Linux 内核会检查该数据包的源 IP</li><li>参照当前的路由表，判断如以该数据包的源 IP 作为目的 IP，返回路径的路由选择是否与当前接收接口一致</li><li>如不一致，则认为该数据包可能是伪造的，丢弃该数据包</li></ol><p>如下图，eth1 网卡开启了严格的 rp_filter 检查，此时 eth1 网卡收到源 IP 为 <code>172.16.19.24</code> 的包，rp_filter 检查如果以 <code>172.16.19.24</code> 为目的 IP，根据路由表，匹配的网卡应该为 eth0，而不是收到包的 eth1，因此判断该数据包可能伪造源 IP，丢弃该包。</p><p><img src="/Users/guoyi/Library/Application Support/typora-user-images/image-20241124140220970.png" alt="image-20241124140220970" style="zoom: 50%;" /></p><h1 id="Linux-内核参数"><a href="#Linux-内核参数" class="headerlink" title="Linux 内核参数"></a>Linux 内核参数</h1><p>rp_filter 为 Linux 用于设置反向路由校验机制的内核参数，</p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Reverse Path Filtering，Linux 内核对接收到的数据包的反向路由校验过滤，主要用于防止 IP 地址欺骗攻击。本文主要介绍该校验机制、系统配置方式以及过滤包查看方法。</p><a id="more"></a><h1 id="反向路由校验机制"><a href="#反向路由校验机制" class="headerlink" title="反向路由校验机制"></a>反向路由校验机制</h1><p>反向路由校验，即在网卡收到数据包后，校验该数据包的反向路由是否匹配，如不匹配，则丢弃该包。具体流程如下：</p><ol><li>对于网卡收到的数据包，Linux 内核会检查该数据包的源 IP</li><li>参照当前的路由表，判断如以该数据包的源 IP 作为目的 IP，返回路径的路由选择是否与当前接收接口一致</li><li>如不一致，则认为该数据包可能是伪造的，丢弃该数据包</li></ol><p>如下图，eth1 网卡开启了严格的 rp_filter 检查，此时 eth1 网卡收到源 IP 为 <code>172.16.19.24</code> 的包，rp_filter 检查如果以 <code>172.16.19.24</code> 为目的 IP，根据路由表，匹配的网卡应该为 eth0，而不是收到包的 eth1，因此判断该数据包可能伪造源 IP，丢弃该包。</p><p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241124140220970.png" alt="image-20241124140220970" style="zoom: 50%;" /></p><h1 id="Linux-内核参数"><a href="#Linux-内核参数" class="headerlink" title="Linux 内核参数"></a>Linux 内核参数</h1><p>rp_filter 为 Linux 用于设置反向路由校验机制的内核参数，</p>]]></content>
     
     
     <summary type="html">&lt;p&gt;Reverse Path Filtering，Linux 内核对接收到的数据包的反向路由校验过滤，主要用于防止 IP 地址欺骗攻击。本文主要介绍该校验机制、系统配置方式以及过滤包查看方法。&lt;/p&gt;</summary>
