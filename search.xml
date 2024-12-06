@@ -13014,4 +13014,24 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 <h1 id="OSPF-多路径负载均衡"><a href="#OSPF-多路径负载均衡" class="headerlink" title="OSPF 多路径负载均衡"></a>OSPF 多路径负载均衡</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol ospf MyOSPF &#123;</span><br><span class="line">    area 0.0.0.0 &#123;</span><br><span class="line">        interface &quot;eth0&quot;, &quot;eth1&quot; &#123;</span><br><span class="line">            cost 10;   # 为两个接口设置相同的 cost</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ecmp yes;   # 启用等价多路径</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
+  <entry>
+    <title>IPIP隧道</title>
+    <url>/2024/12/07/IPIP%E9%9A%A7%E9%81%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+  </entry>
+  <entry>
+    <title>IPv6</title>
+    <url>/2024/12/07/IPv6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+  </entry>
+  <entry>
+    <title>Linux日志管理工具--logrotate</title>
+    <url>/2024/12/07/Linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-logrotate/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+  </entry>
+  <entry>
+    <title>基于FRRouting/Bird的OSPF组网及负载均衡实现</title>
+    <url>/2024/12/07/%E5%9F%BA%E4%BA%8EFRRouting-Bird%E7%9A%84OSPF%E7%BB%84%E7%BD%91%E5%8F%8A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+  </entry>
 </search>
