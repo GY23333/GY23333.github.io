@@ -54,7 +54,7 @@
 <meta property="og:description" content="bird">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-03T05:03:54.000Z">
-<meta property="article:modified_time" content="2024-12-03T05:18:43.000Z">
+<meta property="article:modified_time" content="2024-12-08T07:13:27.809Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 
@@ -232,10 +232,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-12-03 13:03:54 / Modified: 13:18:43" itemprop="dateCreated datePublished" datetime="2024-12-03T13:03:54+08:00">2024-12-03</time>
+              <time title="Created: 2024-12-03 13:03:54" itemprop="dateCreated datePublished" datetime="2024-12-03T13:03:54+08:00">2024-12-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-08 15:13:27" itemprop="dateModified" datetime="2024-12-08T15:13:27+08:00">2024-12-08</time>
+              </span>
 
           
   
@@ -264,7 +270,10 @@
       
         <p>bird</p>
 <a id="more"></a>
-<h1 id="安装-bird"><a href="#安装-bird" class="headerlink" title="安装 bird"></a>安装 bird</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bird2</span><br></pre></td></tr></table></figure>
+<h1 id="安装-bird"><a href="#安装-bird" class="headerlink" title="安装 bird"></a>安装 bird</h1><p>Ubuntu 安装 bird</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bird2</span><br></pre></td></tr></table></figure>
+<p>检查 bird 是否安装成功</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">guoyi@ubuntu2404:~<span class="variable">$</span> systemctl status bird</span><br><span class="line">● bird.service - BIRD Internet Routing Daemon</span><br><span class="line">     Loaded: loaded (/usr/lib/systemd/system/bird.service; enabled; preset: enabled)</span><br><span class="line">     Active: active (running) since Tue <span class="number">2024</span><span class="literal">-12</span><span class="literal">-03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> UTC; <span class="number">5</span> days ago</span><br><span class="line">   Main PID: <span class="number">28186</span> (bird)</span><br><span class="line">      Tasks: <span class="number">1</span> (limit: <span class="number">4542</span>)</span><br><span class="line">     Memory: <span class="number">924.0</span>K (peak: <span class="number">1.9</span>M)</span><br><span class="line">        CPU: <span class="number">4.824</span>s</span><br><span class="line">     CGroup: /system.slice/bird.service</span><br><span class="line">             └─<span class="number">28186</span> /usr/sbin/bird <span class="operator">-f</span> <span class="literal">-u</span> bird <span class="literal">-g</span> bird</span><br><span class="line"></span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 systemd[<span class="number">1</span>]: Starting bird.service - BIRD Internet Routing Daemon...</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 systemd[<span class="number">1</span>]: Started bird.service - BIRD Internet Routing Daemon.</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 (bird)[<span class="number">28186</span>]: bird.service: Referenced but unset environment variable evaluates to an emp&gt;</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 bird[<span class="number">28186</span>]: Chosen router ID <span class="number">172.16</span>.<span class="number">19.129</span> according to interface ens160</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 bird[<span class="number">28186</span>]: Started</span><br></pre></td></tr></table></figure>
 <h1 id="OSPF-多路径负载均衡"><a href="#OSPF-多路径负载均衡" class="headerlink" title="OSPF 多路径负载均衡"></a>OSPF 多路径负载均衡</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">protocol ospf MyOSPF &#123;</span><br><span class="line">    area 0.0.0.0 &#123;</span><br><span class="line">        interface &quot;eth0&quot;, &quot;eth1&quot; &#123;</span><br><span class="line">            cost 10;   # 为两个接口设置相同的 cost</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ecmp yes;   # 启用等价多路径</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
