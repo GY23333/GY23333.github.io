@@ -13081,12 +13081,101 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">guoyi@ubuntu2:~<span class="variable">$</span> ip a</span><br><span class="line"><span class="number">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="number">1000</span></span><br><span class="line">    link/loopback <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> brd <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">    inet <span class="number">127.0</span>.<span class="number">0.1</span>/<span class="number">8</span> scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::<span class="number">1</span>/<span class="number">128</span> scope host noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"><span class="number">2</span>: ens160: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc pfifo_fast state UP group default qlen <span class="number">1000</span></span><br><span class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:<span class="number">62</span>:<span class="number">77</span>:<span class="number">76</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    altname enp2s0</span><br><span class="line">    inet <span class="number">172.16</span>.<span class="number">19.131</span>/<span class="number">24</span> metric <span class="number">100</span> brd <span class="number">172.16</span>.<span class="number">19.255</span> scope global dynamic ens160</span><br><span class="line">       valid_lft <span class="number">1194</span>sec preferred_lft <span class="number">1194</span>sec</span><br><span class="line">    inet6 fe80::<span class="number">20</span>c:<span class="number">29</span>ff:fe62:<span class="number">7776</span>/<span class="number">64</span> scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
 <p>使用 ens160 网卡作为 OSPF 网卡</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">!</span><br><span class="line">interface ens160</span><br><span class="line"> ip ospf area 0.0.0.0</span><br><span class="line"> ip ospf dead-interval 20</span><br><span class="line"> ip ospf hello-interval 5</span><br><span class="line"> ip ospf priority 0</span><br><span class="line">exit</span><br><span class="line">!</span><br><span class="line">router ospf</span><br><span class="line"> ospf router-id 172.16.19.131</span><br><span class="line">exit</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ip ospf area 0.0.0.0</code> <ul>
+<li>将该网卡配置为 OSPF 网卡，并设置 area 为 <code>0.0.0.0</code> </li>
+<li>也可在 <code>router ospf</code> 下配置 <code>network 172.16.19.0/24 area 0.0.0.0</code>，但此配置会将所有该网段的网卡设置为 OSPF 网卡</li>
+</ul>
+</li>
+<li><code>ip ospf dead-interval 20</code>、<code>ip ospf hello-interval 5</code><ul>
+<li>设置 hello 和 dead 的时间间隔</li>
+<li>需建邻的所有节点这两个配置需相同</li>
+</ul>
+</li>
+<li><code>ip ospf priority 0</code><ul>
+<li>此节点不竞选 DR/BDR</li>
+</ul>
+</li>
+<li><code>ospf router-id 172.16.19.131</code><ul>
+<li>area 内该 OSPF 节点的唯一标识，一般用网卡 IP 来表示</li>
+</ul>
+</li>
+</ul>
 <h2 id="Bird-配置-OSPF"><a href="#Bird-配置-OSPF" class="headerlink" title="Bird 配置 OSPF"></a>Bird 配置 OSPF</h2><p>使用 ens256 网卡作为 OSPF 网卡</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol ospf v2 &#123;</span><br><span class="line">        area 0 &#123;</span><br><span class="line">                interface &quot;ens256&quot; &#123;</span><br><span class="line">                        priority 1;</span><br><span class="line">                        hello 10;</span><br><span class="line">                        dead 40;</span><br><span class="line">                &#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="查看建邻"><a href="#查看建邻" class="headerlink" title="查看建邻"></a>查看建邻</h2><p>DR</p>
+<ul>
+<li><code>priority 1</code><ul>
+<li>参与竞选，且优先级最高</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看建邻"><a href="#查看建邻" class="headerlink" title="查看建邻"></a>查看建邻</h2><p>BIRD 节点作为 DR，查看其他的节点状态，均建邻成功（Full）</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bird&gt; show ospf neighbors</span><br><span class="line">ospf1:</span><br><span class="line">Router ID       Pri          State      DTime   Interface  Router IP</span><br><span class="line">172.16.19.131     0     Full&#x2F;Other      17.621  ens256     172.16.19.131</span><br><span class="line">172.16.19.132     0     Full&#x2F;Other      19.486  ens256     172.16.19.132</span><br></pre></td></tr></table></figure>
-<p>DROther</p>
+<p>FRRouting 节点作为 Other，只需与 DR 节点建邻成功，Other 节点之间处于 2-Way 状态</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ubuntu2# show ip ospf neighbor</span><br><span class="line"></span><br><span class="line">Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL</span><br><span class="line">172.16.19.129     1 Full&#x2F;DR         3m18s             16.350s 172.16.19.130   ens160:172.16.19.131                 0     0     0</span><br><span class="line">172.16.19.132     0 2-Way&#x2F;DROther   3m49s             15.307s 172.16.19.132   ens160:172.16.19.131                 0     0     0</span><br></pre></td></tr></table></figure>
+<h2 id="非默认路由网卡建邻问题"><a href="#非默认路由网卡建邻问题" class="headerlink" title="非默认路由网卡建邻问题"></a>非默认路由网卡建邻问题</h2><p>使用非默认路由网卡作为 OSPF 网卡时，如开启严格的反向路由检查，收到的组播 224.0.0.5 的 hello 包会被 rp_filter 过滤掉，导致 ospfd 进程无法收到 hello 包，也就无法建邻。</p>
+<p>解决方法：关闭或使用 loose 的反向路由检查。详细参考：<a href="https://gy23333.github.io/2024/11/22/rp-filter反向路由过滤/">rp_filter反向路由过滤</a></p>
+<h1 id="OSPF-多路径负载均衡"><a href="#OSPF-多路径负载均衡" class="headerlink" title="OSPF 多路径负载均衡"></a>OSPF 多路径负载均衡</h1><p>OSPF 支持多路径的负载均衡，如两台 DNS Server，使用同样的 VIP，通过 OSPF 路由可以实现流量的负载均衡。</p>
+<h2 id="FRRouting-发布-VIP"><a href="#FRRouting-发布-VIP" class="headerlink" title="FRRouting 发布 VIP"></a>FRRouting 发布 VIP</h2><p>添加并开启虚拟网卡 vip_if0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo ip link add vip_if0 type dummy</span><br><span class="line">sudo ip link set vip_if0 up</span><br></pre></td></tr></table></figure>
+<p>FRR 配置 vip_if0 网卡</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">!</span><br><span class="line">interface vip_if0</span><br><span class="line"> ip address 10.0.0.10&#x2F;32</span><br><span class="line"> ip ospf area 0.0.0.0</span><br><span class="line">exit</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ip address 10.0.0.10/32</code><ul>
+<li>添加 <code>10.0.0.10/32</code> 作为 VIP</li>
+</ul>
+</li>
+<li><code>ip ospf area 0.0.0.0</code><ul>
+<li>设置 vip_if0 为 OSPF 网卡，但此虚拟网卡实际无法建邻</li>
+</ul>
+</li>
+</ul>
+<h2 id="BIRD-添加路由"><a href="#BIRD-添加路由" class="headerlink" title="BIRD 添加路由"></a>BIRD 添加路由</h2><p>检查 BIRD 配置是否支持路由导出以及多路径路由</p>
+<ol>
+<li><p>确认 BIRD 开启将学到的路由导出到内核表，确认 <code>export all;</code> 开启</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol kernel &#123;</span><br><span class="line">        ipv4 &#123;                  # Connect protocol to IPv4 table by channel</span><br><span class="line">#             table master4;    # Default IPv4 table is master4</span><br><span class="line">#             import all;       # Import to table, default is import all</span><br><span class="line">              export all;       # Export to protocol. default is export none</span><br><span class="line">        &#125;;</span><br><span class="line">#       learn;                  # Learn alien routes from the kernel</span><br><span class="line">#       kernel table 10;        # Kernel table to synchronize with (default: main)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确认 OSPF 开启 ecmp，以支持 OSPF 多路径。ecmp 默认（不填写）为开启状态，limit 默认 16</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol ospf v2 &#123;</span><br><span class="line">        ecmp &lt;switch&gt; [limit &lt;num&gt;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>查看 BIRD 是否学习到 VIP 路由，可以看到已经学习到了该 VIP 的两条路由</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bird&gt; show route</span><br><span class="line">Table master4:</span><br><span class="line">10.0.0.10&#x2F;32         unicast [ospf1 05:38:47.681] * I (150&#x2F;20) [172.16.19.132]</span><br><span class="line">        via 172.16.19.131 on ens256 weight 1</span><br><span class="line">        via 172.16.19.132 on ens256 weight 1</span><br><span class="line">172.16.19.0&#x2F;24       unicast [ospf1 04:35:44.681] * I (150&#x2F;10) [172.16.19.129]</span><br><span class="line">        dev ens256</span><br></pre></td></tr></table></figure>
+<h2 id="配置并运行-Coredns"><a href="#配置并运行-Coredns" class="headerlink" title="配置并运行 Coredns"></a>配置并运行 Coredns</h2><ol>
+<li><p>添加 Coredns 配置及域名解析</p>
+<p>/etc/coredns/Corefile</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    log</span><br><span class="line">    file &#x2F;etc&#x2F;coredns&#x2F;db.example.com</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/etc/coredns/db.example.com</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$TTL 3600</span><br><span class="line">@   IN  SOA ns.example.com. admin.example.com. (</span><br><span class="line">        1   ; Serial</span><br><span class="line">        3600    ; Refresh</span><br><span class="line">        1800    ; Retry</span><br><span class="line">        604800  ; Expire</span><br><span class="line">        86400 ) ; Minimum TTL</span><br><span class="line"></span><br><span class="line">@   IN  NS  ns.example.com.</span><br><span class="line">@   IN  A   192.168.1.10</span><br><span class="line">ns  IN  A   192.168.1.10</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止 systemd-resolve</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl stop systemd-resolved</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行 Coredns</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">coredns -conf &#x2F;etc&#x2F;coredns&#x2F;Corefile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查 Coredns 是否正常</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">guoyi@ubuntu2:~<span class="variable">$</span> dig @<span class="number">127.0</span>.<span class="number">0.1</span> example.com</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG <span class="number">9.18</span>.<span class="number">28</span><span class="literal">-0ubuntu0</span>.<span class="number">24.04</span>.<span class="number">1</span><span class="literal">-Ubuntu</span> &lt;&lt;&gt;&gt; @<span class="number">127.0</span>.<span class="number">0.1</span> example.com</span><br><span class="line">; (<span class="number">1</span> server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: <span class="number">45115</span></span><br><span class="line">;; flags: qr aa rd; QUERY: <span class="number">1</span>, ANSWER: <span class="number">1</span>, AUTHORITY: <span class="number">1</span>, ADDITIONAL: <span class="number">1</span></span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: <span class="number">0</span>, flags:; udp: <span class="number">1232</span></span><br><span class="line">; COOKIE: a29f8e8fa133c213 (echoed)</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;example.com.                   <span class="keyword">IN</span>      A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">example.com.            <span class="number">3600</span>    <span class="keyword">IN</span>      A       <span class="number">192.168</span>.<span class="number">1.10</span></span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">example.com.            <span class="number">3600</span>    <span class="keyword">IN</span>      NS      ns.example.com.</span><br><span class="line"></span><br><span class="line">;; Query time: <span class="number">0</span> msec</span><br><span class="line">;; SERVER: <span class="number">127.0</span>.<span class="number">0.1</span><span class="comment">#53(127.0.0.1) (UDP)</span></span><br><span class="line">;; WHEN: Mon Dec <span class="number">09</span> <span class="number">12</span>:<span class="number">50</span>:<span class="number">07</span> UTC <span class="number">2024</span></span><br><span class="line">;; MSG SIZE  rcvd: <span class="number">118</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="打流"><a href="#打流" class="headerlink" title="打流"></a>打流</h2><p>在 BIRD 节点通过 dig VIP 打流，查看两个 Coredns 服务器日志是否负载均衡承接流量。</p>
+<ol>
+<li><p>打流前先确认 BIRD 节点内核配置 <code>net.ipv4.fib_multipath_hash_policy</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">sysctl <span class="literal">-a</span> | grep net.ipv4.fib_multipath_hash_policy</span><br></pre></td></tr></table></figure>
+<p>该配置设置了多路径路由哈希策略，相同元组的包在多路径下会选择同一路径</p>
+<ul>
+<li><code>net.ipv4.fib_multipath_hash_policy=0</code>：{src_ip,  dst_ip}</li>
+<li><code>net.ipv4.fib_multipath_hash_policy=1</code>：{src_ip,  src_port , dst_ip, dst_port, proto}</li>
+</ul>
+<p>需将 <code>net.ipv4.fib_multipath_hash_policy</code> 设置为 1</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">sysctl <span class="literal">-w</span> net.ipv4.fib_multipath_hash_policy=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 BIRD 节点打流到 VIP</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;<span class="number">1</span>..<span class="number">1000</span>&#125;; <span class="keyword">do</span> dig @<span class="number">10.0</span>.<span class="number">0.10</span> example.com; done</span><br></pre></td></tr></table></figure>
+<p>查看两个 Coredns 节点日志，可以看到两节点平分了 VIP 的流量</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241209210934934.png" alt=""></p>
+</li>
+</ol>
 ]]></content>
   </entry>
 </search>
