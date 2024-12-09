@@ -13023,16 +13023,19 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt install bird2</span><br></pre></td></tr></table></figure>
 <p>检查 bird 是否安装成功</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">guoyi@ubuntu2404:~<span class="variable">$</span> systemctl status bird</span><br><span class="line">● bird.service - BIRD Internet Routing Daemon</span><br><span class="line">     Loaded: loaded (/usr/lib/systemd/system/bird.service; enabled; preset: enabled)</span><br><span class="line">     Active: active (running) since Tue <span class="number">2024</span><span class="literal">-12</span><span class="literal">-03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> UTC; <span class="number">5</span> days ago</span><br><span class="line">   Main PID: <span class="number">28186</span> (bird)</span><br><span class="line">      Tasks: <span class="number">1</span> (limit: <span class="number">4542</span>)</span><br><span class="line">     Memory: <span class="number">924.0</span>K (peak: <span class="number">1.9</span>M)</span><br><span class="line">        CPU: <span class="number">4.824</span>s</span><br><span class="line">     CGroup: /system.slice/bird.service</span><br><span class="line">             └─<span class="number">28186</span> /usr/sbin/bird <span class="operator">-f</span> <span class="literal">-u</span> bird <span class="literal">-g</span> bird</span><br><span class="line"></span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 systemd[<span class="number">1</span>]: Starting bird.service - BIRD Internet Routing Daemon...</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 systemd[<span class="number">1</span>]: Started bird.service - BIRD Internet Routing Daemon.</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 (bird)[<span class="number">28186</span>]: bird.service: Referenced but unset environment variable evaluates to an emp&gt;</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 bird[<span class="number">28186</span>]: Chosen router ID <span class="number">172.16</span>.<span class="number">19.129</span> according to interface ens160</span><br><span class="line">Dec <span class="number">03</span> <span class="number">05</span>:<span class="number">05</span>:<span class="number">57</span> ubuntu2404 bird[<span class="number">28186</span>]: Started</span><br></pre></td></tr></table></figure>
-<h1 id="birdc-命令"><a href="#birdc-命令" class="headerlink" title="birdc 命令"></a>birdc 命令</h1><ul>
+<h1 id="birdc-命令"><a href="#birdc-命令" class="headerlink" title="birdc 命令"></a>birdc 命令</h1><p>通过 <code>birdc</code> 进入</p>
+<ul>
 <li><p>重新加载配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">birdc configure</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configure</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看路由</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show route</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看 OSPF 邻居节点</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show ospf neighbors</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<ul>
-<li><h1 id="BIRD-配置"><a href="#BIRD-配置" class="headerlink" title="BIRD 配置"></a>BIRD 配置</h1></li>
-</ul>
-<p>默认配置路径 <code>/etc/bird/bird.conf</code></p>
-<h1 id="OSPF-多路径负载均衡"><a href="#OSPF-多路径负载均衡" class="headerlink" title="OSPF 多路径负载均衡"></a>OSPF 多路径负载均衡</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol ospf MyOSPF &#123;</span><br><span class="line">    area 0.0.0.0 &#123;</span><br><span class="line">        interface &quot;eth0&quot;, &quot;eth1&quot; &#123;</span><br><span class="line">            cost 10;   # 为两个接口设置相同的 cost</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ecmp yes;   # 启用等价多路径</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="BIRD-配置"><a href="#BIRD-配置" class="headerlink" title="BIRD 配置"></a>BIRD 配置</h1><p>默认配置路径 <code>/etc/bird/bird.conf</code></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://bird.xmsl.dev" target="_blank" rel="noopener">BIRD 中文文档</a></li>
 </ul>
@@ -13132,7 +13135,7 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </ul>
 <h2 id="BIRD-添加路由"><a href="#BIRD-添加路由" class="headerlink" title="BIRD 添加路由"></a>BIRD 添加路由</h2><p>检查 BIRD 配置是否支持路由导出以及多路径路由</p>
 <ol>
-<li><p>确认 BIRD 开启将学到的路由导出到内核表，确认 <code>export all;</code> 开启</p>
+<li><p>确认 BIRD 开启将学到的路由导出到内核路由表，确认 <code>export all;</code> 开启</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protocol kernel &#123;</span><br><span class="line">        ipv4 &#123;                  # Connect protocol to IPv4 table by channel</span><br><span class="line">#             table master4;    # Default IPv4 table is master4</span><br><span class="line">#             import all;       # Import to table, default is import all</span><br><span class="line">              export all;       # Export to protocol. default is export none</span><br><span class="line">        &#125;;</span><br><span class="line">#       learn;                  # Learn alien routes from the kernel</span><br><span class="line">#       kernel table 10;        # Kernel table to synchronize with (default: main)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>确认 OSPF 开启 ecmp，以支持 OSPF 多路径。ecmp 默认（不填写）为开启状态，limit 默认 16</p>
@@ -13141,6 +13144,8 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </ol>
 <p>查看 BIRD 是否学习到 VIP 路由，可以看到已经学习到了该 VIP 的两条路由</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bird&gt; show route</span><br><span class="line">Table master4:</span><br><span class="line">10.0.0.10&#x2F;32         unicast [ospf1 05:38:47.681] * I (150&#x2F;20) [172.16.19.132]</span><br><span class="line">        via 172.16.19.131 on ens256 weight 1</span><br><span class="line">        via 172.16.19.132 on ens256 weight 1</span><br><span class="line">172.16.19.0&#x2F;24       unicast [ospf1 04:35:44.681] * I (150&#x2F;10) [172.16.19.129]</span><br><span class="line">        dev ens256</span><br></pre></td></tr></table></figure>
+<p>查看是否导入到了 Linux 路由表</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:/home/guoyi/workplace<span class="comment"># ip route show</span></span><br><span class="line">...</span><br><span class="line"><span class="number">10.0</span>.<span class="number">0.10</span> proto bird metric <span class="number">32</span></span><br><span class="line">        nexthop via <span class="number">172.16</span>.<span class="number">19.131</span> dev ens256 weight <span class="number">1</span></span><br><span class="line">        nexthop via <span class="number">172.16</span>.<span class="number">19.132</span> dev ens256 weight <span class="number">1</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <h2 id="配置并运行-Coredns"><a href="#配置并运行-Coredns" class="headerlink" title="配置并运行 Coredns"></a>配置并运行 Coredns</h2><ol>
 <li><p>添加 Coredns 配置及域名解析</p>
 <p>/etc/coredns/Corefile</p>
