@@ -13054,7 +13054,42 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
   <entry>
     <title>Linux日志管理工具--logrotate</title>
     <url>/2024/12/07/Linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-logrotate/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>logrotate 是 Linux 系统中用来管理日志的工具，通过配置可以实现日志的自动轮转、压缩、删除、邮件发送功能。</p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>logrotate 提供了日志的自动轮转、压缩、删除、邮件发送能力，可以设置定期或者限制文件大小来触发。</p>
+<p>一般来说，logrotate 都是作为每日的定时任务运行，一般不会一天内处理多次，除非触发条件是基于文件的大小并且设置 logrotate 一天执行多次，或者在执行时使用强制选项 <code>-f</code></p>
+<h1 id="logrotate-命令"><a href="#logrotate-命令" class="headerlink" title="logrotate 命令"></a>logrotate 命令</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">logrotate [OPTION...] &lt;configfile&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>-d</code>, <code>--debug</code>：以调试模式运行，打印出详细的调试信息，但不执行任何轮转操作</p>
+</li>
+<li><p><code>-f</code>, <code>--force</code>：强制执行日志轮转，即使不符合轮转条件</p>
+</li>
+<li><p><code>-v</code>, <code>--verbose</code>：在轮转时显示更多信息</p>
+</li>
+<li><p><code>-s</code>, <code>--state=statefile</code>：指定一个状态文件来记录日志轮转的历史状态，默认状态文件是 /var/lib/logrotate/status</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">logrotate -s &#x2F;var&#x2F;log&#x2F;logrotate.status &#x2F;etc&#x2F;logrotate.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-l</code>, <code>--log=logfile</code>：指定 logrotate 日志记入的日志文件</p>
+</li>
+<li><p><code>-m</code>, <code>--mail=command</code>：指定发送邮件的命令</p>
+</li>
+</ul>
+<h1 id="logrotate-定时任务"><a href="#logrotate-定时任务" class="headerlink" title="logrotate 定时任务"></a>logrotate 定时任务</h1><h2 id="logrotate-配置文件"><a href="#logrotate-配置文件" class="headerlink" title="logrotate 配置文件"></a>logrotate 配置文件</h2><p>将 logrotate 配置文件按路径不同分为下面三种：</p>
+<ul>
+<li><code>/etc/logrotate.conf</code></li>
+<li><code>/etc/logrotate.d/</code></li>
+<li>其他路径</li>
+</ul>
+<h1 id="logrotate-配置"><a href="#logrotate-配置" class="headerlink" title="logrotate 配置"></a>logrotate 配置</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://linux.die.net/man/8/logrotate" target="_blank" rel="noopener">logrotate 官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>logrotate</tag>
+      </tags>
   </entry>
   <entry>
     <title>基于FRRouting/Bird的OSPF组网及负载均衡实现</title>
@@ -13182,5 +13217,72 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>FRRouting</tag>
+        <tag>BIRD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go 依赖管理</title>
+    <url>/2024/12/24/Go-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 依赖管理</p>
+<a id="more"></a>
+<h1 id="初始化-Go-项目"><a href="#初始化-Go-项目" class="headerlink" title="初始化 Go 项目"></a>初始化 Go 项目</h1><ol>
+<li><p>新建项目文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir survey-test</span><br><span class="line">cd survey-test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化 Go 模块</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">go mod init github.com/GY23333/survey<span class="literal">-test</span></span><br><span class="line">go: creating new go.mod: module github.com/GY23333/survey<span class="literal">-test</span></span><br></pre></td></tr></table></figure>
+<p>该步会自动生成 go.mod 文件</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">module github.com/GY23333/survey-test</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.23</span><span class="number">.3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如需获取依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u github.com&#x2F;gorilla&#x2F;mux</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go Package: survey</title>
+    <url>/2024/12/24/Go-Package-survey/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 交互式命令行工具库，提供了包括文本输入、选择菜单、确认提示、多项选择等多种交互类型，帮助快速构建交互式命令行页面。</p>
+<a id="more"></a>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u github.com&#x2F;AlecAivazis&#x2F;survey&#x2F;v2</span><br></pre></td></tr></table></figure>
+<h1 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h1><h2 id="Input-单行输入"><a href="#Input-单行输入" class="headerlink" title="Input 单行输入"></a>Input 单行输入</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> username <span class="keyword">string</span></span><br><span class="line">prompt := &amp;survey.Input&#123;</span><br><span class="line">  Message: <span class="string">"Input username:"</span>,</span><br><span class="line">&#125;</span><br><span class="line">survey.AskOne(prompt, &amp;username)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241225015619560.png" alt="image-20241225015619560" style="zoom:67%;" /></p>
+<p>可以通过设置 <code>Suggest</code> 来给用户提供建议，帮助补全输入，<code>Suggest</code> 为由当前输入值返回建议值列表的方法。如下面补全文件路径示例。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> path <span class="keyword">string</span></span><br><span class="line">prompt := &amp;survey.Input&#123;</span><br><span class="line">  Message: <span class="string">"Input file path:"</span>,</span><br><span class="line">  Suggest: <span class="function"><span class="keyword">func</span><span class="params">(toComplete <span class="keyword">string</span>)</span> []<span class="title">string</span></span> &#123;</span><br><span class="line">    files, _ := filepath.Glob(toComplete + <span class="string">"*"</span>)</span><br><span class="line">    <span class="keyword">return</span> files</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">survey.AskOne(prompt, &amp;path)</span><br></pre></td></tr></table></figure>
+<p><img src="/Users/guoyi/Library/Application Support/typora-user-images/image-20241225020920573.png" alt="image-20241225020920573"></p>
+<h2 id="Multiline-多行输入"><a href="#Multiline-多行输入" class="headerlink" title="Multiline 多行输入"></a>Multiline 多行输入</h2><h2 id="Select-单选"><a href="#Select-单选" class="headerlink" title="Select 单选"></a>Select 单选</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> tool <span class="keyword">string</span></span><br><span class="line">prompt := &amp;survey.Select&#123;</span><br><span class="line">  Message: <span class="string">"Choose a tool:"</span>,</span><br><span class="line">  Options: []<span class="keyword">string</span>&#123;<span class="string">"toolA"</span>, <span class="string">"toolB"</span>, <span class="string">"toolC"</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line">survey.AskOne(prompt, &amp;tool)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241225013809541.png" style="zoom: 67%;" /></p>
+<p>可以通过设置 <code>Description</code> 给每个选项添加描述， <code>Description</code>  为由选项值/序号返回描述的方法</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> tool <span class="keyword">string</span></span><br><span class="line">description := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">  <span class="string">"toolA"</span>: <span class="string">"Description for toolA"</span>,</span><br><span class="line">  <span class="string">"toolB"</span>: <span class="string">"Description for toolB"</span>,</span><br><span class="line">  <span class="string">"toolC"</span>: <span class="string">"Description for toolC"</span>,</span><br><span class="line">&#125;</span><br><span class="line">prompt := &amp;survey.Select&#123;</span><br><span class="line">  Message: <span class="string">"Choose a tool:"</span>,</span><br><span class="line">  Options: []<span class="keyword">string</span>&#123;<span class="string">"toolA"</span>, <span class="string">"toolB"</span>, <span class="string">"toolC"</span>&#125;,</span><br><span class="line">  Description: <span class="function"><span class="keyword">func</span><span class="params">(value <span class="keyword">string</span>, index <span class="keyword">int</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> description[value]</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">survey.AskOne(prompt, &amp;tool)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241225014328295.png" style="zoom:67%;" /></p>
+<h2 id="MultiSelect-多选"><a href="#MultiSelect-多选" class="headerlink" title="MultiSelect 多选"></a>MultiSelect 多选</h2><h2 id="Confirm-确认"><a href="#Confirm-确认" class="headerlink" title="Confirm 确认"></a>Confirm 确认</h2><h2 id="Password-密码"><a href="#Password-密码" class="headerlink" title="Password 密码"></a>Password 密码</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://github.com/AlecAivazis/survey" target="_blank" rel="noopener">https://github.com/AlecAivazis/survey</a></li>
+<li><a href="https://pkg.go.dev/github.com/AlecAivazis/survey/v2#section-readme" target="_blank" rel="noopener">https://pkg.go.dev/github.com/AlecAivazis/survey/v2#section-readme</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TLS 证书</title>
+    <url>/2024/12/24/TLS-%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
   </entry>
 </search>

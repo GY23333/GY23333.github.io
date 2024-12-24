@@ -46,14 +46,17 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="logrotate 是 Linux 系统中用来管理日志的工具，通过配置可以实现日志的自动轮转、压缩、删除、邮件发送功能。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Linux日志管理工具--logrotate">
 <meta property="og:url" content="https://gy23333.github.io/2024/12/07/Linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-logrotate/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="logrotate 是 Linux 系统中用来管理日志的工具，通过配置可以实现日志的自动轮转、压缩、删除、邮件发送功能。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-06T16:45:51.000Z">
-<meta property="article:modified_time" content="2024-12-06T16:45:51.250Z">
+<meta property="article:modified_time" content="2024-12-16T05:23:49.137Z">
 <meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="logrotate">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://gy23333.github.io/2024/12/07/Linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-logrotate/">
@@ -233,6 +236,24 @@
 
               <time title="Created: 2024-12-07 00:45:51" itemprop="dateCreated datePublished" datetime="2024-12-07T00:45:51+08:00">2024-12-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-16 13:23:49" itemprop="dateModified" datetime="2024-12-16T13:23:49+08:00">2024-12-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
 
           
   
@@ -259,7 +280,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>logrotate 是 Linux 系统中用来管理日志的工具，通过配置可以实现日志的自动轮转、压缩、删除、邮件发送功能。</p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>logrotate 提供了日志的自动轮转、压缩、删除、邮件发送能力，可以设置定期或者限制文件大小来触发。</p>
+<p>一般来说，logrotate 都是作为每日的定时任务运行，一般不会一天内处理多次，除非触发条件是基于文件的大小并且设置 logrotate 一天执行多次，或者在执行时使用强制选项 <code>-f</code></p>
+<h1 id="logrotate-命令"><a href="#logrotate-命令" class="headerlink" title="logrotate 命令"></a>logrotate 命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logrotate [OPTION...] &lt;configfile&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>-d</code>, <code>--debug</code>：以调试模式运行，打印出详细的调试信息，但不执行任何轮转操作</p>
+</li>
+<li><p><code>-f</code>, <code>--force</code>：强制执行日志轮转，即使不符合轮转条件</p>
+</li>
+<li><p><code>-v</code>, <code>--verbose</code>：在轮转时显示更多信息</p>
+</li>
+<li><p><code>-s</code>, <code>--state=statefile</code>：指定一个状态文件来记录日志轮转的历史状态，默认状态文件是 /var/lib/logrotate/status</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logrotate -s &#x2F;var&#x2F;log&#x2F;logrotate.status &#x2F;etc&#x2F;logrotate.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-l</code>, <code>--log=logfile</code>：指定 logrotate 日志记入的日志文件</p>
+</li>
+<li><p><code>-m</code>, <code>--mail=command</code>：指定发送邮件的命令</p>
+</li>
+</ul>
+<h1 id="logrotate-定时任务"><a href="#logrotate-定时任务" class="headerlink" title="logrotate 定时任务"></a>logrotate 定时任务</h1><h2 id="logrotate-配置文件"><a href="#logrotate-配置文件" class="headerlink" title="logrotate 配置文件"></a>logrotate 配置文件</h2><p>将 logrotate 配置文件按路径不同分为下面三种：</p>
+<ul>
+<li><code>/etc/logrotate.conf</code></li>
+<li><code>/etc/logrotate.d/</code></li>
+<li>其他路径</li>
+</ul>
+<h1 id="logrotate-配置"><a href="#logrotate-配置" class="headerlink" title="logrotate 配置"></a>logrotate 配置</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://linux.die.net/man/8/logrotate" target="_blank" rel="noopener">logrotate 官方文档</a></li>
+</ul>
+
     </div>
 
     
@@ -267,6 +317,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/logrotate/" rel="tag"># logrotate</a>
+          </div>
 
         
 
@@ -341,6 +394,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logrotate-命令"><span class="nav-number">2.</span> <span class="nav-text">logrotate 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logrotate-定时任务"><span class="nav-number">3.</span> <span class="nav-text">logrotate 定时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate-配置文件"><span class="nav-number">3.1.</span> <span class="nav-text">logrotate 配置文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logrotate-配置"><span class="nav-number">4.</span> <span class="nav-text">logrotate 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -356,7 +410,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -369,7 +423,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-count">80</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
