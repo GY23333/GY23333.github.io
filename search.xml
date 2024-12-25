@@ -10024,7 +10024,7 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 </ul>
 </li>
 </ul>
-<p><img src="https://i.loli.net/2020/03/19/J1qlUrQx9LiTFY2.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/J1qlUrQx9LiTFY2.png" style="zoom:50%;" /></p>
 <h3 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h3><ul>
 <li><p>为应用程序提供服务的基础设施</p>
 <p>即用户使用应用。</p>
@@ -10069,20 +10069,20 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 </tbody>
 </table>
 </div>
-<p><img src="https://i.loli.net/2020/03/20/oCDhqtVGuRLjenm.png" alt="截屏2020-03-20上午12.22.20.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/oCDhqtVGuRLjenm.png" alt="截屏2020-03-20上午12.22.20.png" style="zoom:50%;" /></p>
 <ul>
 <li><p><strong>电缆因特网接入</strong>（cable Internet access）</p>
 <p>利用<strong>有线电视网</strong>接入网络。结构上，通过粗的同轴电缆接入社区，再用细的同轴电缆接入每家每户。</p>
 <p>采用<strong>共享</strong>的<strong>频分多路复用</strong>来传输。</p>
 </li>
 </ul>
-<p><img src="https://i.loli.net/2020/03/20/w1BdRQcMi5KS7Iz.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/w1BdRQcMi5KS7Iz.png" style="zoom:50%;" /></p>
 <ul>
 <li><strong>混合光纤同轴电缆</strong>（<strong>HFC</strong>）</li>
 </ul>
 <p>​    <strong>同轴电缆</strong>和<strong>光纤节点</strong>相连再接入边缘路由器。</p>
 <p>​    <strong>不对称</strong>的<strong>竞争式协议</strong>，最高可达到30Mbps的下行速率和2Mbps的上行速率。由于采用竞争式协议，在用户少时使用体验优于普通的电缆因特网接入，但是在用户多时容易造成卡顿。</p>
-<p><img src="https://i.loli.net/2020/03/20/xsZF9RbLfSq82or.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/xsZF9RbLfSq82or.png" style="zoom:50%;" /></p>
 <h4 id="企业（家庭）接入：以太网和WiFi"><a href="#企业（家庭）接入：以太网和WiFi" class="headerlink" title="企业（家庭）接入：以太网和WiFi"></a>企业（家庭）接入：以太网和WiFi</h4><ul>
 <li><strong>以太网</strong>：使用双绞铜线与一台以太网交换机相连，速率可达到100Mbps、1Gbps、10Gbps。</li>
 <li><strong>WiFi</strong>：IEEE802.11技术无线LAN，范围在几十米内。</li>
@@ -10094,19 +10094,19 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 </ul>
 <h2 id="网络核心（Network-Core）"><a href="#网络核心（Network-Core）" class="headerlink" title="网络核心（Network Core）"></a>网络核心（Network Core）</h2><p>​    网络核心：由端系统的分组交换机和链路构成的网状网络。下图标亮部分即使网络核心。</p>
 <p>​    一共有三种交换方式：报文交换（很少使用）、分组交换和电路交换</p>
-<p><img src="https://i.loli.net/2020/03/20/dAzBna3i9lZU2uN.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/dAzBna3i9lZU2uN.png" style="zoom:50%;" /></p>
 <h3 id="分组交换（Packet-Switching）"><a href="#分组交换（Packet-Switching）" class="headerlink" title="分组交换（Packet Switching）"></a>分组交换（Packet Switching）</h3><p>​    端系统之间彼此传输报文，分组交换中，将长报文划分为分组，分组再通过通信链路和分组交换机（分为路由器和链路层交换机）传送。</p>
 <ol>
 <li><p><strong>存储转发传输</strong>（Store-and-Forward Transmission）</p>
 <p>​    分组交换和报文交换都采用了存储转发的传输形式。但分组交换的存储转发以分组为单位，即交换机接收到整个分组后才能输出该分组的数据；而报文交换的存储转发单位为报文，需要交换机接收到整个报文后才能输出。</p>
-<p><img src="https://i.loli.net/2020/03/20/YZt3aBmjsS1dLIi.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/YZt3aBmjsS1dLIi.png" style="zoom:50%;" /></p>
 <p>​    传输相同大小的数据包，分组交换比报文交换更快。下面是分组交换传输3L大小的报文的时间流，报文分为3个大小为L的分组，根据分组交换原理，一共耗费了 4L/R 时间完成传输（即<strong>存储转发时延</strong>）。而如果使用报文传输同样的3L大小的报文则需要耗费 6L/R 时间。</p>
-<p><img src="https://i.loli.net/2020/03/20/zkxt9eo4fQqmLRV.jpg" alt="分组交换.jpg" style="zoom: 30%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/zkxt9eo4fQqmLRV.jpg" alt="分组交换.jpg" style="zoom: 30%;" /></p>
 </li>
 <li><p><strong>排队时延</strong>（Queuing Delay）和<strong>分组丢失</strong>（Packet Loss）</p>
 <p>​    分组交换机有有一个<strong>输出缓存</strong>（output buffer），分组可能会在分组交换机上排队等待输出，造成排队时延。</p>
 <p>​    分组交换机的缓存空间是有限的，所以在过于拥堵时会产生分组丢失（丢包）。</p>
-<p><img src="https://i.loli.net/2020/03/20/iCtTZGq6BQuHzwa.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/iCtTZGq6BQuHzwa.png" style="zoom:50%;" /></p>
 </li>
 <li><p><strong>转发表</strong>（Forwarding Table）和<strong>路由选择协议</strong>（Routing Protocol）</p>
 <ul>
@@ -10116,12 +10116,12 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 </li>
 </ol>
 <h3 id="电路交换（Circuit-Switching）"><a href="#电路交换（Circuit-Switching）" class="headerlink" title="电路交换（Circuit Switching）"></a>电路交换（Circuit Switching）</h3><p>​    <strong>端到端连接</strong>（end- to-end connection）：在发送数据之前，必须先在发送和接收两端建立端到端连接，并预留一部分带宽。而分组交换不预留，所以会造成排队和丢包。</p>
-<p><img src="https://i.loli.net/2020/03/20/D91fBHdvxo24MFT.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/D91fBHdvxo24MFT.png" style="zoom:50%;" /></p>
 <h4 id="频分多路复用（FDM）"><a href="#频分多路复用（FDM）" class="headerlink" title="频分多路复用（FDM）"></a>频分多路复用（FDM）</h4><p>​    链路中的每条连接专用一个频段。</p>
-<p><img src="https://i.loli.net/2020/03/20/NubPYJA6WrcvsqI.png" style="zoom: 40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/NubPYJA6WrcvsqI.png" style="zoom: 40%;" /></p>
 <h4 id="时分多路复用（TDM）"><a href="#时分多路复用（TDM）" class="headerlink" title="时分多路复用（TDM）"></a>时分多路复用（TDM）</h4><p>​    远距离传输会有衰减，所以考虑用<strong>数字信号</strong>进行传输。在时域上对信号进行<strong>采样</strong>，接收时再将采样信号恢复。</p>
 <p>​    TDM在时域上被划分为固定的<strong>帧</strong>（frame），每帧又被划分为固定数量的<strong>时隙</strong>（slot），链路中的每条连接专用一个时隙。</p>
-<p><img src="https://i.loli.net/2020/03/21/yLN9bmafTdIqj6c.png" style="zoom: 67%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/yLN9bmafTdIqj6c.png" style="zoom: 67%;" /></p>
 <h3 id="分组交换-amp-电路交换"><a href="#分组交换-amp-电路交换" class="headerlink" title="分组交换 &amp; 电路交换"></a>分组交换 &amp; 电路交换</h3><p>​    分组交换的性能优于电路交换，适用于随机数据，可以满足更多用户。</p>
 <p>​    电路交换需要预留带宽，相当于固定了链路用户的数量。而分组交换不需要预留带宽，用户使用网络是有一定概率的，在一个时刻较多人使用的概率其实相对较低，所以一条链路可以给更多的用户使用。</p>
 <p>​    电路交换适用于特殊情况，比如要保障传输数据能力。</p>
@@ -10130,7 +10130,7 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 <li><strong>ISP</strong>：ISP分为许多层级，比如<strong>第一层ISP</strong>（tier-1 ISP）、<strong>区域ISP</strong>（regional ISP）、<strong>接入ISP</strong>（access ISP）。端系统通过接入ISP与因特网相连，全球的ISP通过各个层级相连，形成了互联网的互联。</li>
 <li>因特网交换点（Internet Exchange Point，<strong>IXP</strong>）：由第三方公司创建，IXP是一个汇合点，多个ISP在此处对等。</li>
 </ul>
-<p><img src="https://i.loli.net/2020/03/21/NugS6r92GDaCqeJ.png" style="zoom: 60%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/NugS6r92GDaCqeJ.png" style="zoom: 60%;" /></p>
 <h2 id="协议（Protocol）"><a href="#协议（Protocol）" class="headerlink" title="协议（Protocol）"></a>协议（Protocol）</h2><p>​    协议定义了在两个或多个通信实体之间交换的报文格式和次序，以及报文发送和/或接收一条报文或其他时间所采取的动作。</p>
 <p>​    协议三大要素：</p>
 <ul>
@@ -10138,10 +10138,10 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 <li>语义（Semantics）：每一段内容需要代表某种意义，比如原地址部分的二进制到底是指哪个地址。</li>
 <li>同步（Timing）：通信的过程，即每一段任务的执行顺序。</li>
 </ul>
-<p><img src="https://i.loli.net/2020/03/22/RS7Lpk2YjGtCnKV.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/RS7Lpk2YjGtCnKV.png" style="zoom:50%;" /></p>
 <h2 id="协议层次（Protocol-Layer）及其服务模型"><a href="#协议层次（Protocol-Layer）及其服务模型" class="headerlink" title="协议层次（Protocol Layer）及其服务模型"></a>协议层次（Protocol Layer）及其服务模型</h2><h3 id="五层因特网协议栈"><a href="#五层因特网协议栈" class="headerlink" title="五层因特网协议栈"></a>五层因特网协议栈</h3><p>​    因特网协议栈由5个层次组成：物理层、链路层、网络层、传输层和应用层。因特网协议栈是一个理想模型。</p>
 <p>​    下层为上层提供服务。越下面的层，越靠近硬件；越上面的层，越靠近用户。</p>
-<p><img src="https://i.loli.net/2020/03/22/oYnb8OzPqg461Ux.png" alt="截屏2020-03-22上午12.23.35.png" style="zoom: 20%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/oYnb8OzPqg461Ux.png" alt="截屏2020-03-22上午12.23.35.png" style="zoom: 20%;" /></p>
 <div class="table-container">
 <table>
 <thead>
@@ -10190,7 +10190,7 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 <p>在接收端以反方向重构报文段。</p>
 </li>
 </ol>
-<p><img src="https://i.loli.net/2020/03/22/uBFK4rGifLvsHqE.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/uBFK4rGifLvsHqE.png" style="zoom:50%;" /></p>
 <h2 id="物理层概述"><a href="#物理层概述" class="headerlink" title="物理层概述"></a>物理层概述</h2><p>​    在两个物理媒体间进行比特流传输，上层都是逻辑链接，只有物理层是实际的物理连接。</p>
 <h3 id="物理层基本目标"><a href="#物理层基本目标" class="headerlink" title="物理层基本目标"></a>物理层基本目标</h3><ul>
 <li>保证发送信号“0”和“1”的正确性以及发送和接收的一致性；</li>
@@ -10244,7 +10244,7 @@ hash(key) \% 2^{32}</script><p>可以把取模结果当做一个圆环，由 $2^
 <li><p><strong>码元</strong>（Symbol）：承载信息量的基本信号单位。</p>
 <p>​    下面是马原分级数 N 与所需bit位数 n 的关系（N个离散的值需要n个bits）</p>
 <script type="math/tex; mode=display">
-n=log_2N</script><p><img src="https://i.loli.net/2020/03/22/wxHkuoMDth7Bqpm.jpg" style="zoom:40%;" /></p>
+n=log_2N</script><p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/wxHkuoMDth7Bqpm.jpg" style="zoom:40%;" /></p>
 </li>
 <li><p><strong>波特率</strong>（Baud rate）：传输码元的速率。</p>
 </li>
@@ -10283,22 +10283,22 @@ C=Wlog_2(1+S/N)</script><ul>
 </ul>
 <h3 id="模拟-数字信号传输"><a href="#模拟-数字信号传输" class="headerlink" title="模拟/数字信号传输"></a>模拟/数字信号传输</h3><p>​    模拟信道只能传输模拟信号，数字信道只能传输数字信号。</p>
 <h4 id="调制解调器"><a href="#调制解调器" class="headerlink" title="调制解调器"></a>调制解调器</h4><p>​    数字/模拟信号 经过 <strong>调制</strong> 变成 <strong>模拟信号</strong>，如此可在 模拟信道 上传输，再经过 <strong>解调</strong> 变成 数字/模拟信号。</p>
-<p><img src="https://i.loli.net/2020/03/23/4mKvzSkIDigxhFX.png" style="zoom:40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/4mKvzSkIDigxhFX.png" style="zoom:40%;" /></p>
 <h4 id="编码解码器"><a href="#编码解码器" class="headerlink" title="编码解码器"></a>编码解码器</h4><p>​    数字/模拟信号 经过 <strong>编码</strong> 变成 <strong>数字信号</strong>，如此可在 数字信道 上传输，再经过 <strong>解码</strong> 变成 数字/模拟信号。</p>
-<p><img src="https://i.loli.net/2020/03/23/OcMLw2JjiA9FsSP.png" alt="截屏2020-03-23上午1.37.30.png" style="zoom:40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/OcMLw2JjiA9FsSP.png" alt="截屏2020-03-23上午1.37.30.png" style="zoom:40%;" /></p>
 <h4 id="调制（Modulation）：数字信号到模拟信号"><a href="#调制（Modulation）：数字信号到模拟信号" class="headerlink" title="调制（Modulation）：数字信号到模拟信号"></a>调制（Modulation）：数字信号到模拟信号</h4><p>​    从数字信号到模拟信号的调制主要有三种方法：</p>
 <ul>
 <li><p><strong>调幅</strong>（Amplitude Modulation，<strong>AM</strong>）</p>
 <p>把数字信号转化成不同幅度的正弦信号。</p>
-<p><img src="https://i.loli.net/2020/03/23/tsgLBTpczPWhOHS.png" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/tsgLBTpczPWhOHS.png" style="zoom:50%;" /></p>
 </li>
 <li><p><strong>调频</strong>（Frequency Modulation，<strong>FM</strong>）</p>
 <p>把数字信号转化成不同频率的正弦信号。</p>
-<p><img src="https://i.loli.net/2020/03/23/RJEuCxXSblUhyfV.png" style="zoom:40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/RJEuCxXSblUhyfV.png" style="zoom:40%;" /></p>
 </li>
 <li><p><strong>调相</strong>（Phase Modulation，<strong>PM</strong>）</p>
 <p>把数字信号转化成不同相位的正弦信号。</p>
-<p><img src="https://i.loli.net/2020/03/23/2NDtUwYbpmuHPVo.png" style="zoom:40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/2NDtUwYbpmuHPVo.png" style="zoom:40%;" /></p>
 </li>
 </ul>
 <h4 id="脉码调制（Pulse-Code-Modulation-PCM）"><a href="#脉码调制（Pulse-Code-Modulation-PCM）" class="headerlink" title="脉码调制（Pulse Code Modulation, PCM）"></a>脉码调制（Pulse Code Modulation, PCM）</h4><p>​    模拟信号变成数字信号。</p>
@@ -10314,13 +10314,13 @@ C=Wlog_2(1+S/N)</script><ul>
 <p>量化后的信号编码成二进制。</p>
 </li>
 </ol>
-<p><img src="https://i.loli.net/2020/03/23/ze59JcGyOojH2Dx.png" style="zoom: 33%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/ze59JcGyOojH2Dx.png" style="zoom: 33%;" /></p>
 <h4 id="数字信号编码（Digital-signal-coding）"><a href="#数字信号编码（Digital-signal-coding）" class="headerlink" title="数字信号编码（Digital signal coding）"></a>数字信号编码（Digital signal coding）</h4><p>​    数字信号到数字信号。</p>
 <h5 id="不归零编码（Non-Return-To-Zero-NRZ）"><a href="#不归零编码（Non-Return-To-Zero-NRZ）" class="headerlink" title="不归零编码（Non-Return-To-Zero, NRZ）"></a>不归零编码（Non-Return-To-Zero, NRZ）</h5><p>​    主要介绍两种不归零编码。</p>
 <ul>
 <li><p>Non-Return-To-Zero Level (<strong>NRZ-L</strong>) Coding</p>
 <p>​    高电平表示“1”，低电平表示“0”。</p>
-<p><img src="https://i.loli.net/2020/03/23/XmcGZnlLOg92azH.png" style="zoom: 15%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/XmcGZnlLOg92azH.png" style="zoom: 15%;" /></p>
 <p>NRZ-L的优点：简单好实现</p>
 <p>NRZ-L的缺点：</p>
 <ul>
@@ -10330,14 +10330,14 @@ C=Wlog_2(1+S/N)</script><ul>
 </li>
 <li><p>反向不归零编码（<strong>NRZ-I</strong>）</p>
 <p>​    遇“1”反向。只能解决NRZ-L的部分问题（全“1”问题，不再是直流）</p>
-<p><img src="https://i.loli.net/2020/03/23/KQJyzFGPtanmhLk.jpg" style="zoom:50%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/KQJyzFGPtanmhLk.jpg" style="zoom:50%;" /></p>
 </li>
 </ul>
 <p><strong>外同步</strong>（External synchronization）</p>
 <p>​    给系统一个同步时钟信号，设置一个周期的宽度。</p>
 <p>​    外同步有诸多不便，于是有了自同步的曼切斯特编码。</p>
 <h5 id="曼切斯特编码（Manchester-encoding）"><a href="#曼切斯特编码（Manchester-encoding）" class="headerlink" title="曼切斯特编码（Manchester encoding）"></a>曼切斯特编码（Manchester encoding）</h5><p>​    每个编码由两段组成，“1”：先高后低；“0”：先低后高（可以反过来定义）。</p>
-<p><img src="https://i.loli.net/2020/03/23/CwpZhdnVO65m2DX.png" style="zoom: 20%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/CwpZhdnVO65m2DX.png" style="zoom: 20%;" /></p>
 <p>曼切斯特编码的优点（解决了不归零编码的问题）：</p>
 <ul>
 <li>自同步，不需要同步时钟；</li>
@@ -10348,7 +10348,7 @@ C=Wlog_2(1+S/N)</script><ul>
 <li><p><strong>基频增加</strong>：基频是不归零编码的两倍，从而比特率变成了不归零编码的一半；</p>
 </li>
 <li><p><strong>二义性</strong>：组合情况有两种。</p>
-<p><img src="https://i.loli.net/2020/03/23/3vlYkrz47V6qC1w.jpg" style="zoom: 40%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/3vlYkrz47V6qC1w.jpg" style="zoom: 40%;" /></p>
 </li>
 </ul>
 <h5 id="差分曼切斯特编码（Differential-Manchester-encoding）"><a href="#差分曼切斯特编码（Differential-Manchester-encoding）" class="headerlink" title="差分曼切斯特编码（Differential Manchester encoding）"></a>差分曼切斯特编码（Differential Manchester encoding）</h5><p>​    解决曼切斯特编码的二义性。</p>
@@ -10358,7 +10358,7 @@ C=Wlog_2(1+S/N)</script><ul>
 <p> 有两种画法，初始为高、初始为低，两种画法结果对称。</p>
 </li>
 </ul>
-<p><img src="https://i.loli.net/2020/03/23/mdYhZEKHulpkjTW.png" style="zoom: 33%;" /></p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/mdYhZEKHulpkjTW.png" style="zoom: 33%;" /></p>
 <p>​    差分曼切斯特编码的优点：</p>
 <ul>
 <li>解决NRZ问题</li>
