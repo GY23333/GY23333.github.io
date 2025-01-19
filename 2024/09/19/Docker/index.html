@@ -59,7 +59,7 @@
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20241015021636441.png">
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/docker-architecture.webp">
 <meta property="article:published_time" content="2024-09-19T05:48:28.000Z">
-<meta property="article:modified_time" content="2024-12-06T19:09:34.911Z">
+<meta property="article:modified_time" content="2025-01-15T14:29:58.382Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -247,7 +247,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-07 03:09:34" itemprop="dateModified" datetime="2024-12-07T03:09:34+08:00">2024-12-07</time>
+                <time title="Modified: 2025-01-15 22:29:58" itemprop="dateModified" datetime="2025-01-15T22:29:58+08:00">2025-01-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -371,6 +371,10 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h1 id="配置国内镜像"><a href="#配置国内镜像" class="headerlink" title="配置国内镜像"></a>配置国内镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;docker&#x2F;daemon.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [</span><br><span class="line">        &quot;https:&#x2F;&#x2F;registry.docker-cn.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;hub-mirror.c.163.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;mirror.baidubce.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;ccr.ccs.tencentyun.com&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:&#x2F;home&#x2F;guoyi# s</span><br><span class="line">...</span><br><span class="line"> Registry Mirrors:</span><br><span class="line">  https:&#x2F;&#x2F;registry.docker-cn.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;hub-mirror.c.163.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;mirror.baidubce.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;ccr.ccs.tencentyun.com&#x2F;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <h1 id="Docker-从构建到部署"><a href="#Docker-从构建到部署" class="headerlink" title="Docker 从构建到部署"></a>Docker 从构建到部署</h1><h2 id="Docker-镜像构建"><a href="#Docker-镜像构建" class="headerlink" title="Docker 镜像构建"></a>Docker 镜像构建</h2><h2 id="Docker-镜像仓"><a href="#Docker-镜像仓" class="headerlink" title="Docker 镜像仓"></a>Docker 镜像仓</h2><h2 id="Docker-容器部署"><a href="#Docker-容器部署" class="headerlink" title="Docker 容器部署"></a>Docker 容器部署</h2><h1 id="Docker-命令"><a href="#Docker-命令" class="headerlink" title="Docker 命令"></a>Docker 命令</h1><p>查看正在运行的容器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 <p>查看所有容器</p>
@@ -470,7 +474,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速了解-Docker"><span class="nav-number">1.</span> <span class="nav-text">快速了解 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟化过程"><span class="nav-number">2.</span> <span class="nav-text">虚拟化过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理机"><span class="nav-number">2.1.</span> <span class="nav-text">物理机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number">2.3.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常结构"><span class="nav-number">2.4.</span> <span class="nav-text">日常结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-架构"><span class="nav-number">3.</span> <span class="nav-text">Docker 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像-Image"><span class="nav-number">3.1.</span> <span class="nav-text">镜像 Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器-Container"><span class="nav-number">3.2.</span> <span class="nav-text">容器 Container</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-中安装-Docker-Engine"><span class="nav-number">4.</span> <span class="nav-text">Ubuntu 中安装 Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-从构建到部署"><span class="nav-number">5.</span> <span class="nav-text">Docker 从构建到部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像构建"><span class="nav-number">5.1.</span> <span class="nav-text">Docker 镜像构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像仓"><span class="nav-number">5.2.</span> <span class="nav-text">Docker 镜像仓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器部署"><span class="nav-number">5.3.</span> <span class="nav-text">Docker 容器部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-命令"><span class="nav-number">6.</span> <span class="nav-text">Docker 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">7.</span> <span class="nav-text">Docker Compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Swarm-与-k8s"><span class="nav-number">8.</span> <span class="nav-text">Docker Swarm 与 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速了解-Docker"><span class="nav-number">1.</span> <span class="nav-text">快速了解 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟化过程"><span class="nav-number">2.</span> <span class="nav-text">虚拟化过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理机"><span class="nav-number">2.1.</span> <span class="nav-text">物理机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number">2.3.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常结构"><span class="nav-number">2.4.</span> <span class="nav-text">日常结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-架构"><span class="nav-number">3.</span> <span class="nav-text">Docker 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像-Image"><span class="nav-number">3.1.</span> <span class="nav-text">镜像 Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器-Container"><span class="nav-number">3.2.</span> <span class="nav-text">容器 Container</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-中安装-Docker-Engine"><span class="nav-number">4.</span> <span class="nav-text">Ubuntu 中安装 Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置国内镜像"><span class="nav-number">5.</span> <span class="nav-text">配置国内镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-从构建到部署"><span class="nav-number">6.</span> <span class="nav-text">Docker 从构建到部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像构建"><span class="nav-number">6.1.</span> <span class="nav-text">Docker 镜像构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-镜像仓"><span class="nav-number">6.2.</span> <span class="nav-text">Docker 镜像仓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-容器部署"><span class="nav-number">6.3.</span> <span class="nav-text">Docker 容器部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-命令"><span class="nav-number">7.</span> <span class="nav-text">Docker 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">8.</span> <span class="nav-text">Docker Compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Swarm-与-k8s"><span class="nav-number">9.</span> <span class="nav-text">Docker Swarm 与 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -486,7 +490,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -499,7 +503,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">81</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -524,7 +528,7 @@
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

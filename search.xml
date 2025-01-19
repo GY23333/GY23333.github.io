@@ -1900,6 +1900,10 @@
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h1 id="配置国内镜像"><a href="#配置国内镜像" class="headerlink" title="配置国内镜像"></a>配置国内镜像</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;docker&#x2F;daemon.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [</span><br><span class="line">        &quot;https:&#x2F;&#x2F;registry.docker-cn.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;hub-mirror.c.163.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;mirror.baidubce.com&quot;,</span><br><span class="line">        &quot;https:&#x2F;&#x2F;ccr.ccs.tencentyun.com&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:&#x2F;home&#x2F;guoyi# s</span><br><span class="line">...</span><br><span class="line"> Registry Mirrors:</span><br><span class="line">  https:&#x2F;&#x2F;registry.docker-cn.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;hub-mirror.c.163.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;mirror.baidubce.com&#x2F;</span><br><span class="line">  https:&#x2F;&#x2F;ccr.ccs.tencentyun.com&#x2F;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <h1 id="Docker-从构建到部署"><a href="#Docker-从构建到部署" class="headerlink" title="Docker 从构建到部署"></a>Docker 从构建到部署</h1><h2 id="Docker-镜像构建"><a href="#Docker-镜像构建" class="headerlink" title="Docker 镜像构建"></a>Docker 镜像构建</h2><h2 id="Docker-镜像仓"><a href="#Docker-镜像仓" class="headerlink" title="Docker 镜像仓"></a>Docker 镜像仓</h2><h2 id="Docker-容器部署"><a href="#Docker-容器部署" class="headerlink" title="Docker 容器部署"></a>Docker 容器部署</h2><h1 id="Docker-命令"><a href="#Docker-命令" class="headerlink" title="Docker 命令"></a>Docker 命令</h1><p>查看正在运行的容器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 <p>查看所有容器</p>
@@ -13323,6 +13327,110 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenTelemetry分布式链路追踪</title>
+    <url>/2025/01/06/OpenTelemetry%E5%88%86%E5%B8%83%E5%BC%8F%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p><a href="https://jckling.github.io/2021/04/02/Jaeger/全链路追踪与%20Jaeger%20入门/index.html" target="_blank" rel="noopener">https://jckling.github.io/2021/04/02/Jaeger/全链路追踪与%20Jaeger%20入门/index.html</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d --name jaeger   -e COLLECTOR_ZIPKIN_HTTP_PORT&#x3D;9411   -p 5775:5775&#x2F;udp   -p 6831:6831&#x2F;udp   -p 6832:6832&#x2F;udp   -p 5778:5778   -p 16686:16686   -p 14268:14268   -p 14250:14250   -p 9411:9411   quay.io&#x2F;jaegertracing&#x2F;all-in-one:1.64.0</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>堆</title>
+    <url>/2025/01/16/%E5%A0%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>堆（heap）是一种满足特定条件的完全二叉树，分为大顶堆和小顶堆，通常用于实现优先队列，进行堆排序。本文主要介绍推数据结构以及其 Go 实现。</p>
+<a id="more"></a>
+<h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><p>堆是一种完全二叉树，与优先队列等价，分为两种类型：</p>
+<ul>
+<li>小顶堆（min heap）：任意节点的值 &lt;= 其子节点的值</li>
+<li>大顶堆（max heap）：任意节点的值 &gt;= 其子节点的值</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/heap.png" alt="heap" style="zoom: 50%;" /></p>
+<p>从存储结构来看，实际就是树层次遍历所得的队列。</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250117014014174.png" alt="image-20250117014014174" style="zoom:50%;" /></p>
+<h1 id="container-heap"><a href="#container-heap" class="headerlink" title="container/heap"></a><code>container/heap</code></h1><p>Golang 标准库 <code>container/heap</code> 提供了堆的快速实现。</p>
+<h2 id="接口定义源码"><a href="#接口定义源码" class="headerlink" title="接口定义源码"></a>接口定义源码</h2><p><code>heap.Interface</code> 接口定义源码</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;</span><br><span class="line">	sort.Interface</span><br><span class="line">	Push(x any) <span class="comment">// add x as element Len()</span></span><br><span class="line">	Pop() any   <span class="comment">// remove and return element Len() - 1.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sort.Interface</code> 接口定义源码</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;</span><br><span class="line">	<span class="comment">// Len is the number of elements in the collection.</span></span><br><span class="line">	Len() <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Less reports whether the element with index i</span></span><br><span class="line">	<span class="comment">// must sort before the element with index j.</span></span><br><span class="line">	Less(i, j <span class="keyword">int</span>) <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Swap swaps the elements with indexes i and j.</span></span><br><span class="line">	Swap(i, j <span class="keyword">int</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口实现"><a href="#接口实现" class="headerlink" title="接口实现"></a>接口实现</h2><p>通过实现 <code>heap.Interface</code> 接口，从而实现一个堆。</p>
+<h3 id="堆的结构体"><a href="#堆的结构体" class="headerlink" title="堆的结构体"></a>堆的结构体</h3><p>首先定义堆的结构体，堆的数据类型需要是一个切片（实际以切片形式存储），切片的 type 即为堆的每个元素的数据类型。</p>
+<ul>
+<li><p>最常用的整数</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> IntHeap []<span class="keyword">int</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可使用结构体的切片，比如想要实现一个每个元素都是一个长方体的优先队列</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Rectangle <span class="keyword">struct</span> &#123;</span><br><span class="line">	width  <span class="keyword">int</span></span><br><span class="line">	height <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> RectangleHeap []Rectangle</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Len-int"><a href="#Len-int" class="headerlink" title="Len() int"></a><code>Len() int</code></h3><p>用于返回堆中元素的数量。</p>
+<p>实现方式相对固定，返回切片长度即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(h)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Less-i-j-int-bool"><a href="#Less-i-j-int-bool" class="headerlink" title="Less(i, j int) bool"></a><code>Less(i, j int) bool</code></h3><p>用于设置堆的元素的大小比较方法。</p>
+<p>比较索引为 <code>i</code> 和 <code>j</code> 上的两个元素，如果 <code>i</code> 索引元素应该排在 <code>j</code> 的前面，即返回 true。</p>
+<ul>
+<li>小顶堆：$h[i] &lt; h[j]$，则返回 true</li>
+<li>大顶堆：$h[i] &gt; h[j]$，则返回 true</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li><p>整数小顶堆</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h[i] &lt; h[j]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>整数大顶堆</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h[i] &gt; h[j]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>长方体大顶堆，面积比大小</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r Rectangle)</span> <span class="title">area</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> r.width * r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h RectangleHeap)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h[i].area() &gt; h[j].area()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Swap-i-j-int"><a href="#Swap-i-j-int" class="headerlink" title="Swap(i, j int)"></a><code>Swap(i, j int)</code></h3><p>用于交换堆中索引 <code>i</code> 和 <code>j</code> 位置的元素。</p>
+<p>实现方式相对固定，直接交换二者存储位置。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	h[i], h[j] = h[j], h[i]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Push-x-any"><a href="#Push-x-any" class="headerlink" title="Push(x any)"></a><code>Push(x any)</code></h3><p>将新的元素 x 加入堆切片，即 append 到最后。</p>
+<p>注：接口的 <code>Push(x any)</code> 只需要将新元素加到堆尾即可，使用 <code>heap.Push()</code> 时，将会调用用户实现的  <code>Push(x any)</code> ，将元素加到队尾，然后自动实现上浮排序。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *IntHeap)</span> <span class="title">Push</span><span class="params">(x any)</span></span> &#123;</span><br><span class="line">	*h = <span class="built_in">append</span>(*h, x.(<span class="keyword">int</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Pop-any"><a href="#Pop-any" class="headerlink" title="Pop() any"></a><code>Pop() any</code></h3><p>从堆切片中移除最后一个元素，并返回。</p>
+<p>注：使用 <code>heap.Pop()</code> 时，将先将堆顶的元素下沉到队尾，然后调用用户实现的  <code>Pop() any</code>  删除并返回。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *IntHeap)</span> <span class="title">Pop</span><span class="params">()</span> <span class="title">any</span></span> &#123;</span><br><span class="line">	n := <span class="built_in">len</span>(*h)</span><br><span class="line">	x := (*h)[n<span class="number">-1</span>]</span><br><span class="line">	*h = (*h)[:n<span class="number">-1</span>]</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>实现 <code>Push()</code> 和 <code>Pop()</code> 时，都需使用指针接收。切片是引用类型，但在方法中增加/删除元素，可能会修改切片本身，所以需使用指针接收。</p>
+</blockquote>
+<h2 id="堆的使用"><a href="#堆的使用" class="headerlink" title="堆的使用"></a>堆的使用</h2><h3 id="heap-Init"><a href="#heap-Init" class="headerlink" title="heap.Init()"></a><code>heap.Init()</code></h3><p>作用：完成堆的初始化。调用结束后，堆的切片即完成排序。</p>
+<p>实现方式：将堆的非叶子节点一一下沉。（由底向上，从第一个非叶子节点开始下沉，直到堆顶，叶子节点没有下沉的必要）</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Init</span><span class="params">(h Interface)</span></span> &#123;</span><br><span class="line">	<span class="comment">// heapify</span></span><br><span class="line">	n := h.Len()</span><br><span class="line">	<span class="keyword">for</span> i := n/<span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		down(h, i, n)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="heap-Push"><a href="#heap-Push" class="headerlink" title="heap.Push()"></a><code>heap.Push()</code></h3><p>作用：将新元素推入堆中，并完成排序。</p>
+<p>实现方式：先调用用户实现的 <code>Push()</code> 接口，将新元素加入切片的最尾部，再将尾部上浮。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Push</span><span class="params">(h Interface, x any)</span></span> &#123;</span><br><span class="line">	h.Push(x)</span><br><span class="line">	up(h, h.Len()<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="heap-Pop"><a href="#heap-Pop" class="headerlink" title="heap.Pop()"></a><code>heap.Pop()</code></h3><p>作用：将堆顶推出并返回。</p>
+<p>实现方式：先将堆顶和堆尾交换，再将新换上的堆顶下沉，最后调用用户实现的 <code>Pop()</code> 接口，将堆尾推出并返回。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Pop</span><span class="params">(h Interface)</span> <span class="title">any</span></span> &#123;</span><br><span class="line">	n := h.Len() - <span class="number">1</span></span><br><span class="line">	h.Swap(<span class="number">0</span>, n)</span><br><span class="line">	down(h, <span class="number">0</span>, n)</span><br><span class="line">	<span class="keyword">return</span> h.Pop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="滑动窗口最大值"><a href="#滑动窗口最大值" class="headerlink" title="滑动窗口最大值"></a><a href="https://leetcode.cn/problems/sliding-window-maximum?envType=study-plan-v2&amp;envId=top-100-liked" target="_blank" rel="noopener">滑动窗口最大值</a></h2><p>给你一个整数数组 <code>nums</code>，有一个大小为 <code>k</code> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <code>k</code> 个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回 <em>滑动窗口中的最大值</em> 。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：nums &#x3D; [1,3,-1,-3,5,3,6,7], k &#x3D; 3</span><br><span class="line">输出：[3,3,5,5,6,7]</span><br><span class="line">解释：</span><br><span class="line">滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
+<p>优先队列方法题解：</p>
+<ol>
+<li>将前 k-1 个数字初始化大顶堆</li>
+<li>从第 k 个数字开始遍历<ol>
+<li>将该数字 Push 入堆</li>
+<li>查看堆顶元素<ul>
+<li>如果已经不在滑动窗口里，则 Pop 出堆</li>
+<li>否则，该堆顶即为现在滑动窗口里最大元素，加入结果</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> element <span class="keyword">struct</span> &#123;</span><br><span class="line">	num   <span class="keyword">int</span></span><br><span class="line">	index <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ElementHeap []element</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h ElementHeap)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(h)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h ElementHeap)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h[i].num &gt; h[j].num</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h ElementHeap)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	h[i], h[j] = h[j], h[i]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *ElementHeap)</span> <span class="title">Push</span><span class="params">(x any)</span></span> &#123;</span><br><span class="line">	*h = <span class="built_in">append</span>(*h, x.(element))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *ElementHeap)</span> <span class="title">Pop</span><span class="params">()</span> <span class="title">any</span></span> &#123;</span><br><span class="line">	n := h.Len()</span><br><span class="line">	x := (*h)[n<span class="number">-1</span>]</span><br><span class="line">	*h = (*h)[:n<span class="number">-1</span>]</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxSlidingWindow</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	h := &amp;ElementHeap&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; k<span class="number">-1</span>; i++ &#123;</span><br><span class="line">		*h = <span class="built_in">append</span>(*h, element&#123;</span><br><span class="line">			num:   nums[i],</span><br><span class="line">			index: i,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	heap.Init(h)</span><br><span class="line">	ans := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="built_in">len</span>(nums))</span><br><span class="line">	<span class="keyword">for</span> i := k - <span class="number">1</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">		heap.Push(h, element&#123;</span><br><span class="line">			num:   nums[i],</span><br><span class="line">			index: i,</span><br><span class="line">		&#125;)</span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (*h)[<span class="number">0</span>].index &lt; i-k+<span class="number">1</span> &#123;</span><br><span class="line">				heap.Pop(h)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				ans = <span class="built_in">append</span>(ans, (*h)[<span class="number">0</span>].num)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>堆</tag>
       </tags>
   </entry>
 </search>
