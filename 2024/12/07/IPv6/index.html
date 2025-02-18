@@ -46,15 +46,19 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="IPv6 是网络层协议的第二代标准协议，将 IP 地址长度从原来的 32 位升级为 128 位，从根本上解决了 IP 地址耗尽的问题。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="IPv6">
 <meta property="og:url" content="https://gy23333.github.io/2024/12/07/IPv6/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="IPv6 是网络层协议的第二代标准协议，将 IP 地址长度从原来的 32 位升级为 128 位，从根本上解决了 IP 地址耗尽的问题。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250219010228278.png">
 <meta property="article:published_time" content="2024-12-06T16:47:16.000Z">
-<meta property="article:modified_time" content="2024-12-06T16:47:16.766Z">
+<meta property="article:modified_time" content="2025-02-18T17:24:18.406Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250219010228278.png">
 
 <link rel="canonical" href="https://gy23333.github.io/2024/12/07/IPv6/">
 
@@ -233,6 +237,13 @@
 
               <time title="Created: 2024-12-07 00:47:16" itemprop="dateCreated datePublished" datetime="2024-12-07T00:47:16+08:00">2024-12-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-19 01:24:18" itemprop="dateModified" datetime="2025-02-19T01:24:18+08:00">2025-02-19</time>
+              </span>
 
           
   
@@ -259,7 +270,76 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>IPv6 是网络层协议的第二代标准协议，将 IP 地址长度从原来的 32 位升级为 128 位，从根本上解决了 IP 地址耗尽的问题。</p>
+<a id="more"></a>
+<h1 id="IPv6-地址"><a href="#IPv6-地址" class="headerlink" title="IPv6 地址"></a>IPv6 地址</h1><p>IPv6 地址由 128 位二进制数组成，书写时采用十六进制，分为 8 组，组之间用 <code>:</code> 分开，每组 16 位，用 4 个十六进制表示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX</span><br></pre></td></tr></table></figure>
+<p>比如 <code>2001:00b8:130F:0000:0000:09C0:0000:0000</code></p>
+<h1 id="简写"><a href="#简写" class="headerlink" title="简写"></a>简写</h1><p>如 IPv6 地址 <code>2001:00b8:130F:0000:0000:09C0:0000:0000</code></p>
+<ol>
+<li><p>每组前半部分的 <code>0</code> 可省去，<code>0000</code> 可简写为 <code>0</code></p>
+<p><code>2001:b8:130F:0:0:9C0:0:0</code></p>
+</li>
+<li><p>连续的 <code>0</code> 可以用 <code>::</code> 缩写（只能用一个 <code>::</code>，且缩最前面那个连续 <code>0</code>）</p>
+<p><code>2001:b8:130F::9C0:0:0</code></p>
+</li>
+</ol>
+<h1 id="IPv4-转-IPv6"><a href="#IPv4-转-IPv6" class="headerlink" title="IPv4 转 IPv6"></a>IPv4 转 IPv6</h1><p>原 IPv4 地址转 IPv6 采用 <code>0:0:0:0:0:FFFF:IPv4-address</code> 格式。</p>
+<p>如 <code>172.17.0.3</code> 变成 <code>0:0:0:0:0:FFFF:172.17.0.3</code></p>
+<h1 id="地址结构"><a href="#地址结构" class="headerlink" title="地址结构"></a>地址结构</h1><p>IPv6 地址可以划分为两个部分：网络前缀、接口标识</p>
+<ul>
+<li>网络前缀：前 n 位划分为网络前缀，类似于 IPv4 中的网络号，一般推荐使用 64 位</li>
+<li>接口标识：后 128-n 位划分为网络前缀，类似于 IPv4 中的主机号</li>
+</ul>
+<p>如 <code>2001:db8:130F:0000:0000:09C0:876A:130B/64</code>，<code>/</code> 后数字表示网络前缀的长度</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250219010228278.png" alt="image-20250219010228278" style="zoom:67%;" /></p>
+<h1 id="地址划分"><a href="#地址划分" class="headerlink" title="地址划分"></a>地址划分</h1><p>按照目的地址，可以将 IPv6 地址划分成下面三种类型：</p>
+<ul>
+<li>单播地址：唯一标识一个接口，和 IPv4 单播一样，点对点的通信。</li>
+<li>组播地址：一点对多点的通信，和 IPv4 组播一样，发送到组播地址的数据包被传输给此地址所标识的所有接口。</li>
+<li>任播地址：IPv6 相比 IPv4 新增地址类型，发送到任播地址的数据包被传输给此地址所标识的一组接口中距离源节点最近的一个接口。</li>
+<li>IPv6 不支持广播，广播地址的功能均由组播地址来提供。IPv4 依赖 BGP 来实现任播。</li>
+</ul>
+<p>IPv6 单播地址又可分为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>地址类型</th>
+<th>二进制前缀</th>
+<th>IPv6前缀标识</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>链路本地单播地址</td>
+<td>1111111010</td>
+<td>FE80::/10</td>
+</tr>
+<tr>
+<td>唯一本地地址</td>
+<td>1111110</td>
+<td>FC00::/7</td>
+</tr>
+<tr>
+<td>环回地址</td>
+<td>00…1 (128 bits)</td>
+<td>::1/128</td>
+</tr>
+<tr>
+<td>未指定地址</td>
+<td>00…0 (128 bits)</td>
+<td>::/128</td>
+</tr>
+<tr>
+<td>全球单播地址</td>
+<td>其他</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+
     </div>
 
     
@@ -341,6 +421,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IPv6-地址"><span class="nav-number">1.</span> <span class="nav-text">IPv6 地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简写"><span class="nav-number">2.</span> <span class="nav-text">简写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPv4-转-IPv6"><span class="nav-number">3.</span> <span class="nav-text">IPv4 转 IPv6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址结构"><span class="nav-number">4.</span> <span class="nav-text">地址结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#地址划分"><span class="nav-number">5.</span> <span class="nav-text">地址划分</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
