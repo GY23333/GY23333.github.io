@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Linux 策略路由是一种高级路由机制。相比于传统路由，策略路由允许用户配置多张路由表，根据源地址、目的地址等选择不同路由表，提供了更灵活的路由控制能力。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux策略路由">
+<meta property="og:url" content="https://gy23333.github.io/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="Linux 策略路由是一种高级路由机制。相比于传统路由，策略路由允许用户配置多张路由表，根据源地址、目的地址等选择不同路由表，提供了更灵活的路由控制能力。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-20T15:11:01.000Z">
+<meta property="article:modified_time" content="2025-03-23T16:38:45.429Z">
+<meta property="article:author" content="GuoYi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gy23333.github.io/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Linux策略路由 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="GuoYi的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux策略路由
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-20 23:11:01" itemprop="dateCreated datePublished" datetime="2025-03-20T23:11:01+08:00">2025-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-24 00:38:45" itemprop="dateModified" datetime="2025-03-24T00:38:45+08:00">2025-03-24</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Linux 策略路由是一种高级路由机制。相比于传统路由，策略路由允许用户配置多张路由表，根据源地址、目的地址等选择不同路由表，提供了更灵活的路由控制能力。</p>
+<a id="more"></a>
+<h1 id="路由表（Routing-Table）"><a href="#路由表（Routing-Table）" class="headerlink" title="路由表（Routing Table）"></a>路由表（Routing Table）</h1><p>路由表是存储路由规则的集合，Linux 支持配置多张路由表。</p>
+<h2 id="rt-tables-文件"><a href="#rt-tables-文件" class="headerlink" title="rt_tables 文件"></a>rt_tables 文件</h2><p><code>/etc/iproute2/rt_tables</code> 是 Linux 中用于定义路由表名称和编号映射的文件。</p>
+<p>其中的每一行定义了一个路由表，包括其编号（1～255）和名称，编号和名称都不能重复。</p>
+<p>Linux 发行版中，<code>/etc/iproute2/rt_tables</code> 的默认内容如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># cat /etc/iproute2/rt_tables</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># reserved values</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="number">255</span>     local</span><br><span class="line"><span class="number">254</span>     main</span><br><span class="line"><span class="number">253</span>     default</span><br><span class="line"><span class="number">0</span>       unspec</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># local</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#1      inr.ruhep</span></span><br></pre></td></tr></table></figure>
+<h2 id="Linux-默认路由表"><a href="#Linux-默认路由表" class="headerlink" title="Linux 默认路由表"></a>Linux 默认路由表</h2><p>Linux 初始的默认状态下，包含下面四个路由表：</p>
+<ul>
+<li><p><code>local</code>表</p>
+<ul>
+<li>编号：255</li>
+<li>存储本地接口地址和广播地址</li>
+<li>内核自动维护，用户通常不需要修改</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># ip route show table local</span></span><br><span class="line">local <span class="number">127.0</span>.<span class="number">0.0</span>/<span class="number">8</span> dev lo proto kernel scope host src <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">local <span class="number">127.0</span>.<span class="number">0.1</span> dev lo proto kernel scope host src <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">broadcast <span class="number">127.255</span>.<span class="number">255.255</span> dev lo proto kernel scope link src <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">local <span class="number">172.16</span>.<span class="number">19.129</span> dev ens160 proto kernel scope host src <span class="number">172.16</span>.<span class="number">19.129</span></span><br><span class="line">local <span class="number">172.16</span>.<span class="number">19.133</span> dev ens256 proto kernel scope host src <span class="number">172.16</span>.<span class="number">19.133</span></span><br><span class="line">broadcast <span class="number">172.16</span>.<span class="number">19.255</span> dev ens160 proto kernel scope link src <span class="number">172.16</span>.<span class="number">19.129</span></span><br><span class="line">broadcast <span class="number">172.16</span>.<span class="number">19.255</span> dev ens256 proto kernel scope link src <span class="number">172.16</span>.<span class="number">19.133</span></span><br><span class="line">local <span class="number">172.17</span>.<span class="number">0.1</span> dev docker0 proto kernel scope host src <span class="number">172.17</span>.<span class="number">0.1</span></span><br><span class="line">broadcast <span class="number">172.17</span>.<span class="number">255.255</span> dev docker0 proto kernel scope link src <span class="number">172.17</span>.<span class="number">0.1</span> linkdown</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>main</code>表</p>
+<ul>
+<li>编号：254</li>
+<li>主路由表，传统路由使用的表</li>
+<li>通过 <code>ip route</code> 命令配置或展示的都是此表</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># ip route show table main</span></span><br><span class="line">default via <span class="number">172.16</span>.<span class="number">19.2</span> dev ens160 proto dhcp src <span class="number">172.16</span>.<span class="number">19.129</span> metric <span class="number">100</span></span><br><span class="line">default via <span class="number">172.16</span>.<span class="number">19.2</span> dev ens256 proto dhcp src <span class="number">172.16</span>.<span class="number">19.133</span> metric <span class="number">101</span></span><br><span class="line"><span class="number">172.16</span>.<span class="number">19.0</span>/<span class="number">24</span> dev ens160 proto kernel scope link src <span class="number">172.16</span>.<span class="number">19.129</span> metric <span class="number">100</span></span><br><span class="line"><span class="number">172.16</span>.<span class="number">19.0</span>/<span class="number">24</span> dev ens256 proto kernel scope link src <span class="number">172.16</span>.<span class="number">19.133</span> metric <span class="number">101</span></span><br><span class="line"><span class="number">172.17</span>.<span class="number">0.0</span>/<span class="number">16</span> dev docker0 proto kernel scope link src <span class="number">172.17</span>.<span class="number">0.1</span> linkdown</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>default</code>表</p>
+<ul>
+<li>编号：253</li>
+<li>默认路由表，通常用于存储默认路由</li>
+<li>初始时为空</li>
+</ul>
+</li>
+<li><p><code>unspec</code>表</p>
+<ul>
+<li>编号：0</li>
+<li>未指定路由表，用于表示未指定或无效的路由表</li>
+</ul>
+</li>
+</ul>
+<h2 id="自定义路由表"><a href="#自定义路由表" class="headerlink" title="自定义路由表"></a>自定义路由表</h2><p>修改 <code>/etc/iproute2/rt_tables</code> 文件，可添加自定义路由表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;编号&gt;	&lt;路由表名&gt;</span><br></pre></td></tr></table></figure>
+<p>建议：编号虽然可以从 1 开始取，但是为了避免与未来系统可能保留的编号冲突，通常选择从 100 开始分配编号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">100   custom1</span><br><span class="line">101   custom2</span><br></pre></td></tr></table></figure>
+<p>也可以分段分配编号，以方便管理不同类型的路由表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">100   custom1</span><br><span class="line">200   custom2</span><br></pre></td></tr></table></figure>
+<h1 id="路由规则（Rule）"><a href="#路由规则（Rule）" class="headerlink" title="路由规则（Rule）"></a>路由规则（Rule）</h1><p>路由规则：数据包如何匹配并选择路由表的规则，根据特定的条件（如源地址、目的地址、入接口等）选择不同的路由表。</p>
+<h2 id="查看路由规则"><a href="#查看路由规则" class="headerlink" title="查看路由规则"></a>查看路由规则</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># ip rule show</span></span><br><span class="line"><span class="number">0</span>:      from all lookup local</span><br><span class="line"><span class="number">32766</span>:  from all lookup main</span><br><span class="line"><span class="number">32767</span>:  from all lookup default</span><br></pre></td></tr></table></figure>
+<h2 id="路由规则的组成"><a href="#路由规则的组成" class="headerlink" title="路由规则的组成"></a>路由规则的组成</h2><p>每一条路由规则包含 3 个信息：</p>
+<ul>
+<li>优先级：数字越小，优先级越高。自定义规则的优先级通常设置在 <strong>1 到 32765</strong> 之间。</li>
+<li>条件：匹配数据包的条件，如源地址、目的地址、入接口等</li>
+<li>动作：通常规定选择哪个路由表</li>
+</ul>
+<p>按照优先级，从小到大匹配规则，如果匹配到，则选择规定的路由表。</p>
+<h2 id="增-删路由规则"><a href="#增-删路由规则" class="headerlink" title="增/删路由规则"></a>增/删路由规则</h2><ul>
+<li><p>增加路由规则（优先级可缺省，缺省时取低优先级）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip rule add &lt;条件&gt; lookup &lt;表名&gt; priority &lt;优先级&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除路由规则</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip rule del &lt;条件&gt; lookup &lt;表名&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="匹配条件"><a href="#匹配条件" class="headerlink" title="匹配条件"></a>匹配条件</h2><p>路由规则的匹配条件支持以下字段：</p>
+<ul>
+<li><p>匹配数据包的源地址</p>
+<ul>
+<li><p><code>from &lt;PREFIX&gt;</code></p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 来自 192.168.1.0/24 的流量使用 custom1 表</span></span><br><span class="line">ip rule add from <span class="number">192.168</span>.<span class="number">1.0</span>/<span class="number">24</span> lookup custom1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>匹配数据包的目的地址</p>
+<ul>
+<li><p><code>to &lt;PREFIX&gt;</code></p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去往 8.8.8.8 的流量使用 custom2 表</span></span><br><span class="line">ip rule add to <span class="number">8.8</span>.<span class="number">8.8</span> lookup custom2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>匹配数据包的入网卡</p>
+<ul>
+<li><p><code>iif &lt;网卡&gt;</code></p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从 eth1 接口进入的流量使用 custom3 表</span></span><br><span class="line">ip rule add iif eth1 lookup custom3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>匹配数据包的协议</p>
+<ul>
+<li><p><code>ipproto &lt;PROTOCOL&gt;</code></p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TCP 协议的流量使用 custom4 表</span></span><br><span class="line">ip rule add proto tcp lookup custom4</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>等等，详细见 help</p>
+</li>
+</ul>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># ip rule help</span></span><br><span class="line">Usage: ip rule &#123; add | del &#125; SELECTOR ACTION</span><br><span class="line">       ip rule &#123; flush | save | restore &#125;</span><br><span class="line">       ip rule [ <span class="type">list</span> [ <span class="type">SELECTOR</span> ]]</span><br><span class="line">SELECTOR := [ <span class="type">not</span> ] [ <span class="type">from</span> <span class="type">PREFIX</span> ] [ <span class="type">to</span> <span class="type">PREFIX</span> ] [ <span class="type">tos</span> <span class="type">TOS</span> ]</span><br><span class="line">            [ <span class="type">fwmark</span> <span class="type">FWMARK</span>[/<span class="type">MASK</span>] ]</span><br><span class="line">            [ <span class="type">iif</span> <span class="built_in">STRING</span> ] [ <span class="type">oif</span> <span class="built_in">STRING</span> ] [ <span class="type">pref</span> <span class="type">NUMBER</span> ] [ <span class="type">l3mdev</span> ]</span><br><span class="line">            [ <span class="type">uidrange</span> <span class="type">NUMBER</span>-<span class="type">NUMBER</span> ]</span><br><span class="line">            [ <span class="type">ipproto</span> <span class="type">PROTOCOL</span> ]</span><br><span class="line">            [ <span class="type">sport</span> [ <span class="type">NUMBER</span> | <span class="type">NUMBER</span>-<span class="type">NUMBER</span> ]</span><br><span class="line">            [ <span class="type">dport</span> [ <span class="type">NUMBER</span> | <span class="type">NUMBER</span>-<span class="type">NUMBER</span> ] ]</span><br><span class="line"><span class="type">ACTION</span> := [ <span class="type">table</span> <span class="type">TABLE_ID</span> ]</span><br><span class="line">          [ <span class="type">protocol</span> <span class="type">PROTO</span> ]</span><br><span class="line">          [ <span class="type">nat</span> <span class="type">ADDRESS</span> ]</span><br><span class="line">          [ <span class="type">realms</span> [<span class="type">SRCREALM</span>/]<span class="type">DSTREALM</span> ]</span><br><span class="line">          [ <span class="type">goto</span> <span class="type">NUMBER</span> ]</span><br><span class="line">          <span class="type">SUPPRESSOR</span></span><br><span class="line"><span class="type">SUPPRESSOR</span> := [ <span class="type">suppress_prefixlength</span> <span class="type">NUMBER</span> ]</span><br><span class="line">              [ <span class="type">suppress_ifgroup</span> <span class="type">DEVGROUP</span> ]</span><br><span class="line"><span class="type">TABLE_ID</span> := [ <span class="type">local</span> | <span class="type">main</span> | <span class="type">default</span> | <span class="type">NUMBER</span> ]</span><br></pre></td></tr></table></figure>
+<h1 id="路由（Route）"><a href="#路由（Route）" class="headerlink" title="路由（Route）"></a>路由（Route）</h1><p>每张路由表里都可以配置自己的路由。</p>
+<h2 id="ip-route-命令"><a href="#ip-route-命令" class="headerlink" title="ip route 命令"></a><code>ip route</code> 命令</h2><p><code>ip route</code> 命令如果没有指定路由表，则默认指定 <code>main</code> 表。</p>
+<h3 id="查看路由表"><a href="#查看路由表" class="headerlink" title="查看路由表"></a>查看路由表</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route show table &lt;路由表名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="help-1"><a href="#help-1" class="headerlink" title="help"></a>help</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:/<span class="comment"># ip route help</span></span><br><span class="line">Usage: ip route &#123; list | flush &#125; SELECTOR</span><br><span class="line">       ip route save SELECTOR</span><br><span class="line">       ip route restore</span><br><span class="line">       ip route showdump</span><br><span class="line">       ip route get [ <span class="type">ROUTE_GET_FLAGS</span> ] ADDRESS</span><br><span class="line">                            [ <span class="type">from</span> <span class="type">ADDRESS</span> <span class="type">iif</span> <span class="built_in">STRING</span> ]</span><br><span class="line">                            [ <span class="type">oif</span> <span class="built_in">STRING</span> ] [ <span class="type">tos</span> <span class="type">TOS</span> ]</span><br><span class="line">                            [ <span class="type">mark</span> <span class="type">NUMBER</span> ] [ <span class="type">vrf</span> <span class="type">NAME</span> ]</span><br><span class="line">                            [ <span class="type">uid</span> <span class="type">NUMBER</span> ] [ <span class="type">ipproto</span> <span class="type">PROTOCOL</span> ]</span><br><span class="line">                            [ <span class="type">sport</span> <span class="type">NUMBER</span> ] [ <span class="type">dport</span> <span class="type">NUMBER</span> ]</span><br><span class="line">       ip route &#123; add | del | change | append | replace &#125; ROUTE</span><br><span class="line">SELECTOR := [ <span class="type">root</span> <span class="type">PREFIX</span> ] [ <span class="type">match</span> <span class="type">PREFIX</span> ] [ <span class="type">exact</span> <span class="type">PREFIX</span> ]</span><br><span class="line">            [ <span class="type">table</span> <span class="type">TABLE_ID</span> ] [ <span class="type">vrf</span> <span class="type">NAME</span> ] [ <span class="type">proto</span> <span class="type">RTPROTO</span> ]</span><br><span class="line">            [ <span class="type">type</span> <span class="type">TYPE</span> ] [ <span class="type">scope</span> <span class="type">SCOPE</span> ]</span><br><span class="line">ROUTE := NODE_SPEC [ <span class="type">INFO_SPEC</span> ]</span><br><span class="line">NODE_SPEC := [ <span class="type">TYPE</span> ] PREFIX [ <span class="type">tos</span> <span class="type">TOS</span> ]</span><br><span class="line">             [ <span class="type">table</span> <span class="type">TABLE_ID</span> ] [ <span class="type">proto</span> <span class="type">RTPROTO</span> ]</span><br><span class="line">             [ <span class="type">scope</span> <span class="type">SCOPE</span> ] [ <span class="type">metric</span> <span class="type">METRIC</span> ]</span><br><span class="line">             [ <span class="type">ttl</span>-<span class="type">propagate</span> &#123; <span class="type">enabled</span> | <span class="type">disabled</span> &#125; ]</span><br><span class="line">INFO_SPEC := &#123; NH | nhid ID &#125; OPTIONS FLAGS [ <span class="type">nexthop</span> <span class="type">NH</span> ]...</span><br><span class="line">NH := [ <span class="type">encap</span> <span class="type">ENCAPTYPE</span> <span class="type">ENCAPHDR</span> ] [ <span class="type">via</span> [ <span class="type">FAMILY</span> ] <span class="type">ADDRESS</span> ]</span><br><span class="line">      [ <span class="type">dev</span> <span class="built_in">STRING</span> ] [ <span class="type">weight</span> <span class="type">NUMBER</span> ] NHFLAGS</span><br><span class="line">FAMILY := [ <span class="type">inet</span> | <span class="type">inet6</span> | <span class="type">mpls</span> | <span class="type">bridge</span> | <span class="type">link</span> ]</span><br><span class="line">OPTIONS := FLAGS [ <span class="type">mtu</span> <span class="type">NUMBER</span> ] [ <span class="type">advmss</span> <span class="type">NUMBER</span> ] [ <span class="type">as</span> [ <span class="type">to</span> ] <span class="type">ADDRESS</span> ]</span><br><span class="line">           [ <span class="type">rtt</span> <span class="type">TIME</span> ] [ <span class="type">rttvar</span> <span class="type">TIME</span> ] [ <span class="type">reordering</span> <span class="type">NUMBER</span> ]</span><br><span class="line">           [ <span class="type">window</span> <span class="type">NUMBER</span> ] [ <span class="type">cwnd</span> <span class="type">NUMBER</span> ] [ <span class="type">initcwnd</span> <span class="type">NUMBER</span> ]</span><br><span class="line">           [ <span class="type">ssthresh</span> <span class="type">NUMBER</span> ] [ <span class="type">realms</span> <span class="type">REALM</span> ] [ <span class="type">src</span> <span class="type">ADDRESS</span> ]</span><br><span class="line">           [ <span class="type">rto_min</span> <span class="type">TIME</span> ] [ <span class="type">hoplimit</span> <span class="type">NUMBER</span> ] [ <span class="type">initrwnd</span> <span class="type">NUMBER</span> ]</span><br><span class="line">           [ <span class="type">features</span> <span class="type">FEATURES</span> ] [ <span class="type">quickack</span> <span class="built_in">BOOL</span> ] [ <span class="type">congctl</span> <span class="type">NAME</span> ]</span><br><span class="line">           [ <span class="type">pref</span> <span class="type">PREF</span> ] [ <span class="type">expires</span> <span class="type">TIME</span> ] [ <span class="type">fastopen_no_cookie</span> <span class="built_in">BOOL</span> ]</span><br><span class="line">TYPE := &#123; unicast | local | broadcast | multicast | <span class="keyword">throw</span> |</span><br><span class="line">          unreachable | prohibit | blackhole | nat &#125;</span><br><span class="line">TABLE_ID := [ <span class="type">local</span> | <span class="type">main</span> | <span class="type">default</span> | <span class="type">all</span> | <span class="type">NUMBER</span> ]</span><br><span class="line">SCOPE := [ <span class="type">host</span> | <span class="type">link</span> | <span class="type">global</span> | <span class="type">NUMBER</span> ]</span><br><span class="line">NHFLAGS := [ <span class="type">onlink</span> | <span class="type">pervasive</span> ]</span><br><span class="line">RTPROTO := [ <span class="type">kernel</span> | <span class="type">boot</span> | <span class="type">static</span> | <span class="type">NUMBER</span> ]</span><br><span class="line">PREF := [ <span class="type">low</span> | <span class="type">medium</span> | <span class="type">high</span> ]</span><br><span class="line">TIME := NUMBER[<span class="type">s</span>|<span class="type">ms</span>]</span><br><span class="line">BOOL := [<span class="number">1</span>|<span class="number">0</span>]</span><br><span class="line">FEATURES := ecn</span><br><span class="line">ENCAPTYPE := [ <span class="type">mpls</span> | <span class="type">ip</span> | <span class="type">ip6</span> | <span class="type">seg6</span> | <span class="type">seg6local</span> | <span class="type">rpl</span> | <span class="type">ioam6</span> | <span class="type">xfrm</span> ]</span><br><span class="line">ENCAPHDR := [ <span class="type">MPLSLABEL</span> | <span class="type">SEG6HDR</span> | <span class="type">SEG6LOCAL</span> | <span class="type">IOAM6HDR</span> | <span class="type">XFRMINFO</span> ]</span><br><span class="line">SEG6HDR := [ <span class="type">mode</span> <span class="type">SEGMODE</span> ] segs ADDR1,ADDRi,ADDRn [<span class="type">hmac</span> <span class="type">HMACKEYID</span>] [<span class="type">cleanup</span>]</span><br><span class="line">SEGMODE := [ <span class="type">encap</span> | <span class="type">encap.red</span> | <span class="type">inline</span> | <span class="type">l2encap</span> | <span class="type">l2encap.red</span> ]</span><br><span class="line">SEG6LOCAL := action ACTION [ <span class="type">OPTIONS</span> ] [ <span class="type">count</span> ]</span><br><span class="line">ACTION := &#123; <span class="keyword">End</span> | End.X | End.T | End.DX2 | End.DX6 | End.DX4 |</span><br><span class="line">            End.DT6 | End.DT4 | End.DT46 | End.B6 | End.B6.Encaps |</span><br><span class="line">            End.BM | End.S | End.AS | End.AM | End.BPF &#125;</span><br><span class="line">OPTIONS := OPTION [ <span class="type">OPTIONS</span> ]</span><br><span class="line">OPTION := &#123; flavors FLAVORS | srh SEG6HDR | nh4 ADDR | nh6 ADDR | iif DEV | oif DEV |</span><br><span class="line">            table TABLEID | vrftable TABLEID | endpoint PROGNAME &#125;</span><br><span class="line">FLAVORS := &#123; FLAVOR[,<span class="type">FLAVOR</span>] &#125;</span><br><span class="line">FLAVOR := &#123; psp | usp | usd | next<span class="literal">-csid</span> &#125;</span><br><span class="line">IOAM6HDR := trace prealloc type IOAM6_TRACE_TYPE ns IOAM6_NAMESPACE size IOAM6_TRACE_SIZE</span><br><span class="line">XFRMINFO := if_id IF_ID [ <span class="type">link_dev</span> <span class="type">LINK</span> ]</span><br><span class="line">ROUTE_GET_FLAGS := [ <span class="type">fibmatch</span> ]</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/16/%E5%A0%86/" rel="prev" title="堆">
+      <i class="fa fa-chevron-left"></i> 堆
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#路由表（Routing-Table）"><span class="nav-number">1.</span> <span class="nav-text">路由表（Routing Table）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rt-tables-文件"><span class="nav-number">1.1.</span> <span class="nav-text">rt_tables 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-默认路由表"><span class="nav-number">1.2.</span> <span class="nav-text">Linux 默认路由表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义路由表"><span class="nav-number">1.3.</span> <span class="nav-text">自定义路由表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由规则（Rule）"><span class="nav-number">2.</span> <span class="nav-text">路由规则（Rule）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看路由规则"><span class="nav-number">2.1.</span> <span class="nav-text">查看路由规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由规则的组成"><span class="nav-number">2.2.</span> <span class="nav-text">路由规则的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增-删路由规则"><span class="nav-number">2.3.</span> <span class="nav-text">增&#x2F;删路由规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配条件"><span class="nav-number">2.4.</span> <span class="nav-text">匹配条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#help"><span class="nav-number">2.5.</span> <span class="nav-text">help</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由（Route）"><span class="nav-number">3.</span> <span class="nav-text">路由（Route）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-route-命令"><span class="nav-number">3.1.</span> <span class="nav-text">ip route 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看路由表"><span class="nav-number">3.1.1.</span> <span class="nav-text">查看路由表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#help-1"><span class="nav-number">3.2.</span> <span class="nav-text">help</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>
