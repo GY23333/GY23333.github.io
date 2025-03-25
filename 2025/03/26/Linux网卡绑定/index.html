@@ -46,15 +46,21 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="GuoYi的博客">
-<meta property="og:url" content="https://gy23333.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+  <meta name="description" content="Linux NIC Bonding 技术可以将多张物理网卡或者虚拟网卡绑定为一张虚拟的逻辑网卡，从而实现网卡的冗余、带宽的扩容以及负载均衡。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux网卡绑定">
+<meta property="og:url" content="https://gy23333.github.io/2025/03/26/Linux%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="Linux NIC Bonding 技术可以将多张物理网卡或者虚拟网卡绑定为一张虚拟的逻辑网卡，从而实现网卡的冗余、带宽的扩容以及负载均衡。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250326005558522.png">
+<meta property="article:published_time" content="2025-03-25T16:36:08.000Z">
+<meta property="article:modified_time" content="2025-03-25T18:17:42.945Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250326005558522.png">
 
-<link rel="canonical" href="https://gy23333.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+<link rel="canonical" href="https://gy23333.github.io/2025/03/26/Linux%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/">
 
 
 <script id="page-configurations">
@@ -62,11 +68,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Category: 计算机网络 | GuoYi的博客</title>
+  <title>Linux网卡绑定 | GuoYi的博客</title>
   
 
 
@@ -201,160 +207,108 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">计算机网络
-          <small>Category</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2025/03/26/Linux%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux网卡绑定
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-03-26 00:36:08 / Modified: 02:17:42" itemprop="dateCreated datePublished" datetime="2025-03-26T00:36:08+08:00">2025-03-26</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2025/03/26/Linux%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/03/26/Linux%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2024</h1>
+        <p>Linux NIC Bonding 技术可以将多张物理网卡或者虚拟网卡绑定为一张虚拟的逻辑网卡，从而实现网卡的冗余、带宽的扩容以及负载均衡。</p>
+<a id="more"></a>
+<h1 id="网卡绑定的作用"><a href="#网卡绑定的作用" class="headerlink" title="网卡绑定的作用"></a>网卡绑定的作用</h1><p>网卡绑定的作用主要有两个方面：</p>
+<ul>
+<li><strong>提供冗余（负载均衡）</strong>：网卡绑定最主要的作用，如下图，物理机的多张物理网卡可以上连多个交换机，将网卡绑定为一张虚拟网卡，使用该 bond 虚拟网卡，当其中一个交换机故障时，流量可以自动切换到另一个交换机与物理网卡，提供了网卡的容灾能力。</li>
+<li>提高吞吐量：由于是多张网卡进行负载均衡，bond 出来的网卡的吞吐量也得到了提升。</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250326005558522.png" alt="image-20250326005558522" style="zoom:50%;" /></p>
+<h1 id="网卡绑定模式"><a href="#网卡绑定模式" class="headerlink" title="网卡绑定模式"></a>网卡绑定模式</h1><h2 id="Mode-0-—-balance-rr（轮询模式）"><a href="#Mode-0-—-balance-rr（轮询模式）" class="headerlink" title="Mode 0 — balance-rr（轮询模式）"></a>Mode 0 — balance-rr（轮询模式）</h2><p>数据包依次顺序轮询每张网卡传输，即第1个包走 eth0，下一个包就走 eth1….一直轮询下去。</p>
+<h2 id="Mode-1-—-active-backup（主备模式）"><a href="#Mode-1-—-active-backup（主备模式）" class="headerlink" title="Mode 1 — active-backup（主备模式）"></a>Mode 1 — active-backup（主备模式）</h2><p>只有一张网卡作为主，承接流量，当主网卡宕机后，启用备网卡。</p>
+<h2 id="Mode-2-—-balance-xor（异或模式）"><a href="#Mode-2-—-balance-xor（异或模式）" class="headerlink" title="Mode 2 — balance-xor（异或模式）"></a>Mode 2 — balance-xor（异或模式）</h2><p>基于源 MAC 和目的 MAC 的 Hash 选择网卡</p>
+<h2 id="Mode-3-—-broadcast（广播模式）"><a href="#Mode-3-—-broadcast（广播模式）" class="headerlink" title="Mode 3 — broadcast（广播模式）"></a>Mode 3 — broadcast（广播模式）</h2><p>所有数据包在所有网卡上传输。</p>
+<h2 id="Mode-4-—-link-aggregation（动态链接聚合）"><a href="#Mode-4-—-link-aggregation（动态链接聚合）" class="headerlink" title="Mode 4 — link aggregation（动态链接聚合）"></a>Mode 4 — link aggregation（动态链接聚合）</h2><h2 id="Mode-5-—-balance-tlb（传输负载均衡）"><a href="#Mode-5-—-balance-tlb（传输负载均衡）" class="headerlink" title="Mode 5 — balance-tlb（传输负载均衡）"></a>Mode 5 — balance-tlb（传输负载均衡）</h2><h2 id="Mode-6-—-balance-alb（适应性负载均衡）"><a href="#Mode-6-—-balance-alb（适应性负载均衡）" class="headerlink" title="Mode 6 — balance-alb（适应性负载均衡）"></a>Mode 6 — balance-alb（适应性负载均衡）</h2><h1 id="使用-nmcli-绑定网卡"><a href="#使用-nmcli-绑定网卡" class="headerlink" title="使用 nmcli 绑定网卡"></a>使用 <code>nmcli</code> 绑定网卡</h1>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-12-07T00:36:31+08:00"
-              content="2024-12-07">
-          12-07
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2024/12/07/%E5%9F%BA%E4%BA%8EFRRouting-Bird%E7%9A%84OSPF%E7%BB%84%E7%BD%91%E5%8F%8A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0/" itemprop="url">
-            <span itemprop="name">基于FRRouting/Bird的OSPF组网及负载均衡实现</span>
-          </a>
-      </h2>
+        
 
-    </header>
-  </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-11-22T23:54:54+08:00"
-              content="2024-11-22">
-          11-22
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2024/11/22/rp-filter%E5%8F%8D%E5%90%91%E8%B7%AF%E7%94%B1%E8%BF%87%E6%BB%A4/" itemprop="url">
-            <span itemprop="name">rp_filter反向路由过滤</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-10-23T02:38:51+08:00"
-              content="2024-10-23">
-          10-23
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2024/10/23/BGP-%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" itemprop="url">
-            <span itemprop="name">BGP 路由协议</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-09-19T01:38:42+08:00"
-              content="2024-09-19">
-          09-19
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2024/09/19/OSPF%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/" itemprop="url">
-            <span itemprop="name">OSPF 路由协议</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h1 class="collection-header">2023</h1>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/20/Linux%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/" rel="prev" title="Linux策略路由">
+      <i class="fa fa-chevron-left"></i> Linux策略路由
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-03-19T21:15:53+08:00"
-              content="2023-03-19">
-          03-19
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2023/03/19/DNS%E4%B8%8EBind/" itemprop="url">
-            <span itemprop="name">DNS与Bind</span>
-          </a>
-      </h2>
-
-    </header>
+      </footer>
+    
   </article>
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
-    </div>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-16T20:54:15+08:00"
-              content="2020-03-16">
-          03-16
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/16/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">《计算机网络-自顶向下方法》笔记</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -401,6 +355,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网卡绑定的作用"><span class="nav-number">1.</span> <span class="nav-text">网卡绑定的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网卡绑定模式"><span class="nav-number">2.</span> <span class="nav-text">网卡绑定模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-0-—-balance-rr（轮询模式）"><span class="nav-number">2.1.</span> <span class="nav-text">Mode 0 — balance-rr（轮询模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-1-—-active-backup（主备模式）"><span class="nav-number">2.2.</span> <span class="nav-text">Mode 1 — active-backup（主备模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-2-—-balance-xor（异或模式）"><span class="nav-number">2.3.</span> <span class="nav-text">Mode 2 — balance-xor（异或模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-3-—-broadcast（广播模式）"><span class="nav-number">2.4.</span> <span class="nav-text">Mode 3 — broadcast（广播模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-4-—-link-aggregation（动态链接聚合）"><span class="nav-number">2.5.</span> <span class="nav-text">Mode 4 — link aggregation（动态链接聚合）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-5-—-balance-tlb（传输负载均衡）"><span class="nav-number">2.6.</span> <span class="nav-text">Mode 5 — balance-tlb（传输负载均衡）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode-6-—-balance-alb（适应性负载均衡）"><span class="nav-number">2.7.</span> <span class="nav-text">Mode 6 — balance-alb（适应性负载均衡）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-nmcli-绑定网卡"><span class="nav-number">3.</span> <span class="nav-text">使用 nmcli 绑定网卡</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
