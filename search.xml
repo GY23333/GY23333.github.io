@@ -344,13 +344,16 @@
 <li><p><code>exit_code</code>: 退出状态码（0 表示成功，非零表示错误）</p>
 <ul>
 <li><p>一般使用 DPDK 提供的状态码</p>
-</li>
-<li><p>``` c</p>
-<h1 id="define-EXIT-FAILURE-1-Failing-exit-status"><a href="#define-EXIT-FAILURE-1-Failing-exit-status" class="headerlink" title="define    EXIT_FAILURE    1    / Failing exit status.  /"></a>define    EXIT_FAILURE    1    /<em> Failing exit status.  </em>/</h1><h1 id="define-EXIT-SUCCESS-0-Successful-exit-status"><a href="#define-EXIT-SUCCESS-0-Successful-exit-status" class="headerlink" title="define    EXIT_SUCCESS    0    / Successful exit status.  /"></a>define    EXIT_SUCCESS    0    /<em> Successful exit status.  </em>/</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- &#96;format&#96;: 格式化字符串（类似 printf）</span><br><span class="line"></span><br><span class="line">- &#96;...&#96;: 可变参数，用于格式化字符串</span><br><span class="line"></span><br><span class="line">### 使用示例</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; c</span><br><span class="line">int ret &#x3D; rte_eal_init(argc, argv);</span><br><span class="line">if (ret &lt; 0) &#123;</span><br><span class="line">  rte_exit(EXIT_FAILURE, &quot;Error with EAL initialization\n&quot;); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	EXIT_FAILURE	1	<span class="comment">/* Failing exit status.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	EXIT_SUCCESS	0	<span class="comment">/* Successful exit status.  */</span></span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
+<li><p><code>format</code>: 格式化字符串（类似 printf）</p>
+</li>
+<li><p><code>...</code>: 可变参数，用于格式化字符串</p>
+</li>
 </ul>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> ret = rte_eal_init(argc, argv);</span><br><span class="line"><span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">  rte_exit(EXIT_FAILURE, <span class="string">"Error with EAL initialization\n"</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="http://doc.dpdk.org" target="_blank" rel="noopener">DPDK 官方文档</a></li>
 <li>《深入浅出DPDK》</li>
