@@ -345,7 +345,7 @@
 <ul>
 <li><p>一般使用 DPDK 提供的状态码</p>
 </li>
-<li><p>```c</p>
+<li><p>``` c</p>
 <h1 id="define-EXIT-FAILURE-1-Failing-exit-status"><a href="#define-EXIT-FAILURE-1-Failing-exit-status" class="headerlink" title="define    EXIT_FAILURE    1    / Failing exit status.  /"></a>define    EXIT_FAILURE    1    /<em> Failing exit status.  </em>/</h1><h1 id="define-EXIT-SUCCESS-0-Successful-exit-status"><a href="#define-EXIT-SUCCESS-0-Successful-exit-status" class="headerlink" title="define    EXIT_SUCCESS    0    / Successful exit status.  /"></a>define    EXIT_SUCCESS    0    /<em> Successful exit status.  </em>/</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- &#96;format&#96;: 格式化字符串（类似 printf）</span><br><span class="line"></span><br><span class="line">- &#96;...&#96;: 可变参数，用于格式化字符串</span><br><span class="line"></span><br><span class="line">### 使用示例</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; c</span><br><span class="line">int ret &#x3D; rte_eal_init(argc, argv);</span><br><span class="line">if (ret &lt; 0) &#123;</span><br><span class="line">  rte_exit(EXIT_FAILURE, &quot;Error with EAL initialization\n&quot;); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
