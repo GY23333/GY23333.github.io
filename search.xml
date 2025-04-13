@@ -13721,12 +13721,23 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 <li><p><code>name</code>：长选项名</p>
 </li>
 <li><p><code>has_arg</code>：是否需要参数</p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> no_argument		0				<span class="comment">//不需要参数</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> required_argument	1		<span class="comment">//必选参数</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> optional_argument	2		<span class="comment">//可选参数</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>flag</code>：设置结果存储方式</p>
 <ul>
-<li>```c<h1 id="define-no-argument-0-不需要参数"><a href="#define-no-argument-0-不需要参数" class="headerlink" title="define no_argument        0                //不需要参数"></a>define no_argument        0                //不需要参数</h1><h1 id="define-required-argument-1-必选参数"><a href="#define-required-argument-1-必选参数" class="headerlink" title="define required_argument    1        //必选参数"></a>define required_argument    1        //必选参数</h1><h1 id="define-optional-argument-2-可选参数"><a href="#define-optional-argument-2-可选参数" class="headerlink" title="define optional_argument    2        //可选参数"></a>define optional_argument    2        //可选参数</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- &#96;flag&#96;：设置结果存储方式</span><br><span class="line"></span><br><span class="line">  - 非 NULL 时，解析到这个长选项时会把 &#96;val&#96; 值放入其指向的内存</span><br><span class="line">  - 如果不需要，则设置为 NULL</span><br><span class="line"></span><br><span class="line">- &#96;val&#96;：解析返回值（&#96;flag&#96; 为 NULL ），或者要设置的值（&#96;flag&#96; 不为 NULL ）</span><br><span class="line"></span><br><span class="line">  - &#96;flag&#96; 为 NULL 时，为 &#96;getopt_long_only()&#96; 解析选项的返回值，用于区分不同的选项，一般给不同的选项设置不同的 &#96;val&#96; 作为 ID。也可以设置为对应短选项的字符，用来匹配长选项和短选项</span><br><span class="line">  - &#96;flag&#96; 不为 NULL 时，把 &#96;val&#96; 值放入其指向的内存</span><br><span class="line"></span><br><span class="line"># &#96;getopt_long_only()&#96;</span><br><span class="line"></span><br><span class="line">解析一个 option，返回该 option 的 id，并将这个 option 的值存入 optarg 中。</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;c</span><br><span class="line">#include &lt;getopt.h&gt;</span><br><span class="line"></span><br><span class="line">int getopt_long_only(int ___argc, char *const *___argv, const char *__shortopts, const struct option *__longopts, int *__longind)</span><br></pre></td></tr></table></figure>
+<li>非 NULL 时，解析到这个长选项时会把 <code>val</code> 值放入其指向的内存</li>
+<li>如果不需要，则设置为 NULL</li>
+</ul>
 </li>
+<li><p><code>val</code>：解析返回值（<code>flag</code> 为 NULL ），或者要设置的值（<code>flag</code> 不为 NULL ）</p>
+<ul>
+<li><code>flag</code> 为 NULL 时，为 <code>getopt_long_only()</code> 解析选项的返回值，用于区分不同的选项，一般给不同的选项设置不同的 <code>val</code> 作为 ID。也可以设置为对应短选项的字符，用来匹配长选项和短选项</li>
+<li><code>flag</code> 不为 NULL 时，把 <code>val</code> 值放入其指向的内存</li>
 </ul>
 </li>
 </ul>
+<h1 id="getopt-long-only"><a href="#getopt-long-only" class="headerlink" title="getopt_long_only()"></a><code>getopt_long_only()</code></h1><p>解析一个 option，返回该 option 的 id，并将这个 option 的值存入 optarg 中。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;getopt.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getopt_long_only</span><span class="params">(<span class="keyword">int</span> ___argc, <span class="keyword">char</span> *<span class="keyword">const</span> *___argv, <span class="keyword">const</span> <span class="keyword">char</span> *__shortopts, <span class="keyword">const</span> struct option *__longopts, <span class="keyword">int</span> *__longind)</span></span></span><br></pre></td></tr></table></figure>
 <p>输入参数：</p>
 <ul>
 <li><code>argc</code>、<code>argv</code>：主函数参数</li>
