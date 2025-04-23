@@ -2438,57 +2438,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Go 环境配置</title>
-    <url>/2024/12/24/Go-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 环境配置</p>
-<a id="more"></a>
-<h1 id="Go-版本管理"><a href="#Go-版本管理" class="headerlink" title="Go 版本管理"></a>Go 版本管理</h1><p>Go 版本管理工具 <a href="https://github.com/moovweb/gvm" target="_blank" rel="noopener">gvm</a> 管理多个版本的 Golang</p>
-<h2 id="gvm-安装"><a href="#gvm-安装" class="headerlink" title="gvm 安装"></a>gvm 安装</h2><ol>
-<li><p>安装 bison</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install bison</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装 gvm</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bash &lt; &lt;(curl -s -S -L https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;moovweb&#x2F;gvm&#x2F;master&#x2F;binscripts&#x2F;gvm-installer)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source &#x2F;root&#x2F;.gvm&#x2F;scripts&#x2F;gvm</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="gvm-管理多个-go-版本"><a href="#gvm-管理多个-go-版本" class="headerlink" title="gvm 管理多个 go 版本"></a>gvm 管理多个 go 版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:~&#x2F;.gvm&#x2F;scripts# gvm help</span><br><span class="line">Usage: gvm [command]</span><br><span class="line"></span><br><span class="line">Description:</span><br><span class="line">  GVM is the Go Version Manager</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  version    - print the gvm version number</span><br><span class="line">  get        - gets the latest code (for debugging)</span><br><span class="line">  use        - select a go version to use (--default to set permanently)</span><br><span class="line">  diff       - view changes to Go root</span><br><span class="line">  help       - display this usage text</span><br><span class="line">  implode    - completely remove gvm</span><br><span class="line">  install    - install go versions</span><br><span class="line">  uninstall  - uninstall go versions</span><br><span class="line">  cross      - install go cross compilers</span><br><span class="line">  linkthis   - link this directory into GOPATH</span><br><span class="line">  list       - list installed go versions</span><br><span class="line">  listall    - list available versions</span><br><span class="line">  alias      - manage go version aliases</span><br><span class="line">  pkgset     - manage go packages sets</span><br><span class="line">  pkgenv     - edit the environment for a package set</span><br><span class="line">  applymod   - apply the go version in go.mod</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>查看已下载 go 版本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm list</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看可下载 go 版本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm listall</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li></li>
-</ul>
-<h1 id="初始化-Go-项目"><a href="#初始化-Go-项目" class="headerlink" title="初始化 Go 项目"></a>初始化 Go 项目</h1><ol>
-<li><p>新建项目文件夹</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir survey-test</span><br><span class="line">cd survey-test</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化 Go 模块</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">go mod init github.com/GY23333/survey<span class="literal">-test</span></span><br><span class="line">go: creating new go.mod: module github.com/GY23333/survey<span class="literal">-test</span></span><br></pre></td></tr></table></figure>
-<p>该步会自动生成 go.mod 文件</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">module github.com/GY23333/survey-test</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.23</span><span class="number">.3</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如需获取依赖</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u github.com&#x2F;gorilla&#x2F;mux</span><br></pre></td></tr></table></figure>
-</li>
-<li></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Golang</category>
-      </categories>
-      <tags>
-        <tag>Golang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go基本语法</title>
     <url>/2023/03/15/Go%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>GoLang基本语法</p>
@@ -13853,5 +13802,57 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Go 环境配置</title>
+    <url>/2024/12/24/Go-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 环境配置</p>
+<a id="more"></a>
+<h1 id="Go-版本管理"><a href="#Go-版本管理" class="headerlink" title="Go 版本管理"></a>Go 版本管理</h1><p>Go 版本管理工具 <a href="https://github.com/moovweb/gvm" target="_blank" rel="noopener">gvm</a> 管理多个版本的 Golang</p>
+<h2 id="gvm-安装"><a href="#gvm-安装" class="headerlink" title="gvm 安装"></a>gvm 安装</h2><ol>
+<li><p>安装 bison</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install bison</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 gvm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bash &lt; &lt;(curl -s -S -L https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;moovweb&#x2F;gvm&#x2F;master&#x2F;binscripts&#x2F;gvm-installer)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source &#x2F;root&#x2F;.gvm&#x2F;scripts&#x2F;gvm</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="gvm-管理多个-go-版本"><a href="#gvm-管理多个-go-版本" class="headerlink" title="gvm 管理多个 go 版本"></a>gvm 管理多个 go 版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:~&#x2F;.gvm&#x2F;scripts# gvm help</span><br><span class="line">Usage: gvm [command]</span><br><span class="line"></span><br><span class="line">Description:</span><br><span class="line">  GVM is the Go Version Manager</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  version    - print the gvm version number</span><br><span class="line">  get        - gets the latest code (for debugging)</span><br><span class="line">  use        - select a go version to use (--default to set permanently)</span><br><span class="line">  diff       - view changes to Go root</span><br><span class="line">  help       - display this usage text</span><br><span class="line">  implode    - completely remove gvm</span><br><span class="line">  install    - install go versions</span><br><span class="line">  uninstall  - uninstall go versions</span><br><span class="line">  cross      - install go cross compilers</span><br><span class="line">  linkthis   - link this directory into GOPATH</span><br><span class="line">  list       - list installed go versions</span><br><span class="line">  listall    - list available versions</span><br><span class="line">  alias      - manage go version aliases</span><br><span class="line">  pkgset     - manage go packages sets</span><br><span class="line">  pkgenv     - edit the environment for a package set</span><br><span class="line">  applymod   - apply the go version in go.mod</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>查看已下载 go 版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看可下载 go 版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm listall</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装特定 go 版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm install go1.24.2</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+<h1 id="初始化-Go-项目"><a href="#初始化-Go-项目" class="headerlink" title="初始化 Go 项目"></a>初始化 Go 项目</h1><ol>
+<li><p>新建项目文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir survey-test</span><br><span class="line">cd survey-test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化 Go 模块</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">go mod init github.com/GY23333/survey<span class="literal">-test</span></span><br><span class="line">go: creating new go.mod: module github.com/GY23333/survey<span class="literal">-test</span></span><br></pre></td></tr></table></figure>
+<p>该步会自动生成 go.mod 文件</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">module github.com/GY23333/survey-test</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.23</span><span class="number">.3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如需获取依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u github.com&#x2F;gorilla&#x2F;mux</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
   </entry>
 </search>
