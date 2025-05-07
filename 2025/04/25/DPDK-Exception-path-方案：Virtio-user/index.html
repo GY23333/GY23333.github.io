@@ -46,15 +46,20 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="GuoYi的博客">
-<meta property="og:url" content="https://gy23333.github.io/tags/blog/index.html">
+  <meta name="description" content="DPDK 的 Exception path 方案之一 —— Virtio_user。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DPDK Exception path 方案：Virtio_user">
+<meta property="og:url" content="https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="DPDK 的 Exception path 方案之一 —— Virtio_user。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-24T16:27:50.000Z">
+<meta property="article:modified_time" content="2025-04-24T16:29:40.706Z">
 <meta property="article:author" content="GuoYi">
+<meta property="article:tag" content="DPDK">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://gy23333.github.io/tags/blog/">
+<link rel="canonical" href="https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/">
 
 
 <script id="page-configurations">
@@ -62,11 +67,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Tag: blog | GuoYi的博客</title>
+  <title>DPDK Exception path 方案：Virtio_user | GuoYi的博客</title>
   
 
 
@@ -201,54 +206,112 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">blog
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DPDK Exception path 方案：Virtio_user
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-04-25 00:27:50 / Modified: 00:29:40" itemprop="dateCreated datePublished" datetime="2025-04-25T00:27:50+08:00">2025-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DPDK/" itemprop="url" rel="index">
+                    <span itemprop="name">DPDK</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <p>DPDK 的 Exception path 方案之一 —— Virtio_user。</p>
+<a id="more"></a>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-25T16:13:22+08:00"
-              content="2020-02-25">
-          02-25
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DPDK/" rel="tag"># DPDK</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/25/Hexo%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" itemprop="url">
-            <span itemprop="name">Hexo搭建记录</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/17/NUMA-%E9%9D%9E%E4%B8%80%E8%87%B4%E6%80%A7%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE/" rel="prev" title="NUMA 非一致性内存访问">
+      <i class="fa fa-chevron-left"></i> NUMA 非一致性内存访问
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {

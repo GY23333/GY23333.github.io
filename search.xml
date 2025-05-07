@@ -4393,9 +4393,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Go调试器:Delve</title>
+    <title>Go 调试器:Delve</title>
     <url>/2024/11/19/Go%E8%B0%83%E8%AF%95%E5%99%A8-Delve/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go调试器:Delve</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 调试器:Delve</p>
 <a id="more"></a>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go install github.com&#x2F;go-delve&#x2F;delve&#x2F;cmd&#x2F;dlv@latest</span><br></pre></td></tr></table></figure>
 <p>检查安装是否成功</p>
@@ -4977,6 +4977,11 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
 <h1 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h1><h1 id="scapy-构建-IPIP-包"><a href="#scapy-构建-IPIP-包" class="headerlink" title="scapy 构建 IPIP 包"></a>scapy 构建 IPIP 包</h1><p>tcpdump -i ens160 -nn -v ‘ip proto 4’</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 外层IP头</span><br><span class="line">outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&#x3D;4表示IPIP</span><br><span class="line"></span><br><span class="line"># 内层IP头</span><br><span class="line">inner_ip &#x3D; IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)</span><br><span class="line"></span><br><span class="line"># 内层负载数据</span><br><span class="line">payload &#x3D; &quot;This is the payload&quot;</span><br><span class="line"></span><br><span class="line"># 组合成IPIP包</span><br><span class="line">ipip_packet &#x3D; outer_ip&#x2F;inner_ip&#x2F;payload</span><br><span class="line"></span><br><span class="line"># 发送数据包</span><br><span class="line">send(ipip_packet)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendp(Ether(src&#x3D;&quot;00:0c:29:4e:e5:7b&quot;, dst&#x3D;&quot;00:0c:29:4e:e5:7a&quot;)&#x2F;IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;172.16.19.137&quot;, proto&#x3D;4)&#x2F;IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)&#x2F;&quot;This is the payload&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="IPv6-隧道"><a href="#IPv6-隧道" class="headerlink" title="IPv6 隧道"></a>IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">modprobe ip6_tunnel</span><br></pre></td></tr></table></figure>
+<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6 隧道接口 <code>ip6tnl0</code></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:~<span class="comment"># ip -6 tunnel show</span></span><br><span class="line">ip6tnl0: ipv6/ipv6 remote :: local :: encaplimit <span class="number">0</span> hoplimit inherit tclass <span class="number">0</span>x00 flowlabel <span class="number">0</span>x00000 (flowinfo <span class="number">0</span>x00000000)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ip -6 tunnel change ip6tnl0 mode ip6ip6</span><br><span class="line"></span><br><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
   <entry>
@@ -13777,6 +13782,12 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
     <title>DPDK 内存管理</title>
     <url>/2025/04/17/DPDK-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h1 id="rte-mempool"><a href="#rte-mempool" class="headerlink" title="rte_mempool"></a>rte_mempool</h1>]]></content>
+      <categories>
+        <category>DPDK</category>
+      </categories>
+      <tags>
+        <tag>DPDK</tag>
+      </tags>
   </entry>
   <entry>
     <title>NUMA 非一致性内存访问</title>
@@ -13802,6 +13813,9 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
   </entry>
   <entry>
     <title>Go 环境配置</title>
@@ -13857,6 +13871,19 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
       </categories>
       <tags>
         <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DPDK Exception path 方案：Virtio_user</title>
+    <url>/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>DPDK 的 Exception path 方案之一 —— Virtio_user。</p>
+<a id="more"></a>
+]]></content>
+      <categories>
+        <category>DPDK</category>
+      </categories>
+      <tags>
+        <tag>DPDK</tag>
       </tags>
   </entry>
 </search>

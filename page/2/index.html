@@ -207,6 +207,79 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/12/24/TLS-%E8%AF%81%E4%B9%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/24/TLS-%E8%AF%81%E4%B9%A6/" class="post-title-link" itemprop="url">TLS 证书</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-24 22:55:05" itemprop="dateCreated datePublished" datetime="2024-12-24T22:55:05+08:00">2024-12-24</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/12/24/TLS-%E8%AF%81%E4%B9%A6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/12/24/TLS-%E8%AF%81%E4%B9%A6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+      
+          
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/12/24/Go-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -436,7 +509,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-04-16 01:05:29" itemprop="dateModified" datetime="2025-04-16T01:05:29+08:00">2025-04-16</time>
+                <time title="Modified: 2025-05-07 13:53:43" itemprop="dateModified" datetime="2025-05-07T13:53:43+08:00">2025-05-07</time>
               </span>
 
           
@@ -467,6 +540,11 @@
           <a id="more"></a>
 <h1 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h1><h1 id="scapy-构建-IPIP-包"><a href="#scapy-构建-IPIP-包" class="headerlink" title="scapy 构建 IPIP 包"></a>scapy 构建 IPIP 包</h1><p>tcpdump -i ens160 -nn -v ‘ip proto 4’</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 外层IP头</span><br><span class="line">outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&#x3D;4表示IPIP</span><br><span class="line"></span><br><span class="line"># 内层IP头</span><br><span class="line">inner_ip &#x3D; IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)</span><br><span class="line"></span><br><span class="line"># 内层负载数据</span><br><span class="line">payload &#x3D; &quot;This is the payload&quot;</span><br><span class="line"></span><br><span class="line"># 组合成IPIP包</span><br><span class="line">ipip_packet &#x3D; outer_ip&#x2F;inner_ip&#x2F;payload</span><br><span class="line"></span><br><span class="line"># 发送数据包</span><br><span class="line">send(ipip_packet)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendp(Ether(src&#x3D;&quot;00:0c:29:4e:e5:7b&quot;, dst&#x3D;&quot;00:0c:29:4e:e5:7a&quot;)&#x2F;IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;172.16.19.137&quot;, proto&#x3D;4)&#x2F;IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)&#x2F;&quot;This is the payload&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="IPv6-隧道"><a href="#IPv6-隧道" class="headerlink" title="IPv6 隧道"></a>IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modprobe ip6_tunnel</span><br></pre></td></tr></table></figure>
+<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6 隧道接口 <code>ip6tnl0</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:~<span class="comment"># ip -6 tunnel show</span></span><br><span class="line">ip6tnl0: ipv6/ipv6 remote :: local :: encaplimit <span class="number">0</span> hoplimit inherit tclass <span class="number">0</span>x00 flowlabel <span class="number">0</span>x00000 (flowinfo <span class="number">0</span>x00000000)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip -6 tunnel change ip6tnl0 mode ip6ip6</span><br><span class="line"></span><br><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -975,7 +1053,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2024/11/19/Go%E8%B0%83%E8%AF%95%E5%99%A8-Delve/" class="post-title-link" itemprop="url">Go调试器:Delve</a>
+            <a href="/2024/11/19/Go%E8%B0%83%E8%AF%95%E5%99%A8-Delve/" class="post-title-link" itemprop="url">Go 调试器:Delve</a>
         </h1>
 
         <div class="post-meta">
@@ -984,10 +1062,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-11-19 01:06:33 / Modified: 02:39:29" itemprop="dateCreated datePublished" datetime="2024-11-19T01:06:33+08:00">2024-11-19</time>
+              <time title="Created: 2024-11-19 01:06:33" itemprop="dateCreated datePublished" datetime="2024-11-19T01:06:33+08:00">2024-11-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-04-23 21:47:44" itemprop="dateModified" datetime="2025-04-23T21:47:44+08:00">2025-04-23</time>
+              </span>
 
           
   
@@ -1014,103 +1098,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Go调试器:Delve</p>
+          <p>Go 调试器:Delve</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/11/19/Go%E8%B0%83%E8%AF%95%E5%99%A8-Delve/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-      
-          
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/11/17/%E7%AE%97%E6%B3%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
-      <meta itemprop="name" content="GuoYi">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GuoYi的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/11/17/%E7%AE%97%E6%B3%95%E9%A2%98/" class="post-title-link" itemprop="url">算法题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-11-17 22:58:09 / Modified: 23:16:21" itemprop="dateCreated datePublished" datetime="2024-11-17T22:58:09+08:00">2024-11-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2024/11/17/%E7%AE%97%E6%B3%95%E9%A2%98/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/11/17/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>LeetCode Go 刷题记录</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/17/%E7%AE%97%E6%B3%95%E9%A2%98/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1203,7 +1194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
