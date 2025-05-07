@@ -54,7 +54,7 @@
 <meta property="og:description" content="Go 环境配置">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-23T17:18:11.000Z">
-<meta property="article:modified_time" content="2025-04-23T13:34:48.087Z">
+<meta property="article:modified_time" content="2025-04-23T13:42:25.093Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
@@ -241,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-04-23 21:34:48" itemprop="dateModified" datetime="2025-04-23T21:34:48+08:00">2025-04-23</time>
+                <time title="Modified: 2025-04-23 21:42:25" itemprop="dateModified" datetime="2025-04-23T21:42:25+08:00">2025-04-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,6 +282,8 @@
       
         <p>Go 环境配置</p>
 <a id="more"></a>
+<h1 id="Go-安装"><a href="#Go-安装" class="headerlink" title="Go 安装"></a>Go 安装</h1><p>Ubuntu 直接使用 apt 安装 Golang</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install golang</span><br></pre></td></tr></table></figure>
 <h1 id="Go-版本管理"><a href="#Go-版本管理" class="headerlink" title="Go 版本管理"></a>Go 版本管理</h1><p>Go 版本管理工具 <a href="https://github.com/moovweb/gvm" target="_blank" rel="noopener">gvm</a> 管理多个版本的 Golang</p>
 <h2 id="gvm-安装"><a href="#gvm-安装" class="headerlink" title="gvm 安装"></a>gvm 安装</h2><ol>
 <li><p>安装 bison</p>
@@ -302,10 +304,12 @@
 <li><p>查看可下载 go 版本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvm listall</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>安装特定 go 版本</p>
+<li><p>安装特定 go 版本（gvm 安装 go 版本需要先安装一个基础的 go，go 版本具体看报错提示）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvm install go1.24.2</span><br></pre></td></tr></table></figure>
 </li>
-<li></li>
+<li><p>使用特定版本的 go</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvm use go1.24.2</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h1 id="初始化-Go-项目"><a href="#初始化-Go-项目" class="headerlink" title="初始化 Go 项目"></a>初始化 Go 项目</h1><ol>
 <li><p>新建项目文件夹</p>
@@ -406,7 +410,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-版本管理"><span class="nav-number">1.</span> <span class="nav-text">Go 版本管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gvm-安装"><span class="nav-number">1.1.</span> <span class="nav-text">gvm 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gvm-管理多个-go-版本"><span class="nav-number">1.2.</span> <span class="nav-text">gvm 管理多个 go 版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化-Go-项目"><span class="nav-number">2.</span> <span class="nav-text">初始化 Go 项目</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-安装"><span class="nav-number">1.</span> <span class="nav-text">Go 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go-版本管理"><span class="nav-number">2.</span> <span class="nav-text">Go 版本管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gvm-安装"><span class="nav-number">2.1.</span> <span class="nav-text">gvm 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gvm-管理多个-go-版本"><span class="nav-number">2.2.</span> <span class="nav-text">gvm 管理多个 go 版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化-Go-项目"><span class="nav-number">3.</span> <span class="nav-text">初始化 Go 项目</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

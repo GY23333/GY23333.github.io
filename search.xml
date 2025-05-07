@@ -13808,6 +13808,8 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
     <url>/2024/12/24/Go-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 环境配置</p>
 <a id="more"></a>
+<h1 id="Go-安装"><a href="#Go-安装" class="headerlink" title="Go 安装"></a>Go 安装</h1><p>Ubuntu 直接使用 apt 安装 Golang</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt install golang</span><br></pre></td></tr></table></figure>
 <h1 id="Go-版本管理"><a href="#Go-版本管理" class="headerlink" title="Go 版本管理"></a>Go 版本管理</h1><p>Go 版本管理工具 <a href="https://github.com/moovweb/gvm" target="_blank" rel="noopener">gvm</a> 管理多个版本的 Golang</p>
 <h2 id="gvm-安装"><a href="#gvm-安装" class="headerlink" title="gvm 安装"></a>gvm 安装</h2><ol>
 <li><p>安装 bison</p>
@@ -13828,10 +13830,12 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 <li><p>查看可下载 go 版本</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm listall</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>安装特定 go 版本</p>
+<li><p>安装特定 go 版本（gvm 安装 go 版本需要先安装一个基础的 go，go 版本具体看报错提示）</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm install go1.24.2</span><br></pre></td></tr></table></figure>
 </li>
-<li></li>
+<li><p>使用特定版本的 go</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gvm use go1.24.2</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h1 id="初始化-Go-项目"><a href="#初始化-Go-项目" class="headerlink" title="初始化 Go 项目"></a>初始化 Go 项目</h1><ol>
 <li><p>新建项目文件夹</p>
