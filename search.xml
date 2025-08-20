@@ -4977,10 +4977,12 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
 <h1 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h1><h1 id="scapy-构建-IPIP-包"><a href="#scapy-构建-IPIP-包" class="headerlink" title="scapy 构建 IPIP 包"></a>scapy 构建 IPIP 包</h1><p>tcpdump -i ens160 -nn -v ‘ip proto 4’</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 外层IP头</span><br><span class="line">outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&#x3D;4表示IPIP</span><br><span class="line"></span><br><span class="line"># 内层IP头</span><br><span class="line">inner_ip &#x3D; IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)</span><br><span class="line"></span><br><span class="line"># 内层负载数据</span><br><span class="line">payload &#x3D; &quot;This is the payload&quot;</span><br><span class="line"></span><br><span class="line"># 组合成IPIP包</span><br><span class="line">ipip_packet &#x3D; outer_ip&#x2F;inner_ip&#x2F;payload</span><br><span class="line"></span><br><span class="line"># 发送数据包</span><br><span class="line">send(ipip_packet)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendp(Ether(src&#x3D;&quot;00:0c:29:4e:e5:7b&quot;, dst&#x3D;&quot;00:0c:29:4e:e5:7a&quot;)&#x2F;IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;172.16.19.137&quot;, proto&#x3D;4)&#x2F;IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)&#x2F;&quot;This is the payload&quot;)</span><br></pre></td></tr></table></figure>
-<h1 id="IPv6-隧道"><a href="#IPv6-隧道" class="headerlink" title="IPv6 隧道"></a>IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
+<h1 id="IPv6-in-IPv6-隧道"><a href="#IPv6-in-IPv6-隧道" class="headerlink" title="IPv6-in-IPv6 隧道"></a>IPv6-in-IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">modprobe ip6_tunnel</span><br></pre></td></tr></table></figure>
-<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6 隧道接口 <code>ip6tnl0</code></p>
+<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6-in-IPv6 隧道接口 <code>ip6tnl0</code></p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">root@ubuntu2404:~<span class="comment"># ip -6 tunnel show</span></span><br><span class="line">ip6tnl0: ipv6/ipv6 remote :: local :: encaplimit <span class="number">0</span> hoplimit inherit tclass <span class="number">0</span>x00 flowlabel <span class="number">0</span>x00000 (flowinfo <span class="number">0</span>x00000000)</span><br></pre></td></tr></table></figure>
+<p>可以直接开启这个默认的隧道</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ip -6 tunnel change ip6tnl0 mode ip6ip6</span><br><span class="line"></span><br><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
@@ -5769,6 +5771,34 @@ cond1(no)->sub(right)->op1</textarea><textarea id="flowchart-3-options" style="d
 <li>变量重命名：<code>Leader</code> —&gt; <code>c</code> —&gt; <code>r</code></li>
 <li></li>
 </ul>
+<h1 id="文件树"><a href="#文件树" class="headerlink" title="文件树"></a>文件树</h1><p>lazyvim 中默认集成了文件树 neo-tree.nvim</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>&lt;leader&gt;e</code></td>
+<td style="text-align:center">打开/关闭文件树</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>?</code></td>
+<td style="text-align:center">help</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
 <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>新建 nvim 的配置文件夹 <code>~/.config/nvim</code> ，结构如下</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── init.vim                              入口文件，这里负责加载所有lua文件夹里的文件</span><br><span class="line">└── lua                                   所有 lua 配置文件</span><br><span class="line">    ├── basic.lua                         Neovim 的基础配置</span><br><span class="line">    ├── keybindings.lua                   快捷键配置</span><br><span class="line">    ├── lsp                               内置 LSP  (Language Server Protocol) 配置</span><br><span class="line">    │   ├── diagnostic_signs.lua</span><br><span class="line">    │   ├── language_servers.lua</span><br><span class="line">    │   └── nvim-cmp-config.lua</span><br><span class="line">    ├── plugin-config                     各个插件配置在这个文件夹</span><br><span class="line">    │   ├── bufferline.lua</span><br><span class="line">    │   ├── comment.lua</span><br><span class="line">    │   ├── nvim-autopairs.lua</span><br><span class="line">    │   ├── nvim-colorizer.lua</span><br><span class="line">    │   ├── nvim-tree.lua</span><br><span class="line">    │   ├── nvim-treesitter.lua</span><br><span class="line">    │   ├── rust-tools.lua</span><br><span class="line">    │   ├── surround.lua</span><br><span class="line">    │   ├── telescope.lua</span><br><span class="line">    │   └── which-key.lua</span><br><span class="line">    └── plugins.lua                       插件安装管理</span><br></pre></td></tr></table></figure>
 <p>nvim 在下次启动时会自动查看其中的内容进行更新，当然也可以在编辑后直接使用 <code>:so</code> 命令当重新载入。</p>
@@ -6868,7 +6898,7 @@ y
 <h2 id="生成代码"><a href="#生成代码" class="headerlink" title="生成代码"></a>生成代码</h2><p>编辑完 .proto 文件后，便可生成各种语言的代码，供客户端和服务端使用，以 Go 语言为例，生成代码命令如下：</p>
 <p><code>
 </code></p>
-<h1 id="一个简单的-gRPC"><a href="#一个简单的-gRPC" class="headerlink" title="一个简单的 gRPC"></a>一个简单的 gRPC</h1><p>实现客户端向服务端查询用户的信息</p>
+<h1 id="TLS-证书"><a href="#TLS-证书" class="headerlink" title="TLS 证书"></a>TLS 证书</h1><h1 id="一个简单的-gRPC"><a href="#一个简单的-gRPC" class="headerlink" title="一个简单的 gRPC"></a>一个简单的 gRPC</h1><p>实现客户端向服务端查询用户的信息</p>
 <h2 id="Protocol-Buffer"><a href="#Protocol-Buffer" class="headerlink" title="Protocol Buffer"></a>Protocol Buffer</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noopener">gRPC 官方文档</a></li>
 <li><a href="http://www.topgoer.com/微服务/gRPC.html" target="_blank" rel="noopener">Go-gRPC 使用教程</a></li>
@@ -13781,7 +13811,8 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
   <entry>
     <title>DPDK 内存管理</title>
     <url>/2025/04/17/DPDK-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h1 id="rte-mempool"><a href="#rte-mempool" class="headerlink" title="rte_mempool"></a>rte_mempool</h1>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+<h1 id="rte-mempool"><a href="#rte-mempool" class="headerlink" title="rte_mempool"></a>rte_mempool</h1>]]></content>
       <categories>
         <category>DPDK</category>
       </categories>
@@ -13865,6 +13896,9 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </li>
 <li></li>
 </ol>
+<h1 id="VSCode-Go-配置"><a href="#VSCode-Go-配置" class="headerlink" title="VSCode Go 配置"></a>VSCode Go 配置</h1><h2 id="Go-代码补全"><a href="#Go-代码补全" class="headerlink" title="Go 代码补全"></a>Go 代码补全</h2><p>需安装 gopls</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">go install golang.org/x/tools/gopls@latest</span><br></pre></td></tr></table></figure>
+<h1 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h1><h2 id="GoProxy"><a href="#GoProxy" class="headerlink" title="GoProxy"></a>GoProxy</h2><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Golang</category>
@@ -13885,5 +13919,21 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
       <tags>
         <tag>DPDK</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Go 单元测试</title>
+    <url>/2025/08/20/Go-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Go 单元测试</p>
+<a id="more"></a>
+<h1 id="testify-断言库"><a href="#testify-断言库" class="headerlink" title="testify 断言库"></a>testify 断言库</h1><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;stretchr&#x2F;testify&#x2F;assert</span><br><span class="line">go get github.com&#x2F;stretchr&#x2F;testify&#x2F;require</span><br></pre></td></tr></table></figure>
+<h2 id="assert-VS-require"><a href="#assert-VS-require" class="headerlink" title="assert VS require"></a><code>assert</code> VS <code>require</code></h2><h1 id="Table-Driven-Unit-Test"><a href="#Table-Driven-Unit-Test" class="headerlink" title="Table Driven Unit Test"></a>Table Driven Unit Test</h1><p>多用例场景推荐使用 Table Driven Unit Test。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestFunctionUnderTest</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	testCases := []<span class="keyword">struct</span> &#123;</span><br><span class="line">		name        <span class="keyword">string</span></span><br><span class="line">		input       <span class="keyword">string</span></span><br><span class="line">		expect      <span class="keyword">string</span></span><br><span class="line">		wantErr     <span class="keyword">bool</span></span><br><span class="line">		errContains <span class="keyword">string</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		&#123;name1, input1, expect1, wantErr1, errContains1&#125;,</span><br><span class="line">		&#123;name2, input2, expect2, wantErr2, errContains2&#125;,</span><br><span class="line">		&#123;name3, input3, expect3, wantErr3, errContains3&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, tt := <span class="keyword">range</span> testCases &#123;</span><br><span class="line">		tt := tt <span class="comment">//如果需要子用例间并发，则加上这两行（局部变量副本保证安全并发）</span></span><br><span class="line">		t.Run(tt.name, <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">			t.Parallel() <span class="comment">//如果需要子用例间并发，则加上这两行</span></span><br><span class="line">			actual, err := FunctionUnderTest(tt.input)</span><br><span class="line">			<span class="keyword">if</span> tt.wantErr &#123;</span><br><span class="line">				require.ErrorContains(t, err, tt.errContains)</span><br><span class="line">				assert.Nil(t, actual)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				compareFunction(t, tt.expect, actual)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>Go连接池</title>
+    <url>/2025/07/11/Go%E8%BF%9E%E6%8E%A5%E6%B1%A0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
   </entry>
 </search>

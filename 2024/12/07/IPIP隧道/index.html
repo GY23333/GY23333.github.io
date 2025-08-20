@@ -54,7 +54,7 @@
 <meta property="og:description" content="IPIPscapy 构建 IPIP 包tcpdump -i ens160 -nn -v ‘ip proto 4’ 1234567891011121314151617# 外层IP头outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-06T16:47:53.000Z">
-<meta property="article:modified_time" content="2025-05-07T05:53:43.209Z">
+<meta property="article:modified_time" content="2025-05-07T16:18:52.839Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-07 13:53:43" itemprop="dateModified" datetime="2025-05-07T13:53:43+08:00">2025-05-07</time>
+                <time title="Modified: 2025-05-08 00:18:52" itemprop="dateModified" datetime="2025-05-08T00:18:52+08:00">2025-05-08</time>
               </span>
 
           
@@ -271,10 +271,12 @@
         <a id="more"></a>
 <h1 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h1><h1 id="scapy-构建-IPIP-包"><a href="#scapy-构建-IPIP-包" class="headerlink" title="scapy 构建 IPIP 包"></a>scapy 构建 IPIP 包</h1><p>tcpdump -i ens160 -nn -v ‘ip proto 4’</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 外层IP头</span><br><span class="line">outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&#x3D;4表示IPIP</span><br><span class="line"></span><br><span class="line"># 内层IP头</span><br><span class="line">inner_ip &#x3D; IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)</span><br><span class="line"></span><br><span class="line"># 内层负载数据</span><br><span class="line">payload &#x3D; &quot;This is the payload&quot;</span><br><span class="line"></span><br><span class="line"># 组合成IPIP包</span><br><span class="line">ipip_packet &#x3D; outer_ip&#x2F;inner_ip&#x2F;payload</span><br><span class="line"></span><br><span class="line"># 发送数据包</span><br><span class="line">send(ipip_packet)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendp(Ether(src&#x3D;&quot;00:0c:29:4e:e5:7b&quot;, dst&#x3D;&quot;00:0c:29:4e:e5:7a&quot;)&#x2F;IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;172.16.19.137&quot;, proto&#x3D;4)&#x2F;IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)&#x2F;&quot;This is the payload&quot;)</span><br></pre></td></tr></table></figure>
-<h1 id="IPv6-隧道"><a href="#IPv6-隧道" class="headerlink" title="IPv6 隧道"></a>IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
+<h1 id="IPv6-in-IPv6-隧道"><a href="#IPv6-in-IPv6-隧道" class="headerlink" title="IPv6-in-IPv6 隧道"></a>IPv6-in-IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modprobe ip6_tunnel</span><br></pre></td></tr></table></figure>
-<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6 隧道接口 <code>ip6tnl0</code></p>
+<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6-in-IPv6 隧道接口 <code>ip6tnl0</code></p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:~<span class="comment"># ip -6 tunnel show</span></span><br><span class="line">ip6tnl0: ipv6/ipv6 remote :: local :: encaplimit <span class="number">0</span> hoplimit inherit tclass <span class="number">0</span>x00 flowlabel <span class="number">0</span>x00000 (flowinfo <span class="number">0</span>x00000000)</span><br></pre></td></tr></table></figure>
+<p>可以直接开启这个默认的隧道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip -6 tunnel change ip6tnl0 mode ip6ip6</span><br><span class="line"></span><br><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -358,7 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IPIP"><span class="nav-number">1.</span> <span class="nav-text">IPIP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scapy-构建-IPIP-包"><span class="nav-number">2.</span> <span class="nav-text">scapy 构建 IPIP 包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPv6-隧道"><span class="nav-number">3.</span> <span class="nav-text">IPv6 隧道</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IPIP"><span class="nav-number">1.</span> <span class="nav-text">IPIP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scapy-构建-IPIP-包"><span class="nav-number">2.</span> <span class="nav-text">scapy 构建 IPIP 包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPv6-in-IPv6-隧道"><span class="nav-number">3.</span> <span class="nav-text">IPv6-in-IPv6 隧道</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -374,7 +376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
