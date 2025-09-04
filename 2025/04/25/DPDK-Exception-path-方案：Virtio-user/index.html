@@ -46,18 +46,22 @@
   };
 </script>
 
-  <meta name="description" content="DPDK 的 Exception path 方案之一 —— Virtio_user。">
+  <meta name="description" content="DPDK 作为旁路内核方案，其接受和转发的包可以不经过内核进行高速转发，但其中可能存在部分“异常”的包（比如发给该节点本身的包）不需要转发，而是需要通过内核处理，这就是 Exception path，virtio-user 则实现 Exception path 的方案之一。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DPDK Exception path 方案：Virtio_user">
+<meta property="og:title" content="DPDK Exception path 方案：Virtio-user">
 <meta property="og:url" content="https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
-<meta property="og:description" content="DPDK 的 Exception path 方案之一 —— Virtio_user。">
+<meta property="og:description" content="DPDK 作为旁路内核方案，其接受和转发的包可以不经过内核进行高速转发，但其中可能存在部分“异常”的包（比如发给该节点本身的包）不需要转发，而是需要通过内核处理，这就是 Exception path，virtio-user 则实现 Exception path 的方案之一。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250905014859933.png">
+<meta property="og:image" content="https://doc.dpdk.org/guides/_images/virtio_user_as_exception_path.svg">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/20250905030911.png">
 <meta property="article:published_time" content="2025-04-24T16:27:50.000Z">
-<meta property="article:modified_time" content="2025-04-24T16:29:40.706Z">
+<meta property="article:modified_time" content="2025-09-04T19:10:16.784Z">
 <meta property="article:author" content="GuoYi">
 <meta property="article:tag" content="DPDK">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250905014859933.png">
 
 <link rel="canonical" href="https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/">
 
@@ -71,7 +75,7 @@
   };
 </script>
 
-  <title>DPDK Exception path 方案：Virtio_user | GuoYi的博客</title>
+  <title>DPDK Exception path 方案：Virtio-user | GuoYi的博客</title>
   
 
 
@@ -224,7 +228,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          DPDK Exception path 方案：Virtio_user
+          DPDK Exception path 方案：Virtio-user
         </h1>
 
         <div class="post-meta">
@@ -233,10 +237,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-04-25 00:27:50 / Modified: 00:29:40" itemprop="dateCreated datePublished" datetime="2025-04-25T00:27:50+08:00">2025-04-25</time>
+              <time title="Created: 2025-04-25 00:27:50" itemprop="dateCreated datePublished" datetime="2025-04-25T00:27:50+08:00">2025-04-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-09-05 03:10:16" itemprop="dateModified" datetime="2025-09-05T03:10:16+08:00">2025-09-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -274,8 +284,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>DPDK 的 Exception path 方案之一 —— Virtio_user。</p>
+        <p>DPDK 作为旁路内核方案，其接受和转发的包可以不经过内核进行高速转发，但其中可能存在部分“异常”的包（比如发给该节点本身的包）不需要转发，而是需要通过内核处理，这就是 Exception path，virtio-user 则实现 Exception path 的方案之一。</p>
 <a id="more"></a>
+<h1 id="Virtio-user"><a href="#Virtio-user" class="headerlink" title="Virtio-user"></a>Virtio-user</h1><p>Virtio-user 一系列概念原本是用来处理虚拟机与主机之间的 I/O。</p>
+<ul>
+<li><code>virtio</code>：即 virtual I/O，用于虚拟机和主机间高速 I/O 操作的开放标准。</li>
+<li><code>vhost</code>：主机中加速 virtio 的后端驱动实现方案。最初 virtio 在主机中的后端处理由 QEMU 进程实现，后升级为 vhost 加速方案，vhost 又分为内核态的 <code>vhost-net</code> 和在用户态的 <code>vhost-user</code>。</li>
+<li><code>virtio-net</code>：在虚拟机内部的<strong>前端驱动</strong>，遵循 virtio 标准收发网络包，需要主机有对应的后端来配合。</li>
+<li><code>vhost-net</code>：在主机的内核空间的<strong>后端驱动</strong>，可以处理来自虚拟机 <code>virtio-net</code> 的包，并将包交给内核网络协议栈。</li>
+<li><code>vhost-user</code>：在主机的用户空间的<strong>后端规范</strong>，规定了如何绕过内核，通过用户态应用（如 OVS-DPDK）来实现一个后端驱动，用来处理来自虚拟机 <code>virtio-net</code> 的包</li>
+<li><code>virtio-user</code>：DPDK 对  <code>virtio-net</code> 的具体实现的<strong>后端驱动</strong>，在主机的用户空间，如通过 DPDK 创建端口与虚拟机通信使用的就是这种驱动。</li>
+</ul>
+<p>由此便有了虚拟机与主机之间的 I/O 的三种后端路径：</p>
+<ol>
+<li>传统的 QEMU 进程：速度很慢</li>
+<li>内核态的 vhost-net 后端驱动：速度快于 QEMU</li>
+<li>用户态基于 vhost-user 协议的 virtio-user 后端驱动：速度最快</li>
+</ol>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20250905014859933.png" alt="image-20250905014859933" style="zoom: 33%;" /></p>
+<h1 id="DPDK-Exception-Path-—-Virtio-user"><a href="#DPDK-Exception-Path-—-Virtio-user" class="headerlink" title="DPDK Exception Path — Virtio_user"></a>DPDK Exception Path — Virtio_user</h1><p>Virtio_user，作为虚拟设备，原本是与 vhost-user 后端（另一个进程）一起作为 IPC（进程间通信） 和用户空间容器网络的高性能解决方案。但在 Exception Path 中，其舍弃了 vhost-user 后端，而是与 vhost-net 进行通信，从而将包转入内核。</p>
+<p>下图展示了 Virtio_user 作为 DPDK Exception Path 的架构。</p>
+<p>图中共有两条包路径：</p>
+<ul>
+<li>Fast Path (<code>NIC &lt;-&gt; other PMDs &lt;-&gt; ETHFEV API &lt;-&gt;</code>)：包的快速转发路径， 纯用户态转发，包从网卡通过各种 DPDK 的 PMD 驱动收发，DPDK 应用通过调用如 <code>rte_eth_rx_burst()</code>和 <code>rte_eth_tx_burst()</code> 等 ETHDEV API 来与 PMD 驱动交互，实现包处理后，不经内核，快速转出</li>
+<li>Exception Path (<code>NIC -&gt; other PMDs -&gt; ETHFEV API -&gt; ... -&gt; ETHFEV API -&gt; virtio PMD -&gt; tap -&gt; kernel network stack</code>)：包的异常路径<ul>
+<li>DPDK -&gt; 内核（发送路径）<ol>
+<li>DPDK 应用调用 <code>rte_eth_tx_burst(virtio_user0, ...)</code> 控制 PMD 驱动</li>
+<li>virtio PMD 驱动将包通过 vhost 协议，将数据包经过 <code>/dev/vhost-net</code> 文件交给内核的 vhost-net 驱动</li>
+<li>vhost-net 驱动将包写入 tap 设备</li>
+<li>内核网络协议栈中 tap 设备中读到包，开始处理</li>
+</ol>
+</li>
+<li>内核 -&gt; DPDK（接收路径）<ol>
+<li>内核网络协议栈决定发一个包，将包写入 tap 设备</li>
+<li>vhost-net 驱动从 tap 设备抓取包</li>
+<li>vhost-net 驱动通过 vhost 协议和共享内存，将包放到 virtio_user0 的接受队列</li>
+<li>DPDK 应用调用 <code>rte_eth_rx_burst(virtio_user0, ...)</code> 从 virtio_user0 的接受队列收包</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://doc.dpdk.org/guides/_images/virtio_user_as_exception_path.svg" alt=""></p>
+<p>DPDK 通过下面代码示例来创建 virtio_user 端口</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rte_eal_hotplug_add(<span class="string">"vdev"</span>, <span class="string">"virtio_user0"</span>, <span class="string">"path=/dev/vhost-net"</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>rte_eal_hotplug_add</code> 函数用于动态添加一个设备</li>
+<li><code>vdev</code> 指这个设备的类型是虚拟设备（Virtual Device），而不是物理 PCI 设备</li>
+<li><code>virtio_user0</code> 指定设备名称，对应图中的 virtio PMD，之后 DPDK 就可通过<code>rte_eth_tx_burst(virtio_user0, ...)</code> 和 <code>rte_eth_rx_burst(virtio_user0, ...)</code> 来操作这个端口</li>
+<li><code>path=/dev/vhost-net</code> 指定的设备的后端路径，即使用 vhost-net 内核驱动与内核交互，对应了图中的对 vhost.ko（vhost-net 的内核模块）的用户态 vhost adapter 适配行为</li>
+</ul>
+<blockquote>
+<p>此处添加的 <code>virtio_user0</code> 虚拟设备并非 Linux 内核的虚拟网卡 tap，该 <code>virtio_user0</code> 是用户态的 DPDK 的 virtio PMD 的一个虚拟端口，tap 是与之在内核对应的那种虚拟网卡，可以同样命名为 virtio_user0，但不是同一个东西。</p>
+</blockquote>
+<h1 id="Virtio-user-Exception-Path-示例"><a href="#Virtio-user-Exception-Path-示例" class="headerlink" title="Virtio-user Exception Path 示例"></a>Virtio-user Exception Path 示例</h1><ol>
+<li>DPDK 从物理网卡的 RX 取下包</li>
+<li>DPDK 判断收包是否走 Exception Path</li>
+<li>如果是走 Exception Path 的包，DPDK 将其放到 EP ring 中，之后统一发到 virtio_user0 的 TX（推荐使用一个 ring 来作为中间缓冲）</li>
+<li>virtio_user0 通过 vhost-net 将包发到内核协议栈，最后交给相应用户态进程</li>
+<li>用户态进程收包后，将响应的回包交给内核协议栈</li>
+<li>vhost-net 将回包放到 virtio_user0 的 RX</li>
+<li>DPDK 从 virtio_user0 的 RX 收包，并通过物理网卡的 TX 发出</li>
+</ol>
+<p>注：RX、TX 都是相对 DPDK 而言的</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/20250905030911.png" alt=""></p>
 
     </div>
 
@@ -361,6 +433,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Virtio-user"><span class="nav-number">1.</span> <span class="nav-text">Virtio-user</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DPDK-Exception-Path-—-Virtio-user"><span class="nav-number">2.</span> <span class="nav-text">DPDK Exception Path — Virtio_user</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Virtio-user-Exception-Path-示例"><span class="nav-number">3.</span> <span class="nav-text">Virtio-user Exception Path 示例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -376,7 +449,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

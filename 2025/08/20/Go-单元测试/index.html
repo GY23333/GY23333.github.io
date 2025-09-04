@@ -54,7 +54,7 @@
 <meta property="og:description" content="Go 单元测试">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-20T15:32:06.000Z">
-<meta property="article:modified_time" content="2025-08-20T17:39:10.696Z">
+<meta property="article:modified_time" content="2025-08-20T18:46:10.282Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-21 01:39:10" itemprop="dateModified" datetime="2025-08-21T01:39:10+08:00">2025-08-21</time>
+                <time title="Modified: 2025-08-21 02:46:10" itemprop="dateModified" datetime="2025-08-21T02:46:10+08:00">2025-08-21</time>
               </span>
 
           
@@ -270,7 +270,7 @@
       
         <p>Go 单元测试</p>
 <a id="more"></a>
-<h1 id="testify-断言库"><a href="#testify-断言库" class="headerlink" title="testify 断言库"></a>testify 断言库</h1><p>安装</p>
+<h1 id="init-函数"><a href="#init-函数" class="headerlink" title="init 函数"></a><code>init</code> 函数</h1><h1 id="testify-断言库"><a href="#testify-断言库" class="headerlink" title="testify 断言库"></a>testify 断言库</h1><p>安装</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get github.com&#x2F;stretchr&#x2F;testify&#x2F;assert</span><br><span class="line">go get github.com&#x2F;stretchr&#x2F;testify&#x2F;require</span><br></pre></td></tr></table></figure>
 <h2 id="assert-VS-require"><a href="#assert-VS-require" class="headerlink" title="assert VS require"></a><code>assert</code> VS <code>require</code></h2><h1 id="Table-Driven-Unit-Test"><a href="#Table-Driven-Unit-Test" class="headerlink" title="Table Driven Unit Test"></a>Table Driven Unit Test</h1><p>多用例场景推荐使用 Table Driven Unit Test。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestFunctionUnderTest</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	testCases := []<span class="keyword">struct</span> &#123;</span><br><span class="line">		name        <span class="keyword">string</span></span><br><span class="line">		input       <span class="keyword">string</span></span><br><span class="line">		expect      <span class="keyword">string</span></span><br><span class="line">		wantErr     <span class="keyword">bool</span></span><br><span class="line">		errContains <span class="keyword">string</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		&#123;name1, input1, expect1, wantErr1, errContains1&#125;,</span><br><span class="line">		&#123;name2, input2, expect2, wantErr2, errContains2&#125;,</span><br><span class="line">		&#123;name3, input3, expect3, wantErr3, errContains3&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, tt := <span class="keyword">range</span> testCases &#123;</span><br><span class="line">		tt := tt <span class="comment">//如果需要子用例间并发，则加上这两行（局部变量副本保证安全并发）</span></span><br><span class="line">		t.Run(tt.name, <span class="function"><span class="keyword">func</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">			t.Parallel() <span class="comment">//如果需要子用例间并发，则加上这两行</span></span><br><span class="line">			actual, err := FunctionUnderTest(tt.input)</span><br><span class="line">			<span class="keyword">if</span> tt.wantErr &#123;</span><br><span class="line">				require.ErrorContains(t, err, tt.errContains)</span><br><span class="line">				assert.Nil(t, actual)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				compareFunction(t, tt.expect, actual)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -292,7 +292,10 @@
     <a href="/2025/07/11/Go%E8%BF%9E%E6%8E%A5%E6%B1%A0/" rel="prev" title="Go连接池">
       <i class="fa fa-chevron-left"></i> Go连接池
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/29/Google-Maglev/" rel="next" title="Google Maglev">
+      Google Maglev <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -353,7 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#testify-断言库"><span class="nav-number">1.</span> <span class="nav-text">testify 断言库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#assert-VS-require"><span class="nav-number">1.1.</span> <span class="nav-text">assert VS require</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-Driven-Unit-Test"><span class="nav-number">2.</span> <span class="nav-text">Table Driven Unit Test</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#init-函数"><span class="nav-number">1.</span> <span class="nav-text">init 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#testify-断言库"><span class="nav-number">2.</span> <span class="nav-text">testify 断言库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#assert-VS-require"><span class="nav-number">2.1.</span> <span class="nav-text">assert VS require</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-Driven-Unit-Test"><span class="nav-number">3.</span> <span class="nav-text">Table Driven Unit Test</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -369,7 +372,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
