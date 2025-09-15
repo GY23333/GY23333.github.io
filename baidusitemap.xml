@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://gy23333.github.io/2025/09/13/Mac%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2025-09-15</lastmod>
+  </url>
+  <url>
+    <loc>https://gy23333.github.io/2025/09/08/navidrome/</loc>
+    <lastmod>2025-09-08</lastmod>
+  </url>
+  <url>
+    <loc>https://gy23333.github.io/2025/08/29/Google-Maglev/</loc>
+    <lastmod>2025-09-05</lastmod>
+  </url>
+  <url>
     <loc>https://gy23333.github.io/2025/04/25/DPDK-Exception-path-%E6%96%B9%E6%A1%88%EF%BC%9AVirtio-user/</loc>
-    <lastmod>2025-09-04</lastmod>
+    <lastmod>2025-09-05</lastmod>
   </url>
   <url>
     <loc>https://gy23333.github.io/2024/09/19/Docker/</loc>
     <lastmod>2025-09-03</lastmod>
-  </url>
-  <url>
-    <loc>https://gy23333.github.io/2025/08/29/Google-Maglev/</loc>
-    <lastmod>2025-08-29</lastmod>
   </url>
   <url>
     <loc>https://gy23333.github.io/2025/08/20/Go-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</loc>

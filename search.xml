@@ -13975,6 +13975,9 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
 </ol>
 <p>注：RX、TX 都是相对 DPDK 而言的</p>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/20250905030911.png" alt=""></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://doc.dpdk.org/guides/howto/virtio_user_as_exception_path.html" target="_blank" rel="noopener">Virtio_user as Exception Path</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>DPDK</category>
@@ -14002,11 +14005,57 @@ efficiency = \frac 1{1+t_{prop}/t_{trans}}</script><p>其中，$t_{prop}$为两�
   <entry>
     <title>Google Maglev</title>
     <url>/2025/08/29/Google-Maglev/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Maglev: A Fast and Reliable Software Network Load Balancer</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Google 《Maglev: A Fast and Reliable Software Network Load Balancer》阅读笔记。</p>
 <a id="more"></a>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Maglev 是 Google 一个高性能软件网络 LB。网络路由通过 ECMP 将流量平均分配给 Maglev 节点，每个 Maglev 节点将包匹配到对应的服务，并平均转发服务的后端。</p>
+<p>Maglev 的核心特性是一致性 hash 和连接跟踪表。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>传统的由硬件实现的 LB 存在一些缺点：</p>
+<ul>
+<li>可扩展性受到单个单元的最大容量限制，无法跟上业务流量的增长</li>
+<li>无法高可用，虽然部署时会做主备，但仅能提供 1+1冗余</li>
+<li></li>
+</ul>
+<p><img src="/Users/guoyi/Library/Application Support/typora-user-images/image-20250905135235582.png" alt="image-20250905135235582" style="zoom:50%;" /></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/44824.pdf" target="_blank" rel="noopener">Maglev: A Fast and Reliable Software Network Load Balancer</a></li>
 </ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Mac服务器环境配置</title>
+    <url>/2025/09/13/Mac%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><a id="more"></a>
+<h1 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h1><h2 id="Command-Line-Tools"><a href="#Command-Line-Tools" class="headerlink" title="Command Line Tools"></a>Command Line Tools</h2><p>Mac 的命令行开发者基础工具合集，包括 clang、make、git、lldb等等</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+<p>该命令会触发图形化安装程序弹窗（需点击确认）</p>
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p>官网：<a href="https://brew.sh/zh-cn/" target="_blank" rel="noopener">https://brew.sh/zh-cn/</a></p>
+<p>依赖 git，请先安装 Command Line Tools</p>
+<p>建议使用国内镜像安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure>
+<p>安装结束后，更新环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source &#x2F;Users&#x2F;XXXX&#x2F;.zprofile</span><br></pre></td></tr></table></figure>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="htop"><a href="#htop" class="headerlink" title="htop"></a>htop</h2><p>增强版 top，用于查看内存</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install htop</span><br></pre></td></tr></table></figure>
+<p>使用 <code>htop</code> 命令查看动态内存使用情况</p>
+<h2 id="ncdu"><a href="#ncdu" class="headerlink" title="ncdu"></a>ncdu</h2><p>磁盘占用查看工具</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install ncdu</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ncdu</code> 查看当前目录</li>
+<li><code>ncdu &lt;PATH&gt;</code> 查看指定目录</li>
+</ul>
+<h2 id="orbstack"><a href="#orbstack" class="headerlink" title="orbstack"></a>orbstack</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install orbstack</span><br></pre></td></tr></table></figure>
+<p>镜像配置</p>
+<ol>
+<li>配置</li>
+<li>重启 orbstack</li>
+</ol>
+<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="Navidrome"><a href="#Navidrome" class="headerlink" title="Navidrome"></a>Navidrome</h2>]]></content>
+  </entry>
+  <entry>
+    <title>navidrome</title>
+    <url>/2025/09/08/navidrome/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>/root/docker-server/docker-compose.yml</p>
+<p>docker-compose up -d</p>
 ]]></content>
   </entry>
 </search>
