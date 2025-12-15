@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://gy23333.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="https流量抓取与解密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https流量抓取与解密">
+<meta property="og:url" content="https://gy23333.github.io/2025/12/16/https%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%AF%86/index.html">
+<meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="https流量抓取与解密">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004258863.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004458572.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004656031.png">
+<meta property="og:image" content="https://gy23333.github.io/Users/guoyi/Library/Application%20Support/typora-user-images/image-20251216004830275.png">
+<meta property="article:published_time" content="2025-12-15T16:01:51.000Z">
+<meta property="article:modified_time" content="2025-12-15T16:53:22.561Z">
+<meta property="article:author" content="GuoYi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004258863.png">
+
+<link rel="canonical" href="https://gy23333.github.io/2025/12/16/https%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>https流量抓取与解密 | GuoYi的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="GuoYi的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GuoYi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-music">
+
+    <a href="/music/" rel="section"><i class="fa fa-fw fa-music"></i>music</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2025/12/16/https%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          https流量抓取与解密
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-12-16 00:01:51 / Modified: 00:53:22" itemprop="dateCreated datePublished" datetime="2025-12-16T00:01:51+08:00">2025-12-16</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2025/12/16/https%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%AF%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/12/16/https%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%AF%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>https流量抓取与解密</p>
+<a id="more"></a>
+<h1 id="使用服务器私钥解密"><a href="#使用服务器私钥解密" class="headerlink" title="使用服务器私钥解密"></a>使用服务器私钥解密</h1><p>此方法局限性较大，使用于能自定义服务器且加密简单的测试场景。</p>
+<p>能够使用服务器私钥解密的必要条件：</p>
+<ul>
+<li>TLS版本小于等于1.2</li>
+<li>必须使用RSA密钥交换</li>
+<li>不能使用前向保密</li>
+</ul>
+<h2 id="简易的https服务器"><a href="#简易的https服务器" class="headerlink" title="简易的https服务器"></a>简易的https服务器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http.server</span><br><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置</span></span><br><span class="line">CERT_FILE = <span class="string">'server.crt'</span></span><br><span class="line">KEY_FILE = <span class="string">'server.key'</span></span><br><span class="line">PORT = <span class="number">8443</span></span><br><span class="line">BIND_IP = <span class="string">'0.0.0.0'</span>  <span class="comment"># 监听所有IP</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> len(sys.argv) &gt; <span class="number">1</span>:</span><br><span class="line">    PORT = int(sys.argv[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成证书（如果不存在）</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(CERT_FILE) <span class="keyword">or</span> <span class="keyword">not</span> os.path.exists(KEY_FILE):</span><br><span class="line">    print(<span class="string">"生成自签名证书..."</span>)</span><br><span class="line">    ip_address = input(<span class="string">"请输入服务器IP地址（默认 127.0.0.1）: "</span>) <span class="keyword">or</span> <span class="string">"127.0.0.1"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成证书命令</span></span><br><span class="line">    subprocess.run([</span><br><span class="line">        <span class="string">'openssl'</span>, <span class="string">'req'</span>, <span class="string">'-x509'</span>, <span class="string">'-newkey'</span>, <span class="string">'rsa:2048'</span>,</span><br><span class="line">        <span class="string">'-keyout'</span>, KEY_FILE, <span class="string">'-out'</span>, CERT_FILE,</span><br><span class="line">        <span class="string">'-days'</span>, <span class="string">'365'</span>, <span class="string">'-nodes'</span>,</span><br><span class="line">        <span class="string">'-subj'</span>, <span class="string">f'/CN=<span class="subst">&#123;ip_address&#125;</span>'</span>,</span><br><span class="line">        <span class="string">'-addext'</span>, <span class="string">f'subjectAltName=IP:<span class="subst">&#123;ip_address&#125;</span>'</span></span><br><span class="line">    ], check=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动HTTPS服务器</span></span><br><span class="line">handler = http.server.SimpleHTTPRequestHandler</span><br><span class="line">httpd = http.server.HTTPServer((BIND_IP, PORT), handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包装为HTTPS</span></span><br><span class="line">context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)</span><br><span class="line">context.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用前向加密</span></span><br><span class="line">context.set_ciphers(<span class="string">'DEFAULT@SECLEVEL=1:!DHE:!ECDHE'</span>)</span><br><span class="line"></span><br><span class="line">httpd.socket = context.wrap_socket(httpd.socket, server_side=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">f"HTTPS服务器已启动"</span>)</span><br><span class="line">print(<span class="string">f"访问地址: https://127.0.0.1:<span class="subst">&#123;PORT&#125;</span>"</span>)</span><br><span class="line">print(<span class="string">f"或: https://&lt;你的IP&gt;:<span class="subst">&#123;PORT&#125;</span>"</span>)</span><br><span class="line">print(<span class="string">f"使用证书: <span class="subst">&#123;CERT_FILE&#125;</span>"</span>)</span><br><span class="line">print(<span class="string">"注意: 这是自签名证书，浏览器会显示警告"</span>)</span><br><span class="line">print(<span class="string">"按 Ctrl+C 停止服务器"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    httpd.serve_forever()</span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    print(<span class="string">"\n服务器已停止"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -kv https:&#x2F;&#x2F;192.168.139.176:8443 --tls-max 1.2</span><br></pre></td></tr></table></figure>
+<p>限制 tls 版本为 1.2</p>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p>抓取一次访问的包序列，写入 pcap 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tcpdump host &lt;客户端IP&gt; and port 8443 -w https.pcap</span><br></pre></td></tr></table></figure>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>将 pcap 文件导入 wireshark，此时 https 层为加密的 Application Data</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004258863.png" alt="image-20251216004258863"></p>
+<p>右键添加 TLS 的 RSA keys list</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004458572.png" alt="image-20251216004458572"></p>
+<p>填入服务器 IP、端口、http、服务器私钥</p>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20251216004656031.png" alt="image-20251216004656031" style="zoom:50%;" /></p>
+<p>如此便将之前的 Application Data 解开出里面的 http 协议层</p>
+<p><img src="/Users/guoyi/Library/Application Support/typora-user-images/image-20251216004830275.png" alt="image-20251216004830275"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/13/Mac%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="prev" title="Mac服务器环境配置">
+      <i class="fa fa-chevron-left"></i> Mac服务器环境配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/16/tcpdump/" rel="next" title="tcpdump">
+      tcpdump <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用服务器私钥解密"><span class="nav-number">1.</span> <span class="nav-text">使用服务器私钥解密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简易的https服务器"><span class="nav-number">1.1.</span> <span class="nav-text">简易的https服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端"><span class="nav-number">1.2.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抓包"><span class="nav-number">1.3.</span> <span class="nav-text">抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析"><span class="nav-number">1.4.</span> <span class="nav-text">解析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuoYi"
+      src="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+  <p class="site-author-name" itemprop="name">GuoYi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuoYi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'default',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: '8VTrBnqrHCihHxfEuBnrXVP3-gzGzoHsz',
+      appKey: 'F0jqadgj1TbxEXnsj8evVvu9',
+      placeholder: "来发个评论，留下邮箱接受回复。",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '20' || 10,
+      visitor: false,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+
+</body>
+</html>

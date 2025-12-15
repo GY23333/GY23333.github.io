@@ -207,6 +207,184 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/12/07/IPIP%E9%9A%A7%E9%81%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/07/IPIP%E9%9A%A7%E9%81%93/" class="post-title-link" itemprop="url">IPIP隧道</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-07 00:47:53" itemprop="dateCreated datePublished" datetime="2024-12-07T00:47:53+08:00">2024-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-08 00:18:52" itemprop="dateModified" datetime="2025-05-08T00:18:52+08:00">2025-05-08</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/12/07/IPIP%E9%9A%A7%E9%81%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/12/07/IPIP%E9%9A%A7%E9%81%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+<h1 id="IPIP"><a href="#IPIP" class="headerlink" title="IPIP"></a>IPIP</h1><h1 id="scapy-构建-IPIP-包"><a href="#scapy-构建-IPIP-包" class="headerlink" title="scapy 构建 IPIP 包"></a>scapy 构建 IPIP 包</h1><p>tcpdump -i ens160 -nn -v ‘ip proto 4’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 外层IP头</span><br><span class="line">outer_ip &#x3D; IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;192.168.1.2&quot;, proto&#x3D;4)  # proto&#x3D;4表示IPIP</span><br><span class="line"></span><br><span class="line"># 内层IP头</span><br><span class="line">inner_ip &#x3D; IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)</span><br><span class="line"></span><br><span class="line"># 内层负载数据</span><br><span class="line">payload &#x3D; &quot;This is the payload&quot;</span><br><span class="line"></span><br><span class="line"># 组合成IPIP包</span><br><span class="line">ipip_packet &#x3D; outer_ip&#x2F;inner_ip&#x2F;payload</span><br><span class="line"></span><br><span class="line"># 发送数据包</span><br><span class="line">send(ipip_packet)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendp(Ether(src&#x3D;&quot;00:0c:29:4e:e5:7b&quot;, dst&#x3D;&quot;00:0c:29:4e:e5:7a&quot;)&#x2F;IP(src&#x3D;&quot;192.168.1.1&quot;, dst&#x3D;&quot;172.16.19.137&quot;, proto&#x3D;4)&#x2F;IP(src&#x3D;&quot;10.0.0.1&quot;, dst&#x3D;&quot;10.0.0.2&quot;)&#x2F;&quot;This is the payload&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="IPv6-in-IPv6-隧道"><a href="#IPv6-in-IPv6-隧道" class="headerlink" title="IPv6-in-IPv6 隧道"></a>IPv6-in-IPv6 隧道</h1><p>加载 <code>ip6_tunnel</code> 模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modprobe ip6_tunnel</span><br></pre></td></tr></table></figure>
+<p>加载 <code>ip6_tunnel</code> 模块后，Linux 内核会自动创建一个默认的 IPv6-in-IPv6 隧道接口 <code>ip6tnl0</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2404:~<span class="comment"># ip -6 tunnel show</span></span><br><span class="line">ip6tnl0: ipv6/ipv6 remote :: local :: encaplimit <span class="number">0</span> hoplimit inherit tclass <span class="number">0</span>x00 flowlabel <span class="number">0</span>x00000 (flowinfo <span class="number">0</span>x00000000)</span><br></pre></td></tr></table></figure>
+<p>可以直接开启这个默认的隧道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip -6 tunnel change ip6tnl0 mode ip6ip6</span><br><span class="line"></span><br><span class="line">ip link set ip6tnl0 up</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+      
+          
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/12/07/IPv6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/07/IPv6/" class="post-title-link" itemprop="url">IPv6</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-07 00:47:16" itemprop="dateCreated datePublished" datetime="2024-12-07T00:47:16+08:00">2024-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-19 01:24:18" itemprop="dateModified" datetime="2025-02-19T01:24:18+08:00">2025-02-19</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2024/12/07/IPv6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/12/07/IPv6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>IPv6 是网络层协议的第二代标准协议，将 IP 地址长度从原来的 32 位升级为 128 位，从根本上解决了 IP 地址耗尽的问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/07/IPv6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+      
+          
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/12/07/Linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-logrotate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -955,204 +1133,6 @@
   
 
       
-      
-          
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/10/05/systemd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
-      <meta itemprop="name" content="GuoYi">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GuoYi的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/05/systemd/" class="post-title-link" itemprop="url">systemd</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-10-05 20:20:32" itemprop="dateCreated datePublished" datetime="2024-10-05T20:20:32+08:00">2024-10-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-11 11:57:58" itemprop="dateModified" datetime="2024-11-11T11:57:58+08:00">2024-11-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2024/10/05/systemd/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/10/05/systemd/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>systemd 是 Linux 的系统和服务管理器。作为系统启动的第一个进程，初始化系统并且管理其他用户服务。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/10/05/systemd/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-      
-          
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2024/09/19/Docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
-      <meta itemprop="name" content="GuoYi">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GuoYi的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/19/Docker/" class="post-title-link" itemprop="url">Docker</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-09-19 13:48:28" itemprop="dateCreated datePublished" datetime="2024-09-19T13:48:28+08:00">2024-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-03 13:32:20" itemprop="dateModified" datetime="2025-09-03T13:32:20+08:00">2025-09-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2024/09/19/Docker/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/09/19/Docker/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>基于 Go 的开源应用容器引擎 Docker</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/09/19/Docker/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   </div>
 
   
@@ -1225,7 +1205,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
