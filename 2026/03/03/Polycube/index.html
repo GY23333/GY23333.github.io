@@ -46,15 +46,21 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="GuoYi的博客">
-<meta property="og:url" content="https://gy23333.github.io/archives/2026/01/index.html">
+  <meta name="description" content="Polycube是一个基于 eBPF 和 XDP 技术的开源软件框架，用于在Linux内核中构建快速、灵活的网络功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polycube">
+<meta property="og:url" content="https://gy23333.github.io/2026/03/03/Polycube/index.html">
 <meta property="og:site_name" content="GuoYi的博客">
+<meta property="og:description" content="Polycube是一个基于 eBPF 和 XDP 技术的开源软件框架，用于在Linux内核中构建快速、灵活的网络功能。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/polycube-archi.png">
+<meta property="article:published_time" content="2026-03-02T16:52:39.000Z">
+<meta property="article:modified_time" content="2026-04-16T17:10:00.507Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/polycube-archi.png">
 
-<link rel="canonical" href="https://gy23333.github.io/archives/2026/01/">
+<link rel="canonical" href="https://gy23333.github.io/2026/03/03/Polycube/">
 
 
 <script id="page-configurations">
@@ -62,11 +68,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Archive | GuoYi的博客</title>
+  <title>Polycube | GuoYi的博客</title>
   
 
 
@@ -201,54 +207,135 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gy23333.github.io/2026/03/03/Polycube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://res.cloudinary.com/dh7ramrlh/image/upload/v1576578789/gy/IMG_0324_o40dwv.jpg">
+      <meta itemprop="name" content="GuoYi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuoYi的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polycube
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-03-03 00:52:39" itemprop="dateCreated datePublished" datetime="2026-03-03T00:52:39+08:00">2026-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-04-17 01:10:00" itemprop="dateModified" datetime="2026-04-17T01:10:00+08:00">2026-04-17</time>
+              </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Good! 92 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2026/03/03/Polycube/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2026/03/03/Polycube/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2026</h1>
+        <p>Polycube是一个基于 eBPF 和 XDP 技术的开源软件框架，用于在Linux内核中构建快速、灵活的网络功能。</p>
+<a id="more"></a>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Polycube 是一个基于 Linux 的开源软件框架，提供快速且轻量级的网络功能，比如网桥（bridge）、路由器（router）、网络地址转换（NAT）、负载均衡器（load balancer）、防火墙（firewall）、DDoS 缓解器等。</p>
+<ul>
+<li><p>适用范围：命名空间（namespaces）、容器（containers）、虚拟机和物理主机。</p>
+</li>
+<li><p>核心：Cube 网络功能模块，基于 Linux 内核最新的 <strong>BPF</strong> (Berkeley Packet Filter) 和 <strong>XDP</strong> (eXpress Data Path) 技术</p>
+</li>
+</ul>
+<p>架构：</p>
+<ul>
+<li>交互方式：<ul>
+<li>polycubectl，命令行工具，用于人工交互</li>
+<li>polycubed，REST API 守护进程，接收 polycubectl 或其他外部指令，用于自动交互</li>
+</ul>
+</li>
+<li>架构<ul>
+<li>应用层：应用程序，如 pcn-k8s, pcn-iptables，通过调用 polycubed 或 CLI 来驱动底层 cubes</li>
+<li>控制与管理层：polycubectl/polycubed，人工/自动控制工具</li>
+<li>功能模块层：各种可用的 “Cubes” (具体的网络功能模块)</li>
+<li>底层：基于 BPF/XDP 的 Linux 内核支撑</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/polycube-archi.png" alt="Polycube architecture brief"></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install wget unzip build-essential golang-go</span><br><span class="line"></span><br><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;polycube-network&#x2F;polycube&#x2F;releases&#x2F;download&#x2F;v0.9.0&#x2F;polycube-v0.9.0.zip</span><br><span class="line"></span><br><span class="line">unzip polycube-v0.9.0.zip</span><br><span class="line"></span><br><span class="line">cd polycube-v0.9.0&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sudo apt-get -y install git build-essential cmake bison flex \</span><br><span class="line">    libelf-dev libllvm5.0 llvm-5.0-dev libclang-5.0-dev libpcap-dev \</span><br><span class="line">    libnl-route-3-dev libnl-genl-3-dev uuid-dev pkg-config \</span><br><span class="line">    autoconf libtool m4 automake libssl-dev kmod jq bash-completion \</span><br><span class="line">    gnupg2chmod +x llvm.sh</span><br></pre></td></tr></table></figure>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://polycube-network.readthedocs.io" target="_blank" rel="noopener">Polycube 官方文档</a></li>
+<li><a href="https://github.com/polycube-network/polycube" target="_blank" rel="noopener">GitHub 代码仓</a></li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2026-01-04T00:08:22+08:00"
-              content="2026-01-04">
-          01-04
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2026/01/04/%E5%B7%A5%E5%85%B7/" itemprop="url">
-            <span itemprop="name">工具</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/28/LVS/" rel="prev" title="LVS">
+      <i class="fa fa-chevron-left"></i> LVS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/04/06/Kubernetes/" rel="next" title="Kubernetes">
+      Kubernetes <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -295,6 +382,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -310,7 +398,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
