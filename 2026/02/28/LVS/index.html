@@ -54,8 +54,9 @@
 <meta property="og:description" content="LVS">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260228023453490.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260420004055093.png">
 <meta property="article:published_time" content="2026-02-27T16:40:47.000Z">
-<meta property="article:modified_time" content="2026-04-16T18:39:25.732Z">
+<meta property="article:modified_time" content="2026-04-19T16:57:38.059Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260228023453490.png">
@@ -242,7 +243,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-04-17 02:39:25" itemprop="dateModified" datetime="2026-04-17T02:39:25+08:00">2026-04-17</time>
+                <time title="Modified: 2026-04-20 00:57:38" itemprop="dateModified" datetime="2026-04-20T00:57:38+08:00">2026-04-20</time>
               </span>
 
           
@@ -304,7 +305,135 @@
 </li>
 </ol>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260228023453490.png" alt=""></p>
-<h1 id="LVS-组成"><a href="#LVS-组成" class="headerlink" title="LVS 组成"></a>LVS 组成</h1><h1 id="LVS-工作模式"><a href="#LVS-工作模式" class="headerlink" title="LVS 工作模式"></a>LVS 工作模式</h1>
+<h2 id="IPVS-工作原理"><a href="#IPVS-工作原理" class="headerlink" title="IPVS 工作原理"></a>IPVS 工作原理</h2><p>IPVS（LVS 的内核模块）在 Netfilter 注册了 3 个核心 hook 函数</p>
+<h3 id="ip-vs-in-——-核心入口函数"><a href="#ip-vs-in-——-核心入口函数" class="headerlink" title="ip_vs_in() —— 核心入口函数"></a><code>ip_vs_in()</code> —— 核心入口函数</h3><ul>
+<li><strong>挂载点</strong>：通常在 <code>LOCAL_IN</code> </li>
+<li><strong>触发时机</strong>：当客户端的请求数据包到达 LVS 服务器，且目标地址是虚拟 IP（VIP）时触发</li>
+<li><strong>核心作用</strong>：<ol>
+<li><strong>检查连接（Connection Lookup）</strong>：<ul>
+<li>它会先查表（哈希表），看这个请求是否属于一个<strong>已经建立的连接</strong></li>
+<li>如果是老请求（比如 TCP 握手后的数据包），直接按之前的路径转发，不重新调度</li>
+</ul>
+</li>
+<li><strong>新建连接与调度（Scheduling）</strong>：<ul>
+<li>如果是<strong>新请求</strong>（如 TCP SYN 包），它会调用调度算法（如轮询 <code>rr</code>、最少连接 <code>lc</code>）从后端真实服务器池中挑选一台服务器</li>
+</ul>
+</li>
+<li><strong>建立连接记录</strong>：<ul>
+<li>在内存中创建一个 <code>ip_vs_conn</code> 结构体，记录“客户端 &lt;-&gt; LVS &lt;-&gt; 真实服务器”的映射关系</li>
+</ul>
+</li>
+<li><strong>修改数据包（DNAT/MAC）</strong>：<ul>
+<li>根据工作模式（NAT、DR、TUN），修改数据包的目标 IP 或 MAC 地址，将其指向选中的真实服务器</li>
+</ul>
+</li>
+<li><strong>重定向</strong>：<ul>
+<li>修改完后，它通常返回 <code>NF_STOLEN</code>，告诉内核“这个包我接管了，别再往下传了”，并将其推向转发流程</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="ip-vs-out-——-响应处理函数"><a href="#ip-vs-out-——-响应处理函数" class="headerlink" title="ip_vs_out() —— 响应处理函数"></a><code>ip_vs_out()</code> —— 响应处理函数</h3><ul>
+<li><strong>挂载点</strong>：<code>NF_INET_FORWARD</code></li>
+<li><strong>触发时机</strong>：当<strong>真实服务器处理完请求，返回响应包</strong>，且该数据包流经 LVS 时触发<ul>
+<li><em>注意：在 DR 模式下，响应包直接回客户端，不经过此函数；此函数主要在 NAT 模式下起作用。</em></li>
+</ul>
+</li>
+<li><strong>核心作用</strong>：<ol>
+<li><strong>查找连接</strong>：<ul>
+<li>根据响应包的五元组（源 IP、源端口、目标 IP、目标端口、协议），在连接表中找到对应的 <code>ip_vs_conn</code> 记录</li>
+</ul>
+</li>
+<li><strong>源地址转换（SNAT）</strong>：<ul>
+<li>这是最关键的一步。它会将响应包的<strong>源 IP（真实服务器 IP）</strong>修改为<strong>虚拟 IP（VIP）</strong></li>
+<li>这样，客户端收到的包看起来就是 VIP 发回来的，从而实现了负载均衡的透明性</li>
+</ul>
+</li>
+<li><strong>状态更新</strong>：<ul>
+<li>更新连接的状态（如 TCP 序列号），确保连接跟踪的准确性</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="ip-vs-post-routing-——-最后的关卡"><a href="#ip-vs-post-routing-——-最后的关卡" class="headerlink" title="ip_vs_post_routing() —— 最后的关卡"></a><code>ip_vs_post_routing()</code> —— 最后的关卡</h3><ul>
+<li><strong>挂载点</strong>：<code>NF_INET_POST_ROUTING</code></li>
+<li><strong>触发时机</strong>：数据包即将离开网卡，发送到物理网络之前的最后一刻</li>
+<li><strong>核心作用</strong>：<ol>
+<li><strong>防止规则冲突</strong>：<ul>
+<li>它的主要任务是确保经过 IPVS 处理过的数据包，<strong>不再被 iptables 的 NAT 规则重复处理</strong></li>
+<li>如果没有这个函数，iptables 可能会再次修改已经被 IPVS 修改过的地址，导致网络错乱</li>
+</ul>
+</li>
+<li><strong>快速放行</strong>：<ul>
+<li>它会检查数据包是否带有 IPVS 的标记。如果有，直接返回 <code>NF_ACCEPT</code> 或 <code>NF_STOLEN</code>，让数据包迅速通过，不再进行复杂的防火墙规则匹配，提高转发效率</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="请求包流程（CIP-gt-VIP-gt-RS）"><a href="#请求包流程（CIP-gt-VIP-gt-RS）" class="headerlink" title="请求包流程（CIP -&gt; VIP -&gt; RS）"></a>请求包流程（CIP -&gt; VIP -&gt; RS）</h3><h4 id="1-PREROUTING-链：入场"><a href="#1-PREROUTING-链：入场" class="headerlink" title="1. PREROUTING 链：入场"></a>1. PREROUTING 链：入场</h4><ul>
+<li><strong>动作</strong>：数据包从网卡进入，到达 <code>PREROUTING</code>。</li>
+<li><strong>Netfilter 行为</strong>：此时数据包的目标 IP 是 VIP。内核进行路由查找（Routing Decision）。</li>
+<li><strong>判断</strong>：因为 VIP 配置在 LVS 的网卡上，内核认为<strong>“这个包是发给本机的”</strong>。</li>
+<li><strong>流向</strong>：数据包被送往 <strong>INPUT</strong> 链。</li>
+</ul>
+<h4 id="2-INPUT-链：LVS-的核心拦截点-ip-vs-in"><a href="#2-INPUT-链：LVS-的核心拦截点-ip-vs-in" class="headerlink" title="2. INPUT 链：LVS 的核心拦截点 (ip_vs_in)"></a>2. INPUT 链：LVS 的核心拦截点 (<code>ip_vs_in</code>)</h4><p>这是 LVS 最关键的“魔法”发生地。</p>
+<ul>
+<li><strong>Hook 函数</strong>：<code>ip_vs_in()</code></li>
+<li><strong>动作</strong>：<ol>
+<li><strong>拦截</strong>：IPVS 模块在 INPUT 链上注册了钩子，它比普通的 TCP/IP 协议栈更早拿到数据包。</li>
+<li><strong>匹配</strong>：检查数据包的目标 IP:Port（VIP:80）是否在 IPVS 的服务列表中。</li>
+<li><strong>调度</strong>：如果是新连接，根据算法（如轮询）选一台真实服务器（RS）。</li>
+<li><strong>修改（关键）</strong>：<ul>
+<li><strong>NAT 模式</strong>：修改目标 IP 为 RS 的 IP（DNAT）。</li>
+<li><strong>DR 模式</strong>：修改目标 MAC 地址为 RS 的 MAC。</li>
+</ul>
+</li>
+<li><strong>连接跟踪</strong>：在 Conntrack 表中建立一条记录，标记这个连接将来需要怎么处理回包。</li>
+<li><strong>重定向</strong>：IPVS 修改完包后，会告诉内核“这个包我处理了”，并将其<strong>强制转发</strong>到 <code>POSTROUTING</code> 链，而不是交给本机的应用程序（如 Nginx/Apache）。</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-POSTROUTING-链：离场"><a href="#3-POSTROUTING-链：离场" class="headerlink" title="3. POSTROUTING 链：离场"></a>3. POSTROUTING 链：离场</h4><ul>
+<li><strong>Hook 函数</strong>：<code>ip_vs_post_routing()</code></li>
+<li><strong>动作</strong>：<ul>
+<li>数据包此时已经变成了发往 RS 的样子（目标 IP 或 MAC 已变）。</li>
+<li><code>ip_vs_post_routing()</code> 的作用是<strong>“放行”</strong>。它给数据包打上标记，告诉后续的 iptables 规则：“这个包是 LVS 转发的，不要再做 SNAT/Masquerade 处理了，直接发走吧。”</li>
+</ul>
+</li>
+<li><strong>流向</strong>：数据包通过物理网卡发出，到达真实服务器（RS）。</li>
+</ul>
+<h3 id="NAT-响应包流程（RS-gt-LVS-gt-CIP）"><a href="#NAT-响应包流程（RS-gt-LVS-gt-CIP）" class="headerlink" title="NAT 响应包流程（RS -&gt; LVS -&gt; CIP）"></a>NAT 响应包流程（RS -&gt; LVS -&gt; CIP）</h3><h4 id="1-PREROUTING-链：入场-1"><a href="#1-PREROUTING-链：入场-1" class="headerlink" title="1. PREROUTING 链：入场"></a>1. PREROUTING 链：入场</h4><ul>
+<li><strong>动作</strong>：响应包从网卡进入 LVS。</li>
+<li><strong>Netfilter 行为</strong>：内核进行路由查找。</li>
+<li><strong>判断</strong>：目标 IP 是 CIP（外网 IP），不是本机。</li>
+<li><strong>流向</strong>：数据包被送往 <strong>FORWARD</strong> 链。</li>
+</ul>
+<h4 id="2-FORWARD-链：LVS-的还原点-ip-vs-out"><a href="#2-FORWARD-链：LVS-的还原点-ip-vs-out" class="headerlink" title="2. FORWARD 链：LVS 的还原点 (ip_vs_out)"></a>2. FORWARD 链：LVS 的还原点 (<code>ip_vs_out</code>)</h4><ul>
+<li><strong>Hook 函数</strong>：<code>ip_vs_out()</code></li>
+<li><strong>动作</strong>：<ol>
+<li><strong>识别</strong>：IPVS 检查数据包的五元组，发现这个包属于之前建立的那个连接（通过 Conntrack 表匹配）。</li>
+<li><strong>还原（SNAT）</strong>：IPVS 将数据包的<strong>源 IP</strong> 从 RS 的 IP（RIP）修改回 <strong>VIP</strong>。<ul>
+<li><em>目的</em>：让客户端觉得是 VIP 给它回的包，而不是 RS。</li>
+</ul>
+</li>
+<li><strong>流向</strong>：修改完成后，数据包继续向前，进入 <code>POSTROUTING</code>。</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-POSTROUTING-链：离场-1"><a href="#3-POSTROUTING-链：离场-1" class="headerlink" title="3. POSTROUTING 链：离场"></a>3. POSTROUTING 链：离场</h4><ul>
+<li><strong>Hook 函数</strong>：<code>ip_vs_post_routing()</code></li>
+<li><strong>动作</strong>：<ul>
+<li>同样，这里的作用是防止被 iptables 的其他规则干扰。</li>
+<li>确认数据包已经完成 SNAT，允许其离开网卡。</li>
+</ul>
+</li>
+<li><strong>流向</strong>：数据包发往互联网，最终回到客户端（CIP）。</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260420004055093.png" alt=""></p>
+<h1 id="LVS-工作模式"><a href="#LVS-工作模式" class="headerlink" title="LVS 工作模式"></a>LVS 工作模式</h1><h2 id="DR-直接路由"><a href="#DR-直接路由" class="headerlink" title="DR 直接路由"></a>DR 直接路由</h2><h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h2><h2 id="Tunnel"><a href="#Tunnel" class="headerlink" title="Tunnel"></a>Tunnel</h2><h2 id="FullNAT"><a href="#FullNAT" class="headerlink" title="FullNAT"></a>FullNAT</h2><h1 id="LVS-组成"><a href="#LVS-组成" class="headerlink" title="LVS 组成"></a>LVS 组成</h1>
     </div>
 
     
@@ -386,7 +515,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作原理"><span class="nav-number">1.</span> <span class="nav-text">LVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Netfilter"><span class="nav-number">1.1.</span> <span class="nav-text">Netfilter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-组成"><span class="nav-number">2.</span> <span class="nav-text">LVS 组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作模式"><span class="nav-number">3.</span> <span class="nav-text">LVS 工作模式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作原理"><span class="nav-number">1.</span> <span class="nav-text">LVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Netfilter"><span class="nav-number">1.1.</span> <span class="nav-text">Netfilter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPVS-工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">IPVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-in-——-核心入口函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">ip_vs_in() —— 核心入口函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-out-——-响应处理函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">ip_vs_out() —— 响应处理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-post-routing-——-最后的关卡"><span class="nav-number">1.2.3.</span> <span class="nav-text">ip_vs_post_routing() —— 最后的关卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求包流程（CIP-gt-VIP-gt-RS）"><span class="nav-number">1.2.4.</span> <span class="nav-text">请求包流程（CIP -&gt; VIP -&gt; RS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-INPUT-链：LVS-的核心拦截点-ip-vs-in"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">2. INPUT 链：LVS 的核心拦截点 (ip_vs_in)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-响应包流程（RS-gt-LVS-gt-CIP）"><span class="nav-number">1.2.5.</span> <span class="nav-text">NAT 响应包流程（RS -&gt; LVS -&gt; CIP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场-1"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-FORWARD-链：LVS-的还原点-ip-vs-out"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">2. FORWARD 链：LVS 的还原点 (ip_vs_out)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场-1"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作模式"><span class="nav-number">2.</span> <span class="nav-text">LVS 工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DR-直接路由"><span class="nav-number">2.1.</span> <span class="nav-text">DR 直接路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT"><span class="nav-number">2.2.</span> <span class="nav-text">NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tunnel"><span class="nav-number">2.3.</span> <span class="nav-text">Tunnel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FullNAT"><span class="nav-number">2.4.</span> <span class="nav-text">FullNAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-组成"><span class="nav-number">3.</span> <span class="nav-text">LVS 组成</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
