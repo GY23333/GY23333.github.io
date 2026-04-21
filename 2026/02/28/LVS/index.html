@@ -55,8 +55,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260228023453490.png">
 <meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260420004055093.png">
+<meta property="og:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260422011209879.png">
 <meta property="article:published_time" content="2026-02-27T16:40:47.000Z">
-<meta property="article:modified_time" content="2026-04-19T16:57:38.059Z">
+<meta property="article:modified_time" content="2026-04-21T17:31:35.174Z">
 <meta property="article:author" content="GuoYi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260228023453490.png">
@@ -243,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-04-20 00:57:38" itemprop="dateModified" datetime="2026-04-20T00:57:38+08:00">2026-04-20</time>
+                <time title="Modified: 2026-04-22 01:31:35" itemprop="dateModified" datetime="2026-04-22T01:31:35+08:00">2026-04-22</time>
               </span>
 
           
@@ -433,7 +434,38 @@
 <li><strong>流向</strong>：数据包发往互联网，最终回到客户端（CIP）。</li>
 </ul>
 <p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260420004055093.png" alt=""></p>
-<h1 id="LVS-工作模式"><a href="#LVS-工作模式" class="headerlink" title="LVS 工作模式"></a>LVS 工作模式</h1><h2 id="DR-直接路由"><a href="#DR-直接路由" class="headerlink" title="DR 直接路由"></a>DR 直接路由</h2><h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h2><h2 id="Tunnel"><a href="#Tunnel" class="headerlink" title="Tunnel"></a>Tunnel</h2><h2 id="FullNAT"><a href="#FullNAT" class="headerlink" title="FullNAT"></a>FullNAT</h2><h1 id="LVS-组成"><a href="#LVS-组成" class="headerlink" title="LVS 组成"></a>LVS 组成</h1>
+<h1 id="LVS-工作模式"><a href="#LVS-工作模式" class="headerlink" title="LVS 工作模式"></a>LVS 工作模式</h1><h2 id="DR-直接路由"><a href="#DR-直接路由" class="headerlink" title="DR 直接路由"></a>DR 直接路由</h2><p><strong>请求经过负载均衡器，响应直接返回给客户端</strong></p>
+<p>前提条件：</p>
+<ul>
+<li>LVS 和 RS 在同一物理网段内（可以通过修改 MAC 下一跳直达的前提）</li>
+<li>LVS 和 RS 同时配置 VIP（RS 可以接收目的 IP 为 VIP 包的前提）</li>
+</ul>
+<p>转发流程：</p>
+<ul>
+<li>请求阶段<ol>
+<li>源/目的 IP 保持不变，源 IP 为客户端 IP（CIP），目的 IP 为 VIP</li>
+<li>通过修改目的 MAC 地址，将下一跳规定为同一物理网段内的 RS 节点</li>
+</ol>
+</li>
+<li>响应阶段<ol>
+<li>不返回 LVS，直接返回到客户端</li>
+<li>源 IP 为 VIP，目的 IP 为 客户端 IP（CIP）</li>
+</ol>
+</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>高性能，LVS 不用处理响应，负载降低一半</li>
+<li>IP 透明，RS 可以拿到客户端 IP（CIP）</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不支持端口映射，转发只能相同端口</li>
+<li>强制要求 LVS 和 RS 在同一物理网段内</li>
+<li>强制要求每台 RS 上配置 VIP 和 ARP 抑制</li>
+</ul>
+<p><img src="https://gy-pic.oss-cn-hangzhou.aliyuncs.com/image-20260422011209879.png" alt=""></p>
+<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h2><h2 id="Tunnel"><a href="#Tunnel" class="headerlink" title="Tunnel"></a>Tunnel</h2><h2 id="FullNAT"><a href="#FullNAT" class="headerlink" title="FullNAT"></a>FullNAT</h2><h1 id="LVS-负载均衡算法"><a href="#LVS-负载均衡算法" class="headerlink" title="LVS 负载均衡算法"></a>LVS 负载均衡算法</h1><h1 id="LVS-组成"><a href="#LVS-组成" class="headerlink" title="LVS 组成"></a>LVS 组成</h1>
     </div>
 
     
@@ -515,7 +547,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作原理"><span class="nav-number">1.</span> <span class="nav-text">LVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Netfilter"><span class="nav-number">1.1.</span> <span class="nav-text">Netfilter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPVS-工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">IPVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-in-——-核心入口函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">ip_vs_in() —— 核心入口函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-out-——-响应处理函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">ip_vs_out() —— 响应处理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-post-routing-——-最后的关卡"><span class="nav-number">1.2.3.</span> <span class="nav-text">ip_vs_post_routing() —— 最后的关卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求包流程（CIP-gt-VIP-gt-RS）"><span class="nav-number">1.2.4.</span> <span class="nav-text">请求包流程（CIP -&gt; VIP -&gt; RS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-INPUT-链：LVS-的核心拦截点-ip-vs-in"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">2. INPUT 链：LVS 的核心拦截点 (ip_vs_in)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-响应包流程（RS-gt-LVS-gt-CIP）"><span class="nav-number">1.2.5.</span> <span class="nav-text">NAT 响应包流程（RS -&gt; LVS -&gt; CIP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场-1"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-FORWARD-链：LVS-的还原点-ip-vs-out"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">2. FORWARD 链：LVS 的还原点 (ip_vs_out)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场-1"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作模式"><span class="nav-number">2.</span> <span class="nav-text">LVS 工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DR-直接路由"><span class="nav-number">2.1.</span> <span class="nav-text">DR 直接路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT"><span class="nav-number">2.2.</span> <span class="nav-text">NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tunnel"><span class="nav-number">2.3.</span> <span class="nav-text">Tunnel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FullNAT"><span class="nav-number">2.4.</span> <span class="nav-text">FullNAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-组成"><span class="nav-number">3.</span> <span class="nav-text">LVS 组成</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作原理"><span class="nav-number">1.</span> <span class="nav-text">LVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Netfilter"><span class="nav-number">1.1.</span> <span class="nav-text">Netfilter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPVS-工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">IPVS 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-in-——-核心入口函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">ip_vs_in() —— 核心入口函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-out-——-响应处理函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">ip_vs_out() —— 响应处理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-vs-post-routing-——-最后的关卡"><span class="nav-number">1.2.3.</span> <span class="nav-text">ip_vs_post_routing() —— 最后的关卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求包流程（CIP-gt-VIP-gt-RS）"><span class="nav-number">1.2.4.</span> <span class="nav-text">请求包流程（CIP -&gt; VIP -&gt; RS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-INPUT-链：LVS-的核心拦截点-ip-vs-in"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">2. INPUT 链：LVS 的核心拦截点 (ip_vs_in)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-响应包流程（RS-gt-LVS-gt-CIP）"><span class="nav-number">1.2.5.</span> <span class="nav-text">NAT 响应包流程（RS -&gt; LVS -&gt; CIP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PREROUTING-链：入场-1"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">1. PREROUTING 链：入场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-FORWARD-链：LVS-的还原点-ip-vs-out"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">2. FORWARD 链：LVS 的还原点 (ip_vs_out)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-POSTROUTING-链：离场-1"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">3. POSTROUTING 链：离场</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-工作模式"><span class="nav-number">2.</span> <span class="nav-text">LVS 工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DR-直接路由"><span class="nav-number">2.1.</span> <span class="nav-text">DR 直接路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT"><span class="nav-number">2.2.</span> <span class="nav-text">NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tunnel"><span class="nav-number">2.3.</span> <span class="nav-text">Tunnel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FullNAT"><span class="nav-number">2.4.</span> <span class="nav-text">FullNAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-负载均衡算法"><span class="nav-number">3.</span> <span class="nav-text">LVS 负载均衡算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LVS-组成"><span class="nav-number">4.</span> <span class="nav-text">LVS 组成</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
